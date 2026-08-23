@@ -2,7 +2,7 @@
   "providerId": "nuro-hikari",
   "providerName": "NURO光",
   "channelId": "official",
-  "observedAt": "2026-08-23T10:11:10.975Z",
+  "observedAt": "2026-08-23T21:56:25.617Z",
   "formula": "実質月額 = ( 月額の合計 + 工事費の実負担額 + 事務手数料 + 必須オプション費用×加入必要月数 - キャッシュバック額 - その他割引の総額 ) ÷ 契約月数",
   "primaryHorizonMonths": 36,
   "sourceUrls": [
@@ -13,6 +13,7 @@
     "2026年8月末までにご利用開始いただいた場合、2026年8月利用分までは料金改定前の月額基本料金でご利用いただけます",
     "料金改定の詳細についてはこちら 2026年8月31日をもちまして、現在販売中プランの新規受付を終了させていただきます",
     "9月1日1:00（予定）のメンテナンス終了後、新プランを提供開始いたします",
+    "料金改定の詳細についてはこちら 月額基本料金に関する注意事項 基本工事費実質無料に関する注意事項 セットでお得なオプション NURO でんき・NURO ガスとセットで、回線の月額基本料金が 毎月最大701円割引 となります",
     "2026年9月より、「NURO 光」一部プランにおける料金改定を予定しております",
     "料金改定の詳細はこちら 2026年8月31日をもちまして、現在販売中プランの新規受付を終了させていただきます",
     "※記載の料金は、2026年9月に予定している料金改定後のものです",
@@ -97,9 +98,9 @@
       },
       "cashbacks": [
         {
-          "amount": 10000,
+          "amount": 15000,
           "receiveAtMonth": 18,
-          "note": "キャッシュバックキャンペーン 10,000円（18か月目）"
+          "note": "キャッシュバックキャンペーン 15,000円（18か月目）"
         }
       ],
       "requiredOptions": [],
@@ -122,31 +123,31 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-08-23T10:11:10.975Z",
+      "observedAt": "2026-08-23T21:56:25.617Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 3701,
-          "total": 88820,
+          "effectiveMonthly": 3493,
+          "total": 83820,
           "breakdown": {
             "monthlyTotal": 95520,
             "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 10000,
+            "cashbackCounted": 15000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 4374,
-          "total": 157460,
+          "effectiveMonthly": 4235,
+          "total": 152460,
           "breakdown": {
             "monthlyTotal": 164160,
             "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 10000,
+            "cashbackCounted": 15000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
@@ -233,9 +234,9 @@
       },
       "cashbacks": [
         {
-          "amount": 20000,
+          "amount": 15000,
           "receiveAtMonth": 18,
-          "note": "キャッシュバックキャンペーン 20,000円（18か月目）"
+          "note": "キャッシュバックキャンペーン 15,000円（18か月目）"
         }
       ],
       "requiredOptions": [],
@@ -258,31 +259,31 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-08-23T10:11:10.975Z",
+      "observedAt": "2026-08-23T21:56:25.617Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 3284,
-          "total": 78820,
+          "effectiveMonthly": 3493,
+          "total": 83820,
           "breakdown": {
             "monthlyTotal": 95520,
             "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 20000,
+            "cashbackCounted": 15000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 4389,
-          "total": 158020,
+          "effectiveMonthly": 4528,
+          "total": 163020,
           "breakdown": {
             "monthlyTotal": 174720,
             "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 20000,
+            "cashbackCounted": 15000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
@@ -384,9 +385,9 @@
       },
       "cashbacks": [
         {
-          "amount": 10000,
+          "amount": 15000,
           "receiveAtMonth": 18,
-          "note": "キャッシュバックキャンペーン 10,000円（18か月目）"
+          "note": "キャッシュバックキャンペーン 15,000円（18か月目）"
         }
       ],
       "requiredOptions": [],
@@ -414,31 +415,31 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-08-23T10:11:10.975Z",
+      "observedAt": "2026-08-23T21:56:25.617Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 3701,
-          "total": 88820,
+          "effectiveMonthly": 3493,
+          "total": 83820,
           "breakdown": {
             "monthlyTotal": 95520,
             "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 10000,
+            "cashbackCounted": 15000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 3794,
-          "total": 136580,
+          "effectiveMonthly": 3655,
+          "total": 131580,
           "breakdown": {
             "monthlyTotal": 143280,
             "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 10000,
+            "cashbackCounted": 15000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
@@ -540,9 +541,9 @@
       },
       "cashbacks": [
         {
-          "amount": 20000,
+          "amount": 15000,
           "receiveAtMonth": 18,
-          "note": "キャッシュバックキャンペーン 20,000円（18か月目）"
+          "note": "キャッシュバックキャンペーン 15,000円（18か月目）"
         }
       ],
       "requiredOptions": [],
@@ -570,31 +571,31 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-08-23T10:11:10.975Z",
+      "observedAt": "2026-08-23T21:56:25.617Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 3284,
-          "total": 78820,
+          "effectiveMonthly": 3493,
+          "total": 83820,
           "breakdown": {
             "monthlyTotal": 95520,
             "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 20000,
+            "cashbackCounted": 15000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 3516,
-          "total": 126580,
+          "effectiveMonthly": 3655,
+          "total": 131580,
           "breakdown": {
             "monthlyTotal": 143280,
             "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 20000,
+            "cashbackCounted": 15000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
@@ -701,10 +702,7 @@
         }
       ],
       "verified": true,
-      "ambiguities": [
-        "ページ全体のキャンペーン表は2ギガプランに10,000円のキャッシュバックを掲げているが、このプランの料金内訳表にはキャッシュバック行が無い。内訳表を採用した（実質月額はキャッシュバック無しで計算）"
-      ],
-      "observedAt": "2026-08-23T10:11:10.975Z",
+      "observedAt": "2026-08-23T21:56:25.617Z",
       "effective": {
         "24": {
           "effectiveMonthly": 3952,
@@ -735,7 +733,7 @@
           "missing": []
         }
       },
-      "publishable": false
+      "publishable": true
     },
     {
       "providerId": "nuro-hikari",
@@ -855,10 +853,7 @@
         }
       ],
       "verified": true,
-      "ambiguities": [
-        "ページ全体のキャンペーン表は2ギガプランに10,000円のキャッシュバックを掲げているが、このプランの料金内訳表にはキャッシュバック行が無い。内訳表を採用した（実質月額はキャッシュバック無しで計算）"
-      ],
-      "observedAt": "2026-08-23T10:11:10.975Z",
+      "observedAt": "2026-08-23T21:56:25.617Z",
       "effective": {
         "24": {
           "effectiveMonthly": 3952,
@@ -889,7 +884,7 @@
           "missing": []
         }
       },
-      "publishable": false
+      "publishable": true
     },
     {
       "providerId": "nuro-hikari",
@@ -990,9 +985,9 @@
       ],
       "verified": true,
       "ambiguities": [
-        "ページ全体のキャンペーン表は10ギガプランに20,000円のキャッシュバックを掲げているが、このプランの料金内訳表にはキャッシュバック行が無い。内訳表を採用した（実質月額はキャッシュバック無しで計算）"
+        "ページ全体のキャンペーン表は10ギガプランに15,000円のキャッシュバックを掲げているが、このプランの料金内訳表にはキャッシュバック行が無い。内訳表を採用した（実質月額はキャッシュバック無しで計算）"
       ],
-      "observedAt": "2026-08-23T10:11:10.975Z",
+      "observedAt": "2026-08-23T21:56:25.617Z",
       "effective": {
         "24": {
           "effectiveMonthly": 3952,
@@ -1144,9 +1139,9 @@
       ],
       "verified": true,
       "ambiguities": [
-        "ページ全体のキャンペーン表は10ギガプランに20,000円のキャッシュバックを掲げているが、このプランの料金内訳表にはキャッシュバック行が無い。内訳表を採用した（実質月額はキャッシュバック無しで計算）"
+        "ページ全体のキャンペーン表は10ギガプランに15,000円のキャッシュバックを掲げているが、このプランの料金内訳表にはキャッシュバック行が無い。内訳表を採用した（実質月額はキャッシュバック無しで計算）"
       ],
-      "observedAt": "2026-08-23T10:11:10.975Z",
+      "observedAt": "2026-08-23T21:56:25.617Z",
       "effective": {
         "24": {
           "effectiveMonthly": 3952,
@@ -1258,9 +1253,9 @@
       },
       "cashbacks": [
         {
-          "amount": 10000,
+          "amount": 15000,
           "receiveAtMonth": 18,
-          "note": "キャッシュバックキャンペーン 10,000円（18か月目）"
+          "note": "キャッシュバックキャンペーン 15,000円（18か月目）"
         }
       ],
       "requiredOptions": [],
@@ -1283,31 +1278,31 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-08-23T10:11:10.975Z",
+      "observedAt": "2026-08-23T21:56:25.617Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 2577,
-          "total": 61840,
+          "effectiveMonthly": 2368,
+          "total": 56840,
           "breakdown": {
             "monthlyTotal": 68540,
             "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 10000,
+            "cashbackCounted": 15000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 3129,
-          "total": 112660,
+          "effectiveMonthly": 2991,
+          "total": 107660,
           "breakdown": {
             "monthlyTotal": 119360,
             "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 10000,
+            "cashbackCounted": 15000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
@@ -1410,9 +1405,9 @@
       },
       "cashbacks": [
         {
-          "amount": 10000,
+          "amount": 15000,
           "receiveAtMonth": 18,
-          "note": "キャッシュバックキャンペーン 10,000円（18か月目）"
+          "note": "キャッシュバックキャンペーン 15,000円（18か月目）"
         }
       ],
       "requiredOptions": [],
@@ -1440,31 +1435,31 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-08-23T10:11:10.975Z",
+      "observedAt": "2026-08-23T21:56:25.617Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 2577,
-          "total": 61840,
+          "effectiveMonthly": 2368,
+          "total": 56840,
           "breakdown": {
             "monthlyTotal": 68540,
             "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 10000,
+            "cashbackCounted": 15000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 2711,
-          "total": 97600,
+          "effectiveMonthly": 2572,
+          "total": 92600,
           "breakdown": {
             "monthlyTotal": 104300,
             "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 10000,
+            "cashbackCounted": 15000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
@@ -1552,9 +1547,9 @@
       },
       "cashbacks": [
         {
-          "amount": 20000,
+          "amount": 15000,
           "receiveAtMonth": 18,
-          "note": "キャッシュバックキャンペーン 20,000円（18か月目）"
+          "note": "キャッシュバックキャンペーン 15,000円（18か月目）"
         }
       ],
       "requiredOptions": [],
@@ -1577,31 +1572,31 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-08-23T10:11:10.975Z",
+      "observedAt": "2026-08-23T21:56:25.617Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 2160,
-          "total": 51840,
+          "effectiveMonthly": 2368,
+          "total": 56840,
           "breakdown": {
             "monthlyTotal": 68540,
             "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 20000,
+            "cashbackCounted": 15000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 3053,
-          "total": 109920,
+          "effectiveMonthly": 3192,
+          "total": 114920,
           "breakdown": {
             "monthlyTotal": 126620,
             "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 20000,
+            "cashbackCounted": 15000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
@@ -1704,9 +1699,9 @@
       },
       "cashbacks": [
         {
-          "amount": 20000,
+          "amount": 15000,
           "receiveAtMonth": 18,
-          "note": "キャッシュバックキャンペーン 20,000円（18か月目）"
+          "note": "キャッシュバックキャンペーン 15,000円（18か月目）"
         }
       ],
       "requiredOptions": [],
@@ -1734,31 +1729,31 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-08-23T10:11:10.975Z",
+      "observedAt": "2026-08-23T21:56:25.617Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 2160,
-          "total": 51840,
+          "effectiveMonthly": 2368,
+          "total": 56840,
           "breakdown": {
             "monthlyTotal": 68540,
             "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 20000,
+            "cashbackCounted": 15000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 2433,
-          "total": 87600,
+          "effectiveMonthly": 2572,
+          "total": 92600,
           "breakdown": {
             "monthlyTotal": 104300,
             "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 20000,
+            "cashbackCounted": 15000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },

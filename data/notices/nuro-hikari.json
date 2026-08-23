@@ -5,6 +5,15 @@
   "firstCollectedAt": "2026-08-23T09:31:26.876Z",
   "notices": [
     {
+      "date": "2026-08-24",
+      "title": "令和８年７月17日から18日にかけての大雨に伴う災害に係る 災害救助法の適用について",
+      "url": "https://www.nuro.jp/news_release/20260824/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T21:55:53.607Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
       "date": "2026-08-20",
       "title": "NTTドコモ合算請求 システムメンテナンス実施のお知らせ",
       "url": "https://www.nuro.jp/news_release/20260820/",
@@ -962,6 +971,6 @@
       "sourceUrl": "https://www.nuro.jp/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-08-23T10:10:39.544Z",
-  "totalNotices": 99
+  "lastCollectedAt": "2026-08-23T21:55:53.607Z",
+  "totalNotices": 100
 }

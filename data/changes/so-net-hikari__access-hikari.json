@@ -1,0 +1,32 @@
+{
+  "key": "so-net-hikari__access-hikari",
+  "providerId": "so-net-hikari",
+  "providerName": "So-net光（ソニーネットワークコミュニケーションズ）",
+  "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
+  "events": [
+    {
+      "detectedAt": "2026-08-23T21:56:18.361Z",
+      "previousCollectedAt": "2026-08-23T10:11:04.427Z",
+      "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
+      "source": "pricing-page",
+      "needsReview": false,
+      "changes": [
+        {
+          "label": "■戸建・マンション共通 ・新設の場合：",
+          "before": [
+            10000,
+            20000
+          ],
+          "after": [
+            15000
+          ],
+          "delta": null
+        }
+      ],
+      "addedLabels": 8,
+      "removedLabels": 9
+    }
+  ],
+  "lastEventAt": "2026-08-23T21:56:18.361Z",
+  "totalEvents": 1
+}

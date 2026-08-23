@@ -1,0 +1,32 @@
+{
+  "key": "nuro-hikari__hikari-house-price",
+  "providerId": "nuro-hikari",
+  "providerName": "NURO光",
+  "sourceUrl": "https://www.nuro.jp/hikari/house/price/",
+  "events": [
+    {
+      "detectedAt": "2026-08-23T21:56:04.396Z",
+      "previousCollectedAt": "2026-08-23T10:10:50.822Z",
+      "sourceUrl": "https://www.nuro.jp/hikari/house/price/",
+      "source": "pricing-page",
+      "needsReview": false,
+      "changes": [
+        {
+          "label": "キャンペーン ー キャッシュバックキャンペーン",
+          "before": [
+            10000,
+            20000
+          ],
+          "after": [
+            15000
+          ],
+          "delta": null
+        }
+      ],
+      "addedLabels": 2,
+      "removedLabels": 2
+    }
+  ],
+  "lastEventAt": "2026-08-23T21:56:04.396Z",
+  "totalEvents": 1
+}
