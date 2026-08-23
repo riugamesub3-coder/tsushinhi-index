@@ -1,0 +1,967 @@
+{
+  "providerId": "nuro-hikari",
+  "providerName": "NURO光",
+  "sourceUrl": "https://www.nuro.jp/news_release/",
+  "firstCollectedAt": "2026-08-23T09:31:26.876Z",
+  "notices": [
+    {
+      "date": "2026-08-20",
+      "title": "NTTドコモ合算請求 システムメンテナンス実施のお知らせ",
+      "url": "https://www.nuro.jp/news_release/20260820/",
+      "categories": [
+        "noise"
+      ],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2026-08-18",
+      "title": "令和８年８月13日からの大雨による災害にかかる災害救助法の適用について",
+      "url": "https://www.nuro.jp/news_release/20260818/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2026-08-17",
+      "title": "新プランの提供と既存プランの新規受付終了について",
+      "url": "https://www.nuro.jp/news_release/20260817/",
+      "categories": [
+        "plan-change",
+        "service-end"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2026-07-30",
+      "title": "【重要】クレジットカード 国際ブランド 決済ルール変更に伴う情報更新についてのご案内",
+      "url": "https://www.nuro.jp/news_release/20260730/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2026-07-27",
+      "title": "ネットワーク設備の増強について【2026年7月27日更新】",
+      "url": "https://www.nuro.jp/quality/network_enhancement/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2026-07-27",
+      "title": "マカフィー セキュリティサービスの一部サービス名変更および機能拡張について",
+      "url": "https://www.nuro.jp/news_release/20260720/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2026-07-15",
+      "title": "令和８年７月滋賀県甲賀市の土砂崩れに係る 災害救助法の適用について",
+      "url": "https://www.nuro.jp/news_release/20260715/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2026-06-30",
+      "title": "令和８年６月24日からの大雨に伴う災害に係る災害救助法の適用について",
+      "url": "https://www.nuro.jp/news_release/20260630/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2026-06-15",
+      "title": "「NURO 光」レンタル機器の返却方法の変更について",
+      "url": "https://www.nuro.jp/news_release/20260615_02/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2026-06-15",
+      "title": "「NURO 光」一部サービスにおける料金改定のご案内",
+      "url": "https://www.nuro.jp/news_release/20260615/",
+      "categories": [
+        "price-change"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2026-04-01",
+      "title": "「NURO 光」提供するONU機種の変更とオプション受付停止について",
+      "url": "https://www.nuro.jp/news_release/20260401/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2026-04-01",
+      "title": "2026年度の電話リレーサービス料について",
+      "url": "https://www.nuro.jp/news_release/20260401_02/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2026-03-19",
+      "title": "ちゃんみな『AREA OF DIAMOND 4』×「NURO」コラボステッカーに関するお知らせ",
+      "url": "https://www.nuro.jp/news_release/20260319/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2026-02-27",
+      "title": "NURO 光 契約約款改定のお知らせ",
+      "url": "https://www.nuro.jp/news_release/20260227/",
+      "categories": [
+        "price-change",
+        "plan-change"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2026-02-06",
+      "title": "令和8年1月21日からの大雪に係る災害救助法の適用について",
+      "url": "https://www.nuro.jp/news_release/20260206/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2026-02-02",
+      "title": "クレジットカードでの請求遅延に関するお詫び",
+      "url": "https://www.nuro.jp/news_release/20260126/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2026-02-02",
+      "title": "ブロードバンドユニバーサルサービス2026年の請求に関するお知らせ",
+      "url": "https://www.nuro.jp/news_release/20260202/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2026-02-02",
+      "title": "ブロードバンドユニバーサルサービス制度 について【2026年2月2日更新】",
+      "url": "https://www.nuro.jp/hikari/legal/bbuniversal/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2025-12-29",
+      "title": "ユニバーサルサービス料 改定のお知らせ",
+      "url": "https://www.nuro.jp/news_release/20251229/",
+      "categories": [
+        "price-change"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2025-12-11",
+      "title": "集合住宅向け「NURO 光」10ギガプランへのアップグレード受付を開始",
+      "url": "https://www.nuro.jp/news_release/20251211/",
+      "categories": [
+        "plan-change"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2025-10-01",
+      "title": "自動口座振替サービス ご請求方法の変更について",
+      "url": "https://www.nuro.jp/news_release/20251001/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2025-09-17",
+      "title": "令和７年９月12日からの大雨に伴う災害に係る 災害救助法の適用について",
+      "url": "https://www.nuro.jp/news_release/20250917/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2025-09-15",
+      "title": "NUROサービス 会員規約本則の改訂について",
+      "url": "https://www.nuro.jp/news_release/20250915/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2025-09-10",
+      "title": "令和７年８月６日からの低気圧と前線による大雨に伴う災害に係る 災害救助法の適用について",
+      "url": "https://www.nuro.jp/news_release/20250910/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2025-09-09",
+      "title": "令和７年台風第15号等に伴う災害に係る 災害救助法の適用について",
+      "url": "https://www.nuro.jp/news_release/20250909/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2025-09-01",
+      "title": "NURO 光 契約約款改定のお知らせ",
+      "url": "https://www.nuro.jp/news_release/20250901/",
+      "categories": [
+        "price-change",
+        "plan-change"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2025-08-27",
+      "title": "NUROサービス 会員規約本則の改訂について",
+      "url": "https://www.nuro.jp/news_release/20250827/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2025-08-01",
+      "title": "令和７年カムチャツカ半島付近の地震に伴う津波にかかる 災害救助法の適用について",
+      "url": "https://www.nuro.jp/news_release/20250801/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2025-06-02",
+      "title": "NURO 光 契約解除料 改定のお知らせ",
+      "url": "https://www.nuro.jp/news_release/20250602/",
+      "categories": [
+        "price-change"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2025-05-19",
+      "title": "ユニバーサルサービス料 改定のお知らせ",
+      "url": "https://www.nuro.jp/news_release/20250519/",
+      "categories": [
+        "price-change"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2025-04-01",
+      "title": "2025年度の電話リレーサービス料について",
+      "url": "https://www.nuro.jp/news_release/20250401/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2025-04-01",
+      "title": "NURO 光 でんわ契約約款の改訂について",
+      "url": "https://www.nuro.jp/news_release/20250401-2/",
+      "categories": [
+        "plan-change"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2025-03-24",
+      "title": "NTTドコモ合算請求 システムメンテナンス実施のお知らせ",
+      "url": "https://www.nuro.jp/news_release/20250324/",
+      "categories": [
+        "noise"
+      ],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2025-03-10",
+      "title": "クレジットカード本人認証サービス「3Dセキュア」導入のお知らせ",
+      "url": "https://www.nuro.jp/news_release/20250310/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2025-03-01",
+      "title": "NURO光 契約約款の誤記の修正について",
+      "url": "https://www.nuro.jp/news_release/20250301/",
+      "categories": [
+        "plan-change"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2025-02-13",
+      "title": "流域下水道管の破損に起因する道路陥没事故にかかる災害救助法の適用について",
+      "url": "https://www.nuro.jp/news_release/20250213/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2025-02-11",
+      "title": "令和7年2月4日からの大雪にかかる 災害救助法の適用について",
+      "url": "https://www.nuro.jp/news_release/20250211/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2025-01-27",
+      "title": "「NURO 光 でんわ」双方向番号ポータビリティ開始にあたっての移行期間対応",
+      "url": "https://www.nuro.jp/news_release/20241211/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2024-12-11",
+      "title": "「NURO 光 でんわ One Type」双方向番号ポータビリティ開始にあたっての移行期間対応",
+      "url": "https://www.nuro.jp/news_release/20241211-2/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2024-12-06",
+      "title": "インターネットの悪質な乗り換え勧誘について",
+      "url": "https://www.nuro.jp/news_release/20230809/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2024-10-01",
+      "title": "集合住宅向け新プランの提供および「NURO 光 for マンション」新規受付終了について",
+      "url": "https://www.nuro.jp/news_release/20241001/",
+      "categories": [
+        "plan-change",
+        "service-end"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2024-09-18",
+      "title": "「NURO 光 for マンション」価格変更のご案内",
+      "url": "https://www.nuro.jp/news_release/20240412/",
+      "categories": [
+        "price-change"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2024-08-30",
+      "title": "令和6年台風第10号に伴う災害にかかる災害救助法の適用について",
+      "url": "https://www.nuro.jp/news_release/20240830/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2024-07-27",
+      "title": "令和6年7月25日からの大雨にかかる災害救助法の適用について",
+      "url": "https://www.nuro.jp/news_release/20240727/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2024-06-11",
+      "title": "So-netメールリニューアルについて",
+      "url": "https://www.nuro.jp/news_release/20231101/",
+      "categories": [
+        "service-start"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2024-03-27",
+      "title": "2024年度の電話リレーサービス料について",
+      "url": "https://www.nuro.jp/news_release/20240327/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2024-02-14",
+      "title": "NUROサービス 会員規約本則の改訂について",
+      "url": "https://www.nuro.jp/news_release/20240214/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2024-01-26",
+      "title": "令和6年1月23日からの大雪等による災害にかかる災害救助法の適用について",
+      "url": "https://www.nuro.jp/news_release/20240126/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2023-10-10",
+      "title": "インボイス制度に関するお知らせ",
+      "url": "https://www.nuro.jp/news_release/20231010/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2023-09-12",
+      "title": "ご利用履歴のないメールアドレスの削除について",
+      "url": "https://www.nuro.jp/news_release/20230912/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2023-09-12",
+      "title": "令和５年台風第13号に伴う災害にかかる災害救助法の適用について",
+      "url": "https://www.nuro.jp/news_release/20230912-2/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2023-09-01",
+      "title": "NUROサービス 会員規約本則の改訂について",
+      "url": "https://www.nuro.jp/news_release/20230901/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2023-07-14",
+      "title": "令和５年７月７日からの大雨による災害にかかる災害救助法の適用について",
+      "url": "https://www.nuro.jp/news_release/20230713/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2023-06-26",
+      "title": "【重要】クレジットカード 国際ブランドVisa決済ルール変更に伴う情報更新についてのご案内",
+      "url": "https://www.nuro.jp/news_release/20230616/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2023-06-23",
+      "title": "【重要】クレジットカード「ヤフーカード」から「PayPayカード」に切替となったお客さまへ、クレジットカード情報更新のお願い",
+      "url": "https://www.nuro.jp/news_release/20230623/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2023-06-01",
+      "title": "NUROサービス会員規約本則の改訂について",
+      "url": "https://www.nuro.jp/news_release/20230601",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2023-04-01",
+      "title": "【重要】 携帯料金合算請求 決済事務手数料に関するお知らせ",
+      "url": "https://www.nuro.jp/news_release/20230401",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2023-03-27",
+      "title": "2023年度の電話リレーサービス料について",
+      "url": "https://www.nuro.jp/news_release/20230327",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2023-03-20",
+      "title": "NURO 光×ロックマンエグゼ アドバンスドコレクション コラボキャンペーン開始のお知らせ",
+      "url": "https://www.nuro.jp/news_release/20230320-2/",
+      "categories": [
+        "campaign",
+        "service-start"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2023-03-20",
+      "title": "NURO 光の販売代理店を名乗る不適切な電話勧誘について",
+      "url": "https://www.nuro.jp/quality/agency_correspondence/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2023-03-15",
+      "title": "トルコへの国際電話の無償化について",
+      "url": "https://www.nuro.jp/news_release/20230315-2/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2023-02-20",
+      "title": "【重要】So-netを装った不審な迷惑メールにご注意ください",
+      "url": "https://www.nuro.jp/news_release/20220421",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2023-02-20",
+      "title": "インターネットの悪質な乗り換え勧誘について",
+      "url": "https://www.nuro.jp/news_release/20230220",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2022-12-28",
+      "title": "つながるメッシュWi-Fi 機器ご提供について",
+      "url": "https://www.nuro.jp/news_release/20221228",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2022-11-25",
+      "title": "NURO 光 でんわ TA機器ご提供について",
+      "url": "https://www.nuro.jp/news_release/common/hikari_denwa_2104/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2022-10-18",
+      "title": "「NURO 光 お客様ご意見箱」開設のお知らせ",
+      "url": "https://www.nuro.jp/news_release/20221018",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2022-10-12",
+      "title": "NURO 光 ご利用状況に関するアンケート実施のお知らせ",
+      "url": "https://www.nuro.jp/news_release/20221012",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2022-10-12",
+      "title": "NURO 光 ネットワークに関する調査結果のご報告および今後の取り組みについて",
+      "url": "https://www.nuro.jp/news_release/20221012-2",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2022-09-26",
+      "title": "カスペルスキー セキュリティのサービス終了について",
+      "url": "https://www.nuro.jp/news_release/20220926",
+      "categories": [
+        "service-end"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2022-08-30",
+      "title": "「NURO 光 Safe」 iOS版リリースのお知らせ",
+      "url": "https://www.nuro.jp/news_release/20220830",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2022-07-11",
+      "title": "【重要】 コンビニ払込票発行手数料改定のお知らせ",
+      "url": "https://www.nuro.jp/news_release/20220711",
+      "categories": [
+        "price-change"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2022-07-01",
+      "title": "NURO 光 プランラインアップ刷新について",
+      "url": "https://www.sonynetwork.co.jp/corporation/release/2022/pub20220701_0087.html",
+      "categories": [
+        "plan-change"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2022-06-07",
+      "title": "「オプションコース（N）」提供終了に関するご案内",
+      "url": "https://www.nuro.jp/news_release/20220607/",
+      "categories": [
+        "service-end"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2022-04-21",
+      "title": "【重要】So-netを装った不審な迷惑メールにご注意ください",
+      "url": "https://www.nuro.jp/news_release/20220421/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2022-04-21",
+      "title": "セキュリティ対策ソフトの変更をご希望のお客様さまへ（更新）",
+      "url": "https://www.nuro.jp/news_release/20220311/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2022-04-04",
+      "title": "ウクライナへの国際通話の無償化について（更新）",
+      "url": "https://www.nuro.jp/news_release/20220311-2/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2022-04-01",
+      "title": "2022年度の電話リレーサービス料について",
+      "url": "https://www.nuro.jp/news_release/20220401/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2022-04-01",
+      "title": "法改正に伴う各種会員規約変更について",
+      "url": "https://www.nuro.jp/news_release/20220401-2/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2022-02-28",
+      "title": "ひかりTV for NURO 障害復旧後の対応について",
+      "url": "https://www.nuro.jp/news_release/20220228/",
+      "categories": [
+        "noise"
+      ],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2022-02-16",
+      "title": "カスペルスキー セキュリティ「iOS版」リリースのお知らせ",
+      "url": "https://www.nuro.jp/news_release/20220216/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2022-01-01",
+      "title": "ユニバーサルサービス料 改定のお知らせ",
+      "url": "https://www.nuro.jp/news_release/20220101/",
+      "categories": [
+        "price-change"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2021-12-27",
+      "title": "NURO コンタクトセンター 年末年始受付時間のお知らせ",
+      "url": "https://www.nuro.jp/news_release/20211227/",
+      "categories": [
+        "noise"
+      ],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2021-12-17",
+      "title": "カスペルスキー セキュリティ「iOS版」リリースおよび利用規約改訂のお知らせ",
+      "url": "https://www.nuro.jp/news_release/20211217/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2021-10-29",
+      "title": "「NURO 光 G2N」の受付開始と「NURO 光 G2」の新規受付終了について",
+      "url": "https://www.nuro.jp/news_release/20211029/",
+      "categories": [
+        "service-end"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2021-10-18",
+      "title": "NURO 光 でんわ TA機器ご提供の遅延について（電話番号継続利用の方向け）",
+      "url": "https://www.nuro.jp/news_release/common/hikari_denwa_2110/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2021-09-30",
+      "title": "「NURO」 ブランドアイデンティティを刷新",
+      "url": "https://www.sonynetwork.co.jp/corporation/release/2021/pr20210930_0069.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2021-09-24",
+      "title": "新型コロナウィルス感染症の影響拡大に伴う料金請求の取り扱いについて",
+      "url": "https://www.sonynetwork.co.jp/corporation/release/2021/pr20210126_0048.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2021-09-17",
+      "title": "高速インターネット「NURO 光」、「PlayStation ® 5」の月額オプションを提供開始",
+      "url": "https://www.sonynetwork.co.jp/corporation/release/2021/pub20210917_0067.html",
+      "categories": [
+        "service-start"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2021-07-01",
+      "title": "NURO 光 プランラインアップ刷新に伴う各種ご利用規約の改訂について",
+      "url": "https://www.nuro.jp/news_release/20210701/",
+      "categories": [
+        "plan-change"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2021-06-30",
+      "title": "NURO 光 プランラインアップ刷新について",
+      "url": "https://www.sonynetwork.co.jp/corporation/release/2021/pub20210630_0061.html",
+      "categories": [
+        "plan-change"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2021-06-25",
+      "title": "『電話リレーサービス』の開始に関して",
+      "url": "https://www.nuro.jp/news_release/20210625/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2021-06-03",
+      "title": "会員規約の制定および各種ご利用規約の改訂について",
+      "url": "https://www.nuro.jp/news_release/20210603/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2021-06-02",
+      "title": "NURO 光（戸建・マンションミニ）サービス体系の変更について（更新）",
+      "url": "https://www.nuro.jp/news_release/20210602/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2021-04-16",
+      "title": "西日本エリア システムメンテナンスによる関連業務停止について（2021年5月実施予定）",
+      "url": "https://www.nuro.jp/news_release/20210416/",
+      "categories": [
+        "noise"
+      ],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2021-04-15",
+      "title": "NURO 光（戸建・マンションミニ）サービス体系の変更について（更新）",
+      "url": "https://www.nuro.jp/news_release/20210415/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2021-03-26",
+      "title": "「NURO 光」コースにおけるコース変更受付終了のお知らせ",
+      "url": "https://www.so-net.ne.jp/info/2021/op20210326_0019.html",
+      "categories": [
+        "plan-change",
+        "service-end"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2020-12-04",
+      "title": "「HG8045Q」ファームウェアアップデートについて",
+      "url": "https://www.nuro.jp/news_release/20201204/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2020-10-21",
+      "title": "NURO 光の開通工事について",
+      "url": "https://www.nuro.jp/news_release/2010_const.html",
+      "categories": [
+        "noise"
+      ],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2020-03-01",
+      "title": "NURO 光 事務センター及びコンタクトセンターの運営に関して",
+      "url": "https://www.nuro.jp/news_release/20200301/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:26.877Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    }
+  ],
+  "lastCollectedAt": "2026-08-23T09:31:26.877Z",
+  "totalNotices": 99
+}

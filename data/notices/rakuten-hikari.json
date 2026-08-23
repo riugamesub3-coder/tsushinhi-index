@@ -1,0 +1,316 @@
+{
+  "providerId": "rakuten-hikari",
+  "providerName": "楽天ひかり",
+  "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/",
+  "firstCollectedAt": "2026-08-23T09:31:30.121Z",
+  "notices": [
+    {
+      "date": "2026-08-17",
+      "title": "令和8年8月13日からの大雨による災害に伴う支援措置について",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2026/0817_01/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
+      "date": "2026-07-29",
+      "title": "令和8年熊本地震による災害に伴う支援措置について",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2026/0729_01/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
+      "date": "2026-07-27",
+      "title": "計画メンテナンス（8/12,21,24）によるサービス停止のお知らせ ※楽天ひかりのお申し込みはご利用いただけます",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2026/0727_01/",
+      "categories": [
+        "noise"
+      ],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
+      "date": "2026-07-16",
+      "title": "NTT東日本/西日本におけるシステムメンテナンスに伴う、楽天ひかりサービスへの影響について",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2026/0716_01/",
+      "categories": [
+        "noise"
+      ],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
+      "date": "2026-06-02",
+      "title": "2026年 オリコン顧客満足度®調査「インターネット回線 広域企業」ランキングの受賞ついて",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2026/0602_01/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
+      "date": "2026-06-02",
+      "title": "緊急メンテナンス（6/5,9）のお知らせ ※楽天ひかりのお申し込みはご利用いただけます",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2026/0602_02/",
+      "categories": [
+        "noise"
+      ],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
+      "date": "2026-05-29",
+      "title": "【復旧】 楽天ひかりのお申し込みサイトがご利用しづらい状況について（4月9日（木）午前11時35分時点）",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2026/0409_01/",
+      "categories": [
+        "noise"
+      ],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
+      "date": "2026-05-29",
+      "title": "【復旧】楽天ひかりの障害のお詫びと復旧のお知らせ（2026年5月29日 午前5時45分時点）",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2026/0529_01/",
+      "categories": [
+        "noise"
+      ],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
+      "date": "2026-03-16",
+      "title": "【復旧】 楽天ひかりのお申し込みサイトとメンバーズステーション障害のお詫びと復旧のお知らせ（3月17日（火）午前9時0分時点）",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2026/0316_01/",
+      "categories": [
+        "noise"
+      ],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
+      "date": "2026-02-17",
+      "title": "緊急メンテナンス（2/26）によるサービス停止のお知らせ ※楽天ひかりのお申し込みはご利用いただけます",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2026/0217_01/",
+      "categories": [
+        "noise"
+      ],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
+      "date": "2026-02-02",
+      "title": "令和8年1月21日からの大雪による災害に伴う支援措置について",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2026/0202_01/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
+      "date": "2026-01-08",
+      "title": "計画メンテナンス（1/20）によるサービス停止のお知らせ ※楽天ひかりのお申し込みはご利用いただけます",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2026/0108_01/",
+      "categories": [
+        "noise"
+      ],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
+      "date": "2026-01-06",
+      "title": "緊急メンテナンス（1/7）によるサービス停止のお知らせ ※楽天ひかりのお申し込みはご利用いただけます",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2026/0106_01/",
+      "categories": [
+        "noise"
+      ],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
+      "date": "2025-12-19",
+      "title": "計画メンテナンス（12/22）のお知らせ ※インターネットはご利用いただけます",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2025/1219_01/",
+      "categories": [
+        "noise"
+      ],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
+      "date": "2025-12-17",
+      "title": "【重要】ブロードバンドユニバーサルサービス料について",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2025/1217_01/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
+      "date": "2025-12-10",
+      "title": "令和7年青森県東方沖を震源とする地震による災害に伴う支援措置について",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2025/1210_01/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
+      "date": "2025-12-09",
+      "title": "計画メンテナンス（12/12）のお知らせ ※インターネットはご利用いただけます",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2025/1209_01/",
+      "categories": [
+        "noise"
+      ],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
+      "date": "2025-12-08",
+      "title": "楽天モバイル データSIM（3GB/月）1年間無料特典のご案内",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2025/1208_01/",
+      "categories": [
+        "campaign"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
+      "date": "2025-11-28",
+      "title": "計画メンテナンス（12/3）のお知らせ ※インターネットはご利用いただけます",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2025/1128_01/",
+      "categories": [
+        "noise"
+      ],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
+      "date": "2025-11-14",
+      "title": "緊急メンテナンス（11/21）によるサービス停止のお知らせ ※楽天ひかりのお申し込みはご利用いただけます",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2025/1114_01/",
+      "categories": [
+        "noise"
+      ],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
+      "date": "2025-10-03",
+      "title": "一部建物のVDSL方式サービス終了と光配線方式への移行のお願い",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2025/1003_01/",
+      "categories": [
+        "service-end"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
+      "date": "2025-08-08",
+      "title": "令和7年8月6日からの低気圧と前線の大雨による災害に伴う支援措置について",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2025/0808_01/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
+      "date": "2025-07-03",
+      "title": "【復旧】メンバーズステーションの障害のお詫びと復旧のお知らせ（2025年7月3日（木）午前10時20分時点）",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2025/0703_01/",
+      "categories": [
+        "noise"
+      ],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
+      "date": "2025-07-03",
+      "title": "【復旧】楽天ひかりの障害のお詫びと復旧のお知らせ（3月3日（月）午後9時10分時点）",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2025/0303_01/",
+      "categories": [
+        "noise"
+      ],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
+      "date": "2025-03-18",
+      "title": "【再掲】 他社光回線サービスへの乗り換えを勧誘する電話連絡について",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2024/0930_01/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
+      "date": "2025-02-01",
+      "title": "【重要】楽天ひかり標準工事費および移転工事費の改定について",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2024/0110_01/",
+      "categories": [
+        "noise"
+      ],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
+      "date": "2024-12-26",
+      "title": "2025年2月1日（土）以降、 楽天ひかりご契約で＋2倍のポイントを受け取るためにエントリーが必要になります",
+      "url": "https://network.mobile.rakuten.co.jp/internet/turbo/campaign/spu/?tab-list=tab-menu2",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
+      "date": "2023-09-12",
+      "title": "令和5年台風第13号に伴う支援措置について",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2023/0912_01/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
+      "date": "2023-08-31",
+      "title": "適格請求書保存方式（インボイス制度）に伴う対応のお知らせ",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2023/0831_01/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
+      "date": "2023-08-21",
+      "title": "令和５年台風第６号および、台風第７号の影響による停電に伴う支援について",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2023/0821_01/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:30.121Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    }
+  ],
+  "lastCollectedAt": "2026-08-23T09:31:30.121Z",
+  "totalNotices": 30
+}

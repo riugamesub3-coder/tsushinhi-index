@@ -51,10 +51,9 @@
       "id": "flets-west",
       "name": "フレッツ光（NTT西日本）",
       "status": "verified",
-      "note": "料金ページ実測: 年59.4回変更。robots.txt の Disallow 2件は対象外パス",
+      "note": "料金ページ実測: 年59.4回変更。robots.txt の Disallow 2件は対象外パス。お知らせ一覧 https://flets-w.com/topics/ はJS描画で、HTMLに含まれるのは空hrefのテンプレート（コメント内）のみだったため対象外にした。ブラウザ実行が必要になるので、他社が固まってから再検討する",
       "pages": [
-        { "url": "https://flets-w.com/", "type": "pricing", "priceHits": 4 },
-        { "url": "https://flets-w.com/topics/", "type": "notice", "dateHits": 6 }
+        { "url": "https://flets-w.com/", "type": "pricing", "priceHits": 4 }
       ]
     },
     {

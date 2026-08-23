@@ -1,0 +1,589 @@
+{
+  "providerId": "biglobe-hikari",
+  "providerName": "ビッグローブ光",
+  "sourceUrl": "https://support.biglobe.ne.jp/news/",
+  "firstCollectedAt": "2026-08-23T09:31:28.541Z",
+  "notices": [
+    {
+      "date": "2026-08-01",
+      "title": "BIGLOBE会員規約改定のお知らせ（2026年8月1日施行）",
+      "url": "https://support.biglobe.ne.jp/kiyaku/youten260801.html",
+      "categories": [
+        "price-change",
+        "plan-change"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2026-08-01",
+      "title": "令和８年熊本地震に対するBIGLOBEの支援について",
+      "url": "https://support.biglobe.ne.jp/news/news798.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2026-07-09",
+      "title": "【7/9更新】不正アクセス発生に関するお詫びと、パスワード変更のお願い",
+      "url": "https://support.biglobe.ne.jp/news/news796.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2026-07-07",
+      "title": "【重要】「レンタル無線LANルーター」一部機種のメーカーサポート期間終了のご案内",
+      "url": "https://support.biglobe.ne.jp/news/news794.html",
+      "categories": [
+        "service-end"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2026-07-02",
+      "title": "【お知らせ】BIGLOBE光／フレッツ光／ドコモ光の回線速度改善の取り組みを進めています",
+      "url": "https://support.biglobe.ne.jp/news/network.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2026-07-01",
+      "title": "【重要】「BIGLOBE光 auひかり・プラス」コース 名称変更のお知らせ",
+      "url": "https://support.biglobe.ne.jp/news/news795.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2026-07-01",
+      "title": "BIGLOBE WiMAX +5G / WiMAX 2+ サービス 月額料金改定のお知らせ",
+      "url": "https://support.biglobe.ne.jp/news/news793.html",
+      "categories": [
+        "price-change"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2026-06-25",
+      "title": "【重要】「ベーシック」コース サービス提供終了のお知らせ",
+      "url": "https://support.biglobe.ne.jp/news/news761.html",
+      "categories": [
+        "service-end"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2026-06-25",
+      "title": "【重要】BIGLOBE WiMAX 料金体系および割引内容の変更について",
+      "url": "https://support.biglobe.ne.jp/news/news764.html",
+      "categories": [
+        "campaign"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2026-06-25",
+      "title": "【重要】BIGLOBEメール 新プラン提供開始のお知らせ",
+      "url": "https://support.biglobe.ne.jp/news/news762.html",
+      "categories": [
+        "plan-change",
+        "service-start"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2026-06-25",
+      "title": "【重要】BIGLOBEモバイル 料金体系および割引内容の変更について",
+      "url": "https://support.biglobe.ne.jp/news/news763.html",
+      "categories": [
+        "campaign"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2026-06-25",
+      "title": "【重要】家族会員サービス料金改定のお知らせ",
+      "url": "https://support.biglobe.ne.jp/news/news782.html",
+      "categories": [
+        "price-change"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2026-05-29",
+      "title": "【重要】「無料出張サポート特典」の委託会社変更のお知らせ",
+      "url": "https://support.biglobe.ne.jp/news/news791.html",
+      "categories": [
+        "campaign"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2026-05-29",
+      "title": "BIGLOBEを詐称したフィッシング詐欺の実例をご確認ください",
+      "url": "https://support.biglobe.ne.jp/phishing/example.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2026-04-24",
+      "title": "【お知らせ】「バザールでござーるアドレス」サービス終了について",
+      "url": "https://support.biglobe.ne.jp/news/news790.html",
+      "categories": [
+        "service-end"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2026-04-23",
+      "title": "BIGLOBEメール スマートフォン版Webメールのデザインリニューアルについて",
+      "url": "https://support.biglobe.ne.jp/news/news786.html",
+      "categories": [
+        "service-start"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2026-04-23",
+      "title": "iOSのアップデートにともなう、BIGLOBEメールの動作不具合解消について",
+      "url": "https://support.biglobe.ne.jp/news/news752.html",
+      "categories": [
+        "noise"
+      ],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2026-04-08",
+      "title": "【重要】BIGLOBEを騙ったなりすましメールへの対策強化について",
+      "url": "https://support.biglobe.ne.jp/news/news789.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2026-03-30",
+      "title": "【お知らせ】BIGLOBE光電話（NTT東日本エリア）の通信障害に伴うお詫びとご返金について",
+      "url": "https://support.biglobe.ne.jp/news/news787.html",
+      "categories": [
+        "noise"
+      ],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2026-03-30",
+      "title": "【重要】「接続機器(無線LAN付き)」提供 Aterm製品の脆弱性に関するお知らせ",
+      "url": "https://support.biglobe.ne.jp/news/news788.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2026-03-25",
+      "title": "【重要】BIGLOBEモバイル Webからのお申し込み時における、新たな本人確認手続きの導入について",
+      "url": "https://support.biglobe.ne.jp/news/news783.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2026-03-25",
+      "title": "【重要】BIGLOBEモバイル タイプD 「国際SMS」利用限度額の開始について",
+      "url": "https://support.biglobe.ne.jp/news/news784.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2026-03-25",
+      "title": "【重要】BIGLOBEモバイル 非常時における事業者間ローミングについて",
+      "url": "https://support.biglobe.ne.jp/news/emergency-roaming.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2026-03-06",
+      "title": "【お知らせ】「BIGLOBE eo光」コース終了と株式会社オプテージ提供eo光への移行手続きのご案内",
+      "url": "https://support.biglobe.ne.jp/news/news766.html",
+      "categories": [
+        "service-end"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2026-03-06",
+      "title": "【重要】「コミュファ光・Neo」および「コミュファ光」コースサービス提供終了、新規受付停止のお知らせ",
+      "url": "https://support.biglobe.ne.jp/news/news767.html",
+      "categories": [
+        "service-end",
+        "noise"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2026-02-20",
+      "title": "【重要】他事業者の販売代理店による勧誘にご注意ください",
+      "url": "https://support.biglobe.ne.jp/news/news785.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2026-02-01",
+      "title": "【お知らせ】サイバーセキュリティ月間連携：「古いWi-FIルータの見直しプロジェクト」に賛同しています（社外サイト）",
+      "url": "https://dlpa.jp/replace/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2026-01-26",
+      "title": "【重要】「BIGLOBE光 with フレッツ」サービス終了による「ひかり」コース、「Ｂフレッツ」コースへの移行のお知らせ",
+      "url": "https://support.biglobe.ne.jp/news/news774.html",
+      "categories": [
+        "service-end"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2025-12-22",
+      "title": "【お知らせ】BIGLOBEモバイル 新スマホ発売開始（3機種）",
+      "url": "https://join.biglobe.ne.jp/mobile/device/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2025-12-22",
+      "title": "【重要】「ひかり」コース新規申込受付終了のお知らせ",
+      "url": "https://support.biglobe.ne.jp/news/news779.html",
+      "categories": [
+        "service-end"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2025-12-17",
+      "title": "【お知らせ】GmailのPOPサポート終了にともなう設定変更について",
+      "url": "https://support.biglobe.ne.jp/news/news781.html",
+      "categories": [
+        "service-end"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2025-12-11",
+      "title": "【お知らせ】「ユニバーサルサービス料および電話リレーサービス料」の改定について",
+      "url": "https://support.biglobe.ne.jp/news/news777.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2025-12-11",
+      "title": "【お知らせ】青森県東方沖を震源とする地震の影響による発送物の到着遅延について",
+      "url": "https://support.biglobe.ne.jp/news/news780.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2025-11-21",
+      "title": "【お知らせ】ファイル共有ソフトの利用にご注意ください（意図しない著作権侵害リスクについて）",
+      "url": "https://support.biglobe.ne.jp/news/news778.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2025-10-28",
+      "title": "【重要】BIGLOBEモバイル タイプA 国際ローミングの一部地域で音声通話が発信できない事象について",
+      "url": "https://support.biglobe.ne.jp/news/news-roaming.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2025-10-03",
+      "title": "【重要】BIGLOBEを騙ったなりすましメールへの対策強化のお知らせ",
+      "url": "https://support.biglobe.ne.jp/news/news770.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2025-10-01",
+      "title": "【お知らせ】NTT東日本霞ヶ関ビルの通信設備移設および回線切替工事について",
+      "url": "https://support.biglobe.ne.jp/news/news775.html",
+      "categories": [
+        "noise"
+      ],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2025-09-10",
+      "title": "【お知らせ】BIGLOBE光テレビ 月額料金の改定について（2025年12月～）",
+      "url": "https://support.biglobe.ne.jp/news/news773.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2025-09-08",
+      "title": "【重要】プレミアムサービス終了のお知らせ",
+      "url": "https://support.biglobe.ne.jp/news/news772.html",
+      "categories": [
+        "service-end"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2025-07-24",
+      "title": "【重要】「インターネットサギウォール」のサービス名称変更について",
+      "url": "https://support.biglobe.ne.jp/news/news769.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2025-07-23",
+      "title": "【お知らせ】マイページ トップページのデザイン変更について",
+      "url": "https://support.biglobe.ne.jp/news/news771.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2025-07-23",
+      "title": "BIGLOBE会員規約改定のお知らせ（2025年7月23日施行）",
+      "url": "https://support.biglobe.ne.jp/kiyaku/youten250723.html",
+      "categories": [
+        "price-change",
+        "plan-change"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2025-06-03",
+      "title": "【お知らせ】「ユニバーサルサービス料および電話リレーサービス料」の改定について",
+      "url": "https://support.biglobe.ne.jp/news/news765.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2025-04-07",
+      "title": "【重要】「BIGLOBEモバイル」タイプD 3G通信停波について",
+      "url": "https://support.biglobe.ne.jp/news/news759.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2025-03-25",
+      "title": "【お知らせ】トータル・ネットセキュリティのサービス機能強化について",
+      "url": "https://support.biglobe.ne.jp/news/news760.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2025-03-13",
+      "title": "【お知らせ】「BIGLOBE WiMAX ＋5G」新端末提供開始",
+      "url": "https://support.biglobe.ne.jp/news/news757.html",
+      "categories": [
+        "service-start"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2025-02-27",
+      "title": "【重要】「BIGLOBE eo光」コースサービス提供終了のお知らせ",
+      "url": "https://support.biglobe.ne.jp/news/news758.html",
+      "categories": [
+        "service-end"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2025-01-21",
+      "title": "【お知らせ】本人認証サービス（3Dセキュア）について",
+      "url": "https://support.biglobe.ne.jp/news/news754.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2024-11-18",
+      "title": "【お知らせ】独自ドメイン形式の別名メールアドレス（一部）と「TSUTAYAonline特約」コース サービス提供終了のお知らせ",
+      "url": "https://support.biglobe.ne.jp/news/news756.html",
+      "categories": [
+        "service-end"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2024-11-01",
+      "title": "【お知らせ】ビッグローブ光 メッシュ機能付きルーター TP-Link Deco X50販売開始",
+      "url": "https://support.biglobe.ne.jp/news/news755.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2024-10-08",
+      "title": "【重要】「BIGLOBEモバイル」タイプDにおける一部のSIMカードの通信不良について",
+      "url": "https://support.biglobe.ne.jp/news/news753.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2024-09-17",
+      "title": "【重要】eSIMスワップにご注意ください",
+      "url": "https://support.biglobe.ne.jp/news/news751.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2024-09-17",
+      "title": "BIGLOBE会員規約改定のお知らせ（2024年9月17日施行）",
+      "url": "https://support.biglobe.ne.jp/kiyaku/youten240917.html",
+      "categories": [
+        "price-change",
+        "plan-change"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2024-09-11",
+      "title": "【お知らせ】BIGLOBEモバイル eSIMの提供開始",
+      "url": "https://support.biglobe.ne.jp/news/news750.html",
+      "categories": [
+        "service-start"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2024-07-24",
+      "title": "【重要】BIGLOBEモバイル タイプA 国際ローミング通話料の一部過大請求について",
+      "url": "https://support.biglobe.ne.jp/news/news749.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2024-07-10",
+      "title": "【お知らせ】BIGLOBEモバイル MNPワンストップ方式による受付開始",
+      "url": "https://support.biglobe.ne.jp/news/news748.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2024-07-05",
+      "title": "【重要】第三者へのSIMカードの貸与・譲渡による不正利用にご注意ください",
+      "url": "https://support.biglobe.ne.jp/news/news747.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
+      "date": "2024-06-20",
+      "title": "【重要】「BIGLOBE 電話で入会センター 引越し相談窓口」および「ビッグローブ光 タイプ変更受付窓口」受付時間変更について（2024年7月1日～）",
+      "url": "https://support.biglobe.ne.jp/news/news746.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:28.541Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    }
+  ],
+  "lastCollectedAt": "2026-08-23T09:31:28.541Z",
+  "totalNotices": 58
+}

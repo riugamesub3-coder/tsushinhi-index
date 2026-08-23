@@ -1,0 +1,158 @@
+{
+  "providerId": "docomo-hikari",
+  "providerName": "ドコモ光",
+  "sourceUrl": "https://www.docomo.ne.jp/info/news_release/",
+  "firstCollectedAt": "2026-08-23T09:31:31.945Z",
+  "notices": [
+    {
+      "date": "2026-08-21",
+      "title": "「あんしんセキュリティ」の対象4プラン、累計契約数が200万件を突破！ -社会課題化する特殊詐欺への対策強化プランが好評、100万件突破からおよそ8か月で達成-（PDF形式：927KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260821_g1.pdf",
+      "categories": [
+        "plan-change"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:31.945Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-08-21",
+      "title": "「ドコモの銀行」誕生記念！住宅ローンの新規借入と対象のドコモサービスのご契約で最大10万ポイントプレゼントキャンペーンを実施（PDF形式：668KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260821_s1.pdf",
+      "categories": [
+        "campaign"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:31.945Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-08-21",
+      "title": "【ドコモFG】ドコモショップで「ドコモの銀行」のご案内や口座開設等のサポートを開始（PDF形式：516KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/docomofg/20260821081000.pdf",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:31.945Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-08-21",
+      "title": "令和8年7月17日から18日にかけての大雨に伴う支援措置",
+      "url": "https://www.docomo.ne.jp/info/news_release/detail/20260821_03_m.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:31.945Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-08-20",
+      "title": "Starlinkと「docomo Starlink Direct」の機能拡充に向け「Starlink Mobile V2」の契約に合意 -2028年度中に音声通話および高速インターネットを実現する次世代サービスを提供予定-",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/08/14_00.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:31.945Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-08-20",
+      "title": "電子コミック配信サービス「MANGA MIRAI」のサービス提供を終了し、「MangaPlaza」へ購入済み作品を移行",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/08/20_00.html",
+      "categories": [
+        "service-end"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:31.945Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-08-18",
+      "title": "9月開始の「dポイント」「d払い」自治体キャンペーン（PDF形式：418KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260818_g1.pdf",
+      "categories": [
+        "campaign"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:31.945Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-08-18",
+      "title": "令和8年熊本地震の被災地支援として、dカーシェアのご利用料金を減免 -熊本県内のカーシェア利用について、1回あたり最大10,000円を割引-（PDF形式：723KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260818_e1.pdf",
+      "categories": [
+        "campaign"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:31.945Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-08-14",
+      "title": "令和8年8月13日からの大雨に伴う支援措置",
+      "url": "https://www.docomo.ne.jp/info/news_release/detail/20260814_00_m.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:31.945Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-08-13",
+      "title": "15歳以下のスマホデビューを応援する料金プラン「ドコモ スマホデビュープラン U15」と、そのご家族までおトクになる割引「ドコモ 親子割」の提供を開始",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/08/06_00.html",
+      "categories": [
+        "campaign",
+        "plan-change"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:31.945Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-08-13",
+      "title": "ドコモ、「Google Pixel 11」「Google Pixel 11 Pro」「Google Pixel 11 Pro XL」「Google Pixel 11 Pro Fold」「Google Pixel Watch 5」を8月20日に発売",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/08/13_00.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:31.945Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-08-06",
+      "title": "2026年度第1四半期決算について",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/08/06_01.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:31.945Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-08-06",
+      "title": "令和8年7月熊本地震災害に対する支援（義援金の拠出）について",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/08/05_00.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:31.945Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-08-05",
+      "title": "「dアニメストア for LINEマンガ」を開始 -「LINEマンガ」内にて、原作マンガの購読からアニメの視聴までをシームレスに提供-",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/08/05_01.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:31.945Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-08-05",
+      "title": "令和8年熊本地震に伴い、「Starlink Business」やスマートフォンなどを無償で提供",
+      "url": "https://www.docomo.ne.jp/info/news_release/detail/20260731_02_m.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:31.945Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    }
+  ],
+  "lastCollectedAt": "2026-08-23T09:31:31.945Z",
+  "totalNotices": 15
+}
