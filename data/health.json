@@ -1,8 +1,8 @@
 {
-  "checkedAt": "2026-08-23T09:42:24.177Z",
+  "checkedAt": "2026-08-23T09:54:56.011Z",
   "summary": {
-    "total": 12,
-    "ok": 12,
+    "total": 14,
+    "ok": 14,
     "failed": 0,
     "excludedProviders": [
       {
@@ -31,14 +31,27 @@
     {
       "providerId": "nuro-hikari",
       "providerName": "NURO光",
-      "url": "https://www.nuro.jp/hikari/",
+      "url": "https://www.nuro.jp/hikari/house/price/",
       "type": "pricing",
       "status": "ok",
       "detail": null,
       "httpStatus": 200,
-      "hits": 137,
-      "bytes": 260181,
-      "elapsedMs": 1324,
+      "hits": 170,
+      "bytes": 225967,
+      "elapsedMs": 1092,
+      "robotsNote": "該当ルールなし"
+    },
+    {
+      "providerId": "nuro-hikari",
+      "providerName": "NURO光",
+      "url": "https://www.nuro.jp/hikari/mansion/price/",
+      "type": "pricing",
+      "status": "ok",
+      "detail": null,
+      "httpStatus": 200,
+      "hits": 202,
+      "bytes": 285023,
+      "elapsedMs": 499,
       "robotsNote": "該当ルールなし"
     },
     {
@@ -51,7 +64,7 @@
       "httpStatus": 200,
       "hits": 102,
       "bytes": 55035,
-      "elapsedMs": 333,
+      "elapsedMs": 299,
       "robotsNote": "該当ルールなし"
     },
     {
@@ -64,20 +77,20 @@
       "httpStatus": 200,
       "hits": 71,
       "bytes": 32686,
-      "elapsedMs": 551,
+      "elapsedMs": 506,
       "robotsNote": "該当ルールなし"
     },
     {
       "providerId": "rakuten-hikari",
       "providerName": "楽天ひかり",
-      "url": "https://network.mobile.rakuten.co.jp/hikari/",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/fee/pricelist/",
       "type": "pricing",
       "status": "ok",
       "detail": null,
       "httpStatus": 200,
-      "hits": 11,
-      "bytes": 72642,
-      "elapsedMs": 8,
+      "hits": 81,
+      "bytes": 95832,
+      "elapsedMs": 15,
       "robotsNote": "Allow: /"
     },
     {
@@ -90,20 +103,33 @@
       "httpStatus": 200,
       "hits": 44,
       "bytes": 30995,
-      "elapsedMs": 5,
+      "elapsedMs": 11,
       "robotsNote": "Allow: /"
     },
     {
       "providerId": "docomo-hikari",
       "providerName": "ドコモ光",
-      "url": "https://www.docomo.ne.jp/hikari/",
+      "url": "https://www.docomo.ne.jp/internet/hikari/charge/type_c/",
       "type": "pricing",
       "status": "ok",
       "detail": null,
       "httpStatus": 200,
-      "hits": 23,
-      "bytes": 187868,
-      "elapsedMs": 855,
+      "hits": 22,
+      "bytes": 244327,
+      "elapsedMs": 656,
+      "robotsNote": "robots.txt なし（制限なしとみなす）"
+    },
+    {
+      "providerId": "docomo-hikari",
+      "providerName": "ドコモ光",
+      "url": "https://www.docomo.ne.jp/internet/hikari/charge/10g_type_c/",
+      "type": "pricing",
+      "status": "ok",
+      "detail": null,
+      "httpStatus": 200,
+      "hits": 33,
+      "bytes": 218010,
+      "elapsedMs": 380,
       "robotsNote": "robots.txt なし（制限なしとみなす）"
     },
     {
@@ -116,7 +142,7 @@
       "httpStatus": 200,
       "hits": 22,
       "bytes": 137680,
-      "elapsedMs": 424,
+      "elapsedMs": 393,
       "robotsNote": "robots.txt なし（制限なしとみなす）"
     },
     {
@@ -129,7 +155,7 @@
       "httpStatus": 200,
       "hits": 4,
       "bytes": 84532,
-      "elapsedMs": 277,
+      "elapsedMs": 264,
       "robotsNote": "該当ルールなし"
     },
     {
@@ -142,7 +168,7 @@
       "httpStatus": 200,
       "hits": 247,
       "bytes": 308162,
-      "elapsedMs": 60,
+      "elapsedMs": 51,
       "robotsNote": "該当ルールなし"
     },
     {
@@ -155,7 +181,7 @@
       "httpStatus": 200,
       "hits": 115,
       "bytes": 98555,
-      "elapsedMs": 22,
+      "elapsedMs": 40,
       "robotsNote": "該当ルールなし"
     },
     {
@@ -168,7 +194,7 @@
       "httpStatus": 200,
       "hits": 9,
       "bytes": 385053,
-      "elapsedMs": 28,
+      "elapsedMs": 23,
       "robotsNote": "該当ルールなし"
     },
     {
@@ -181,7 +207,7 @@
       "httpStatus": 200,
       "hits": 8,
       "bytes": 38617,
-      "elapsedMs": 473,
+      "elapsedMs": 433,
       "robotsNote": "該当ルールなし"
     }
   ]
