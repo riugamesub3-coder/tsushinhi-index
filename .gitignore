@@ -141,3 +141,10 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# --- このプロジェクト固有 ---
+# 認証情報は絶対にコミットしない。GitHub の Secrets を使うこと。
+*_secret*
+*credentials*
+.DS_Store
+Thumbs.db

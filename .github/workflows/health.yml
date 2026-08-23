@@ -1,0 +1,62 @@
+name: 収集元の死活監視
+
+# なぜ最初にこれを回すか:
+#   自動収集の最悪の失敗は「静かに壊れること」。収集元がURL変更・bot遮断・構造変更を
+#   起こしても気づかず、古い値を出し続けるのが一番まずい。
+#   死活監視を先に立てておけば、以後どの収集器を足しても壊れたら必ず赤くなる。
+
+on:
+  schedule:
+    # 毎日 21:17 UTC = 翌 06:17 JST。
+    # 毎時0分はGitHub Actions全体が混雑して遅延・スキップが起きやすいので意図的に外している。
+    - cron: '17 21 * * *'
+  workflow_dispatch:        # 手動実行。動作確認と、壊れたときの再実行に使う
+  push:
+    paths:
+      - 'collect/**'        # 収集ロジックを触ったら即検証する
+      - '.github/workflows/health.yml'
+
+permissions:
+  contents: write           # data/health.json を書き戻すために必要
+
+concurrency:
+  group: health
+  cancel-in-progress: false # データを書くジョブなので、途中で殺さない
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          # 依存パッケージを持たない方針なのでキャッシュ設定は不要
+
+      - name: 収集元を確認する
+        run: node collect/health-check.mjs
+
+      - name: 結果をコミットする
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/health.json
+          # 変化がなければコミットしない（空コミットでログを汚さない）
+          if git diff --staged --quiet; then
+            echo "変化なし。コミットしません。"
+          else
+            git commit -m "死活監視: $(date -u '+%Y-%m-%d %H:%M UTC')"
+            git push
+          fi
+
+      # 失敗した回の中身を残す。あとで「いつ何が壊れたか」を追えるようにする。
+      - name: 失敗時の結果を保存する
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: health-${{ github.run_number }}
+          path: data/health.json
+          if-no-files-found: ignore

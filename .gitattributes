@@ -1,0 +1,7 @@
+# Windowsで編集し、Linux（GitHub Actions）で実行するリポジトリなので、
+# 改行コードは常に LF に固定する。CRLF が混ざるとワークフロー内のシェルが壊れる。
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.gz  binary

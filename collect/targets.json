@@ -1,0 +1,127 @@
+{
+  "_readme": [
+    "光回線の収集対象（Phase 4で使う）。公式・プロバイダ窓口のみ。代理店は未着手。",
+    "pages の type: 'pricing'=料金ページ / 'notice'=お知らせ一覧",
+    "お知らせ監視が主系統。理由は docs/01_手法設計.md「データ源は料金ページだけではない」",
+    "status: verified=2026-08-12に実際に取得して中身を確認 / unresolved=URL未特定 / excluded=対象外",
+    "到達性チェック: node tools/niche-scout/scout.mjs --file tools/collect/targets.json --no-history",
+    "お知らせURL探索: node tools/collect/find-notice-pages.mjs [事業者ID...]"
+  ],
+  "niches": [
+    {
+      "id": "nuro-hikari",
+      "name": "NURO光",
+      "status": "verified",
+      "note": "robots.txt は Disallow なし（Sitemap宣言のみ）。お知らせ一覧の日付99件と最良",
+      "pages": [
+        { "url": "https://www.nuro.jp/hikari/", "type": "pricing" },
+        { "url": "https://www.nuro.jp/news_release/", "type": "notice", "dateHits": 99 }
+      ]
+    },
+    {
+      "id": "biglobe-hikari",
+      "name": "ビッグローブ光",
+      "status": "verified",
+      "note": "お知らせ日付71件。料金ページURLは未特定",
+      "pages": [
+        { "url": "https://support.biglobe.ne.jp/news/", "type": "notice", "dateHits": 71 }
+      ]
+    },
+    {
+      "id": "rakuten-hikari",
+      "name": "楽天ひかり",
+      "status": "verified",
+      "note": "料金・お知らせとも取得可。お知らせ日付44件",
+      "pages": [
+        { "url": "https://network.mobile.rakuten.co.jp/hikari/", "type": "pricing", "priceHits": 12 },
+        { "url": "https://network.mobile.rakuten.co.jp/hikari/information/", "type": "notice", "dateHits": 44 }
+      ]
+    },
+    {
+      "id": "docomo-hikari",
+      "name": "ドコモ光",
+      "status": "verified",
+      "note": "光コラボ最大手。報道発表に料金改定が載る。/info/network/ は通信障害用なので使わない",
+      "pages": [
+        { "url": "https://www.docomo.ne.jp/hikari/", "type": "pricing", "priceHits": 27 },
+        { "url": "https://www.docomo.ne.jp/info/news_release/", "type": "notice", "dateHits": 22 }
+      ]
+    },
+    {
+      "id": "flets-west",
+      "name": "フレッツ光（NTT西日本）",
+      "status": "verified",
+      "note": "料金ページ実測: 年59.4回変更。robots.txt の Disallow 2件は対象外パス",
+      "pages": [
+        { "url": "https://flets-w.com/", "type": "pricing", "priceHits": 4 },
+        { "url": "https://flets-w.com/topics/", "type": "notice", "dateHits": 6 }
+      ]
+    },
+    {
+      "id": "so-net-hikari",
+      "name": "So-net光（ソニーネットワークコミュニケーションズ）",
+      "status": "verified",
+      "note": "料金ページ実測: 年27.9回変更・料金265件。お知らせ一覧URLは未特定（個別記事は /info/{年}/ 配下）",
+      "pages": [
+        { "url": "https://www.so-net.ne.jp/access/hikari/", "type": "pricing", "priceHits": 265 }
+      ]
+    },
+    {
+      "id": "softbank-hikari",
+      "name": "ソフトバンク光",
+      "status": "verified",
+      "note": "料金ページ取得可（料金135件）。お知らせ一覧URLは未特定",
+      "pages": [
+        { "url": "https://www.softbank.jp/ybb/sbhikari/", "type": "pricing", "priceHits": 135 }
+      ]
+    },
+    {
+      "id": "au-hikari",
+      "name": "auひかり（KDDI）",
+      "status": "verified",
+      "note": "料金ページ取得可（料金9件）。お知らせ一覧URLは未特定（自動探索は不適切なページを拾った）",
+      "pages": [
+        { "url": "https://www.au.com/internet/", "type": "pricing", "priceHits": 9 }
+      ]
+    },
+    {
+      "id": "eo-hikari",
+      "name": "eo光（関西電力系）",
+      "status": "verified",
+      "note": "料金ページ取得可（料金8件）。電力系は地域独占的で乗り換え検討が多い",
+      "pages": [
+        { "url": "https://eonet.jp/go/", "type": "pricing", "priceHits": 8 }
+      ]
+    },
+    {
+      "id": "commufa-hikari",
+      "name": "コミュファ光（中部電力系）",
+      "status": "verified",
+      "note": "トップは取得可だが一部パスが403。robots.txt が存在せずHTMLが返る。お知らせ一覧は要手動確認",
+      "pages": [
+        { "url": "https://www.commufa.jp/", "type": "pricing", "priceHits": 2 }
+      ]
+    },
+    {
+      "id": "flets-east",
+      "name": "フレッツ光（NTT東日本）",
+      "status": "unresolved",
+      "note": "料金ページ・お知らせとも未特定。次回、flets.com のトップを起点に再探索する",
+      "pages": []
+    },
+    {
+      "id": "nifty-hikari",
+      "name": "＠nifty光",
+      "status": "unresolved",
+      "note": "料金ページ・お知らせとも未特定",
+      "pages": []
+    },
+    {
+      "id": "gmo-tokutoku",
+      "name": "GMOとくとくBB光",
+      "status": "excluded",
+      "note": "⛔ 対象外。robots.txt 自体が Cloudflare の bot チャレンジで保護されており、自動アクセスを望まない明確な意思表示と判断した。技術的に回避可能かどうかにかかわらず対象にしない",
+      "pages": []
+    }
+  ]
+}
