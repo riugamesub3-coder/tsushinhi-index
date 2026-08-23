@@ -75,8 +75,26 @@ async function main() {
   }
 }
 
+/**
+ * スナップショットの保存キー。
+ *
+ * ★事業者IDだけをキーにしていたら、複数の料金ページを持つ事業者で上書きが起きた。
+ *   NURO光の戸建てページとマンションページが同じファイルを取り合い、
+ *   **別ページ同士の比較を「変化15件」として報告していた。** 偽の変化を公開しかねない欠陥だった。
+ *   → ページ単位（事業者ID + URL）でキーを持つ。
+ */
+function pageKey(providerId, url) {
+  const u = new URL(url);
+  const path = (u.pathname + u.search)
+    .replace(/[^a-zA-Z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+    .slice(0, 60);
+  return path ? `${providerId}__${path}` : providerId;
+}
+
 async function collectOne(provider, url, dryRun) {
   const base = { providerId: provider.id, providerName: provider.name, url };
+  const key = pageKey(provider.id, url);
 
   const robots = await checkRobots(url);
   if (robots.ok && robots.allowed === false) {
@@ -101,12 +119,12 @@ async function collectOne(provider, url, dryRun) {
     };
   }
 
-  const prev = await loadSnapshot(provider.id);
+  const prev = await loadSnapshot(key);
   const now = new Date().toISOString();
 
   // 初回は差分を取らない（全部が「新規」になって無意味なため）
   if (!prev) {
-    if (!dryRun) await saveSnapshot(provider.id, { providerId: provider.id, providerName: provider.name, url, collectedAt: now, points });
+    if (!dryRun) await saveSnapshot(key, { key, providerId: provider.id, providerName: provider.name, url, collectedAt: now, points });
     console.log(`✅ ${provider.id.padEnd(18)} 金額${points.length}点 — 初回（基準として保存）`);
     return { ...base, status: 'ok', changed: 0, points: points.length, first: true };
   }
@@ -129,37 +147,37 @@ async function collectOne(provider, url, dryRun) {
   }
 
   if (!dryRun) {
-    await saveSnapshot(provider.id, { providerId: provider.id, providerName: provider.name, url, collectedAt: now, points });
+    await saveSnapshot(key, { key, providerId: provider.id, providerName: provider.name, url, collectedAt: now, points });
     if (diff.changed.length) {
-      await appendEvents(provider, url, now, diff, suspicious, prev.collectedAt);
+      await appendEvents(key, provider, url, now, diff, suspicious, prev.collectedAt);
     }
   }
 
   return { ...base, status: 'ok', changed: diff.changed.length, points: points.length, suspicious };
 }
 
-async function loadSnapshot(providerId) {
+async function loadSnapshot(key) {
   try {
-    return JSON.parse(await readFile(join(SNAP_DIR, `${providerId}.json`), 'utf8'));
+    return JSON.parse(await readFile(join(SNAP_DIR, `${key}.json`), 'utf8'));
   } catch {
     return null;
   }
 }
 
-async function saveSnapshot(providerId, snapshot) {
+async function saveSnapshot(key, snapshot) {
   await mkdir(SNAP_DIR, { recursive: true });
-  await writeFile(join(SNAP_DIR, `${providerId}.json`), JSON.stringify(snapshot, null, 2) + '\n', 'utf8');
+  await writeFile(join(SNAP_DIR, `${key}.json`), JSON.stringify(snapshot, null, 2) + '\n', 'utf8');
 }
 
-async function appendEvents(provider, url, now, diff, suspicious, previousCollectedAt) {
+async function appendEvents(key, provider, url, now, diff, suspicious, previousCollectedAt) {
   await mkdir(EVENT_DIR, { recursive: true });
-  const path = join(EVENT_DIR, `${provider.id}.json`);
+  const path = join(EVENT_DIR, `${key}.json`);
 
   let store;
   try {
     store = JSON.parse(await readFile(path, 'utf8'));
   } catch {
-    store = { providerId: provider.id, providerName: provider.name, events: [] };
+    store = { key, providerId: provider.id, providerName: provider.name, sourceUrl: url, events: [] };
   }
 
   store.events.unshift({

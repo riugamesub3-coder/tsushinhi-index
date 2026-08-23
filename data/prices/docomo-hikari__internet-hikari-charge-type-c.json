@@ -1,0 +1,69 @@
+{
+  "key": "docomo-hikari__internet-hikari-charge-type-c",
+  "providerId": "docomo-hikari",
+  "providerName": "ドコモ光",
+  "url": "https://www.docomo.ne.jp/internet/hikari/charge/type_c/",
+  "collectedAt": "2026-08-23T09:52:52.201Z",
+  "points": [
+    {
+      "label": "」「5Gギガホ プレミア」「ギガホ プレミア」は",
+      "value": 1100,
+      "raw": "1,100円"
+    },
+    {
+      "label": "」「ドコモ ポイ活 20」「ドコモ mini」は",
+      "value": 1210,
+      "raw": "1,210円"
+    },
+    {
+      "label": "ギガホ プレミア」「ギガホ」「ギガライト」は最大",
+      "value": 1100,
+      "raw": "1,100円"
+    },
+    {
+      "label": "ギガライト（1GB超～3GB）」は",
+      "value": 550,
+      "raw": "550円"
+    },
+    {
+      "label": "マンションタイプ",
+      "value": 4180,
+      "raw": "4,180円"
+    },
+    {
+      "label": "マンションタイプ",
+      "value": 8800,
+      "raw": "8,800円"
+    },
+    {
+      "label": "永年最大",
+      "value": 1210,
+      "raw": "1,210円"
+    },
+    {
+      "label": "家族全員のスマホ料金が永年最大",
+      "value": 1210,
+      "raw": "1,210円"
+    },
+    {
+      "label": "戸建タイプ",
+      "value": 14300,
+      "raw": "14,300円"
+    },
+    {
+      "label": "更新期間を除いて戸建タイプ",
+      "value": 5500,
+      "raw": "5,500円"
+    },
+    {
+      "label": "手続きにあたりご用意いただくもの 契約事務手数料",
+      "value": 4950,
+      "raw": "4,950円"
+    },
+    {
+      "label": "別途契約事務手数料",
+      "value": 4950,
+      "raw": "4,950円"
+    }
+  ]
+}
