@@ -95,11 +95,9 @@
     {
       "id": "commufa-hikari",
       "name": "コミュファ光（中部電力系）",
-      "status": "verified",
-      "note": "トップは取得可だが一部パスが403。robots.txt が存在せずHTMLが返る。お知らせ一覧は要手動確認",
-      "pages": [
-        { "url": "https://www.commufa.jp/", "type": "pricing", "priceHits": 2 }
-      ]
+      "status": "excluded",
+      "note": "⛔ 対象外。トップページは200を返すが料金情報を含まず、/lineup/ /price/ /lineup/net/ など料金関連パスはすべて403。robots.txt も存在せずHTMLが返る。GMOとくとくBB光と同じく、自動アクセスを望まない意思表示と判断した",
+      "pages": []
     },
     {
       "id": "flets-east",

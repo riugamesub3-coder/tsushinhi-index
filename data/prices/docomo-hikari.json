@@ -1,0 +1,43 @@
+{
+  "providerId": "docomo-hikari",
+  "providerName": "ドコモ光",
+  "url": "https://www.docomo.ne.jp/hikari/",
+  "collectedAt": "2026-08-23T09:40:24.472Z",
+  "points": [
+    {
+      "label": "ギガホ プレミア」「ギガホ」「ギガライト」は最大",
+      "value": 1100,
+      "raw": "1,100円"
+    },
+    {
+      "label": "マンションタイプ",
+      "value": 4180,
+      "raw": "4,180円"
+    },
+    {
+      "label": "マンションタイプ",
+      "value": 8800,
+      "raw": "8,800円"
+    },
+    {
+      "label": "月額基本料金を6か月目まで",
+      "value": 500,
+      "raw": "500円"
+    },
+    {
+      "label": "戸建タイプ",
+      "value": 14300,
+      "raw": "14,300円"
+    },
+    {
+      "label": "更新期間を除いて",
+      "value": 5500,
+      "raw": "5,500円"
+    },
+    {
+      "label": "更新期間を除いて戸建タイプ",
+      "value": 5500,
+      "raw": "5,500円"
+    }
+  ]
+}
