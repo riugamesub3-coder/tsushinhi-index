@@ -1,8 +1,8 @@
 {
-  "checkedAt": "2026-08-23T09:23:42.427Z",
+  "checkedAt": "2026-08-23T09:33:26.820Z",
   "summary": {
-    "total": 14,
-    "ok": 14,
+    "total": 13,
+    "ok": 13,
     "failed": 0,
     "excludedProviders": [
       {
@@ -33,7 +33,7 @@
       "httpStatus": 200,
       "hits": 137,
       "bytes": 260181,
-      "elapsedMs": 1622,
+      "elapsedMs": 2026,
       "robotsNote": "該当ルールなし"
     },
     {
@@ -46,7 +46,7 @@
       "httpStatus": 200,
       "hits": 102,
       "bytes": 55035,
-      "elapsedMs": 322,
+      "elapsedMs": 938,
       "robotsNote": "該当ルールなし"
     },
     {
@@ -59,7 +59,7 @@
       "httpStatus": 200,
       "hits": 71,
       "bytes": 32686,
-      "elapsedMs": 431,
+      "elapsedMs": 808,
       "robotsNote": "該当ルールなし"
     },
     {
@@ -72,7 +72,7 @@
       "httpStatus": 200,
       "hits": 11,
       "bytes": 72642,
-      "elapsedMs": 553,
+      "elapsedMs": 284,
       "robotsNote": "Allow: /"
     },
     {
@@ -85,7 +85,7 @@
       "httpStatus": 200,
       "hits": 44,
       "bytes": 30995,
-      "elapsedMs": 831,
+      "elapsedMs": 10,
       "robotsNote": "Allow: /"
     },
     {
@@ -98,7 +98,7 @@
       "httpStatus": 200,
       "hits": 23,
       "bytes": 187868,
-      "elapsedMs": 780,
+      "elapsedMs": 1104,
       "robotsNote": "robots.txt なし（制限なしとみなす）"
     },
     {
@@ -111,7 +111,7 @@
       "httpStatus": 200,
       "hits": 22,
       "bytes": 137680,
-      "elapsedMs": 389,
+      "elapsedMs": 520,
       "robotsNote": "robots.txt なし（制限なしとみなす）"
     },
     {
@@ -124,20 +124,7 @@
       "httpStatus": 200,
       "hits": 4,
       "bytes": 84532,
-      "elapsedMs": 247,
-      "robotsNote": "該当ルールなし"
-    },
-    {
-      "providerId": "flets-west",
-      "providerName": "フレッツ光（NTT西日本）",
-      "url": "https://flets-w.com/topics/",
-      "type": "notice",
-      "status": "ok",
-      "detail": null,
-      "httpStatus": 200,
-      "hits": 6,
-      "bytes": 34622,
-      "elapsedMs": 132,
+      "elapsedMs": 355,
       "robotsNote": "該当ルールなし"
     },
     {
@@ -150,7 +137,7 @@
       "httpStatus": 200,
       "hits": 247,
       "bytes": 308162,
-      "elapsedMs": 20,
+      "elapsedMs": 41,
       "robotsNote": "該当ルールなし"
     },
     {
@@ -163,7 +150,7 @@
       "httpStatus": 200,
       "hits": 115,
       "bytes": 98555,
-      "elapsedMs": 696,
+      "elapsedMs": 123,
       "robotsNote": "該当ルールなし"
     },
     {
@@ -176,7 +163,7 @@
       "httpStatus": 200,
       "hits": 9,
       "bytes": 385053,
-      "elapsedMs": 2769,
+      "elapsedMs": 3024,
       "robotsNote": "該当ルールなし"
     },
     {
@@ -189,7 +176,7 @@
       "httpStatus": 200,
       "hits": 8,
       "bytes": 38617,
-      "elapsedMs": 462,
+      "elapsedMs": 650,
       "robotsNote": "該当ルールなし"
     },
     {
@@ -202,7 +189,7 @@
       "httpStatus": 200,
       "hits": 1,
       "bytes": 147490,
-      "elapsedMs": 16,
+      "elapsedMs": 26,
       "robotsNote": "robots.txt 取得失敗: HTTP 403"
     }
   ]
