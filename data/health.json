@@ -1,0 +1,209 @@
+{
+  "checkedAt": "2026-08-23T09:23:42.427Z",
+  "summary": {
+    "total": 14,
+    "ok": 14,
+    "failed": 0,
+    "excludedProviders": [
+      {
+        "id": "flets-east",
+        "name": "フレッツ光（NTT東日本）",
+        "reason": "料金ページ・お知らせとも未特定。次回、flets.com のトップを起点に再探索する"
+      },
+      {
+        "id": "nifty-hikari",
+        "name": "＠nifty光",
+        "reason": "料金ページ・お知らせとも未特定"
+      },
+      {
+        "id": "gmo-tokutoku",
+        "name": "GMOとくとくBB光",
+        "reason": "⛔ 対象外。robots.txt 自体が Cloudflare の bot チャレンジで保護されており、自動アクセスを望まない明確な意思表示と判断した。技術的に回避可能かどうかにかかわらず対象にしない"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "providerId": "nuro-hikari",
+      "providerName": "NURO光",
+      "url": "https://www.nuro.jp/hikari/",
+      "type": "pricing",
+      "status": "ok",
+      "detail": null,
+      "httpStatus": 200,
+      "hits": 137,
+      "bytes": 260181,
+      "elapsedMs": 1622,
+      "robotsNote": "該当ルールなし"
+    },
+    {
+      "providerId": "nuro-hikari",
+      "providerName": "NURO光",
+      "url": "https://www.nuro.jp/news_release/",
+      "type": "notice",
+      "status": "ok",
+      "detail": null,
+      "httpStatus": 200,
+      "hits": 102,
+      "bytes": 55035,
+      "elapsedMs": 322,
+      "robotsNote": "該当ルールなし"
+    },
+    {
+      "providerId": "biglobe-hikari",
+      "providerName": "ビッグローブ光",
+      "url": "https://support.biglobe.ne.jp/news/",
+      "type": "notice",
+      "status": "ok",
+      "detail": null,
+      "httpStatus": 200,
+      "hits": 71,
+      "bytes": 32686,
+      "elapsedMs": 431,
+      "robotsNote": "該当ルールなし"
+    },
+    {
+      "providerId": "rakuten-hikari",
+      "providerName": "楽天ひかり",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/",
+      "type": "pricing",
+      "status": "ok",
+      "detail": null,
+      "httpStatus": 200,
+      "hits": 11,
+      "bytes": 72642,
+      "elapsedMs": 553,
+      "robotsNote": "Allow: /"
+    },
+    {
+      "providerId": "rakuten-hikari",
+      "providerName": "楽天ひかり",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/",
+      "type": "notice",
+      "status": "ok",
+      "detail": null,
+      "httpStatus": 200,
+      "hits": 44,
+      "bytes": 30995,
+      "elapsedMs": 831,
+      "robotsNote": "Allow: /"
+    },
+    {
+      "providerId": "docomo-hikari",
+      "providerName": "ドコモ光",
+      "url": "https://www.docomo.ne.jp/hikari/",
+      "type": "pricing",
+      "status": "ok",
+      "detail": null,
+      "httpStatus": 200,
+      "hits": 23,
+      "bytes": 187868,
+      "elapsedMs": 780,
+      "robotsNote": "robots.txt なし（制限なしとみなす）"
+    },
+    {
+      "providerId": "docomo-hikari",
+      "providerName": "ドコモ光",
+      "url": "https://www.docomo.ne.jp/info/news_release/",
+      "type": "notice",
+      "status": "ok",
+      "detail": null,
+      "httpStatus": 200,
+      "hits": 22,
+      "bytes": 137680,
+      "elapsedMs": 389,
+      "robotsNote": "robots.txt なし（制限なしとみなす）"
+    },
+    {
+      "providerId": "flets-west",
+      "providerName": "フレッツ光（NTT西日本）",
+      "url": "https://flets-w.com/",
+      "type": "pricing",
+      "status": "ok",
+      "detail": null,
+      "httpStatus": 200,
+      "hits": 4,
+      "bytes": 84532,
+      "elapsedMs": 247,
+      "robotsNote": "該当ルールなし"
+    },
+    {
+      "providerId": "flets-west",
+      "providerName": "フレッツ光（NTT西日本）",
+      "url": "https://flets-w.com/topics/",
+      "type": "notice",
+      "status": "ok",
+      "detail": null,
+      "httpStatus": 200,
+      "hits": 6,
+      "bytes": 34622,
+      "elapsedMs": 132,
+      "robotsNote": "該当ルールなし"
+    },
+    {
+      "providerId": "so-net-hikari",
+      "providerName": "So-net光（ソニーネットワークコミュニケーションズ）",
+      "url": "https://www.so-net.ne.jp/access/hikari/",
+      "type": "pricing",
+      "status": "ok",
+      "detail": null,
+      "httpStatus": 200,
+      "hits": 247,
+      "bytes": 308162,
+      "elapsedMs": 20,
+      "robotsNote": "該当ルールなし"
+    },
+    {
+      "providerId": "softbank-hikari",
+      "providerName": "ソフトバンク光",
+      "url": "https://www.softbank.jp/ybb/sbhikari/",
+      "type": "pricing",
+      "status": "ok",
+      "detail": null,
+      "httpStatus": 200,
+      "hits": 115,
+      "bytes": 98555,
+      "elapsedMs": 696,
+      "robotsNote": "該当ルールなし"
+    },
+    {
+      "providerId": "au-hikari",
+      "providerName": "auひかり（KDDI）",
+      "url": "https://www.au.com/internet/",
+      "type": "pricing",
+      "status": "ok",
+      "detail": null,
+      "httpStatus": 200,
+      "hits": 9,
+      "bytes": 385053,
+      "elapsedMs": 2769,
+      "robotsNote": "該当ルールなし"
+    },
+    {
+      "providerId": "eo-hikari",
+      "providerName": "eo光（関西電力系）",
+      "url": "https://eonet.jp/go/",
+      "type": "pricing",
+      "status": "ok",
+      "detail": null,
+      "httpStatus": 200,
+      "hits": 8,
+      "bytes": 38617,
+      "elapsedMs": 462,
+      "robotsNote": "該当ルールなし"
+    },
+    {
+      "providerId": "commufa-hikari",
+      "providerName": "コミュファ光（中部電力系）",
+      "url": "https://www.commufa.jp/",
+      "type": "pricing",
+      "status": "ok",
+      "detail": null,
+      "httpStatus": 200,
+      "hits": 1,
+      "bytes": 147490,
+      "elapsedMs": 16,
+      "robotsNote": "robots.txt 取得失敗: HTTP 403"
+    }
+  ]
+}
