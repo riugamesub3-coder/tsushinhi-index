@@ -7,6 +7,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { parseTables, toYen, cellText } from './lib/table.mjs';
+import { findBlocks, parseDefinitionLists, headingChains } from './lib/dom.mjs';
 import { computeEffectiveMonthly, expandMonthly } from './lib/effective.mjs';
 
 // ── toYen ────────────────────────────────────────────────────────
@@ -69,6 +70,44 @@ test('script と HTMLコメントの中身を値にしない', () => {
 
 test('文字実体参照を戻す', () => {
   assert.equal(cellText('5,720&nbsp;円'), '5,720 円');
+});
+
+// ── dom（<dl> で書かれた料金表・ブロック抽出）──────────────────
+
+test('class は語として一致させる（部分一致で別要素を拾わない）', () => {
+  const html = '<div class="cost-wrap-x">誤</div><div class="a cost-wrap b">正</div>';
+  const found = findBlocks(html, 'div', 'cost-wrap');
+  assert.equal(found.length, 1);
+  assert.match(found[0].html, /正/);
+});
+
+test('同じクラスが入れ子でも外側だけを返す', () => {
+  const html = '<div class="box"><div class="box">内</div></div>';
+  assert.equal(findBlocks(html, 'div', 'box').length, 1);
+});
+
+test('<dl> を 項目名→値 に開く', () => {
+  const html = '<dl><dt>月額基本料金</dt><dd>6,270円</dd><dt>回線工事費</dt><dd>2,420円</dd></dl>';
+  assert.deepEqual(parseDefinitionLists(html)[0].pairs, [
+    ['月額基本料金', '6,270円'],
+    ['回線工事費', '2,420円'],
+  ]);
+});
+
+test('1つの dt に複数の dd がぶら下がる場合は結合する', () => {
+  const html = '<dl><dt>月額基本料金</dt><dd>6,270円</dd><dd>（最大）</dd></dl>';
+  assert.deepEqual(parseDefinitionLists(html)[0].pairs, [['月額基本料金', '6,270円 （最大）']]);
+});
+
+test('見出しの連なりは、浅い見出しが来たら深い階層を捨てる', () => {
+  // 「戸建」の節が終わったあとに、前の節の小見出しを引きずってはいけない
+  const html = '<h4>新設</h4><h6>戸建</h6><h4>転用</h4><span id="here"></span>';
+  const chain = headingChains(html)(html.indexOf('<span'));
+  assert.deepEqual(chain, ['転用']);
+});
+
+test('全角マイナスの割引を負値として読む', () => {
+  assert.equal(toYen('月額基本料金割引 －2,290円'), -2290);
 });
 
 // ── expandMonthly ────────────────────────────────────────────────

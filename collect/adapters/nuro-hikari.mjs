@@ -112,7 +112,10 @@ function flagCashbackAmbiguity(offers, tables) {
     if (o.cashbacks.length) continue;
     const speed = o.plan.labels.find((l) => /ギガ/.test(l));
     if (!speed) continue;
-    const i = header.findIndex((h) => h.replace(/\s/g, '').startsWith(speed.replace(/プラン|\s/g, '')));
+    // ヘッダは「10ギガ」「2ギガ」と分かれることも「10ギガ・2ギガ」と束ねられることもある
+    // （2026-08-24にNURO側が2列から1列に変えた）。前方一致だと束ねられた側を取り逃す
+    const needle = speed.replace(/プラン|\s/g, '');
+    const i = header.findIndex((h) => h.replace(/\s/g, '').includes(needle));
     const amount = i > 0 ? toYen(cbRow[i]) : null;
     if (amount == null) continue;
     (o.ambiguities ??= []).push(
