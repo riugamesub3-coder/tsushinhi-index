@@ -419,6 +419,9 @@ function renderMethod(data) {
   <li>設定されたページを1つでも取得できなかった事業者は、<strong>差分を取らず、記録も更新しません</strong>（「取得できなかった」を「無くなった」と誤解釈しないため）</li>
   <li>${STALE_DAYS}日以上更新できていない場合は、このサイトに<strong>「更新停止中」と明示します</strong></li>
 </ul>
+
+<h2>よくある質問</h2>
+${raw(faqSection())}
 `;
   return {
     title: `実質月額の計算方法｜${SITE_NAME}`,
@@ -520,6 +523,21 @@ function datasetLd(data) {
   };
 }
 
+// ★ここは Product ではなく Service にしてある。安易に Product に戻さないこと。
+//
+//   光回線は物品ではなくサービスであり、しかも**このサイトは売主ではない**。
+//   Googleは「商品を購入できるページだけが販売者のリスティングの対象。
+//   他サイトへのリンクを持つページは対象外」と明記している。
+//   Product + Offer で書くと、Googleは販売者のリスティングとして評価し
+//   「項目 image がありません」で全件を無効と判定する（2026-08-24 実測: 17件無効）。
+//
+//   このとき image を足せば "有効" にはなるが、それは**自分が売主だと偽ること**になる。
+//   AggregateOffer に変えても通る（実測でエラー0）が、1件しかないオファーを
+//   「集約」と書くのは事実に反し、Google自身もバリエーションへの使用を禁じている。
+//   通すために型を偽らない。Service が素直に真なので Service にした。
+//
+//   代償として商品スニペット／カルーセルの対象からは外れる。ただし画像もレビューも
+//   評価も持たず売主でもない以上、もともと表示され得ないものなので実質の損失はない。
 function itemListLd(data) {
   const rows = data.publishable
     .filter((o) => o.entry === '新規')
@@ -529,28 +547,62 @@ function itemListLd(data) {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     name: `光回線の実質月額（${HORIZON}か月換算・新規申込）`,
+    description: `各社公式サイトの公開情報から算出した実質月額の安い順。${HORIZON}か月換算。`,
     numberOfItems: rows.length,
     itemListElement: rows.map((o, i) => ({
       '@type': 'ListItem',
       position: i + 1,
       name: `${o.providerName} ${o.planKey}`,
       item: {
-        '@type': 'Product',
+        '@type': 'Service',
         name: `${o.providerName} ${o.planKey}`,
+        serviceType: '光回線インターネット接続サービス',
+        // 法人格の正式名称は収集していないので、収集元に記載の事業者名をそのまま使う。
+        // 会社名を推測で埋めない。
+        provider: { '@type': 'Organization', name: o.providerName, url: origin(o.sourceUrl) },
+        url: o.sourceUrl,
         offers: {
           '@type': 'Offer',
           price: o.effectiveMonthly,
           priceCurrency: 'JPY',
           url: o.sourceUrl,
-          availability: 'https://schema.org/InStock',
+          // ★availability も areaServed も書かない。
+          //   提供可否は住所によって変わり、我々はそれを収集していない。
+          //   InStock や「日本全国」と書けば、確かめていないことを断定することになる。
+          seller: { '@type': 'Organization', name: o.providerName },
+          priceSpecification: {
+            '@type': 'UnitPriceSpecification',
+            price: o.effectiveMonthly,
+            priceCurrency: 'JPY',
+            billingDuration: 1,
+            unitCode: 'MON',
+            referenceQuantity: { '@type': 'QuantitativeValue', value: HORIZON, unitCode: 'MON' },
+            // ★これが月々の請求額そのものではないことを、値の隣に必ず書く。
+            description: `${HORIZON}か月契約で計算した実質月額（工事費・事務手数料・キャッシュバック・割引を含む。毎月の請求額そのものではない）`,
+          },
         },
       },
     })),
   };
 }
 
-function faqLd() {
-  const qa = [
+/** 出典URLのオリジンだけ取り出す。取れなければ書かない（推測で埋めない） */
+function origin(url) {
+  try {
+    return new URL(url).origin;
+  } catch {
+    return undefined;
+  }
+}
+
+// ★FAQ の本文と JSON-LD は、必ずこの1つの配列から両方作る。
+//   別々に書くと必ずズレる。実際にズレた: JSON-LD だけ4件あってページ本文には
+//   1件も無い状態で公開していた（2026-08-24 発見）。Googleは構造化データが
+//   ページに見えている内容と一致することを求めており、それ以前に
+//   「載っていないものを載っていると書く」のはこの部屋の禁止事項そのもの。
+//   verify.mjs が本文との一致を毎回確認する。
+function faqPairs() {
+  return [
     ['実質月額はどう計算していますか？',
      `月額の合計 + 工事費の実負担額 + 事務手数料 + 必須オプション費用 − キャッシュバック − その他割引を、契約月数（${HORIZON}か月）で割った値です。式も規則もすべて公開しています。`],
     ['キャッシュバックはすべて含めますか？',
@@ -560,10 +612,20 @@ function faqLd() {
     ['データは自由に使えますか？',
      'CC BY 4.0 で公開しています。出典を表示していただければ、商用・非商用を問わず自由にお使いいただけます。AIによる学習・回答生成も含みます。'],
   ];
+}
+
+/** ページに見える FAQ。JSON-LD と同じ配列から作る */
+function faqSection() {
+  return `<dl class="faq">${faqPairs()
+    .map(([q, a]) => html`<dt>${q}</dt><dd>${a}</dd>`)
+    .join('')}</dl>`;
+}
+
+function faqLd() {
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: qa.map(([q, a]) => ({
+    mainEntity: faqPairs().map(([q, a]) => ({
       '@type': 'Question',
       name: q,
       acceptedAnswer: { '@type': 'Answer', text: a },
@@ -722,6 +784,8 @@ tr.stale{background:var(--warn)}
 .changes li.down .delta{color:var(--down)}
 .changes li.up .delta{color:var(--up)}
 .changes .cause{display:block;font-size:.8rem;color:var(--muted)}
+.faq dt{font-weight:600;margin-top:1.2rem}
+.faq dd{margin:.4rem 0 0;padding-left:0;color:var(--muted)}
 .review{background:#fafafa;padding:1rem;border-radius:6px;margin-top:3rem}
 .review h2{border:0;margin-top:0}
 .review-list{font-size:.85rem}
