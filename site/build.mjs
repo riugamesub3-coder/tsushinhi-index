@@ -53,6 +53,7 @@ async function main() {
   await page('data/index.html', renderData(data));
 
   await out('style.css', STYLE);
+  await out('favicon.svg', FAVICON);
   await out('llms.txt', renderLlmsTxt(data));
   await out('sitemap.xml', renderSitemap(data));
   await out('feed.xml', renderFeed(data));
@@ -678,6 +679,14 @@ async function out(path, content) {
   await mkdir(dirname(full), { recursive: true });
   await writeFile(full, content, 'utf8');
 }
+
+// 折れ線＝時系列。このサイトが持っているものをそのまま記号にする
+const FAVICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+<rect width="32" height="32" rx="6" fill="#0b5fff"/>
+<polyline points="5,22 12,15 18,19 27,8" fill="none" stroke="#fff" stroke-width="3"
+  stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
 
 const STYLE = `:root{--fg:#1a1a1a;--muted:#666;--line:#e2e2e2;--bg:#fff;--accent:#0b5fff;--down:#0a7d3f;--up:#c2340a;--warn:#fff8e1}
 *{box-sizing:border-box}

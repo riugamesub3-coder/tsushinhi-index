@@ -46,6 +46,7 @@ export function layout({ title, description, canonical, siteUrl, bodyClass = '',
 <title>${e(title)}</title>
 <meta name="description" content="${attr(description)}">
 <link rel="canonical" href="${attr(canonical)}">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/style.css">
 <link rel="alternate" type="application/rss+xml" title="料金の変化" href="/feed.xml">
 <meta property="og:title" content="${attr(title)}">
