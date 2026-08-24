@@ -65,6 +65,49 @@ jobs:
         if: always()
         run: node collect/health-check.mjs
 
+      # ★生成と検証は必ずセットで動かす。検証を通らないものは公開しない。
+      #   verify.mjs は生成されたHTMLを読み直して data/ と突き合わせるので、
+      #   「サイトの数字とデータの数字が食い違う」状態で配信されることがない。
+      - name: サイトを生成して検証する
+        if: always()
+        run: |
+          node site/build.mjs
+          node site/verify.mjs
+
+      # 認証情報が未設定なら黙って飛ばす（セットアップ前でもワークフローを壊さない）
+      - name: 配信できるか確認する
+        if: always()
+        id: deploy_ready
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+        run: |
+          if [ -n "$FTP_HOST" ]; then echo "ready=true" >> "$GITHUB_OUTPUT"; else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "FTP_HOST が未設定のため配信を飛ばします（Secrets を設定すると配信されます）"
+          fi
+
+      - name: Xserver へ配信する
+        # main 以外のブランチからは配信しない。検証用ブランチが本番を書き換えないため
+        if: steps.deploy_ready.outputs.ready == 'true' && github.ref == 'refs/heads/main'
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASS: ${{ secrets.FTP_PASSWORD }}
+          # サブFTPアカウントはアクセスディレクトリが起点になるので既定は "/"
+          FTP_DIR: ${{ vars.FTP_REMOTE_DIR || '/' }}
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+          # ftp:ssl-force = 平文でのログインを許さない。証明書の検証も有効のままにする。
+          # 検証を切ると FTPS にする意味がほぼ無くなるので、失敗したら原因を調べる。
+          lftp -c "
+            set ftp:ssl-force true;
+            set ftp:ssl-protect-data true;
+            set ssl:verify-certificate true;
+            set net:max-retries 3;
+            open -u '$FTP_USER','$FTP_PASS' '$FTP_HOST';
+            mirror -R --delete --parallel=2 --verbose site/dist/ '$FTP_DIR';
+          "
+
       - name: 結果をコミットする
         if: always()
         run: |

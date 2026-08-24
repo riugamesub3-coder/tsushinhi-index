@@ -148,3 +148,4 @@ vite.config.ts.timestamp-*
 *credentials*
 .DS_Store
 Thumbs.db
+site/dist/
