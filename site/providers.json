@@ -1,0 +1,29 @@
+{
+  "_readme": [
+    "サービスの運営会社。★収集していない静的な事実なので、必ず出典と確認日を残す。",
+    "",
+    "なぜ要るか: NURO光 と So-net光 は別サービスだが、運営しているのは同じ会社。",
+    "これを書かずに『3社を比較』と言うと、実際より独立した比較に見える。",
+    "広告リンクを載せると、収益源が1社に偏っていることも読者に見えなくなる。",
+    "",
+    "data/effective/ に出てくる providerId は全部ここに書くこと。",
+    "書き漏れは site/verify.mjs が赤くする（新しい事業者を足したとき忘れないように）。"
+  ],
+  "operators": {
+    "nuro-hikari": {
+      "name": "ソニーネットワークコミュニケーションズ株式会社",
+      "source": "https://www.nuro.jp/hikari/house/price/",
+      "confirmedAt": "2026-08-24"
+    },
+    "so-net-hikari": {
+      "name": "ソニーネットワークコミュニケーションズ株式会社",
+      "source": "https://www.so-net.ne.jp/access/hikari/",
+      "confirmedAt": "2026-08-24"
+    },
+    "rakuten-hikari": {
+      "name": "楽天モバイル株式会社",
+      "source": "https://network.mobile.rakuten.co.jp/hikari/",
+      "confirmedAt": "2026-08-24"
+    }
+  }
+}

@@ -130,7 +130,16 @@ async function loadAll() {
 
   const updatedAt = effective.map((s) => s.observedAt).sort().pop() ?? new Date().toISOString();
 
-  return { effective, offers, publishable, needsReview, events, failures, health, updatedAt, ads: await loadAds() };
+  const operators = ((await readJson(join(HERE, 'providers.json'))) ?? {}).operators ?? {};
+
+  return {
+    effective, offers, publishable, needsReview, events, failures, health, updatedAt,
+    ads: await loadAds(),
+    operators,
+    // ★「3社」と書かない。NURO光とSo-net光は同じ会社なので、サービス数と会社数は違う。
+    serviceCount: new Set(publishable.map((o) => o.providerId)).size,
+    operatorCount: new Set(publishable.map((o) => operators[o.providerId]?.name).filter(Boolean)).size,
+  };
 }
 
 async function readDir(dir) {
@@ -201,7 +210,16 @@ function verify(data) {
     if (fromData !== o.effectiveMonthly) problems.push(`表示値がデータと不一致: ${o.planKey}`);
   }
   const providers = new Set(data.publishable.map((o) => o.providerId));
-  if (providers.size < 2) problems.push(`掲載可の事業者が${providers.size}社。横並び比較が成立しない`);
+  if (providers.size < 2) problems.push(`掲載可のサービスが${providers.size}件。横並び比較が成立しない`);
+
+  // ★新しい事業者を足したときに運営会社の記録を忘れないための歯止め。
+  //   忘れると「運営N社」の数え方が黙って狂う。
+  for (const id of providers) {
+    const op = data.operators[id];
+    if (!op?.name || !op?.source || !op?.confirmedAt) {
+      problems.push(`運営会社が site/providers.json に無い（または出典・確認日が欠けている）: ${id}`);
+    }
+  }
   return problems;
 }
 
@@ -220,9 +238,10 @@ function renderIndex(data) {
     計算式は<a href="/method/">すべて公開</a>しています。
   </p>
   <p class="meta">
-    ${data.publishable.length}件の観測 ／ ${new Set(data.publishable.map((o) => o.providerId)).size}社 ／
+    ${data.publishable.length}件の観測 ／ ${data.serviceCount}サービス（運営${data.operatorCount}社） ／
     最終取得 ${jstDateTime(data.updatedAt)}
   </p>
+  ${raw(operatorNote(data))}
 </section>
 
 ${raw(staleBanner(data))}
@@ -242,7 +261,7 @@ ${raw(needsReviewSection(data))}
 
   return {
     title: `光回線の実質月額インデックス｜${SITE_NAME}`,
-    description: `光回線${new Set(data.publishable.map((o) => o.providerId)).size}社の料金・工事費・割引・キャッシュバックを毎日自動収集し、同一の計算式で${HORIZON}か月の実質月額に換算して比較しています。計算式と出典を全公開。`,
+    description: `光回線${data.serviceCount}サービス（運営${data.operatorCount}社）の料金・工事費・割引・キャッシュバックを毎日自動収集し、同一の計算式で${HORIZON}か月の実質月額に換算して比較しています。計算式と出典を全公開。`,
     canonical: `${SITE_URL}/`,
     head: [
       jsonLd(datasetLd(data)).value,
@@ -644,6 +663,32 @@ function itemListLd(data) {
       },
     })),
   };
+}
+
+/**
+ * 同じ会社が運営しているサービスがあれば明記する。
+ *
+ * ★これを書かないと、実際より独立した比較に見える。
+ *   NURO光とSo-net光はどちらもソニーネットワークコミュニケーションズ。
+ *   比較表の上位がこの2つで占められている以上、読者が知るべき事実。
+ *   広告を載せたときは「収益源が1社に偏っている」ことの開示にもなる。
+ */
+function operatorNote(data) {
+  const byOperator = new Map();
+  for (const id of new Set(data.publishable.map((o) => o.providerId))) {
+    const op = data.operators[id];
+    if (!op) continue;
+    const name = data.publishable.find((o) => o.providerId === id).providerName;
+    if (!byOperator.has(op.name)) byOperator.set(op.name, { names: [], source: op.source });
+    byOperator.get(op.name).names.push(name);
+  }
+  const shared = [...byOperator.entries()].filter(([, v]) => v.names.length > 1);
+  if (!shared.length) return '';
+
+  return html`<p class="note">${raw(shared
+    .map(([operator, v]) => html`<strong>${v.names.join('と')}は同じ会社（${operator}）が運営しています。</strong>
+別サービスですが、独立した2社の比較ではありません。<a href="${v.source}" rel="nofollow noopener">出典</a>`)
+    .join('<br>'))}</p>`;
 }
 
 /** 出典URLのオリジンだけ取り出す。取れなければ書かない（推測で埋めない） */
