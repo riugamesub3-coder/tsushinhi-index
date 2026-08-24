@@ -3,7 +3,7 @@
   "providerId": "flets-east",
   "providerName": "フレッツ光（NTT東日本）",
   "url": "https://flets.com/flets-hikari/next/",
-  "collectedAt": "2026-08-24T02:07:52.740Z",
+  "collectedAt": "2026-08-24T02:10:53.901Z",
   "points": [
     {
       "label": "※5 ＜ひかり電話＞ ひかり電話 基本プラン",
@@ -46,6 +46,16 @@
       "raw": "2,200円"
     },
     {
+      "label": "上記に加え",
+      "value": 3300,
+      "raw": "3,300円"
+    },
+    {
+      "label": "最終月",
+      "value": 783,
+      "raw": "783円"
+    },
+    {
       "label": "回目以降",
       "value": 779,
       "raw": "779円"
@@ -59,16 +69,6 @@
       "label": "月額料金",
       "value": 5940,
       "raw": "5,940 円"
-    },
-    {
-      "label": "最終月",
-      "value": 783,
-      "raw": "783円"
-    },
-    {
-      "label": "上記に加え",
-      "value": 3300,
-      "raw": "3,300円"
     }
   ]
 }
