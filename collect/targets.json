@@ -147,7 +147,7 @@
       "id": "eo-hikari",
       "name": "eo光（関西電力系）",
       "status": "verified",
-      "note": "料金ページ取得可（料金8件）。電力系は地域独占的で乗り換え検討が多い",
+      "note": "料金ページ取得可（料金8件）。電力系は地域独占的で乗り換え検討が多い。★2026-08-24 法務判定=条件付き可: robots.txt に制限なしだが、サイトのご利用条件が原文の複製・二次利用を明示的に禁じている。事実値のみ保持を厳守すること（アダプタ実装時に要確認）",
       "pages": [
         {
           "url": "https://eonet.jp/go/",
@@ -166,16 +166,35 @@
     {
       "id": "flets-east",
       "name": "フレッツ光（NTT東日本）",
-      "status": "unresolved",
-      "note": "料金ページ・お知らせとも未特定。次回、flets.com のトップを起点に再探索する",
-      "pages": []
+      "status": "verified",
+      "note": "2026-08-24に料金ページを特定。robots.txt の Disallow 16件はいずれも対象外パス。サイトのご利用条件に自動アクセスの制限なし。お知らせ一覧は未特定",
+      "pages": [
+        {
+          "url": "https://flets.com/flets-hikari/next/",
+          "type": "pricing",
+          "plan": "フレッツ 光ネクスト",
+          "priceHits": 13
+        },
+        {
+          "url": "https://flets.com/flets-hikari/priceplan/",
+          "type": "pricing",
+          "plan": "プラン一覧",
+          "priceHits": 6
+        }
+      ]
     },
     {
       "id": "nifty-hikari",
       "name": "＠nifty光",
-      "status": "unresolved",
-      "note": "料金ページ・お知らせとも未特定",
-      "pages": []
+      "status": "verified",
+      "note": "2026-08-24に料金ページを特定。robots.txt に Disallow なし。@nifty規約ページはサービス約款の一覧でサイト利用規約は不在、自動アクセスの制限なし。お知らせ一覧は未特定",
+      "pages": [
+        {
+          "url": "https://setsuzoku.nifty.com/niftyhikari/",
+          "type": "pricing",
+          "priceHits": 21
+        }
+      ]
     },
     {
       "id": "gmo-tokutoku",
