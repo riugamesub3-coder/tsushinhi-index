@@ -3,7 +3,7 @@
   "providerId": "nuro-hikari",
   "providerName": "NURO光",
   "url": "https://www.nuro.jp/hikari/mansion/price/",
-  "collectedAt": "2026-08-24T09:15:33.177Z",
+  "collectedAt": "2026-08-24T09:32:56.364Z",
   "points": [
     {
       "label": "～24か月目 25〜36か月目 37か月目～",
@@ -179,11 +179,6 @@
       "label": "タイプS 開通2～36か月目：月額基本料金から",
       "value": 860,
       "raw": "860円"
-    },
-    {
-      "label": "タ通信量1日10G 月間通信量 無制限 ※ 月額",
-      "value": 3630,
-      "raw": "3,630円"
     },
     {
       "label": "つになりますか？ レンタルWi-Fi（最大2か月",
