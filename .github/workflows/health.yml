@@ -21,6 +21,7 @@ on:
   push:
     paths:
       - 'collect/**'        # 収集ロジックを触ったら即検証する
+      - 'site/**'           # サイトの生成を触ったら即生成・検証・配信する
       - '.github/workflows/health.yml'
 
 permissions:
