@@ -37,7 +37,7 @@ export function jsonLd(obj) {
  * ページの外枠。
  * CSSは1枚を全ページで共有する（外部依存なし・キャッシュが効く）。
  */
-export function layout({ title, description, canonical, siteUrl, bodyClass = '', head = '', body, updatedAt }) {
+export function layout({ title, description, canonical, siteUrl, bodyClass = '', head = '', body, updatedAt, disclosure = '' }) {
   return `<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -67,6 +67,7 @@ ${head}
     <a href="/data/">データを使う</a>
   </nav>
 </header>
+${disclosure}
 <main>
 ${body}
 </main>

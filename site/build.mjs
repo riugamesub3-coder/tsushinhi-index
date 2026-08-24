@@ -47,10 +47,12 @@ async function main() {
   await rm(DIST, { recursive: true, force: true });
   await mkdir(DIST, { recursive: true });
 
-  await page('index.html', renderIndex(data));
-  await page('changes/index.html', renderChanges(data));
-  await page('method/index.html', renderMethod(data));
-  await page('data/index.html', renderData(data));
+  // 広告表記は全ページのヘッダ直下（ファーストビュー）に置く。広告が無ければ空文字
+  const disclosure = adDisclosure(data);
+  await page('index.html', renderIndex(data), disclosure);
+  await page('changes/index.html', renderChanges(data), disclosure);
+  await page('method/index.html', renderMethod(data), disclosure);
+  await page('data/index.html', renderData(data), disclosure);
 
   await out('style.css', STYLE);
   await out('favicon.svg', FAVICON);
@@ -63,6 +65,30 @@ async function main() {
 }
 
 // ── データ読み込み ───────────────────────────────────────────────
+
+/**
+ * 広告リンクを読む。★条件を満たさないものは黙って落とす（出さない側に倒す）。
+ *
+ * 落とす条件と理由:
+ *   matchesSource が true でない  … 飛び先の条件が、表示している実質月額の出典と違う。
+ *                                   数字と申込先が食い違ったまま広告を出すことになる
+ *   confirmedAt / confirmedNote が空 … 人が確認した証跡が無い。確認していないものは出さない
+ * 詳細は site/affiliate.json と docs/03_法務コンプラ.md の 6-5。
+ */
+async function loadAds() {
+  const conf = (await readJson(join(HERE, 'affiliate.json'))) ?? { links: [] };
+  const byProvider = new Map();
+  for (const a of conf.links ?? []) {
+    if (a.matchesSource !== true) continue;
+    if (!a.confirmedAt || !String(a.confirmedNote ?? '').trim()) continue;
+    if (!a.url || !a.providerId) continue;
+    byProvider.set(a.providerId, a);
+  }
+  return byProvider;
+}
+
+/** 広告リンクを1本でも出すか。出さないなら広告表記も出さない（無いのに「広告あり」と書くのも嘘） */
+const hasAds = (data) => data.ads.size > 0;
 
 async function loadAll() {
   const effective = await readDir(join(ROOT, 'data', 'effective'));
@@ -104,7 +130,7 @@ async function loadAll() {
 
   const updatedAt = effective.map((s) => s.observedAt).sort().pop() ?? new Date().toISOString();
 
-  return { effective, offers, publishable, needsReview, events, failures, health, updatedAt };
+  return { effective, offers, publishable, needsReview, events, failures, health, updatedAt, ads: await loadAds() };
 }
 
 async function readDir(dir) {
@@ -236,16 +262,18 @@ function rankingSection(data, building) {
 
   if (!rows.length) return '';
 
+  const ads = hasAds(data);
+
   return html`
 <section>
   <h2>${building}：実質月額の安い順（新規申込・${HORIZON}か月換算）</h2>
   <div class="table-wrap">
   <table>
     <thead>
-      <tr><th>実質月額</th><th>事業者</th><th>プラン</th><th>内訳</th><th>出典・取得日時</th></tr>
+      <tr><th>実質月額</th><th>事業者</th><th>プラン</th><th>内訳</th><th>出典・取得日時</th>${raw(ads ? '<th>申込</th>' : '')}</tr>
     </thead>
     <tbody>
-      ${raw(rows.map(rankRow).join(''))}
+      ${raw(rows.map((o) => rankRow(o, data)).join(''))}
     </tbody>
   </table>
   </div>
@@ -253,11 +281,17 @@ function rankingSection(data, building) {
     ${HORIZON}か月換算です。契約期間は各社ばらばら（NURO光は縛りなし）なので、揃えないと比較になりません。
     数え方の統一規則は<a href="/method/">計算方法</a>に書いています。
   </p>
+  <p class="note">
+    <strong>順位は実質月額の安い順で、それ以外の基準は入れていません。</strong>
+    速度（1ギガ／2ギガ／10ギガ）が異なるプランも同じ表に並べているので、速度は各行で確かめてください。
+    条件に合う観測は<strong>1件も除外していません</strong>（検算に通らなかったものはページ下部に理由つきで出しています）。
+  </p>
 </section>
 `;
 }
 
-function rankRow(o) {
+function rankRow(o, data) {
+  const ad = data.ads.get(o.providerId);
   const b = o.breakdown;
   const notes = [];
   if (o.setBenefits?.length) notes.push('セット特典は不算入');
@@ -276,8 +310,34 @@ function rankRow(o) {
     <a href="${o.sourceUrl}" rel="nofollow noopener">${host(o.sourceUrl)}</a><br>
     <time datetime="${o.observedAt}">${jstDateTime(o.observedAt)}</time>
   </td>
+  ${raw(hasAds(data) ? adCell(ad) : '')}
 </tr>
 `;
+}
+
+/**
+ * 申込セル。★広告であることをリンク自体に書く。
+ *   rel="sponsored" は広告リンクであることの機械可読な宣言（Google が定義している）。
+ *   提携していない事業者の行は空欄にする。**空欄を埋めるために別条件のリンクを入れない。**
+ */
+function adCell(ad) {
+  if (!ad) return '<td class="cta">—</td>';
+  return html`<td class="cta">
+  <a class="btn" href="${ad.url}" rel="sponsored nofollow noopener" target="_blank">公式サイトで見る</a>
+  <span class="tag">広告</span>
+</td>`;
+}
+
+/**
+ * 広告表記。★ステマ規制（景表法・2023年10月〜）への対応。
+ *   A8.net は「ファーストビュー等、一般消費者が認識できる位置にわかりやすく表示」を求めている。
+ *   出典: https://a8pr.jp/2023/08/31/fairlabeling/
+ *   ★広告リンクが1本も無いときは出さない。無いのに「広告を利用しています」と書くのも嘘になる。
+ */
+function adDisclosure(data) {
+  if (!hasAds(data)) return '';
+  return html`<p class="ad-disclosure">本ページはアフィリエイト広告を利用しています。
+<strong>広告の有無は順位に影響しません。</strong>順位は実質月額だけで決めています。</p>`;
 }
 
 function needsReviewSection(data) {
@@ -732,8 +792,8 @@ const xml = (s) => String(s).replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt
 
 // ── 出力 ─────────────────────────────────────────────────────────
 
-async function page(path, spec) {
-  await out(path, layout({ ...spec, siteUrl: SITE_URL }));
+async function page(path, spec, disclosure = '') {
+  await out(path, layout({ ...spec, siteUrl: SITE_URL, disclosure }));
 }
 
 async function out(path, content) {
@@ -784,6 +844,10 @@ tr.stale{background:var(--warn)}
 .changes li.down .delta{color:var(--down)}
 .changes li.up .delta{color:var(--up)}
 .changes .cause{display:block;font-size:.8rem;color:var(--muted)}
+.ad-disclosure{max-width:1000px;margin:0 auto;padding:.6rem 1rem;font-size:.8rem;color:var(--muted);background:#f6f6f6;border-bottom:1px solid var(--line)}
+.cta{white-space:nowrap}
+.btn{display:inline-block;padding:.35rem .7rem;background:#0b5fff;color:#fff;border-radius:4px;text-decoration:none;font-size:.82rem;font-weight:600}
+.btn:hover{background:#0847c4}
 .faq dt{font-weight:600;margin-top:1.2rem}
 .faq dd{margin:.4rem 0 0;padding-left:0;color:var(--muted)}
 .review{background:#fafafa;padding:1rem;border-radius:6px;margin-top:3rem}
