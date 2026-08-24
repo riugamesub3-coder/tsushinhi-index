@@ -106,14 +106,32 @@ jobs:
           #   公式に明記されていない。--delete は生成物に無いファイルを消すので、
           #   除外しないと**初回の配信で常時SSLの設定を消してしまう**可能性がある。
           #   どちらの実装でも壊れない側に倒す。
+          # ★同時接続は張らない（--parallel=1）。
+          #   共用サーバーはアカウントあたりの同時FTP接続数を絞っていることがあり、
+          #   2本張ると片方が蹴られて転送ごと失敗しうる。速度より確実さを取る。
+          #   再試行の間隔も空ける（間を置かず叩き直すと締め出されやすい）。
+          set +e
           lftp -c "
             set ftp:ssl-force true;
             set ftp:ssl-protect-data true;
             set ssl:verify-certificate true;
-            set net:max-retries 3;
+            set ftp:passive-mode true;
+            set net:max-retries 5;
+            set net:reconnect-interval-base 10;
+            set net:timeout 30;
+            set mirror:parallel-transfer-count 1;
             open -u '$FTP_USER','$FTP_PASS' '$FTP_HOST';
-            mirror -R --delete --parallel=2 --verbose -X .htaccess -X .well-known/ site/dist/ '$FTP_DIR';
-          "
+            mirror -R --delete --verbose -X .htaccess -X .well-known/ site/dist/ '$FTP_DIR';
+          " 2>&1 | tee /tmp/lftp.log
+          status=${PIPESTATUS[0]}
+          set -e
+          if [ "$status" -ne 0 ]; then
+            echo "### 配信に失敗しました" >> "$GITHUB_STEP_SUMMARY"
+            # 認証情報が混ざらないよう、ユーザー名とホスト名は伏せてから出す
+            sed -e "s#$FTP_USER#***USER***#g" -e "s#$FTP_HOST#***HOST***#g" /tmp/lftp.log \
+              | tail -40 >> "$GITHUB_STEP_SUMMARY"
+            exit "$status"
+          fi
 
       - name: 結果をコミットする
         if: always()
