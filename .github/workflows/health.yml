@@ -100,13 +100,19 @@ jobs:
           sudo apt-get update -qq && sudo apt-get install -y -qq lftp
           # ftp:ssl-force = 平文でのログインを許さない。証明書の検証も有効のままにする。
           # 検証を切ると FTPS にする意味がほぼ無くなるので、失敗したら原因を調べる。
+          #
+          # ★ .htaccess は転送も削除もしない（-X）。
+          #   サーバー側の「HTTPS転送設定」がこのファイルに書き込む実装なのかは
+          #   公式に明記されていない。--delete は生成物に無いファイルを消すので、
+          #   除外しないと**初回の配信で常時SSLの設定を消してしまう**可能性がある。
+          #   どちらの実装でも壊れない側に倒す。
           lftp -c "
             set ftp:ssl-force true;
             set ftp:ssl-protect-data true;
             set ssl:verify-certificate true;
             set net:max-retries 3;
             open -u '$FTP_USER','$FTP_PASS' '$FTP_HOST';
-            mirror -R --delete --parallel=2 --verbose site/dist/ '$FTP_DIR';
+            mirror -R --delete --parallel=2 --verbose -X .htaccess -X .well-known/ site/dist/ '$FTP_DIR';
           "
 
       - name: 結果をコミットする
