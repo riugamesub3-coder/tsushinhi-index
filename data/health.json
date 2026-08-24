@@ -1,9 +1,10 @@
 {
-  "checkedAt": "2026-08-24T02:11:42.083Z",
+  "checkedAt": "2026-08-24T02:23:45.288Z",
   "summary": {
     "total": 17,
     "ok": 17,
     "failed": 0,
+    "escalated": [],
     "excludedProviders": [
       {
         "id": "commufa-hikari",
@@ -28,8 +29,10 @@
       "httpStatus": 200,
       "hits": 169,
       "bytes": 225311,
-      "elapsedMs": 858,
-      "robotsNote": "該当ルールなし"
+      "elapsedMs": 181,
+      "robotsNote": "該当ルールなし",
+      "consecutiveFailures": 0,
+      "staleSince": null
     },
     {
       "providerId": "nuro-hikari",
@@ -41,8 +44,10 @@
       "httpStatus": 200,
       "hits": 201,
       "bytes": 285145,
-      "elapsedMs": 538,
-      "robotsNote": "該当ルールなし"
+      "elapsedMs": 126,
+      "robotsNote": "該当ルールなし",
+      "consecutiveFailures": 0,
+      "staleSince": null
     },
     {
       "providerId": "nuro-hikari",
@@ -54,8 +59,10 @@
       "httpStatus": 200,
       "hits": 103,
       "bytes": 55353,
-      "elapsedMs": 323,
-      "robotsNote": "該当ルールなし"
+      "elapsedMs": 98,
+      "robotsNote": "該当ルールなし",
+      "consecutiveFailures": 0,
+      "staleSince": null
     },
     {
       "providerId": "biglobe-hikari",
@@ -67,8 +74,10 @@
       "httpStatus": 200,
       "hits": 71,
       "bytes": 32686,
-      "elapsedMs": 433,
-      "robotsNote": "該当ルールなし"
+      "elapsedMs": 66,
+      "robotsNote": "該当ルールなし",
+      "consecutiveFailures": 0,
+      "staleSince": null
     },
     {
       "providerId": "rakuten-hikari",
@@ -80,8 +89,10 @@
       "httpStatus": 200,
       "hits": 81,
       "bytes": 95832,
-      "elapsedMs": 8,
-      "robotsNote": "Allow: /"
+      "elapsedMs": 15,
+      "robotsNote": "Allow: /",
+      "consecutiveFailures": 0,
+      "staleSince": null
     },
     {
       "providerId": "rakuten-hikari",
@@ -93,8 +104,10 @@
       "httpStatus": 200,
       "hits": 44,
       "bytes": 30995,
-      "elapsedMs": 11,
-      "robotsNote": "Allow: /"
+      "elapsedMs": 108,
+      "robotsNote": "Allow: /",
+      "consecutiveFailures": 0,
+      "staleSince": null
     },
     {
       "providerId": "docomo-hikari",
@@ -106,8 +119,10 @@
       "httpStatus": 200,
       "hits": 22,
       "bytes": 244327,
-      "elapsedMs": 729,
-      "robotsNote": "robots.txt なし（制限なしとみなす）"
+      "elapsedMs": 120,
+      "robotsNote": "robots.txt なし（制限なしとみなす）",
+      "consecutiveFailures": 0,
+      "staleSince": null
     },
     {
       "providerId": "docomo-hikari",
@@ -119,8 +134,10 @@
       "httpStatus": 200,
       "hits": 33,
       "bytes": 218010,
-      "elapsedMs": 359,
-      "robotsNote": "robots.txt なし（制限なしとみなす）"
+      "elapsedMs": 58,
+      "robotsNote": "robots.txt なし（制限なしとみなす）",
+      "consecutiveFailures": 0,
+      "staleSince": null
     },
     {
       "providerId": "docomo-hikari",
@@ -132,8 +149,10 @@
       "httpStatus": 200,
       "hits": 22,
       "bytes": 137680,
-      "elapsedMs": 320,
-      "robotsNote": "robots.txt なし（制限なしとみなす）"
+      "elapsedMs": 48,
+      "robotsNote": "robots.txt なし（制限なしとみなす）",
+      "consecutiveFailures": 0,
+      "staleSince": null
     },
     {
       "providerId": "flets-west",
@@ -145,8 +164,10 @@
       "httpStatus": 200,
       "hits": 4,
       "bytes": 84559,
-      "elapsedMs": 245,
-      "robotsNote": "該当ルールなし"
+      "elapsedMs": 29,
+      "robotsNote": "該当ルールなし",
+      "consecutiveFailures": 0,
+      "staleSince": null
     },
     {
       "providerId": "so-net-hikari",
@@ -158,8 +179,10 @@
       "httpStatus": 200,
       "hits": 246,
       "bytes": 308859,
-      "elapsedMs": 23,
-      "robotsNote": "該当ルールなし"
+      "elapsedMs": 57,
+      "robotsNote": "該当ルールなし",
+      "consecutiveFailures": 0,
+      "staleSince": null
     },
     {
       "providerId": "softbank-hikari",
@@ -171,8 +194,10 @@
       "httpStatus": 200,
       "hits": 115,
       "bytes": 98555,
-      "elapsedMs": 76,
-      "robotsNote": "該当ルールなし"
+      "elapsedMs": 56,
+      "robotsNote": "該当ルールなし",
+      "consecutiveFailures": 0,
+      "staleSince": null
     },
     {
       "providerId": "au-hikari",
@@ -184,8 +209,10 @@
       "httpStatus": 200,
       "hits": 9,
       "bytes": 385053,
-      "elapsedMs": 18,
-      "robotsNote": "該当ルールなし"
+      "elapsedMs": 73,
+      "robotsNote": "該当ルールなし",
+      "consecutiveFailures": 0,
+      "staleSince": null
     },
     {
       "providerId": "eo-hikari",
@@ -197,8 +224,10 @@
       "httpStatus": 200,
       "hits": 8,
       "bytes": 38617,
-      "elapsedMs": 462,
-      "robotsNote": "該当ルールなし"
+      "elapsedMs": 64,
+      "robotsNote": "該当ルールなし",
+      "consecutiveFailures": 0,
+      "staleSince": null
     },
     {
       "providerId": "flets-east",
@@ -210,8 +239,10 @@
       "httpStatus": 200,
       "hits": 10,
       "bytes": 36681,
-      "elapsedMs": 500,
-      "robotsNote": "該当ルールなし"
+      "elapsedMs": 134,
+      "robotsNote": "該当ルールなし",
+      "consecutiveFailures": 0,
+      "staleSince": null
     },
     {
       "providerId": "flets-east",
@@ -223,8 +254,10 @@
       "httpStatus": 200,
       "hits": 6,
       "bytes": 28515,
-      "elapsedMs": 127,
-      "robotsNote": "該当ルールなし"
+      "elapsedMs": 40,
+      "robotsNote": "該当ルールなし",
+      "consecutiveFailures": 0,
+      "staleSince": null
     },
     {
       "providerId": "nifty-hikari",
@@ -236,8 +269,10 @@
       "httpStatus": 200,
       "hits": 84,
       "bytes": 107679,
-      "elapsedMs": 540,
-      "robotsNote": "該当ルールなし"
+      "elapsedMs": 85,
+      "robotsNote": "該当ルールなし",
+      "consecutiveFailures": 0,
+      "staleSince": null
     }
   ]
 }

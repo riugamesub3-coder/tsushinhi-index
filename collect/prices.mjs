@@ -19,6 +19,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fetchWithRetry, checkRobots, sleep } from './lib/http.mjs';
 import { extractPricePoints, diffPricePoints } from './lib/prices.mjs';
+import { loadFailureState, saveFailureState, recordOutcome, shouldFail, reportFailures } from './lib/failures.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -69,9 +70,22 @@ async function main() {
     for (const f of failed) console.log(`  [${f.status}] ${f.providerId} — ${f.detail}`);
   }
 
-  if (results.length && failed.length / results.length > 0.5) {
-    console.error(`\n異常: ${failed.length}/${results.length} が失敗。収集元の構造変更を疑うこと。`);
+  // ★1つの収集元が静かに死ぬのを許さない。
+  //   以前は「半分以上失敗」でしか赤くならず、実測で1件壊しても終了コード0だった。
+  const state = await loadFailureState();
+  const keys = results.map((r) => `prices:${r.url}`);
+  for (const r of results) {
+    recordOutcome(state, `prices:${r.url}`, r.status === 'ok', { status: r.status, detail: r.detail });
+  }
+  if (!dryRun) await saveFailureState(state);
+
+  const reasons = shouldFail(state, keys, failed.length);
+  if (reasons.length) {
+    reportFailures(reasons);
     process.exit(1);
+  }
+  if (failed.length) {
+    console.log(`\n注意: ${failed.length}件が失敗しているが、いずれも初回のため一時的な不調とみなす。次回も失敗したら赤くする。`);
   }
 }
 

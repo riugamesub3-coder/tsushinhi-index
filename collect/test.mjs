@@ -9,6 +9,7 @@ import assert from 'node:assert/strict';
 import { parseTables, toYen, cellText } from './lib/table.mjs';
 import { findBlocks, parseDefinitionLists, headingChains } from './lib/dom.mjs';
 import { computeEffectiveMonthly, expandMonthly } from './lib/effective.mjs';
+import { recordOutcome, shouldFail, escalated } from './lib/failures.mjs';
 
 // ── toYen ────────────────────────────────────────────────────────
 
@@ -108,6 +109,63 @@ test('見出しの連なりは、浅い見出しが来たら深い階層を捨�
 
 test('全角マイナスの割引を負値として読む', () => {
   assert.equal(toYen('月額基本料金割引 －2,290円'), -2290);
+});
+
+// ── 失敗の持ち越し（静かに壊れないための要）──────────────────────
+//
+// 2026-08-24に実測して分かった欠陥の回帰テスト。
+// 収集元を1つ壊しても「半分以上失敗」の閾値に届かず終了コード0で通っていた。
+
+test('1回の失敗では赤くしない（一時的な不調を狼少年にしない）', () => {
+  const state = { sources: {} };
+  recordOutcome(state, 'a', false, { status: 'unreachable' });
+  recordOutcome(state, 'b', true);
+  assert.deepEqual(shouldFail(state, ['a', 'b'], 1), []);
+});
+
+test('2回続けて失敗したら赤くする（収集元が1つでも静かに死なせない）', () => {
+  const state = { sources: {} };
+  const keys = ['a', 'b', 'c', 'd'];
+  for (let i = 0; i < 2; i++) recordOutcome(state, 'a', false, { status: 'unreachable' });
+  for (const k of ['b', 'c', 'd']) recordOutcome(state, k, true);
+  const reasons = shouldFail(state, keys, 1);
+  assert.equal(reasons.length, 1);
+  assert.match(reasons[0], /2回続けて失敗/);
+});
+
+test('一度に半分以上落ちたら、回数によらず即座に赤くする', () => {
+  const state = { sources: {} };
+  const keys = ['a', 'b', 'c'];
+  for (const k of keys) recordOutcome(state, k, false, { status: 'unreachable' });
+  const reasons = shouldFail(state, keys, 3);
+  assert.ok(reasons.some((r) => /同時に失敗/.test(r)));
+});
+
+test('成功したら連続失敗をリセットし、更新停止の起点も消す', () => {
+  const state = { sources: {} };
+  recordOutcome(state, 'a', false, { status: 'unreachable' });
+  recordOutcome(state, 'a', false, { status: 'unreachable' });
+  assert.equal(state.sources.a.consecutive, 2);
+  assert.ok(state.sources.a.staleSince);
+  recordOutcome(state, 'a', true);
+  assert.equal(state.sources.a.consecutive, 0);
+  assert.equal(state.sources.a.staleSince, null);
+});
+
+test('staleSince は最初に失敗した時刻を保つ（失敗のたびに更新しない）', () => {
+  const state = { sources: {} };
+  recordOutcome(state, 'a', false, { status: 'unreachable' });
+  const first = state.sources.a.staleSince;
+  recordOutcome(state, 'a', false, { status: 'unreachable' });
+  assert.equal(state.sources.a.staleSince, first, 'サイト側で「◯日更新停止中」を出せなくなる');
+});
+
+test('escalated は閾値に達した収集元だけを返す', () => {
+  const state = { sources: {} };
+  recordOutcome(state, 'a', false, {});
+  recordOutcome(state, 'b', false, {});
+  recordOutcome(state, 'b', false, {});
+  assert.deepEqual(escalated(state).map((e) => e.key), ['b']);
 });
 
 // ── expandMonthly ────────────────────────────────────────────────

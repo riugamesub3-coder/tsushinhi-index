@@ -18,6 +18,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fetchWithRetry, checkRobots, sleep } from './lib/http.mjs';
 import { computeEffectiveMonthly, FORMULA_TEXT } from './lib/effective.mjs';
+import { loadFailureState, saveFailureState, recordOutcome, shouldFail, reportFailures } from './lib/failures.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -61,9 +62,27 @@ async function main() {
 
   report(results);
 
+  // 失敗の持ち越しを記録する。ここは事業者単位（アダプタ単位）で数える。
+  const state = await loadFailureState();
+  const keys = results.map((r) => `effective:${r.providerId}`);
+  for (const r of results) {
+    recordOutcome(state, `effective:${r.providerId}`, r.status === 'ok', {
+      status: r.status,
+      detail: r.detail ?? (r.warnings?.[0] ?? null),
+    });
+  }
   const failed = results.filter((r) => r.status !== 'ok');
-  if (failed.length) {
-    console.error(`\n異常: ${failed.length}/${results.length} が失敗。`);
+  if (!dryRun) await saveFailureState(state);
+
+  // ★実質月額は「1社でも観測不完全なら赤くする」。
+  //   ここで通してしまうと、欠けたまま比較表を出すことになる。
+  const reasons = shouldFail(state, keys, failed.length);
+  for (const r of failed) {
+    const why = `${r.providerId}: ${r.status}${r.detail ? ` — ${r.detail}` : ''}`;
+    if (!reasons.some((x) => x.includes(r.providerId))) reasons.push(why);
+  }
+  if (reasons.length) {
+    reportFailures(reasons);
     process.exit(1);
   }
 }
@@ -89,6 +108,7 @@ async function runAdapter(adapter, urls, dryRun) {
   const offers = [];
   const notices = new Set();
   const warnings = [];
+  const failedUrls = [];
   const now = new Date().toISOString();
 
   for (const url of urls) {
@@ -97,11 +117,13 @@ async function runAdapter(adapter, urls, dryRun) {
     const robots = await checkRobots(url);
     if (robots.ok && robots.allowed === false) {
       warnings.push(`robots で禁止: ${url}`);
+      failedUrls.push({ url, reason: `robots で禁止: ${robots.note}` });
       continue;
     }
     const res = await fetchWithRetry(url, { retries: 2 });
     if (!res.ok) {
       warnings.push(`取得失敗 ${url}: ${res.error}`);
+      failedUrls.push({ url, reason: `取得失敗: ${res.error}` });
       continue;
     }
 
@@ -110,11 +132,35 @@ async function runAdapter(adapter, urls, dryRun) {
       out = adapter.extract(res.text, url);
     } catch (e) {
       warnings.push(`抽出で例外 ${url}: ${e.message}`);
+      failedUrls.push({ url, reason: `抽出で例外: ${e.message}` });
       continue;
     }
     offers.push(...out.offers);
     for (const n of out.notices ?? []) notices.add(n);
     warnings.push(...(out.warnings ?? []));
+  }
+
+  // ★★ 観測が欠けている状態で先に進まない。
+  //
+  //   2026-08-24、収集元を1つ故意に404にして実測したところ、
+  //   **「取得できなかった」を「事業者がプランを廃止した」と解釈し、
+  //   実在するプランの廃止イベントを4件でっち上げた。** しかも終了コードは0だった。
+  //   古い値を出し続けるより悪い。存在しないニュースを作ってしまう。
+  //
+  //   → 設定されたURLが1つでも取れなければ、その事業者は「観測不完全」とする。
+  //     差分を取らず、スナップショットも上書きしない（正しい基準を壊さないため）。
+  if (failedUrls.length) {
+    console.log(
+      `❌ ${adapter.providerId.padEnd(16)} 観測不完全（${urls.length - failedUrls.length}/${urls.length} ページのみ取得）` +
+        ` — 差分は取らず、スナップショットも更新しない`
+    );
+    for (const f of failedUrls) console.log(`     ${f.url} — ${f.reason}`);
+    return {
+      providerId: adapter.providerId,
+      status: 'incomplete',
+      detail: failedUrls.map((f) => `${f.url}: ${f.reason}`).join(' / '),
+      warnings,
+    };
   }
 
   if (!offers.length) {
@@ -151,6 +197,16 @@ async function runAdapter(adapter, urls, dryRun) {
   };
 
   const prev = await loadJson(join(OUT_DIR, `${adapter.providerId}.json`));
+
+  // ★取得は全部できたのに観測数が大きく減った場合も、廃止イベントを出さない。
+  //   ページの構造が変わって半分しか解釈できていない可能性の方が高く、
+  //   その状態で「プランが消えた」と発信すると誤報になる。
+  const drop = countDrop(prev, snapshot);
+  if (drop) {
+    console.log(`❌ ${adapter.providerId.padEnd(16)} ${drop} — 構造変更を疑う。差分は取らず、スナップショットも更新しない`);
+    return { providerId: adapter.providerId, status: 'offer-count-drop', detail: drop, warnings };
+  }
+
   const events = diffOffers(prev, snapshot);
 
   printProvider(adapter, priced, events, warnings);
@@ -169,6 +225,19 @@ async function runAdapter(adapter, urls, dryRun) {
     events: events.length,
     warnings,
   };
+}
+
+/** 前回より観測数がこの割合を超えて減ったら、構造変更を疑って差分を取らない */
+const MAX_OFFER_DROP_RATIO = 0.25;
+
+function countDrop(prev, next) {
+  if (!prev?.offers?.length) return null;
+  const before = prev.offers.filter((o) => o.verified).length;
+  const after = next.offers.filter((o) => o.verified).length;
+  if (!before) return null;
+  const lost = (before - after) / before;
+  if (lost <= MAX_OFFER_DROP_RATIO) return null;
+  return `検算を通った観測が ${before}件 → ${after}件 に減った`;
 }
 
 /**

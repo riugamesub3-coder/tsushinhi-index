@@ -21,6 +21,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fetchWithRetry, checkRobots, sleep } from './lib/http.mjs';
+import { loadFailureState, saveFailureState, recordOutcome, shouldFail, reportFailures, escalated } from './lib/failures.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -58,12 +59,24 @@ async function main() {
   }
 
   const failures = checks.filter((c) => c.status !== 'ok');
+
+  // 連続失敗を持ち越して記録する。1回の失敗と、続いている失敗を区別するため。
+  const state = await loadFailureState();
+  const keys = checks.map((c) => `health:${c.url}`);
+  for (const c of checks) {
+    const s = recordOutcome(state, `health:${c.url}`, c.status === 'ok', { status: c.status, detail: c.detail });
+    // サイト側が「更新停止中」を出せるよう、health.json にも持たせる
+    c.consecutiveFailures = s.consecutive;
+    c.staleSince = s.staleSince;
+  }
+
   const report = {
     checkedAt: new Date().toISOString(),
     summary: {
       total: checks.length,
       ok: checks.length - failures.length,
       failed: failures.length,
+      escalated: escalated(state, keys).map((e) => ({ key: e.key, consecutive: e.consecutive, staleSince: e.staleSince })),
       excludedProviders: skipped.map((s) => ({ id: s.id, name: s.name, reason: s.note ?? s.status })),
     },
     checks,
@@ -82,13 +95,21 @@ async function main() {
 
   await mkdir(join(ROOT, 'data'), { recursive: true });
   await writeFile(join(ROOT, 'data', 'health.json'), JSON.stringify(report, null, 2) + '\n', 'utf8');
-  console.log('\n書き込み: data/health.json');
+  await saveFailureState(state);
+  console.log('\n書き込み: data/health.json, data/failures.json');
 
-  // ★静かに壊れないための要。半分以上落ちたら異常終了してActionsを赤くする。
-  //   1〜2件の失敗でいちいち赤くすると狼少年になるので、閾値を設ける。
-  if (checks.length && failures.length / checks.length > 0.5) {
-    console.error(`\n異常: ${failures.length}/${checks.length} が失敗。収集元の構造変更を疑うこと。`);
+  // ★静かに壊れないための要。
+  //   以前は「半分以上落ちたら赤くする」だけだった。実測したところ、
+  //   収集元を1つ壊しても終了コード0で通ってしまった。**13あるうち6つまで
+  //   静かに死んでいても気づけない**状態で、死活監視の目的を裏切っていた。
+  //   → 「2回続けて失敗」でも赤くする（狼少年を避けつつ、静かな死を許さない）。
+  const reasons = shouldFail(state, keys, failures.length);
+  if (reasons.length) {
+    reportFailures(reasons);
     process.exit(1);
+  }
+  if (failures.length) {
+    console.log(`\n注意: ${failures.length}件が失敗しているが、いずれも初回のため一時的な不調とみなす。次回も失敗したら赤くする。`);
   }
 }
 
