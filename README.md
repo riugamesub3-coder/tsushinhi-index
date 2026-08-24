@@ -145,7 +145,17 @@ node --test collect/test.mjs
 
 ## ライセンス
 
-検討中。
+| 対象 | ライセンス |
+|---|---|
+| `data/` 以下のデータセット | **CC BY 4.0**（出典表示のみが条件。商用可・AI学習可） → [data/LICENSE](data/LICENSE) |
+| `collect/` 以下のコード | **MIT** → [LICENSE](LICENSE) |
+
+データを CC BY 4.0 にしたのは、**ライセンス自体が出典表示を義務づける**ためです。
+このデータセットの目的は引用されることなので、利用のハードルを下げつつ出典が残る形にしています。
+
+表示例:
+
+> 出典: 通信費インデックス（tsushinhi-index）https://github.com/riugamesub3-coder/tsushinhi-index — CC BY 4.0
 
 ## 免責
 
