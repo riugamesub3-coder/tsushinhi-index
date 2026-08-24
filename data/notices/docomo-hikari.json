@@ -5,6 +5,15 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-08-24",
+      "title": "ドコモと三菱地所、大手町・丸の内・有楽町エリアでの次世代スマートシティの構築連携に合意 -ミリ波をはじめとする通信インフラ確保を加速-",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/08/24_00.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-24T08:47:26.419Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-08-21",
       "title": "「あんしんセキュリティ」の対象4プラン、累計契約数が200万件を突破！ -社会課題化する特殊詐欺への対策強化プランが好評、100万件突破からおよそ8か月で達成-（PDF形式：927KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260821_g1.pdf",
@@ -145,6 +154,15 @@
     },
     {
       "date": "2026-08-05",
+      "title": "2026年度（2026年4月～）",
+      "url": "https://www.docomo.ne.jp/info/news_release/year.html?year=2026",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-24T08:47:26.419Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-08-05",
       "title": "令和8年熊本地震に伴い、「Starlink Business」やスマートフォンなどを無償で提供",
       "url": "https://www.docomo.ne.jp/info/news_release/detail/20260731_02_m.html",
       "categories": [],
@@ -153,6 +171,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-08-24T02:25:29.289Z",
-  "totalNotices": 15
+  "lastCollectedAt": "2026-08-24T08:47:26.419Z",
+  "totalNotices": 17
 }
