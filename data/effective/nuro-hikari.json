@@ -2,7 +2,7 @@
   "providerId": "nuro-hikari",
   "providerName": "NURO光",
   "channelId": "official",
-  "observedAt": "2026-08-24T09:04:12.472Z",
+  "observedAt": "2026-08-24T09:10:22.580Z",
   "formula": "実質月額 = ( 月額の合計 + 工事費の実負担額 + 事務手数料 + 必須オプション費用×加入必要月数 - キャッシュバック額 - その他割引の総額 ) ÷ 契約月数",
   "primaryHorizonMonths": 36,
   "sourceUrls": [
@@ -123,7 +123,7 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-08-24T09:04:12.472Z",
+      "observedAt": "2026-08-24T09:10:22.580Z",
       "effective": {
         "24": {
           "effectiveMonthly": 3493,
@@ -259,7 +259,7 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-08-24T09:04:12.472Z",
+      "observedAt": "2026-08-24T09:10:22.580Z",
       "effective": {
         "24": {
           "effectiveMonthly": 3493,
@@ -415,7 +415,7 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-08-24T09:04:12.472Z",
+      "observedAt": "2026-08-24T09:10:22.580Z",
       "effective": {
         "24": {
           "effectiveMonthly": 3493,
@@ -571,7 +571,7 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-08-24T09:04:12.472Z",
+      "observedAt": "2026-08-24T09:10:22.580Z",
       "effective": {
         "24": {
           "effectiveMonthly": 3493,
@@ -705,7 +705,7 @@
       "ambiguities": [
         "ページ全体のキャンペーン表は2ギガプランに15,000円のキャッシュバックを掲げているが、このプランの料金内訳表にはキャッシュバック行が無い。内訳表を採用した（実質月額はキャッシュバック無しで計算）"
       ],
-      "observedAt": "2026-08-24T09:04:12.472Z",
+      "observedAt": "2026-08-24T09:10:22.580Z",
       "effective": {
         "24": {
           "effectiveMonthly": 3952,
@@ -859,7 +859,7 @@
       "ambiguities": [
         "ページ全体のキャンペーン表は2ギガプランに15,000円のキャッシュバックを掲げているが、このプランの料金内訳表にはキャッシュバック行が無い。内訳表を採用した（実質月額はキャッシュバック無しで計算）"
       ],
-      "observedAt": "2026-08-24T09:04:12.472Z",
+      "observedAt": "2026-08-24T09:10:22.580Z",
       "effective": {
         "24": {
           "effectiveMonthly": 3952,
@@ -993,7 +993,7 @@
       "ambiguities": [
         "ページ全体のキャンペーン表は10ギガプランに15,000円のキャッシュバックを掲げているが、このプランの料金内訳表にはキャッシュバック行が無い。内訳表を採用した（実質月額はキャッシュバック無しで計算）"
       ],
-      "observedAt": "2026-08-24T09:04:12.472Z",
+      "observedAt": "2026-08-24T09:10:22.580Z",
       "effective": {
         "24": {
           "effectiveMonthly": 3952,
@@ -1147,7 +1147,7 @@
       "ambiguities": [
         "ページ全体のキャンペーン表は10ギガプランに15,000円のキャッシュバックを掲げているが、このプランの料金内訳表にはキャッシュバック行が無い。内訳表を採用した（実質月額はキャッシュバック無しで計算）"
       ],
-      "observedAt": "2026-08-24T09:04:12.472Z",
+      "observedAt": "2026-08-24T09:10:22.580Z",
       "effective": {
         "24": {
           "effectiveMonthly": 3952,
@@ -1284,7 +1284,7 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-08-24T09:04:12.472Z",
+      "observedAt": "2026-08-24T09:10:22.580Z",
       "effective": {
         "24": {
           "effectiveMonthly": 2368,
@@ -1441,7 +1441,7 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-08-24T09:04:12.472Z",
+      "observedAt": "2026-08-24T09:10:22.580Z",
       "effective": {
         "24": {
           "effectiveMonthly": 2368,
@@ -1578,7 +1578,7 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-08-24T09:04:12.472Z",
+      "observedAt": "2026-08-24T09:10:22.580Z",
       "effective": {
         "24": {
           "effectiveMonthly": 2368,
@@ -1735,7 +1735,7 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-08-24T09:04:12.472Z",
+      "observedAt": "2026-08-24T09:10:22.580Z",
       "effective": {
         "24": {
           "effectiveMonthly": 2368,
