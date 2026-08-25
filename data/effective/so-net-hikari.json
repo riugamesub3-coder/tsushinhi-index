@@ -2,11 +2,12 @@
   "providerId": "so-net-hikari",
   "providerName": "So-net光",
   "channelId": "official",
-  "observedAt": "2026-08-25T04:55:04.350Z",
+  "observedAt": "2026-08-25T07:17:02.911Z",
   "formula": "実質月額 = ( 月額の合計 + 工事費の実負担額 + 事務手数料 + 必須オプション費用×加入必要月数 - キャッシュバック額 - その他割引の総額 ) ÷ 契約月数",
   "primaryHorizonMonths": 36,
   "sourceUrls": [
-    "https://www.so-net.ne.jp/access/hikari/"
+    "https://www.so-net.ne.jp/access/hikari/",
+    "https://www.so-net.ne.jp/access/hikari/1g/"
   ],
   "pageNotices": [
     "So-net 光 10ギガは2026年10月1日に月額基本料金の改定を予定しており、6,270円が6,380円となります",
@@ -16,7 +17,10 @@
     "10ギガ 1ギガ 2026年9月以降、So-netの一部サービスにおける料金改定を予定しております",
     "月額基本料金 6,270 円/月 ※1 特典によりご利用開始月 ※2 と、1～23カ月目まで3,980円/月 ※1 So-net 光 10ギガは2026年10月1日に月額基本料金の改定を予定しており、6,270円が6,380円となります",
     "料金改定以降、本ページの特典適用後のご利用開始月（開通月）の月額料金は最大4,090円/月、1～23カ月目の月額料金は4,090円/月です",
-    "月額基本料金 6,270 円/月 ※1 特典によりご利用開始月 ※2 と、1～11カ月目まで3,980円/月 ※1 So-net 光 10ギガは2026年10月1日に月額基本料金の改定を予定しており、6,270円が6,380円となります"
+    "月額基本料金 6,270 円/月 ※1 特典によりご利用開始月 ※2 と、1～11カ月目まで3,980円/月 ※1 So-net 光 10ギガは2026年10月1日に月額基本料金の改定を予定しており、6,270円が6,380円となります",
+    "2026年9月以降、So-netの一部サービスにおける料金改定を予定しております",
+    "便利なサービスいろいろ オプションサービス 同時申し込み 最大6カ月無料! 2026年9月以降、So-netの一部サービスにおける料金改定を予定しております",
+    "料金改定の詳細はこちら 詳細はこちら 詳細はこちら 詳細はこちら 詳細はこちら 詳細はこちら 詳細はこちら 詳細はこちら 詳細はこちら 詳細はこちら 現在のフレッツ光回線の利用状況によって、 ご利用までの流れが変わります"
   ],
   "offers": [
     {
@@ -25,8 +29,10 @@
       "channelId": "official",
       "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
       "planKey": "10ギガ / 戸建・マンション共通 / 回線新設でお申し込み / 派遣工事",
+      "planLabel": "10ギガ / 戸建・マンション共通 / 回線新設でお申し込み / 派遣工事",
       "plan": {
         "speed": "10ギガ",
+        "grade": null,
         "building": "戸建・マンション共通",
         "entry": "回線新設でお申し込み",
         "work": "派遣工事"
@@ -136,7 +142,7 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-08-25T04:55:04.350Z",
+      "observedAt": "2026-08-25T07:17:02.911Z",
       "effective": {
         "24": {
           "effectiveMonthly": 3501,
@@ -175,8 +181,10 @@
       "channelId": "official",
       "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
       "planKey": "10ギガ / 戸建・マンション共通 / 転用・事業者変更でのお申し込み / 10ギガ⇒10ギガ",
+      "planLabel": "10ギガ / 戸建・マンション共通 / 転用・事業者変更でのお申し込み / 10ギガ⇒10ギガ",
       "plan": {
         "speed": "10ギガ",
+        "grade": null,
         "building": "戸建・マンション共通",
         "entry": "転用・事業者変更でのお申し込み",
         "work": "10ギガ⇒10ギガ"
@@ -259,7 +267,7 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-08-25T04:55:04.350Z",
+      "observedAt": "2026-08-25T07:17:02.911Z",
       "effective": {
         "24": {
           "effectiveMonthly": 5271,
@@ -298,8 +306,10 @@
       "channelId": "official",
       "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
       "planKey": "1ギガ / 戸建 / 回線新設でお申し込み / 派遣工事",
+      "planLabel": "1ギガ M / 戸建 / 回線新設でお申し込み / 派遣工事",
       "plan": {
         "speed": "1ギガ",
+        "grade": "M",
         "building": "戸建",
         "entry": "回線新設でお申し込み",
         "work": "派遣工事"
@@ -409,7 +419,10 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-08-25T04:55:04.350Z",
+      "alsoSeenAt": [
+        "https://www.so-net.ne.jp/access/hikari/1g/"
+      ],
+      "observedAt": "2026-08-25T07:17:02.911Z",
       "effective": {
         "24": {
           "effectiveMonthly": 2821,
@@ -448,8 +461,10 @@
       "channelId": "official",
       "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
       "planKey": "1ギガ / マンション / 回線新設でお申し込み / 派遣工事",
+      "planLabel": "1ギガ M / マンション / 回線新設でお申し込み / 派遣工事",
       "plan": {
         "speed": "1ギガ",
+        "grade": "M",
         "building": "マンション",
         "entry": "回線新設でお申し込み",
         "work": "派遣工事"
@@ -559,7 +574,10 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-08-25T04:55:04.350Z",
+      "alsoSeenAt": [
+        "https://www.so-net.ne.jp/access/hikari/1g/"
+      ],
+      "observedAt": "2026-08-25T07:17:02.911Z",
       "effective": {
         "24": {
           "effectiveMonthly": 2821,
@@ -598,8 +616,10 @@
       "channelId": "official",
       "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
       "planKey": "1ギガ / 戸建 / 転用・事業者変更でのお申し込み",
+      "planLabel": "1ギガ M / 戸建 / 転用・事業者変更でのお申し込み",
       "plan": {
         "speed": "1ギガ",
+        "grade": "M",
         "building": "戸建",
         "entry": "転用・事業者変更でのお申し込み",
         "work": null
@@ -682,7 +702,10 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-08-25T04:55:04.350Z",
+      "alsoSeenAt": [
+        "https://www.so-net.ne.jp/access/hikari/1g/"
+      ],
+      "observedAt": "2026-08-25T07:17:02.911Z",
       "effective": {
         "24": {
           "effectiveMonthly": 4793,
@@ -721,8 +744,10 @@
       "channelId": "official",
       "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
       "planKey": "1ギガ / マンション / 転用・事業者変更でのお申し込み",
+      "planLabel": "1ギガ M / マンション / 転用・事業者変更でのお申し込み",
       "plan": {
         "speed": "1ギガ",
+        "grade": "M",
         "building": "マンション",
         "entry": "転用・事業者変更でのお申し込み",
         "work": null
@@ -805,7 +830,10 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-08-25T04:55:04.350Z",
+      "alsoSeenAt": [
+        "https://www.so-net.ne.jp/access/hikari/1g/"
+      ],
+      "observedAt": "2026-08-25T07:17:02.911Z",
       "effective": {
         "24": {
           "effectiveMonthly": 4243,
@@ -826,6 +854,822 @@
           "total": 160580,
           "breakdown": {
             "monthlyTotal": 157080,
+            "adminFee": 3500,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "so-net-hikari",
+      "providerName": "So-net光",
+      "channelId": "official",
+      "sourceUrl": "https://www.so-net.ne.jp/access/hikari/1g/",
+      "planKey": "1ギガ S / 戸建 / 回線新設でお申し込み / 派遣工事",
+      "planLabel": "1ギガ S / 戸建 / 回線新設でお申し込み / 派遣工事",
+      "plan": {
+        "speed": "1ギガ",
+        "grade": "S",
+        "building": "戸建",
+        "entry": "回線新設でお申し込み",
+        "work": "派遣工事"
+      },
+      "contractMonths": null,
+      "contractNote": "契約期間の定めなし（工事費の分割は23回）",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 4500
+        }
+      ],
+      "adminFee": 3500,
+      "constructionFee": {
+        "monthlySchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": 1,
+            "amount": 0
+          },
+          {
+            "fromMonth": 2,
+            "toMonth": 2,
+            "amount": 2420
+          },
+          {
+            "fromMonth": 3,
+            "toMonth": 24,
+            "amount": 1210
+          },
+          {
+            "fromMonth": 25,
+            "toMonth": null,
+            "amount": 0
+          }
+        ],
+        "discountSchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": 1,
+            "amount": 0
+          },
+          {
+            "fromMonth": 2,
+            "toMonth": 2,
+            "amount": 2420
+          },
+          {
+            "fromMonth": 3,
+            "toMonth": 24,
+            "amount": 1210
+          },
+          {
+            "fromMonth": 25,
+            "toMonth": null,
+            "amount": 0
+          }
+        ],
+        "residualOnEarlyExit": true
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": true,
+      "publishedMonthly": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 4500
+        }
+      ],
+      "verified": true,
+      "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=4500円 / 特典表の一覧=4500円）",
+      "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
+      "observedAt": "2026-08-25T07:17:02.911Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 4646,
+          "total": 111500,
+          "breakdown": {
+            "monthlyTotal": 108000,
+            "adminFee": 3500,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 4597,
+          "total": 165500,
+          "breakdown": {
+            "monthlyTotal": 162000,
+            "adminFee": 3500,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "so-net-hikari",
+      "providerName": "So-net光",
+      "channelId": "official",
+      "sourceUrl": "https://www.so-net.ne.jp/access/hikari/1g/",
+      "planKey": "1ギガ S / マンション / 回線新設でお申し込み / 派遣工事",
+      "planLabel": "1ギガ S / マンション / 回線新設でお申し込み / 派遣工事",
+      "plan": {
+        "speed": "1ギガ",
+        "grade": "S",
+        "building": "マンション",
+        "entry": "回線新設でお申し込み",
+        "work": "派遣工事"
+      },
+      "contractMonths": null,
+      "contractNote": "契約期間の定めなし（工事費の分割は23回）",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 3400
+        }
+      ],
+      "adminFee": 3500,
+      "constructionFee": {
+        "monthlySchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": 1,
+            "amount": 0
+          },
+          {
+            "fromMonth": 2,
+            "toMonth": 2,
+            "amount": 2420
+          },
+          {
+            "fromMonth": 3,
+            "toMonth": 24,
+            "amount": 1210
+          },
+          {
+            "fromMonth": 25,
+            "toMonth": null,
+            "amount": 0
+          }
+        ],
+        "discountSchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": 1,
+            "amount": 0
+          },
+          {
+            "fromMonth": 2,
+            "toMonth": 2,
+            "amount": 2420
+          },
+          {
+            "fromMonth": 3,
+            "toMonth": 24,
+            "amount": 1210
+          },
+          {
+            "fromMonth": 25,
+            "toMonth": null,
+            "amount": 0
+          }
+        ],
+        "residualOnEarlyExit": true
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": true,
+      "publishedMonthly": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 3400
+        }
+      ],
+      "verified": true,
+      "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=3400円 / 特典表の一覧=3400円）",
+      "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
+      "observedAt": "2026-08-25T07:17:02.911Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 3546,
+          "total": 85100,
+          "breakdown": {
+            "monthlyTotal": 81600,
+            "adminFee": 3500,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 3497,
+          "total": 125900,
+          "breakdown": {
+            "monthlyTotal": 122400,
+            "adminFee": 3500,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "so-net-hikari",
+      "providerName": "So-net光",
+      "channelId": "official",
+      "sourceUrl": "https://www.so-net.ne.jp/access/hikari/1g/",
+      "planKey": "1ギガ S / 戸建 / 転用・事業者変更でのお申し込み",
+      "planLabel": "1ギガ S / 戸建 / 転用・事業者変更でのお申し込み",
+      "plan": {
+        "speed": "1ギガ",
+        "grade": "S",
+        "building": "戸建",
+        "entry": "転用・事業者変更でのお申し込み",
+        "work": null
+      },
+      "contractMonths": null,
+      "contractNote": "契約期間の定めなし（工事費の分割は23回）",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 4500
+        }
+      ],
+      "adminFee": 3500,
+      "constructionFee": {
+        "monthlySchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": null,
+            "amount": 0
+          }
+        ],
+        "discountSchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": null,
+            "amount": 0
+          }
+        ],
+        "residualOnEarlyExit": true
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": true,
+      "publishedMonthly": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 4500
+        }
+      ],
+      "verified": true,
+      "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=4500円 / 特典表の一覧=4500円）",
+      "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
+      "observedAt": "2026-08-25T07:17:02.911Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 4646,
+          "total": 111500,
+          "breakdown": {
+            "monthlyTotal": 108000,
+            "adminFee": 3500,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 4597,
+          "total": 165500,
+          "breakdown": {
+            "monthlyTotal": 162000,
+            "adminFee": 3500,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "so-net-hikari",
+      "providerName": "So-net光",
+      "channelId": "official",
+      "sourceUrl": "https://www.so-net.ne.jp/access/hikari/1g/",
+      "planKey": "1ギガ S / マンション / 転用・事業者変更でのお申し込み",
+      "planLabel": "1ギガ S / マンション / 転用・事業者変更でのお申し込み",
+      "plan": {
+        "speed": "1ギガ",
+        "grade": "S",
+        "building": "マンション",
+        "entry": "転用・事業者変更でのお申し込み",
+        "work": null
+      },
+      "contractMonths": null,
+      "contractNote": "契約期間の定めなし（工事費の分割は23回）",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 3400
+        }
+      ],
+      "adminFee": 3500,
+      "constructionFee": {
+        "monthlySchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": null,
+            "amount": 0
+          }
+        ],
+        "discountSchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": null,
+            "amount": 0
+          }
+        ],
+        "residualOnEarlyExit": true
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": true,
+      "publishedMonthly": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 3400
+        }
+      ],
+      "verified": true,
+      "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=3400円 / 特典表の一覧=3400円）",
+      "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
+      "observedAt": "2026-08-25T07:17:02.911Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 3546,
+          "total": 85100,
+          "breakdown": {
+            "monthlyTotal": 81600,
+            "adminFee": 3500,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 3497,
+          "total": 125900,
+          "breakdown": {
+            "monthlyTotal": 122400,
+            "adminFee": 3500,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "so-net-hikari",
+      "providerName": "So-net光",
+      "channelId": "official",
+      "sourceUrl": "https://www.so-net.ne.jp/access/hikari/1g/",
+      "planKey": "1ギガ L / 戸建 / 回線新設でお申し込み / 派遣工事",
+      "planLabel": "1ギガ L / 戸建 / 回線新設でお申し込み / 派遣工事",
+      "plan": {
+        "speed": "1ギガ",
+        "grade": "L",
+        "building": "戸建",
+        "entry": "回線新設でお申し込み",
+        "work": "派遣工事"
+      },
+      "contractMonths": null,
+      "contractNote": "契約期間の定めなし（工事費の分割は23回）",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 7095
+        }
+      ],
+      "adminFee": 3500,
+      "constructionFee": {
+        "monthlySchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": 1,
+            "amount": 0
+          },
+          {
+            "fromMonth": 2,
+            "toMonth": 2,
+            "amount": 2420
+          },
+          {
+            "fromMonth": 3,
+            "toMonth": 24,
+            "amount": 1210
+          },
+          {
+            "fromMonth": 25,
+            "toMonth": null,
+            "amount": 0
+          }
+        ],
+        "discountSchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": 1,
+            "amount": 0
+          },
+          {
+            "fromMonth": 2,
+            "toMonth": 2,
+            "amount": 2420
+          },
+          {
+            "fromMonth": 3,
+            "toMonth": 24,
+            "amount": 1210
+          },
+          {
+            "fromMonth": 25,
+            "toMonth": null,
+            "amount": 0
+          }
+        ],
+        "residualOnEarlyExit": true
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": true,
+      "publishedMonthly": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 7095
+        }
+      ],
+      "verified": true,
+      "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=7095円 / 特典表の一覧=7095円）",
+      "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
+      "observedAt": "2026-08-25T07:17:02.911Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 7241,
+          "total": 173780,
+          "breakdown": {
+            "monthlyTotal": 170280,
+            "adminFee": 3500,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 7192,
+          "total": 258920,
+          "breakdown": {
+            "monthlyTotal": 255420,
+            "adminFee": 3500,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "so-net-hikari",
+      "providerName": "So-net光",
+      "channelId": "official",
+      "sourceUrl": "https://www.so-net.ne.jp/access/hikari/1g/",
+      "planKey": "1ギガ L / マンション / 回線新設でお申し込み / 派遣工事",
+      "planLabel": "1ギガ L / マンション / 回線新設でお申し込み / 派遣工事",
+      "plan": {
+        "speed": "1ギガ",
+        "grade": "L",
+        "building": "マンション",
+        "entry": "回線新設でお申し込み",
+        "work": "派遣工事"
+      },
+      "contractMonths": null,
+      "contractNote": "契約期間の定めなし（工事費の分割は23回）",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 5995
+        }
+      ],
+      "adminFee": 3500,
+      "constructionFee": {
+        "monthlySchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": 1,
+            "amount": 0
+          },
+          {
+            "fromMonth": 2,
+            "toMonth": 2,
+            "amount": 2420
+          },
+          {
+            "fromMonth": 3,
+            "toMonth": 24,
+            "amount": 1210
+          },
+          {
+            "fromMonth": 25,
+            "toMonth": null,
+            "amount": 0
+          }
+        ],
+        "discountSchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": 1,
+            "amount": 0
+          },
+          {
+            "fromMonth": 2,
+            "toMonth": 2,
+            "amount": 2420
+          },
+          {
+            "fromMonth": 3,
+            "toMonth": 24,
+            "amount": 1210
+          },
+          {
+            "fromMonth": 25,
+            "toMonth": null,
+            "amount": 0
+          }
+        ],
+        "residualOnEarlyExit": true
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": true,
+      "publishedMonthly": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 5995
+        }
+      ],
+      "verified": true,
+      "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=5995円 / 特典表の一覧=5995円）",
+      "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
+      "observedAt": "2026-08-25T07:17:02.911Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 6141,
+          "total": 147380,
+          "breakdown": {
+            "monthlyTotal": 143880,
+            "adminFee": 3500,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 6092,
+          "total": 219320,
+          "breakdown": {
+            "monthlyTotal": 215820,
+            "adminFee": 3500,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "so-net-hikari",
+      "providerName": "So-net光",
+      "channelId": "official",
+      "sourceUrl": "https://www.so-net.ne.jp/access/hikari/1g/",
+      "planKey": "1ギガ L / 戸建 / 転用・事業者変更でのお申し込み",
+      "planLabel": "1ギガ L / 戸建 / 転用・事業者変更でのお申し込み",
+      "plan": {
+        "speed": "1ギガ",
+        "grade": "L",
+        "building": "戸建",
+        "entry": "転用・事業者変更でのお申し込み",
+        "work": null
+      },
+      "contractMonths": null,
+      "contractNote": "契約期間の定めなし（工事費の分割は23回）",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 7095
+        }
+      ],
+      "adminFee": 3500,
+      "constructionFee": {
+        "monthlySchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": null,
+            "amount": 0
+          }
+        ],
+        "discountSchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": null,
+            "amount": 0
+          }
+        ],
+        "residualOnEarlyExit": true
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": true,
+      "publishedMonthly": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 7095
+        }
+      ],
+      "verified": true,
+      "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=7095円 / 特典表の一覧=7095円）",
+      "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
+      "observedAt": "2026-08-25T07:17:02.911Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 7241,
+          "total": 173780,
+          "breakdown": {
+            "monthlyTotal": 170280,
+            "adminFee": 3500,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 7192,
+          "total": 258920,
+          "breakdown": {
+            "monthlyTotal": 255420,
+            "adminFee": 3500,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "so-net-hikari",
+      "providerName": "So-net光",
+      "channelId": "official",
+      "sourceUrl": "https://www.so-net.ne.jp/access/hikari/1g/",
+      "planKey": "1ギガ L / マンション / 転用・事業者変更でのお申し込み",
+      "planLabel": "1ギガ L / マンション / 転用・事業者変更でのお申し込み",
+      "plan": {
+        "speed": "1ギガ",
+        "grade": "L",
+        "building": "マンション",
+        "entry": "転用・事業者変更でのお申し込み",
+        "work": null
+      },
+      "contractMonths": null,
+      "contractNote": "契約期間の定めなし（工事費の分割は23回）",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 5995
+        }
+      ],
+      "adminFee": 3500,
+      "constructionFee": {
+        "monthlySchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": null,
+            "amount": 0
+          }
+        ],
+        "discountSchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": null,
+            "amount": 0
+          }
+        ],
+        "residualOnEarlyExit": true
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": true,
+      "publishedMonthly": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 5995
+        }
+      ],
+      "verified": true,
+      "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=5995円 / 特典表の一覧=5995円）",
+      "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
+      "observedAt": "2026-08-25T07:17:02.911Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 6141,
+          "total": 147380,
+          "breakdown": {
+            "monthlyTotal": 143880,
+            "adminFee": 3500,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 6092,
+          "total": 219320,
+          "breakdown": {
+            "monthlyTotal": 215820,
             "adminFee": 3500,
             "constructionBorne": 0,
             "optionTotal": 0,

@@ -1,21 +1,21 @@
 {
-  "updatedAt": "2026-08-25T04:55:46.020Z",
+  "updatedAt": "2026-08-25T07:17:06.201Z",
   "sources": {
     "effective:nuro-hikari": {
       "consecutive": 0,
-      "lastOkAt": "2026-08-25T04:55:06.132Z",
+      "lastOkAt": "2026-08-25T07:17:06.201Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "effective:rakuten-hikari": {
       "consecutive": 0,
-      "lastOkAt": "2026-08-25T04:55:06.132Z",
+      "lastOkAt": "2026-08-25T07:17:06.201Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "effective:so-net-hikari": {
       "consecutive": 0,
-      "lastOkAt": "2026-08-25T04:55:06.132Z",
+      "lastOkAt": "2026-08-25T07:17:06.201Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
