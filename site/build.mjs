@@ -71,12 +71,13 @@ async function main() {
 // ── データ読み込み ───────────────────────────────────────────────
 
 /**
- * 広告リンクを読む。★条件を満たさないものは黙って落とす（出さない側に倒す）。
+ * 広告を読む。★条件を満たさないものは黙って落とす（出さない側に倒す）。
  *
  * 落とす条件と理由:
- *   matchesSource が true でない  … 飛び先の条件が、表示している実質月額の出典と違う。
- *                                   数字と申込先が食い違ったまま広告を出すことになる
+ *   adCode が空                      … 貼るものが無い
  *   confirmedAt / confirmedNote が空 … 人が確認した証跡が無い。確認していないものは出さない
+ *   確認から日が経ちすぎている       … 手で書いた事実は自動で直らない
+ *   mode が無い / differenceNote が空 … 飛び先が出典と同条件かどうかを判断できない
  * 詳細は site/affiliate.json と docs/03_法務コンプラ.md の 6-5。
  */
 async function loadAds() {
@@ -85,7 +86,9 @@ async function loadAds() {
   const different = [];       // 飛び先が別条件。行には出さず、独立ブロックで別物として出す
 
   for (const a of conf.links ?? []) {
-    if (!a.url || !a.providerId) continue;
+    // ★adCode は ASP が生成したコードそのもの。url を受け取らないのは意図的で、
+    //   リンク部分だけ抜き出して自前のボタンを作るのが広告素材の改変にあたるため。
+    if (!String(a.adCode ?? '').trim() || !a.providerId) continue;
     if (!a.confirmedAt || !String(a.confirmedNote ?? '').trim()) continue;
 
     // ★手で記録した事実は放っておくと古くなる。収集値と違って自動で直らない。
@@ -358,9 +361,8 @@ function rankRow(o, data) {
  * ★飛び先の条件が出典と違う広告を、比較表と混ぜずに出すためのブロック。
  *
  *   実質月額は「誰でも見られる公式の料金ページ」を計測している。
- *   一方、アフィリエイト経由の申込は専用LPの特典が適用され、条件が違うことがある
- * （広告主固有の条件のため削除。非公開の docs/03_法務コンプラ.md を参照）
- *   公式料金ページの特典とは別物）。
+ *   一方、広告経由の申込には別の条件が適用されることがあり、
+ *   公開されている料金ページの条件と一致しない場合がある。
  *
  *   これを比較表の行に混ぜると、表示している数字と申込先が食い違う。
  *   かといって黙っていると、読者はより良い条件を知らずに終わる。
@@ -382,10 +384,9 @@ function linkOnlyOffers(data) {
   </p>
   <ul>
     ${raw(list.map((a) => html`<li>
-      <strong>${providerNameOf(data, a.providerId) ?? a.providerId}</strong>
-      <span class="tag">広告</span><br>
+      <strong>${providerNameOf(data, a.providerId) ?? a.providerId}</strong><br>
       ${a.differenceNote}<br>
-      <a class="btn" href="${a.url}" rel="sponsored nofollow noopener" target="_blank">特典の内容を見る</a>
+      ${raw(adUnit(a))}
       <span class="tag">条件を確認した日: ${a.confirmedAt}</span>
     </li>`).join(''))}
   </ul>
@@ -400,16 +401,26 @@ function linkOnlyOffers(data) {
 const providerNameOf = (data, id) => data.publishable.find((o) => o.providerId === id)?.providerName;
 
 /**
- * 申込セル。★広告であることをリンク自体に書く。
- *   rel="sponsored" は広告リンクであることの機械可読な宣言（Google が定義している）。
- *   提携していない事業者の行は空欄にする。**空欄を埋めるために別条件のリンクを入れない。**
+ * 申込セル。提携していない事業者の行は空欄にする。
+ * **空欄を埋めるために別条件の広告を入れない。**
  */
 function adCell(ad) {
   if (!ad) return '<td class="cta">—</td>';
-  return html`<td class="cta">
-  <a class="btn" href="${ad.url}" rel="sponsored nofollow noopener" target="_blank">公式サイトで見る</a>
-  <span class="tag">広告</span>
-</td>`;
+  return `<td class="cta">${adUnit(ad)}</td>`;
+}
+
+/**
+ * 広告そのもの。★ASPが生成したコードを一字も変えずに出す。
+ *
+ *   リンク先URLだけ抜き出して自前のボタンにすること、文言や画像を差し替えることは
+ *   「広告素材の改変」にあたる。ASPの広告コードには表示回数の計測用タグが含まれる
+ *   こともあり、リンクだけ抜くとそれも落ちる。
+ *
+ *   我々が足してよいのは**コードの外側**だけ。「広告」の表示は隣に置き、
+ *   コード自体（rel やテキストを含む）には触らない。
+ */
+function adUnit(ad) {
+  return `<span class="ad-unit" data-ad="1"><span class="tag">広告</span> ${ad.adCode}</span>`;
 }
 
 /**
@@ -961,6 +972,7 @@ tr.stale{background:var(--warn)}
 .link-only li{padding:.8rem 0;border-bottom:1px solid #dbe7ff;font-size:.92rem}
 .link-only li:last-child{border-bottom:none}
 .link-only .btn{margin-top:.4rem}
+.ad-unit{display:inline-block}
 .btn{display:inline-block;padding:.35rem .7rem;background:#0b5fff;color:#fff;border-radius:4px;text-decoration:none;font-size:.82rem;font-weight:600}
 .btn:hover{background:#0847c4}
 .faq dt{font-weight:600;margin-top:1.2rem}
