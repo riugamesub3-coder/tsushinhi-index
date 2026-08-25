@@ -5,6 +5,15 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-08-25",
+      "title": "ドコモ、DAZN、CARTA ZEROで、1億超のdポイントクラブ会員基盤データを活用した高精度なターゲティング配信を実現するソリューションの提供を開始 -dポイントクラブ会員基盤データを活用し、ターゲティングから効果計測までを一気通貫で支援-（PDF形式：543KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260825_x1.pdf",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-25T02:40:17.674Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-08-24",
       "title": "ドコモと三菱地所、大手町・丸の内・有楽町エリアでの次世代スマートシティの構築連携に合意 -ミリ波をはじめとする通信インフラ確保を加速-",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/08/24_00.html",
@@ -171,6 +180,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-08-24T22:03:06.871Z",
-  "totalNotices": 17
+  "lastCollectedAt": "2026-08-25T02:40:17.674Z",
+  "totalNotices": 18
 }
