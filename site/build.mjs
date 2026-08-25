@@ -30,6 +30,10 @@ const HORIZON = 36;
 // これ日数を超えて更新できていない収集元は「更新停止中」と明示する
 const STALE_DAYS = 3;
 
+// 広告リンクの条件は手で確認して記録する（自動収集できない）。
+// ★手で書いた事実は自動で直らないので、確認から離れたら出すのをやめる。
+const AD_CONFIRM_MAX_DAYS = 60;
+
 async function main() {
   const checkOnly = process.argv.includes('--check');
   const data = await loadAll();
@@ -77,18 +81,30 @@ async function main() {
  */
 async function loadAds() {
   const conf = (await readJson(join(HERE, 'affiliate.json'))) ?? { links: [] };
-  const byProvider = new Map();
+  const same = new Map();     // 飛び先の条件＝出典の条件。比較表の行にリンクを出す
+  const different = [];       // 飛び先が別条件。行には出さず、独立ブロックで別物として出す
+
   for (const a of conf.links ?? []) {
-    if (a.matchesSource !== true) continue;
-    if (!a.confirmedAt || !String(a.confirmedNote ?? '').trim()) continue;
     if (!a.url || !a.providerId) continue;
-    byProvider.set(a.providerId, a);
+    if (!a.confirmedAt || !String(a.confirmedNote ?? '').trim()) continue;
+
+    // ★手で記録した事実は放っておくと古くなる。収集値と違って自動で直らない。
+    //   古い条件のまま広告を出し続けるのは「事実と異なる情報」になる。
+    const age = daysSince(a.confirmedAt);
+    if (age != null && age > AD_CONFIRM_MAX_DAYS) {
+      console.warn(`広告リンクを出しません（確認から${age}日経過・上限${AD_CONFIRM_MAX_DAYS}日）: ${a.providerId}`);
+      continue;
+    }
+
+    if (a.mode === 'same') same.set(a.providerId, a);
+    else if (a.mode === 'different' && String(a.differenceNote ?? '').trim()) different.push(a);
+    else console.warn(`広告リンクを出しません（mode か differenceNote が不足）: ${a.providerId}`);
   }
-  return byProvider;
+  return { same, different };
 }
 
 /** 広告リンクを1本でも出すか。出さないなら広告表記も出さない（無いのに「広告あり」と書くのも嘘） */
-const hasAds = (data) => data.ads.size > 0;
+const hasAds = (data) => data.ads.same.size > 0 || data.ads.different.length > 0;
 
 async function loadAll() {
   const effective = await readDir(join(ROOT, 'data', 'effective'));
@@ -248,6 +264,8 @@ ${raw(staleBanner(data))}
 
 ${raw(buildings.map((b) => rankingSection(data, b)).join(''))}
 
+${raw(linkOnlyOffers(data))}
+
 <section>
   <h2>最近の変化</h2>
   ${raw(recent.length
@@ -281,7 +299,9 @@ function rankingSection(data, building) {
 
   if (!rows.length) return '';
 
-  const ads = hasAds(data);
+  // 申込列を出すのは「飛び先の条件＝出典の条件」のリンクがあるときだけ。
+  // 条件が違うリンクは行に混ぜない（数字と食い違うため）。別ブロックに出す。
+  const ads = data.ads.same.size > 0;
 
   return html`
 <section>
@@ -310,7 +330,7 @@ function rankingSection(data, building) {
 }
 
 function rankRow(o, data) {
-  const ad = data.ads.get(o.providerId);
+  const ad = data.ads.same.get(o.providerId);
   const b = o.breakdown;
   const notes = [];
   if (o.setBenefits?.length) notes.push('セット特典は不算入');
@@ -329,10 +349,55 @@ function rankRow(o, data) {
     <a href="${o.sourceUrl}" rel="nofollow noopener">${host(o.sourceUrl)}</a><br>
     <time datetime="${o.observedAt}">${jstDateTime(o.observedAt)}</time>
   </td>
-  ${raw(hasAds(data) ? adCell(ad) : '')}
+  ${raw(data.ads.same.size > 0 ? adCell(ad) : '')}
 </tr>
 `;
 }
+
+/**
+ * ★飛び先の条件が出典と違う広告を、比較表と混ぜずに出すためのブロック。
+ *
+ *   実質月額は「誰でも見られる公式の料金ページ」を計測している。
+ *   一方、アフィリエイト経由の申込は専用LPの特典が適用され、条件が違うことがある
+ * （広告主固有の条件のため削除。非公開の docs/03_法務コンプラ.md を参照）
+ *   公式料金ページの特典とは別物）。
+ *
+ *   これを比較表の行に混ぜると、表示している数字と申込先が食い違う。
+ *   かといって黙っていると、読者はより良い条件を知らずに終わる。
+ *   **別物として、別条件であることを明記して出す。** 金額は書かない
+ *   （自動で追えないものを数字で断定しない）。
+ */
+function linkOnlyOffers(data) {
+  const list = data.ads.different;
+  if (!list.length) return '';
+
+  return html`
+<section class="link-only">
+  <h2>このサイト経由の申込にだけ適用される特典</h2>
+  <p>
+    上の比較表は<strong>誰でも見られる公式の料金ページ</strong>を毎日計測した値です。
+    下記は<strong>申込経路によって条件が変わるもの</strong>で、
+    <strong>上の実質月額には含まれていません。</strong>
+    金額や条件は変わるので、<strong>必ず申込先のページで確認してください。</strong>
+  </p>
+  <ul>
+    ${raw(list.map((a) => html`<li>
+      <strong>${providerNameOf(data, a.providerId) ?? a.providerId}</strong>
+      <span class="tag">広告</span><br>
+      ${a.differenceNote}<br>
+      <a class="btn" href="${a.url}" rel="sponsored nofollow noopener" target="_blank">特典の内容を見る</a>
+      <span class="tag">条件を確認した日: ${a.confirmedAt}</span>
+    </li>`).join(''))}
+  </ul>
+  <p class="note">
+    この欄の内容は<strong>自動収集ではなく、人が申込先を開いて確認して書いています。</strong>
+    確認から${AD_CONFIRM_MAX_DAYS}日を過ぎたものは、古い条件を出し続けないよう自動で表示をやめます。
+  </p>
+</section>
+`;
+}
+
+const providerNameOf = (data, id) => data.publishable.find((o) => o.providerId === id)?.providerName;
 
 /**
  * 申込セル。★広告であることをリンク自体に書く。
@@ -891,6 +956,11 @@ tr.stale{background:var(--warn)}
 .changes .cause{display:block;font-size:.8rem;color:var(--muted)}
 .ad-disclosure{max-width:1000px;margin:0 auto;padding:.6rem 1rem;font-size:.8rem;color:var(--muted);background:#f6f6f6;border-bottom:1px solid var(--line)}
 .cta{white-space:nowrap}
+.link-only{background:#f4f8ff;border:1px solid #cfe0ff;border-radius:6px;padding:1rem 1.2rem;margin:2rem 0}
+.link-only ul{list-style:none;padding:0}
+.link-only li{padding:.8rem 0;border-bottom:1px solid #dbe7ff;font-size:.92rem}
+.link-only li:last-child{border-bottom:none}
+.link-only .btn{margin-top:.4rem}
 .btn{display:inline-block;padding:.35rem .7rem;background:#0b5fff;color:#fff;border-radius:4px;text-decoration:none;font-size:.82rem;font-weight:600}
 .btn:hover{background:#0847c4}
 .faq dt{font-weight:600;margin-top:1.2rem}

@@ -119,7 +119,10 @@ function flagCashbackAmbiguity(offers, tables) {
     const amount = i > 0 ? toYen(cbRow[i]) : null;
     if (amount == null) continue;
     (o.ambiguities ??= []).push(
-      `ページ全体のキャンペーン表は${speed}に${amount.toLocaleString('ja-JP')}円のキャッシュバックを掲げているが、` +
+      // ★「キャンペーン」と書くときは「特典」も併記する。
+      // （広告主固有の条件のため削除。非公開の docs/03_法務コンプラ.md を参照）
+      //   記載も一緒に表記をお願いします」への対応。この文言はサイトに表示される。
+      `ページ全体の特典・キャンペーン表は${speed}に${amount.toLocaleString('ja-JP')}円のキャッシュバックを掲げているが、` +
         `このプランの料金内訳表にはキャッシュバック行が無い。内訳表を採用した（実質月額はキャッシュバック無しで計算）`
     );
   }
