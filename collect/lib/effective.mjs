@@ -80,9 +80,19 @@ export function computeEffectiveMonthly(offer, months) {
 
   // キャッシュバック。**受取時期が計算期間を超える分は算入しない。**
   // 受け取れるかどうか分からないものを値引きとして数えると数字が甘くなる。
+  //
+  // ★`cashbacks` は配列でなければならない。「特典なし」は `[]`、「読めなかった」は `null`。
+  //   以前ここは `offer.cashbacks ?? []` だった。**アダプタが「読めなかったから計算を止めろ」と
+  //   null を立てても、空配列に化けて「特典0円」として計算が通っていた**（2026-08-25 発見）。
+  //   実際 So-net の 1ギガ専用ページは特典欄の書式が別で、同じプランが
+  //   3,879円ではなく4,296円と算出され、しかも verified=true で出ていた。
+  //   欠測は必ず null に倒す。黙って0円と読み替えない。
   let cashbackCounted = 0;
   const excludedCashback = [];
-  for (const cb of offer.cashbacks ?? []) {
+  if (!Array.isArray(offer.cashbacks)) {
+    push('cashbacks');
+    cashbackCounted = null;
+  } else for (const cb of offer.cashbacks) {
     if (cb.amount == null) { push('cashback.amount'); cashbackCounted = null; break; }
     if (cb.receiveAtMonth == null) { push('cashback.receiveAtMonth'); cashbackCounted = null; break; }
     if (cb.receiveAtMonth <= months) cashbackCounted += cb.amount;
@@ -123,3 +133,55 @@ const sum = (a) => a.reduce((x, y) => x + y, 0);
 export const FORMULA_TEXT =
   '実質月額 = ( 月額の合計 + 工事費の実負担額 + 事務手数料 + 必須オプション費用×加入必要月数 ' +
   '- キャッシュバック額 - その他割引の総額 ) ÷ 契約月数';
+
+/**
+ * 同じプランが複数の収集元ページに載っている場合をまとめる。
+ *
+ * ★So-net光で実際に起きた（2026-08-25）。1ギガMは
+ *   /access/hikari/ にも /access/hikari/1g/ にも載っている。
+ *   - 黙って両方残すと、比較表に同じ行が2つ出る
+ *   - 黙って片方を捨てると、**ページ間の食い違い＝どちらかの読み違いに気づけない**
+ *
+ * → 料金に関わる項目が完全に一致するときだけ1件にまとめる。
+ *   食い違ったら**両方とも検算不合格にして公開から外し、赤くする**。
+ *   どちらが正しいか機械には決められないので、正しそうな方を選ぶことはしない。
+ *
+ * 消えたことにはしない（両方 offers に残す）。verified を落とすだけなので、
+ * 変化検知は「プランが見当たらなくなった」という誤報を出さない。
+ */
+export function dedupeAcrossPages(offers, warnings) {
+  const first = new Map();
+  const merged = [];
+  const conflicts = [];
+
+  for (const o of offers) {
+    const seen = first.get(o.planKey);
+    if (!seen) {
+      first.set(o.planKey, o);
+      merged.push(o);
+      continue;
+    }
+    if (pricingFingerprint(seen) === pricingFingerprint(o)) {
+      seen.alsoSeenAt = [...(seen.alsoSeenAt ?? []), o.sourceUrl];
+      continue; // 完全一致。1件にまとめる
+    }
+    const why = `同じプランがページ間で食い違う [${o.planKey}]: ${seen.sourceUrl} と ${o.sourceUrl}`;
+    warnings.push(why);
+    conflicts.push(why);
+    seen.verified = false;
+    o.verified = false;
+    o.mismatch = [...(o.mismatch ?? []), why];
+    merged.push(o); // 「消えた」ことにしないため両方残す
+  }
+  return { merged, conflicts };
+}
+
+/** 料金に関わる項目だけを取り出した指紋。sourceUrl や注記の違いは無視する */
+function pricingFingerprint(o) {
+  return JSON.stringify([
+    o.monthlySchedule, o.adminFee, o.constructionFee?.monthlySchedule,
+    o.constructionFee?.discountSchedule, o.constructionFee?.borne,
+    (o.cashbacks ?? null) && o.cashbacks.map((c) => [c.amount, c.receiveAtMonth]),
+    o.requiredOptions, o.otherDiscountTotal ?? 0,
+  ]);
+}

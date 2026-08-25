@@ -6,6 +6,17 @@
 
 export const yen = (n) => (n == null ? '—' : `${n.toLocaleString('ja-JP')}円`);
 
+/**
+ * 読者に見せるプラン名。
+ *
+ * ★`planKey` は**識別子**で、変化検知が前回と突き合わせる鍵。これを変えると
+ *   「プランが廃止されて別のプランが登場した」という誤報になるので、いったん決めたら変えない。
+ *   一方、収集を進めるうちに「実はこれは So-net 光 M だった」のように
+ *   **正しい呼び名が後から分かる**ことがある。そのとき直すのは表示だけ。
+ *   → 識別（planKey）と表示（planLabel）を分ける。planLabel が無ければ planKey をそのまま出す。
+ */
+export const planName = (o) => o.planLabel ?? o.planKey;
+
 export const yenSigned = (n) =>
   n == null ? '—' : `${n > 0 ? '+' : n < 0 ? '−' : '±'}${Math.abs(n).toLocaleString('ja-JP')}円`;
 

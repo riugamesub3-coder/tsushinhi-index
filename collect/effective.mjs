@@ -17,7 +17,7 @@ import { readFile, writeFile, mkdir, readdir } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fetchWithRetry, checkRobots, sleep } from './lib/http.mjs';
-import { computeEffectiveMonthly, FORMULA_TEXT } from './lib/effective.mjs';
+import { computeEffectiveMonthly, FORMULA_TEXT, dedupeAcrossPages } from './lib/effective.mjs';
 import { loadFailureState, saveFailureState, recordOutcome, shouldFail, reportFailures } from './lib/failures.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -168,8 +168,10 @@ async function runAdapter(adapter, urls, dryRun) {
     return { providerId: adapter.providerId, status: 'extract-failed', warnings };
   }
 
+  const { merged, conflicts } = dedupeAcrossPages(offers, warnings);
+
   // 実質月額を計算して観測に載せる
-  const priced = offers.map((o) => {
+  const priced = merged.map((o) => {
     const horizons = {};
     for (const m of HORIZONS) {
       const r = computeEffectiveMonthly(o, m);
@@ -219,7 +221,8 @@ async function runAdapter(adapter, urls, dryRun) {
   const broken = priced.filter((o) => !o.verified).length;
   return {
     providerId: adapter.providerId,
-    status: broken === priced.length ? 'all-mismatch' : 'ok',
+    status: broken === priced.length ? 'all-mismatch' : conflicts.length ? 'page-conflict' : 'ok',
+    detail: conflicts.length ? conflicts.join(' / ') : undefined,
     offers: priced.length,
     verified: priced.length - broken,
     events: events.length,
@@ -249,11 +252,22 @@ function diffOffers(prev, next) {
   const before = new Map(prev.offers.filter((o) => o.verified).map((o) => [o.planKey, o]));
   const events = [];
 
+  // ★収集元ページを増やした初回に「プランが追加されました」と発信しない。
+  //   事業者は何もしていない。こちらが見に行き始めただけで、これは事業者側のニュースではない。
+  //   2026-08-25、So-net の /access/hikari/1g/ を収集対象に足した初回に
+  //   S/L 8件ぶんの plan-added が立った。そのまま出せば「8プラン新登場」という嘘になる。
+  //   前回のスナップショットに無かった収集元から来た観測は、初回に限って黙って取り込む。
+  const knownSources = new Set(prev.sourceUrls ?? []);
+
   for (const o of next.offers) {
     if (!o.verified) continue;
     const p = before.get(o.planKey);
     if (!p) {
-      events.push({ type: 'plan-added', planKey: o.planKey, after: o.effective[PRIMARY].effectiveMonthly });
+      if (!knownSources.has(o.sourceUrl)) {
+        console.log(`  ＋ 収集開始: ${o.planKey}（新しい収集元 ${o.sourceUrl}。事業者側の変化ではないのでイベントにしない）`);
+        continue;
+      }
+      events.push({ type: 'plan-added', planKey: o.planKey, planLabel: o.planLabel ?? o.planKey, after: o.effective[PRIMARY].effectiveMonthly });
       continue;
     }
     const a = p.effective?.[PRIMARY]?.effectiveMonthly ?? null;
@@ -263,6 +277,7 @@ function diffOffers(prev, next) {
     events.push({
       type: 'effective-monthly-changed',
       planKey: o.planKey,
+      planLabel: o.planLabel ?? o.planKey,
       horizonMonths: PRIMARY,
       before: a,
       after: b,
@@ -277,7 +292,7 @@ function diffOffers(prev, next) {
 
   for (const [key, p] of before) {
     if (!next.offers.some((o) => o.planKey === key)) {
-      events.push({ type: 'plan-removed', planKey: key, before: p.effective?.[PRIMARY]?.effectiveMonthly ?? null });
+      events.push({ type: 'plan-removed', planKey: key, planLabel: p.planLabel ?? key, before: p.effective?.[PRIMARY]?.effectiveMonthly ?? null });
     }
   }
 

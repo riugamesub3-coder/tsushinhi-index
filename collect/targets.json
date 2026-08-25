@@ -108,12 +108,17 @@
       "id": "so-net-hikari",
       "name": "So-net光（ソニーネットワークコミュニケーションズ）",
       "status": "verified",
-      "note": "料金ページ実測: 年27.9回変更・料金265件。お知らせ一覧URLは未特定（個別記事は /info/{年}/ 配下）",
+      "note": "料金ページ実測: 年27.9回変更・料金265件。お知らせ一覧URLは未特定（個別記事は /info/{年}/ 配下）。★1ギガには S/M/L の3プランがあるが、トップページには M の料金しか無い（2026-08-25 実測: 4,500円/7,095円/3,400円 が0件）。S/L は /access/hikari/1g/ にのみ載る。1ギガM は両ページに載るのでページ間で突き合わせている",
       "pages": [
         {
           "url": "https://www.so-net.ne.jp/access/hikari/",
           "type": "pricing",
           "priceHits": 265
+        },
+        {
+          "url": "https://www.so-net.ne.jp/access/hikari/1g/",
+          "type": "pricing",
+          "note": "So-net 光 S / M / L。robots.txt は該当ルールなし（2026-08-25 確認）"
         }
       ]
     },

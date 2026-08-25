@@ -15,7 +15,7 @@ import { readFile, writeFile, mkdir, readdir, rm } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { html, raw, layout, jsonLd, e } from './lib/html.mjs';
-import { yen, yenSigned, jstDateTime, jstDate, isoDate, daysSince, host } from './lib/format.mjs';
+import { yen, yenSigned, jstDateTime, jstDate, isoDate, daysSince, host, planName } from './lib/format.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -344,7 +344,7 @@ function rankRow(o, data) {
 <tr${raw(o.stale ? ' class="stale"' : '')}>
   <td class="num strong">${yen(o.effectiveMonthly)}</td>
   <td>${o.providerName}</td>
-  <td>${o.planKey}${raw(notes.length ? `<br><span class="tag">${notes.map(e).join(' / ')}</span>` : '')}</td>
+  <td>${planName(o)}${raw(notes.length ? `<br><span class="tag">${notes.map(e).join(' / ')}</span>` : '')}</td>
   <td class="breakdown">
     ${raw(b ? `月額計 ${e(yen(b.monthlyTotal))}<br>事務手数料 ${e(yen(b.adminFee))}<br>工事費実負担 ${e(yen(b.constructionBorne))}<br>CB −${e(yen(b.cashbackCounted))}` : '—')}
   </td>
@@ -447,7 +447,7 @@ function needsReviewSection(data) {
   <ul class="review-list">
     ${raw(data.needsReview.map((o) => html`
       <li>
-        <strong>${o.providerName}</strong> ${o.planKey}
+        <strong>${o.providerName}</strong> ${planName(o)}
         <br><span class="tag">${(o.ambiguities?.[0] ?? o.mismatch?.[0] ?? '実質月額を算出できなかった')}</span>
       </li>`).join(''))}
   </ul>
@@ -493,14 +493,14 @@ ${raw(data.events.length
 function changeItem(c) {
   if (c.type !== 'effective-monthly-changed') {
     return html`<li><time datetime="${c.detectedAt}">${jstDate(c.detectedAt)}</time>
-      <strong>${c.providerName}</strong> ${c.planKey} — ${c.type === 'plan-added' ? 'プランが追加されました' : 'プランが見当たらなくなりました'}</li>`;
+      <strong>${c.providerName}</strong> ${planName(c)} — ${c.type === 'plan-added' ? 'プランが追加されました' : 'プランが見当たらなくなりました'}</li>`;
   }
   const dir = c.effectiveMonthlyDelta < 0 ? 'down' : 'up';
   const cause = (c.cause ?? []).map((x) => `${x.label} ${yen(x.before)}→${yen(x.after)}`).join(' / ');
   return html`
 <li class="${dir}">
   <time datetime="${c.detectedAt}">${jstDate(c.detectedAt)}</time>
-  <strong>${c.providerName}</strong> ${c.planKey}
+  <strong>${c.providerName}</strong> ${planName(c)}
   <span class="delta">実質月額 ${yen(c.before)} → ${yen(c.after)}（${yenSigned(c.effectiveMonthlyDelta)}）</span>
   ${raw(cause ? `<span class="cause">${e(cause)}</span>` : '')}
   ${raw(c.sourceUrl ? `<a class="src" href="${e(c.sourceUrl)}" rel="nofollow noopener">出典</a>` : '')}
@@ -707,10 +707,10 @@ function itemListLd(data) {
     itemListElement: rows.map((o, i) => ({
       '@type': 'ListItem',
       position: i + 1,
-      name: `${o.providerName} ${o.planKey}`,
+      name: `${o.providerName} ${planName(o)}`,
       item: {
         '@type': 'Service',
-        name: `${o.providerName} ${o.planKey}`,
+        name: `${o.providerName} ${planName(o)}`,
         serviceType: '光回線インターネット接続サービス',
         // 法人格の正式名称は収集していないので、収集元に記載の事業者名をそのまま使う。
         // 会社名を推測で埋めない。
@@ -822,7 +822,7 @@ function renderLlmsTxt(data) {
     .filter((o) => o.entry === '新規')
     .sort((a, b) => a.effectiveMonthly - b.effectiveMonthly)
     .slice(0, 10)
-    .map((o) => `- ${o.providerName} ${o.planKey}: ${o.effectiveMonthly.toLocaleString('ja-JP')}円/月（${HORIZON}か月換算、${isoDate(o.observedAt)}時点、出典 ${o.sourceUrl}）`)
+    .map((o) => `- ${o.providerName} ${planName(o)}: ${o.effectiveMonthly.toLocaleString('ja-JP')}円/月（${HORIZON}か月換算、${isoDate(o.observedAt)}時点、出典 ${o.sourceUrl}）`)
     .join('\n');
 
   return `# 通信費インデックス（tsushinhi-index）
@@ -884,8 +884,8 @@ ${urls.map((u) => `  <url>
 function renderFeed(data) {
   const items = data.events.slice(0, 50).map((c) => {
     const title = c.type === 'effective-monthly-changed'
-      ? `${c.providerName} ${c.planKey} 実質月額 ${yenSigned(c.effectiveMonthlyDelta)}（${yen(c.before)}→${yen(c.after)}）`
-      : `${c.providerName} ${c.planKey} ${c.type}`;
+      ? `${c.providerName} ${planName(c)} 実質月額 ${yenSigned(c.effectiveMonthlyDelta)}（${yen(c.before)}→${yen(c.after)}）`
+      : `${c.providerName} ${planName(c)} ${c.type}`;
     return `  <item>
     <title>${xml(title)}</title>
     <link>${SITE_URL}/changes/</link>

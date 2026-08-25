@@ -8,7 +8,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { parseTables, toYen, cellText } from './lib/table.mjs';
 import { findBlocks, parseDefinitionLists, headingChains } from './lib/dom.mjs';
-import { computeEffectiveMonthly, expandMonthly } from './lib/effective.mjs';
+import { computeEffectiveMonthly, expandMonthly, dedupeAcrossPages } from './lib/effective.mjs';
+import { parseBenefitByEntry, gradesInService, readBasePriceList, readDiscountExemptGrades } from './adapters/so-net-hikari.mjs';
 import { recordOutcome, shouldFail, escalated } from './lib/failures.mjs';
 
 // ── toYen ────────────────────────────────────────────────────────
@@ -247,6 +248,35 @@ test('一項目でも欠ければ実質月額は null（推定で埋めない）
   assert.ok(r.missing.includes('adminFee'));
 });
 
+// ★2026-08-25 に実際に踏んだ欠陥の再発防止。
+//   アダプタは「特典の有無が読めなかった」ことを cashbacks = null で伝える設計だったが、
+//   計算側が `?? []` で空配列に読み替えていたため、**特典0円として計算が通っていた**。
+//   「特典なし（[]）」と「読めなかった（null）」は別物として扱う。
+test('キャッシュバックが読めていない（null）なら実質月額は null', () => {
+  const o = nuroHouse2Giga();
+  o.cashbacks = null;
+  const r = computeEffectiveMonthly(o, 36);
+  assert.equal(r.effectiveMonthly, null);
+  assert.ok(r.missing.includes('cashbacks'));
+});
+
+test('キャッシュバックの欄が無い（undefined）場合も null にする', () => {
+  const o = nuroHouse2Giga();
+  delete o.cashbacks;
+  const r = computeEffectiveMonthly(o, 36);
+  assert.equal(r.effectiveMonthly, null);
+  assert.ok(r.missing.includes('cashbacks'));
+});
+
+test('特典が無い（空配列）ことは事実として計算に通す', () => {
+  const o = nuroHouse2Giga();
+  o.cashbacks = [];
+  const r = computeEffectiveMonthly(o, 36);
+  // 10,000円のキャッシュバックが無くなるぶんだけ実質月額は上がる
+  assert.equal(r.total, 167460);
+  assert.deepEqual(r.missing, []);
+});
+
 test('受取時期が不明なキャッシュバックは全体を null にする', () => {
   const o = nuroHouse2Giga();
   o.cashbacks = [{ amount: 10000, receiveAtMonth: null }];
@@ -260,4 +290,87 @@ test('必須オプションは加入必要月数ぶんだけ加算する', () =>
   const r = computeEffectiveMonthly(o, 36);
   assert.equal(r.breakdown.optionTotal, 6000);
   assert.equal(r.total, 163460);
+});
+
+// ── So-net光: S/M/L グレードの取り違えを防ぐ ─────────────────────
+//
+// ★2026-08-25、当サイトは So-net 光 1ギガの **Mプランだけ**を「1ギガ」として載せていた。
+//   S/L は別ページ /access/hikari/1g/ にしか無く、そこは特典の書き方も違った。
+//   同じキャンペーンが2つの書式で書かれているので、両方を読めないと
+//   「Mの15,000円をSにも付ける」「Sは特典対象外なのに読めないと言い張る」のどちらかが起きる。
+
+test('特典の対象サービスからグレードを取る（Mだけの特典をS/Lに付けない）', () => {
+  assert.deepEqual(gradesInService('So-net 光 1ギガ（So-net 光 M）'), ['M']);
+  assert.deepEqual(gradesInService('So-net 光 1ギガ（So-net 光 S/M/L）'), ['S', 'M', 'L']);
+  assert.equal(gradesInService('So-net 光 10ギガ'), null); // 括弧書きなし＝そのサービス全体
+});
+
+test('特典内容が申込区分ごと（トップページの書式）', () => {
+  const r = parseBenefitByEntry(
+    'お申し込みの住居タイプ・回線種別について、以下の金額をキャッシュバックします。' +
+    ' ■戸建・マンション共通 ・新設の場合：15,000円 ・転用/事業者変更の場合：対象外'
+  );
+  assert.deepEqual(r['新設'], { '*': 15000 });
+  assert.deepEqual(r['転用/事業者変更'], { '*': 0 }); // 「対象外」は不明ではなく0円という事実
+});
+
+test('特典内容がグレード別（1ギガ専用ページの書式）', () => {
+  const r = parseBenefitByEntry(
+    ' ■戸建・マンション共通 ・新設の場合 So-net 光 S：対象外 So-net 光 M：15,000円 So-net 光 L：対象外' +
+    ' ・転用/事業者変更の場合 So-net 光 S/M/L共通：対象外'
+  );
+  assert.deepEqual(r['新設'], { S: 0, M: 15000, L: 0 });
+  assert.deepEqual(r['転用/事業者変更'], { S: 0, M: 0, L: 0 });
+});
+
+test('「各プランの通常月額基本料金」の一覧を住居タイプごとに割る', () => {
+  const r = readBasePriceList(
+    '各プランの通常月額基本料金 ■戸建 ・So-net 光 S：4,500円 ・So-net 光 M：5,995円 ・So-net 光 L：7,095円' +
+    ' ■マンション ・So-net 光 S：3,400円 ・So-net 光 M：4,895円 ・So-net 光 L：5,995円'
+  );
+  assert.deepEqual(r.S, { 戸建: 4500, マンション: 3400 });
+  assert.deepEqual(r.L, { 戸建: 7095, マンション: 5995 });
+});
+
+test('割引対象外グレードは「対象外」と明記されているものだけ', () => {
+  const yes = readDiscountExemptGrades('・So-net 光 S/L共通 新設・転用・事業者変更すべて：特典対象外');
+  assert.deepEqual([...yes].sort(), ['L', 'S']);
+  // ★書いていなければ「割引が無い」と決めつけない。空集合＝観測を作らない側に倒れる
+  assert.equal(readDiscountExemptGrades('・So-net 光 M 新設の場合：1～23カ月目 2,695円割引').size, 0);
+});
+
+// ── 複数ページに同じプランが載っている場合 ───────────────────────
+
+const twoPageOffer = (url, monthly) => ({
+  planKey: '1ギガ / 戸建 / 回線新設でお申し込み / 派遣工事',
+  sourceUrl: url,
+  verified: true,
+  monthlySchedule: [{ fromMonth: 1, toMonth: null, amount: monthly }],
+  adminFee: 3500,
+  constructionFee: { monthlySchedule: [], discountSchedule: [] },
+  cashbacks: [],
+  requiredOptions: [],
+});
+
+test('同じプランが2ページに載っていて一致すれば1件にまとめる', () => {
+  const warnings = [];
+  const { merged, conflicts } = dedupeAcrossPages(
+    [twoPageOffer('https://example.com/a', 5995), twoPageOffer('https://example.com/b', 5995)],
+    warnings
+  );
+  assert.equal(merged.length, 1);
+  assert.deepEqual(merged[0].alsoSeenAt, ['https://example.com/b']);
+  assert.deepEqual(conflicts, []);
+});
+
+test('ページ間で食い違えば、どちらも公開しない（正しそうな方を選ばない）', () => {
+  const warnings = [];
+  const { merged, conflicts } = dedupeAcrossPages(
+    [twoPageOffer('https://example.com/a', 5995), twoPageOffer('https://example.com/b', 6270)],
+    warnings
+  );
+  assert.equal(conflicts.length, 1);
+  assert.equal(merged.length, 2);              // 「消えた」ことにしないため両方残す
+  assert.ok(merged.every((o) => o.verified === false));
+  assert.equal(warnings.length, 1);
 });
