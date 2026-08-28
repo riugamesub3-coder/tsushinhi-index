@@ -5,6 +5,15 @@
   "firstCollectedAt": "2026-08-23T09:31:30.121Z",
   "notices": [
     {
+      "date": "2026-08-28",
+      "title": "令和8年8月27日からの大雨による災害に伴う支援措置について",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2026/0828_01/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-28T22:01:08.442Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
       "date": "2026-08-17",
       "title": "令和8年8月13日からの大雨による災害に伴う支援措置について",
       "url": "https://network.mobile.rakuten.co.jp/hikari/information/2026/0817_01/",
@@ -311,6 +320,6 @@
       "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
     }
   ],
-  "lastCollectedAt": "2026-08-28T04:27:00.519Z",
-  "totalNotices": 30
+  "lastCollectedAt": "2026-08-28T22:01:08.442Z",
+  "totalNotices": 31
 }
