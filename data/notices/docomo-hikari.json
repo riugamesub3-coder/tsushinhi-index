@@ -5,6 +5,53 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-08-28",
+      "title": "【ドコモFG】ドコモSMTBネット銀行とマネックス証券、連携機能の提供を開始",
+      "url": "https://www.docomo-fg.com/info/news_release/20260828_001.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-28T04:27:02.876Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-08-28",
+      "title": "NTTドコモ・NTTデータ・Synspective、「災害時における衛星画像活用に関する協定」を締結",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/08/28_00.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-28T04:27:02.876Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-08-28",
+      "title": "令和8年8月27日からの大雨に伴う支援措置",
+      "url": "https://www.docomo.ne.jp/info/news_release/detail/20260827_00_m.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-28T04:27:02.876Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-08-27",
+      "title": "【ドコモFG】9月開始の「d払い」エリアキャンペーン -全国7地域の対象店舗で抽選によりdポイントを進呈-（PDF形式：594KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/docomofg/20260827151000.pdf",
+      "categories": [
+        "campaign"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-28T04:27:02.876Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-08-26",
+      "title": "「ドコモスポーツくじ」で「DUNK」の取扱い開始 -バスケットボールを対象とした予想いらずのスポーツくじ-（PDF形式：469KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260826_g1.pdf",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-28T04:27:02.876Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-08-25",
       "title": "ドコモ、DAZN、CARTA ZEROで、1億超のdポイントクラブ会員基盤データを活用した高精度なターゲティング配信を実現するソリューションの提供を開始 -dポイントクラブ会員基盤データを活用し、ターゲティングから効果計測までを一気通貫で支援-（PDF形式：543KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260825_x1.pdf",
@@ -180,6 +227,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-08-25T22:00:43.865Z",
-  "totalNotices": 18
+  "lastCollectedAt": "2026-08-28T04:27:02.876Z",
+  "totalNotices": 23
 }
