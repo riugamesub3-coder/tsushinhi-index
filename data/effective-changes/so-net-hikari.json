@@ -1,0 +1,370 @@
+{
+  "providerId": "so-net-hikari",
+  "providerName": "So-net光",
+  "events": [
+    {
+      "detectedAt": "2026-08-31T21:25:29.755Z",
+      "changes": [
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "10ギガ / 戸建・マンション共通 / 回線新設でお申し込み / 派遣工事",
+          "planLabel": "10ギガ / 戸建・マンション共通 / 回線新設でお申し込み / 派遣工事",
+          "horizonMonths": 36,
+          "before": 4424,
+          "after": 4634,
+          "effectiveMonthlyDelta": 210,
+          "direction": "up",
+          "cause": [
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 3500,
+              "after": 6050,
+              "delta": 2550
+            },
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 15000,
+              "after": 10000,
+              "delta": -5000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
+          "previousObservedAt": "2026-08-30T21:25:06.547Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "10ギガ / 戸建・マンション共通 / 転用・事業者変更でのお申し込み / 10ギガ⇒10ギガ",
+          "planLabel": "10ギガ / 戸建・マンション共通 / 転用・事業者変更でのお申し込み / 10ギガ⇒10ギガ",
+          "horizonMonths": 36,
+          "before": 5604,
+          "after": 5675,
+          "effectiveMonthlyDelta": 71,
+          "direction": "up",
+          "cause": [
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 3500,
+              "after": 6050,
+              "delta": 2550
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
+          "previousObservedAt": "2026-08-30T21:25:06.547Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "1ギガ / 戸建 / 回線新設でお申し込み / 派遣工事",
+          "planLabel": "1ギガ M / 戸建 / 回線新設でお申し込み / 派遣工事",
+          "horizonMonths": 36,
+          "before": 3879,
+          "after": 5408,
+          "effectiveMonthlyDelta": 1529,
+          "direction": "up",
+          "cause": [
+            {
+              "field": "monthlyTotal",
+              "label": "月額の合計",
+              "before": 151140,
+              "after": 191640,
+              "delta": 40500
+            },
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 3500,
+              "after": 6050,
+              "delta": 2550
+            },
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 15000,
+              "after": 3000,
+              "delta": -12000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
+          "previousObservedAt": "2026-08-30T21:25:06.547Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "1ギガ / マンション / 回線新設でお申し込み / 派遣工事",
+          "planLabel": "1ギガ M / マンション / 回線新設でお申し込み / 派遣工事",
+          "horizonMonths": 36,
+          "before": 3512,
+          "after": 4675,
+          "effectiveMonthlyDelta": 1163,
+          "direction": "up",
+          "cause": [
+            {
+              "field": "monthlyTotal",
+              "label": "月額の合計",
+              "before": 137940,
+              "after": 165240,
+              "delta": 27300
+            },
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 3500,
+              "after": 6050,
+              "delta": 2550
+            },
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 15000,
+              "after": 3000,
+              "delta": -12000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
+          "previousObservedAt": "2026-08-30T21:25:06.547Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "1ギガ / 戸建 / 転用・事業者変更でのお申し込み",
+          "planLabel": "1ギガ M / 戸建 / 転用・事業者変更でのお申し込み",
+          "horizonMonths": 36,
+          "before": 5194,
+          "after": 5827,
+          "effectiveMonthlyDelta": 633,
+          "direction": "up",
+          "cause": [
+            {
+              "field": "monthlyTotal",
+              "label": "月額の合計",
+              "before": 183480,
+              "after": 203730,
+              "delta": 20250
+            },
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 3500,
+              "after": 6050,
+              "delta": 2550
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
+          "previousObservedAt": "2026-08-30T21:25:06.547Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "1ギガ / マンション / 転用・事業者変更でのお申し込み",
+          "planLabel": "1ギガ M / マンション / 転用・事業者変更でのお申し込み",
+          "horizonMonths": 36,
+          "before": 4461,
+          "after": 4911,
+          "effectiveMonthlyDelta": 450,
+          "direction": "up",
+          "cause": [
+            {
+              "field": "monthlyTotal",
+              "label": "月額の合計",
+              "before": 157080,
+              "after": 170730,
+              "delta": 13650
+            },
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 3500,
+              "after": 6050,
+              "delta": 2550
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
+          "previousObservedAt": "2026-08-30T21:25:06.547Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "1ギガ S / 戸建 / 回線新設でお申し込み / 派遣工事",
+          "planLabel": "1ギガ S / 戸建 / 回線新設でお申し込み / 派遣工事",
+          "horizonMonths": 36,
+          "before": 4597,
+          "after": 4668,
+          "effectiveMonthlyDelta": 71,
+          "direction": "up",
+          "cause": [
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 3500,
+              "after": 6050,
+              "delta": 2550
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.so-net.ne.jp/access/hikari/1g/",
+          "previousObservedAt": "2026-08-30T21:25:06.547Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "1ギガ S / マンション / 回線新設でお申し込み / 派遣工事",
+          "planLabel": "1ギガ S / マンション / 回線新設でお申し込み / 派遣工事",
+          "horizonMonths": 36,
+          "before": 3497,
+          "after": 3568,
+          "effectiveMonthlyDelta": 71,
+          "direction": "up",
+          "cause": [
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 3500,
+              "after": 6050,
+              "delta": 2550
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.so-net.ne.jp/access/hikari/1g/",
+          "previousObservedAt": "2026-08-30T21:25:06.547Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "1ギガ S / 戸建 / 転用・事業者変更でのお申し込み",
+          "planLabel": "1ギガ S / 戸建 / 転用・事業者変更でのお申し込み",
+          "horizonMonths": 36,
+          "before": 4597,
+          "after": 4668,
+          "effectiveMonthlyDelta": 71,
+          "direction": "up",
+          "cause": [
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 3500,
+              "after": 6050,
+              "delta": 2550
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.so-net.ne.jp/access/hikari/1g/",
+          "previousObservedAt": "2026-08-30T21:25:06.547Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "1ギガ S / マンション / 転用・事業者変更でのお申し込み",
+          "planLabel": "1ギガ S / マンション / 転用・事業者変更でのお申し込み",
+          "horizonMonths": 36,
+          "before": 3497,
+          "after": 3568,
+          "effectiveMonthlyDelta": 71,
+          "direction": "up",
+          "cause": [
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 3500,
+              "after": 6050,
+              "delta": 2550
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.so-net.ne.jp/access/hikari/1g/",
+          "previousObservedAt": "2026-08-30T21:25:06.547Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "1ギガ L / 戸建 / 回線新設でお申し込み / 派遣工事",
+          "planLabel": "1ギガ L / 戸建 / 回線新設でお申し込み / 派遣工事",
+          "horizonMonths": 36,
+          "before": 7192,
+          "after": 7263,
+          "effectiveMonthlyDelta": 71,
+          "direction": "up",
+          "cause": [
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 3500,
+              "after": 6050,
+              "delta": 2550
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.so-net.ne.jp/access/hikari/1g/",
+          "previousObservedAt": "2026-08-30T21:25:06.547Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "1ギガ L / マンション / 回線新設でお申し込み / 派遣工事",
+          "planLabel": "1ギガ L / マンション / 回線新設でお申し込み / 派遣工事",
+          "horizonMonths": 36,
+          "before": 6092,
+          "after": 6163,
+          "effectiveMonthlyDelta": 71,
+          "direction": "up",
+          "cause": [
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 3500,
+              "after": 6050,
+              "delta": 2550
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.so-net.ne.jp/access/hikari/1g/",
+          "previousObservedAt": "2026-08-30T21:25:06.547Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "1ギガ L / 戸建 / 転用・事業者変更でのお申し込み",
+          "planLabel": "1ギガ L / 戸建 / 転用・事業者変更でのお申し込み",
+          "horizonMonths": 36,
+          "before": 7192,
+          "after": 7263,
+          "effectiveMonthlyDelta": 71,
+          "direction": "up",
+          "cause": [
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 3500,
+              "after": 6050,
+              "delta": 2550
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.so-net.ne.jp/access/hikari/1g/",
+          "previousObservedAt": "2026-08-30T21:25:06.547Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "1ギガ L / マンション / 転用・事業者変更でのお申し込み",
+          "planLabel": "1ギガ L / マンション / 転用・事業者変更でのお申し込み",
+          "horizonMonths": 36,
+          "before": 6092,
+          "after": 6163,
+          "effectiveMonthlyDelta": 71,
+          "direction": "up",
+          "cause": [
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 3500,
+              "after": 6050,
+              "delta": 2550
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.so-net.ne.jp/access/hikari/1g/",
+          "previousObservedAt": "2026-08-30T21:25:06.547Z"
+        }
+      ]
+    }
+  ],
+  "lastEventAt": "2026-08-31T21:25:29.755Z",
+  "totalEvents": 1
+}

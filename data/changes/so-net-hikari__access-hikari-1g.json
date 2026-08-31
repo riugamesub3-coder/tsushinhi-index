@@ -1,13 +1,13 @@
 {
-  "key": "so-net-hikari__access-hikari",
+  "key": "so-net-hikari__access-hikari-1g",
   "providerId": "so-net-hikari",
   "providerName": "So-net光（ソニーネットワークコミュニケーションズ）",
-  "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
+  "sourceUrl": "https://www.so-net.ne.jp/access/hikari/1g/",
   "events": [
     {
-      "detectedAt": "2026-08-31T21:25:04.104Z",
-      "previousCollectedAt": "2026-08-30T21:24:37.257Z",
-      "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
+      "detectedAt": "2026-08-31T21:25:06.605Z",
+      "previousCollectedAt": "2026-08-30T21:24:38.963Z",
+      "sourceUrl": "https://www.so-net.ne.jp/access/hikari/1g/",
       "source": "pricing-page",
       "needsReview": true,
       "changes": [
@@ -16,16 +16,10 @@
           "before": [
             3300
           ],
-          "after": [],
-          "delta": null
-        },
-        {
-          "label": "－ 回線工事費相当割引 － 2カ月目～23カ月目",
-          "before": [
-            3300
+          "after": [
+            3980
           ],
-          "after": [],
-          "delta": null
+          "delta": 680
         },
         {
           "label": "・事業者変更でのお申し込み 初期費用 事務手数料",
@@ -48,72 +42,24 @@
           "delta": 440
         },
         {
-          "label": "～11カ月目",
-          "before": [
-            1595,
-            2695
-          ],
-          "after": [
-            915,
-            2015
-          ],
-          "delta": null
-        },
-        {
           "label": "～11カ月目まで",
           "before": [
             3300
           ],
-          "after": [],
-          "delta": null
-        },
-        {
-          "label": "～23カ月目",
-          "before": [
-            1595,
-            2695
+          "after": [
+            3980
           ],
-          "after": [],
-          "delta": null
+          "delta": 680
         },
         {
-          "label": "～23カ月目まで",
-          "before": [
-            3300
-          ],
-          "after": [],
-          "delta": null
-        },
-        {
-          "label": "■戸建・マンション共通 ・新設の場合：",
+          "label": "net 光 S：対象外 So-net 光 M：",
           "before": [
             15000
           ],
           "after": [
-            3000,
-            10000
+            3000
           ],
-          "delta": null
-        },
-        {
-          "label": "ガの場合］ 工事不要 *1：23回分割払い（初回",
-          "before": [
-            2420
-          ],
-          "after": [
-            3300
-          ],
-          "delta": 880
-        },
-        {
-          "label": "ガの場合］ 派遣工事の場合 （屋内配線工事あり）",
-          "before": [
-            29040
-          ],
-          "after": [
-            39600
-          ],
-          "delta": 10560
+          "delta": -12000
         },
         {
           "label": "カ月目 （料金内訳） 月額基本料金 回線工事費",
@@ -126,26 +72,6 @@
           "delta": 880
         },
         {
-          "label": "ご利用開始月（開通月） 最大 ＋ 事務手数料",
-          "before": [
-            3500
-          ],
-          "after": [
-            6050
-          ],
-          "delta": 2550
-        },
-        {
-          "label": "ョン共通 ・派遣工事（屋内配線工事あり）の場合：",
-          "before": [
-            29040
-          ],
-          "after": [
-            39600
-          ],
-          "delta": 10560
-        },
-        {
           "label": "ン ご利用開始月（開通月） 最大 ＋ 事務手数料",
           "before": [
             3500
@@ -154,26 +80,6 @@
             6050
           ],
           "delta": 2550
-        },
-        {
-          "label": "事業者変更でのお申し込み ■初期費用 事務手数料",
-          "before": [
-            3500
-          ],
-          "after": [
-            6050
-          ],
-          "delta": 2550
-        },
-        {
-          "label": "光 1ギガ（So-net 光 M）新設の場合に",
-          "before": [
-            15000
-          ],
-          "after": [
-            3000
-          ],
-          "delta": -12000
         },
         {
           "label": "最大 ＋ 事務手数料 （料金内訳） 事務手数料",
@@ -208,35 +114,17 @@
           "delta": 10560
         },
         {
-          "label": "合 ご利用開始月（開通月） 最大 ＋ 事務手数料",
-          "before": [
-            3500
-          ],
-          "after": [
-            6050
-          ],
-          "delta": 2550
-        },
-        {
           "label": "回目以降",
-          "before": [],
+          "before": [
+            1210
+          ],
           "after": [
             1650
           ],
-          "delta": null
+          "delta": 440
         },
         {
           "label": "場合 特典により実質無料 *23回分割払い(初回",
-          "before": [
-            2420
-          ],
-          "after": [
-            3300
-          ],
-          "delta": 880
-        },
-        {
-          "label": "場合 特典により実質無料 *23回分割払い（初回",
           "before": [
             2420
           ],
@@ -324,18 +212,10 @@
           "before": [
             3300
           ],
-          "after": [],
-          "delta": null
-        },
-        {
-          "label": "更 回線新設でお申し込み ■初期費用 事務手数料",
-          "before": [
-            3500
-          ],
           "after": [
-            6050
+            3980
           ],
-          "delta": 2550
+          "delta": 680
         },
         {
           "label": "月額基本料金 回線工事費 月額基本料金割引 －",
@@ -350,10 +230,9 @@
           "delta": null
         },
         {
-          "label": "月額基本料金 月額基本料金割引 － 12カ月目～",
+          "label": "月額基本料金（マンション）",
           "before": [
-            4895,
-            5995
+            4895
           ],
           "after": [],
           "delta": null
@@ -379,15 +258,6 @@
           "delta": 440
         },
         {
-          "label": "目～23カ月目 /月 （料金内訳） 月額基本料金",
-          "before": [
-            4895,
-            5995
-          ],
-          "after": [],
-          "delta": null
-        },
-        {
           "label": "費 月額基本料金割引 － 回線工事費相当割引 －",
           "before": [
             1210,
@@ -408,43 +278,12 @@
             3980
           ],
           "delta": 680
-        },
-        {
-          "label": "金割引 － 回線工事費相当割引 － 24カ月目～",
-          "before": [
-            4895,
-            5995
-          ],
-          "after": [],
-          "delta": null
         }
       ],
       "addedLabels": 12,
-      "removedLabels": 2
-    },
-    {
-      "detectedAt": "2026-08-23T21:56:18.361Z",
-      "previousCollectedAt": "2026-08-23T10:11:04.427Z",
-      "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
-      "source": "pricing-page",
-      "needsReview": false,
-      "changes": [
-        {
-          "label": "■戸建・マンション共通 ・新設の場合：",
-          "before": [
-            10000,
-            20000
-          ],
-          "after": [
-            15000
-          ],
-          "delta": null
-        }
-      ],
-      "addedLabels": 8,
-      "removedLabels": 9
+      "removedLabels": 8
     }
   ],
-  "lastEventAt": "2026-08-31T21:25:04.104Z",
-  "totalEvents": 2
+  "lastEventAt": "2026-08-31T21:25:06.605Z",
+  "totalEvents": 1
 }

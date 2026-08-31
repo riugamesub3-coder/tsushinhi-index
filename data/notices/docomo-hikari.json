@@ -5,6 +5,15 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-08-31",
+      "title": "自律共創人材を育成する「docomo academy」、社外企業へ参加対象を拡大 -企業・業界を越えた学びと共創の場へ発展、第7期を2026年10月から開講-（PDF形式：566KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260831_a.pdf",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-31T21:24:46.340Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-08-28",
       "title": "【ドコモFG】ドコモSMTBネット銀行とマネックス証券、連携機能の提供を開始",
       "url": "https://www.docomo-fg.com/info/news_release/20260828_001.html",
@@ -227,6 +236,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-08-30T21:24:19.339Z",
-  "totalNotices": 23
+  "lastCollectedAt": "2026-08-31T21:24:46.340Z",
+  "totalNotices": 24
 }

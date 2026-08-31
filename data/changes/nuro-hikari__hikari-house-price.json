@@ -5,6 +5,279 @@
   "sourceUrl": "https://www.nuro.jp/hikari/house/price/",
   "events": [
     {
+      "detectedAt": "2026-08-31T21:24:49.188Z",
+      "previousCollectedAt": "2026-08-30T21:24:22.541Z",
+      "sourceUrl": "https://www.nuro.jp/hikari/house/price/",
+      "source": "pricing-page",
+      "needsReview": true,
+      "changes": [
+        {
+          "label": "※2 ー 2年割 - /月 (最大) 2年割 -",
+          "before": [
+            1740,
+            2620
+          ],
+          "after": [
+            1190,
+            2070
+          ],
+          "delta": null
+        },
+        {
+          "label": "～24か月目 25～36か月目 37か月目～",
+          "before": [
+            3980
+          ],
+          "after": [
+            4530
+          ],
+          "delta": 550
+        },
+        {
+          "label": "が発生 料金内訳を確認する 月額基本料金 ※1",
+          "before": [
+            5720,
+            6600
+          ],
+          "after": [
+            5170,
+            6050
+          ],
+          "delta": null
+        },
+        {
+          "label": "キャンペーン ー キャッシュバックキャンペーン",
+          "before": [
+            15000
+          ],
+          "after": [
+            3000,
+            10000
+          ],
+          "delta": null
+        },
+        {
+          "label": "以下限定の最安プラン！ U29応援割 3年間最大",
+          "before": [
+            2620
+          ],
+          "after": [
+            2070
+          ],
+          "delta": -550
+        },
+        {
+          "label": "最大） U29応援割 - /月 U29応援割 -",
+          "before": [
+            1740,
+            2620
+          ],
+          "after": [
+            1190,
+            2070
+          ],
+          "delta": null
+        },
+        {
+          "label": "最大) 月額基本料金 ※1 月額基本料金 ※1",
+          "before": [
+            5720,
+            6600
+          ],
+          "after": [
+            5170,
+            6050
+          ],
+          "delta": null
+        },
+        {
+          "label": "分割でお支払いいただく基本工事費",
+          "before": [
+            49500
+          ],
+          "after": [
+            55000
+          ],
+          "delta": 5500
+        },
+        {
+          "label": "割引 開通2か月目～24か月目：月額基本料金から",
+          "before": [
+            1740,
+            2620
+          ],
+          "after": [
+            1190,
+            2070
+          ],
+          "delta": null
+        },
+        {
+          "label": "割引 開通2か月目～36か月目：月額基本料金から",
+          "before": [
+            1740,
+            2620
+          ],
+          "after": [
+            1190,
+            2070
+          ],
+          "delta": null
+        },
+        {
+          "label": "基本工事費",
+          "before": [
+            44000,
+            49500
+          ],
+          "after": [
+            55000
+          ],
+          "delta": null
+        },
+        {
+          "label": "契約事務手数料",
+          "before": [
+            3300
+          ],
+          "after": [
+            6050
+          ],
+          "delta": 2750
+        },
+        {
+          "label": "契約事務手数料 が発生",
+          "before": [
+            3980
+          ],
+          "after": [
+            4530
+          ],
+          "delta": 550
+        },
+        {
+          "label": "年割 ー 工事費相当割引 - 工事費相当割引 -",
+          "before": [
+            2062
+          ],
+          "after": [
+            1527
+          ],
+          "delta": -535
+        },
+        {
+          "label": "応援割 - /月 （最大） U29応援割 -",
+          "before": [
+            1740,
+            2620
+          ],
+          "after": [
+            1190,
+            2070
+          ],
+          "delta": null
+        },
+        {
+          "label": "援割 ー 工事費相当割引 - 工事費相当割引 -",
+          "before": [
+            2062
+          ],
+          "after": [
+            1527
+          ],
+          "delta": -535
+        },
+        {
+          "label": "月 U29応援割 ー 工事費相当割引 -",
+          "before": [
+            2074
+          ],
+          "after": [
+            1555
+          ],
+          "delta": -519
+        },
+        {
+          "label": "月額基本料金 ※1 (最大) 月額基本料金 ※1",
+          "before": [
+            5720,
+            6600
+          ],
+          "after": [
+            5170,
+            6050
+          ],
+          "delta": null
+        },
+        {
+          "label": "月額基本料金に関する注意事項 別途契約事務手数料",
+          "before": [
+            3300
+          ],
+          "after": [
+            6050
+          ],
+          "delta": 2750
+        },
+        {
+          "label": "本工事費 ※1 ー 特典割引 工事費相当割引 -",
+          "before": [
+            2074
+          ],
+          "after": [
+            1555
+          ],
+          "delta": -519
+        },
+        {
+          "label": "本工事費 ※2 基本工事費 ※2 ー 2年割 -",
+          "before": [
+            1740,
+            2620
+          ],
+          "after": [
+            1190,
+            2070
+          ],
+          "delta": null
+        },
+        {
+          "label": "特典割引 工事費相当割引 - 工事費相当割引 -",
+          "before": [
+            2062
+          ],
+          "after": [
+            1527
+          ],
+          "delta": -535
+        },
+        {
+          "label": "費割賦について:基本工事費割賦として開通1か月目",
+          "before": [
+            2074
+          ],
+          "after": [
+            1555
+          ],
+          "delta": -519
+        },
+        {
+          "label": "金 ※1 月額基本料金 ※1 月額基本料金 ※1",
+          "before": [
+            5720,
+            6600
+          ],
+          "after": [
+            5170,
+            6050
+          ],
+          "delta": null
+        }
+      ],
+      "addedLabels": 35,
+      "removedLabels": 24
+    },
+    {
       "detectedAt": "2026-08-24T08:47:29.797Z",
       "previousCollectedAt": "2026-08-24T02:25:32.103Z",
       "sourceUrl": "https://www.nuro.jp/hikari/house/price/",
@@ -54,6 +327,6 @@
       "removedLabels": 2
     }
   ],
-  "lastEventAt": "2026-08-24T08:47:29.797Z",
-  "totalEvents": 2
+  "lastEventAt": "2026-08-31T21:24:49.188Z",
+  "totalEvents": 3
 }

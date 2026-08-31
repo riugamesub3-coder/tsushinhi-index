@@ -2,7 +2,7 @@
   "providerId": "so-net-hikari",
   "providerName": "So-net光",
   "channelId": "official",
-  "observedAt": "2026-08-30T21:25:06.547Z",
+  "observedAt": "2026-08-31T21:25:29.755Z",
   "formula": "実質月額 = ( 月額の合計 + 工事費の実負担額 + 事務手数料 + 必須オプション費用×加入必要月数 - キャッシュバック額 - その他割引の総額 ) ÷ 契約月数",
   "primaryHorizonMonths": 36,
   "sourceUrls": [
@@ -61,7 +61,7 @@
           "amount": 6270
         }
       ],
-      "adminFee": 3500,
+      "adminFee": 6050,
       "constructionFee": {
         "monthlySchedule": [
           {
@@ -72,12 +72,12 @@
           {
             "fromMonth": 2,
             "toMonth": 2,
-            "amount": 2420
+            "amount": 3300
           },
           {
             "fromMonth": 3,
             "toMonth": 24,
-            "amount": 1210
+            "amount": 1650
           },
           {
             "fromMonth": 25,
@@ -94,12 +94,12 @@
           {
             "fromMonth": 2,
             "toMonth": 2,
-            "amount": 2420
+            "amount": 3300
           },
           {
             "fromMonth": 3,
             "toMonth": 24,
-            "amount": 1210
+            "amount": 1650
           },
           {
             "fromMonth": 25,
@@ -111,10 +111,10 @@
       },
       "cashbacks": [
         {
-          "amount": 15000,
+          "amount": 10000,
           "receiveAtMonth": 17,
           "note": "So-net 光 10ギガ / 新設 / 対象サービスのご利用開始（開通）から17カ月後の15日より45日間",
-          "campaignPeriod": "2026年8月24日～2026年8月31日"
+          "campaignPeriod": "2026年9月1日～2026年9月6日"
         }
       ],
       "requiredOptions": [],
@@ -142,31 +142,31 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-08-30T21:25:06.547Z",
+      "observedAt": "2026-08-31T21:25:29.755Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 3501,
-          "total": 84020,
+          "effectiveMonthly": 3815,
+          "total": 91570,
           "breakdown": {
             "monthlyTotal": 95520,
-            "adminFee": 3500,
+            "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 15000,
+            "cashbackCounted": 10000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 4424,
-          "total": 159260,
+          "effectiveMonthly": 4634,
+          "total": 166810,
           "breakdown": {
             "monthlyTotal": 170760,
-            "adminFee": 3500,
+            "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 15000,
+            "cashbackCounted": 10000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
@@ -208,7 +208,7 @@
           "amount": 6270
         }
       ],
-      "adminFee": 3500,
+      "adminFee": 6050,
       "constructionFee": {
         "monthlySchedule": [
           {
@@ -267,14 +267,14 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-08-30T21:25:06.547Z",
+      "observedAt": "2026-08-31T21:25:29.755Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 5271,
-          "total": 126500,
+          "effectiveMonthly": 5377,
+          "total": 129050,
           "breakdown": {
             "monthlyTotal": 123000,
-            "adminFee": 3500,
+            "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
             "cashbackCounted": 0,
@@ -284,11 +284,11 @@
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 5604,
-          "total": 201740,
+          "effectiveMonthly": 5675,
+          "total": 204290,
           "breakdown": {
             "monthlyTotal": 198240,
-            "adminFee": 3500,
+            "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
             "cashbackCounted": 0,
@@ -320,25 +320,25 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 3300
+          "amount": 3980
         },
         {
           "fromMonth": 2,
           "toMonth": 2,
-          "amount": 3300
+          "amount": 3980
         },
         {
           "fromMonth": 3,
-          "toMonth": 24,
-          "amount": 3300
+          "toMonth": 12,
+          "amount": 3980
         },
         {
-          "fromMonth": 25,
+          "fromMonth": 13,
           "toMonth": null,
           "amount": 5995
         }
       ],
-      "adminFee": 3500,
+      "adminFee": 6050,
       "constructionFee": {
         "monthlySchedule": [
           {
@@ -349,15 +349,15 @@
           {
             "fromMonth": 2,
             "toMonth": 2,
-            "amount": 2420
+            "amount": 3300
           },
           {
             "fromMonth": 3,
-            "toMonth": 24,
-            "amount": 1210
+            "toMonth": 12,
+            "amount": 1650
           },
           {
-            "fromMonth": 25,
+            "fromMonth": 13,
             "toMonth": null,
             "amount": 0
           }
@@ -371,15 +371,15 @@
           {
             "fromMonth": 2,
             "toMonth": 2,
-            "amount": 2420
+            "amount": 3300
           },
           {
             "fromMonth": 3,
-            "toMonth": 24,
-            "amount": 1210
+            "toMonth": 12,
+            "amount": 1650
           },
           {
-            "fromMonth": 25,
+            "fromMonth": 13,
             "toMonth": null,
             "amount": 0
           }
@@ -388,10 +388,10 @@
       },
       "cashbacks": [
         {
-          "amount": 15000,
+          "amount": 3000,
           "receiveAtMonth": 17,
           "note": "So-net 光 1ギガ（So-net 光 M） / 新設 / 対象サービスのご利用開始（開通）から17カ月後の15日より45日間",
-          "campaignPeriod": "2026年8月24日～2026年8月31日"
+          "campaignPeriod": "2026年9月1日～2026年9月6日"
         }
       ],
       "requiredOptions": [],
@@ -400,20 +400,20 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 3300
+          "amount": 3980
         },
         {
           "fromMonth": 2,
           "toMonth": 2,
-          "amount": 3300
+          "amount": 3980
         },
         {
           "fromMonth": 3,
-          "toMonth": 24,
-          "amount": 3300
+          "toMonth": 12,
+          "amount": 3980
         },
         {
-          "fromMonth": 25,
+          "fromMonth": 13,
           "toMonth": null,
           "amount": 5995
         }
@@ -422,31 +422,31 @@
       "alsoSeenAt": [
         "https://www.so-net.ne.jp/access/hikari/1g/"
       ],
-      "observedAt": "2026-08-30T21:25:06.547Z",
+      "observedAt": "2026-08-31T21:25:29.755Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 2821,
-          "total": 67700,
+          "effectiveMonthly": 5115,
+          "total": 122750,
           "breakdown": {
-            "monthlyTotal": 79200,
-            "adminFee": 3500,
+            "monthlyTotal": 119700,
+            "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 15000,
+            "cashbackCounted": 3000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 3879,
-          "total": 139640,
+          "effectiveMonthly": 5408,
+          "total": 194690,
           "breakdown": {
-            "monthlyTotal": 151140,
-            "adminFee": 3500,
+            "monthlyTotal": 191640,
+            "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 15000,
+            "cashbackCounted": 3000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
@@ -475,25 +475,25 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 3300
+          "amount": 3980
         },
         {
           "fromMonth": 2,
           "toMonth": 2,
-          "amount": 3300
+          "amount": 3980
         },
         {
           "fromMonth": 3,
-          "toMonth": 24,
-          "amount": 3300
+          "toMonth": 12,
+          "amount": 3980
         },
         {
-          "fromMonth": 25,
+          "fromMonth": 13,
           "toMonth": null,
           "amount": 4895
         }
       ],
-      "adminFee": 3500,
+      "adminFee": 6050,
       "constructionFee": {
         "monthlySchedule": [
           {
@@ -504,15 +504,15 @@
           {
             "fromMonth": 2,
             "toMonth": 2,
-            "amount": 2420
+            "amount": 3300
           },
           {
             "fromMonth": 3,
-            "toMonth": 24,
-            "amount": 1210
+            "toMonth": 12,
+            "amount": 1650
           },
           {
-            "fromMonth": 25,
+            "fromMonth": 13,
             "toMonth": null,
             "amount": 0
           }
@@ -526,15 +526,15 @@
           {
             "fromMonth": 2,
             "toMonth": 2,
-            "amount": 2420
+            "amount": 3300
           },
           {
             "fromMonth": 3,
-            "toMonth": 24,
-            "amount": 1210
+            "toMonth": 12,
+            "amount": 1650
           },
           {
-            "fromMonth": 25,
+            "fromMonth": 13,
             "toMonth": null,
             "amount": 0
           }
@@ -543,10 +543,10 @@
       },
       "cashbacks": [
         {
-          "amount": 15000,
+          "amount": 3000,
           "receiveAtMonth": 17,
           "note": "So-net 光 1ギガ（So-net 光 M） / 新設 / 対象サービスのご利用開始（開通）から17カ月後の15日より45日間",
-          "campaignPeriod": "2026年8月24日～2026年8月31日"
+          "campaignPeriod": "2026年9月1日～2026年9月6日"
         }
       ],
       "requiredOptions": [],
@@ -555,20 +555,20 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 3300
+          "amount": 3980
         },
         {
           "fromMonth": 2,
           "toMonth": 2,
-          "amount": 3300
+          "amount": 3980
         },
         {
           "fromMonth": 3,
-          "toMonth": 24,
-          "amount": 3300
+          "toMonth": 12,
+          "amount": 3980
         },
         {
-          "fromMonth": 25,
+          "fromMonth": 13,
           "toMonth": null,
           "amount": 4895
         }
@@ -577,31 +577,31 @@
       "alsoSeenAt": [
         "https://www.so-net.ne.jp/access/hikari/1g/"
       ],
-      "observedAt": "2026-08-30T21:25:06.547Z",
+      "observedAt": "2026-08-31T21:25:29.755Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 2821,
-          "total": 67700,
+          "effectiveMonthly": 4565,
+          "total": 109550,
           "breakdown": {
-            "monthlyTotal": 79200,
-            "adminFee": 3500,
+            "monthlyTotal": 106500,
+            "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 15000,
+            "cashbackCounted": 3000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 3512,
-          "total": 126440,
+          "effectiveMonthly": 4675,
+          "total": 168290,
           "breakdown": {
-            "monthlyTotal": 137940,
-            "adminFee": 3500,
+            "monthlyTotal": 165240,
+            "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 15000,
+            "cashbackCounted": 3000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
@@ -630,20 +630,20 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 3300
+          "amount": 3980
         },
         {
           "fromMonth": 2,
-          "toMonth": 12,
-          "amount": 3300
+          "toMonth": 6,
+          "amount": 3980
         },
         {
-          "fromMonth": 13,
+          "fromMonth": 7,
           "toMonth": null,
           "amount": 5995
         }
       ],
-      "adminFee": 3500,
+      "adminFee": 6050,
       "constructionFee": {
         "monthlySchedule": [
           {
@@ -653,11 +653,11 @@
           },
           {
             "fromMonth": 2,
-            "toMonth": 12,
+            "toMonth": 6,
             "amount": 0
           },
           {
-            "fromMonth": 13,
+            "fromMonth": 7,
             "toMonth": null,
             "amount": 0
           }
@@ -670,11 +670,11 @@
           },
           {
             "fromMonth": 2,
-            "toMonth": 12,
+            "toMonth": 6,
             "amount": 0
           },
           {
-            "fromMonth": 13,
+            "fromMonth": 7,
             "toMonth": null,
             "amount": 0
           }
@@ -688,15 +688,15 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 3300
+          "amount": 3980
         },
         {
           "fromMonth": 2,
-          "toMonth": 12,
-          "amount": 3300
+          "toMonth": 6,
+          "amount": 3980
         },
         {
-          "fromMonth": 13,
+          "fromMonth": 7,
           "toMonth": null,
           "amount": 5995
         }
@@ -705,14 +705,14 @@
       "alsoSeenAt": [
         "https://www.so-net.ne.jp/access/hikari/1g/"
       ],
-      "observedAt": "2026-08-30T21:25:06.547Z",
+      "observedAt": "2026-08-31T21:25:29.755Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 4793,
-          "total": 115040,
+          "effectiveMonthly": 5743,
+          "total": 137840,
           "breakdown": {
-            "monthlyTotal": 111540,
-            "adminFee": 3500,
+            "monthlyTotal": 131790,
+            "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
             "cashbackCounted": 0,
@@ -722,11 +722,11 @@
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 5194,
-          "total": 186980,
+          "effectiveMonthly": 5827,
+          "total": 209780,
           "breakdown": {
-            "monthlyTotal": 183480,
-            "adminFee": 3500,
+            "monthlyTotal": 203730,
+            "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
             "cashbackCounted": 0,
@@ -758,20 +758,20 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 3300
+          "amount": 3980
         },
         {
           "fromMonth": 2,
-          "toMonth": 12,
-          "amount": 3300
+          "toMonth": 6,
+          "amount": 3980
         },
         {
-          "fromMonth": 13,
+          "fromMonth": 7,
           "toMonth": null,
           "amount": 4895
         }
       ],
-      "adminFee": 3500,
+      "adminFee": 6050,
       "constructionFee": {
         "monthlySchedule": [
           {
@@ -781,11 +781,11 @@
           },
           {
             "fromMonth": 2,
-            "toMonth": 12,
+            "toMonth": 6,
             "amount": 0
           },
           {
-            "fromMonth": 13,
+            "fromMonth": 7,
             "toMonth": null,
             "amount": 0
           }
@@ -798,11 +798,11 @@
           },
           {
             "fromMonth": 2,
-            "toMonth": 12,
+            "toMonth": 6,
             "amount": 0
           },
           {
-            "fromMonth": 13,
+            "fromMonth": 7,
             "toMonth": null,
             "amount": 0
           }
@@ -816,15 +816,15 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 3300
+          "amount": 3980
         },
         {
           "fromMonth": 2,
-          "toMonth": 12,
-          "amount": 3300
+          "toMonth": 6,
+          "amount": 3980
         },
         {
-          "fromMonth": 13,
+          "fromMonth": 7,
           "toMonth": null,
           "amount": 4895
         }
@@ -833,14 +833,14 @@
       "alsoSeenAt": [
         "https://www.so-net.ne.jp/access/hikari/1g/"
       ],
-      "observedAt": "2026-08-30T21:25:06.547Z",
+      "observedAt": "2026-08-31T21:25:29.755Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 4243,
-          "total": 101840,
+          "effectiveMonthly": 4918,
+          "total": 118040,
           "breakdown": {
-            "monthlyTotal": 98340,
-            "adminFee": 3500,
+            "monthlyTotal": 111990,
+            "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
             "cashbackCounted": 0,
@@ -850,11 +850,11 @@
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 4461,
-          "total": 160580,
+          "effectiveMonthly": 4911,
+          "total": 176780,
           "breakdown": {
-            "monthlyTotal": 157080,
-            "adminFee": 3500,
+            "monthlyTotal": 170730,
+            "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
             "cashbackCounted": 0,
@@ -889,7 +889,7 @@
           "amount": 4500
         }
       ],
-      "adminFee": 3500,
+      "adminFee": 6050,
       "constructionFee": {
         "monthlySchedule": [
           {
@@ -900,12 +900,12 @@
           {
             "fromMonth": 2,
             "toMonth": 2,
-            "amount": 2420
+            "amount": 3300
           },
           {
             "fromMonth": 3,
             "toMonth": 24,
-            "amount": 1210
+            "amount": 1650
           },
           {
             "fromMonth": 25,
@@ -922,12 +922,12 @@
           {
             "fromMonth": 2,
             "toMonth": 2,
-            "amount": 2420
+            "amount": 3300
           },
           {
             "fromMonth": 3,
             "toMonth": 24,
-            "amount": 1210
+            "amount": 1650
           },
           {
             "fromMonth": 25,
@@ -950,14 +950,14 @@
       "verified": true,
       "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=4500円 / 特典表の一覧=4500円）",
       "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
-      "observedAt": "2026-08-30T21:25:06.547Z",
+      "observedAt": "2026-08-31T21:25:29.755Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 4646,
-          "total": 111500,
+          "effectiveMonthly": 4752,
+          "total": 114050,
           "breakdown": {
             "monthlyTotal": 108000,
-            "adminFee": 3500,
+            "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
             "cashbackCounted": 0,
@@ -967,11 +967,11 @@
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 4597,
-          "total": 165500,
+          "effectiveMonthly": 4668,
+          "total": 168050,
           "breakdown": {
             "monthlyTotal": 162000,
-            "adminFee": 3500,
+            "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
             "cashbackCounted": 0,
@@ -1006,7 +1006,7 @@
           "amount": 3400
         }
       ],
-      "adminFee": 3500,
+      "adminFee": 6050,
       "constructionFee": {
         "monthlySchedule": [
           {
@@ -1017,12 +1017,12 @@
           {
             "fromMonth": 2,
             "toMonth": 2,
-            "amount": 2420
+            "amount": 3300
           },
           {
             "fromMonth": 3,
             "toMonth": 24,
-            "amount": 1210
+            "amount": 1650
           },
           {
             "fromMonth": 25,
@@ -1039,12 +1039,12 @@
           {
             "fromMonth": 2,
             "toMonth": 2,
-            "amount": 2420
+            "amount": 3300
           },
           {
             "fromMonth": 3,
             "toMonth": 24,
-            "amount": 1210
+            "amount": 1650
           },
           {
             "fromMonth": 25,
@@ -1067,14 +1067,14 @@
       "verified": true,
       "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=3400円 / 特典表の一覧=3400円）",
       "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
-      "observedAt": "2026-08-30T21:25:06.547Z",
+      "observedAt": "2026-08-31T21:25:29.755Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 3546,
-          "total": 85100,
+          "effectiveMonthly": 3652,
+          "total": 87650,
           "breakdown": {
             "monthlyTotal": 81600,
-            "adminFee": 3500,
+            "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
             "cashbackCounted": 0,
@@ -1084,11 +1084,11 @@
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 3497,
-          "total": 125900,
+          "effectiveMonthly": 3568,
+          "total": 128450,
           "breakdown": {
             "monthlyTotal": 122400,
-            "adminFee": 3500,
+            "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
             "cashbackCounted": 0,
@@ -1123,7 +1123,7 @@
           "amount": 4500
         }
       ],
-      "adminFee": 3500,
+      "adminFee": 6050,
       "constructionFee": {
         "monthlySchedule": [
           {
@@ -1154,14 +1154,14 @@
       "verified": true,
       "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=4500円 / 特典表の一覧=4500円）",
       "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
-      "observedAt": "2026-08-30T21:25:06.547Z",
+      "observedAt": "2026-08-31T21:25:29.755Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 4646,
-          "total": 111500,
+          "effectiveMonthly": 4752,
+          "total": 114050,
           "breakdown": {
             "monthlyTotal": 108000,
-            "adminFee": 3500,
+            "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
             "cashbackCounted": 0,
@@ -1171,11 +1171,11 @@
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 4597,
-          "total": 165500,
+          "effectiveMonthly": 4668,
+          "total": 168050,
           "breakdown": {
             "monthlyTotal": 162000,
-            "adminFee": 3500,
+            "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
             "cashbackCounted": 0,
@@ -1210,7 +1210,7 @@
           "amount": 3400
         }
       ],
-      "adminFee": 3500,
+      "adminFee": 6050,
       "constructionFee": {
         "monthlySchedule": [
           {
@@ -1241,14 +1241,14 @@
       "verified": true,
       "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=3400円 / 特典表の一覧=3400円）",
       "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
-      "observedAt": "2026-08-30T21:25:06.547Z",
+      "observedAt": "2026-08-31T21:25:29.755Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 3546,
-          "total": 85100,
+          "effectiveMonthly": 3652,
+          "total": 87650,
           "breakdown": {
             "monthlyTotal": 81600,
-            "adminFee": 3500,
+            "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
             "cashbackCounted": 0,
@@ -1258,11 +1258,11 @@
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 3497,
-          "total": 125900,
+          "effectiveMonthly": 3568,
+          "total": 128450,
           "breakdown": {
             "monthlyTotal": 122400,
-            "adminFee": 3500,
+            "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
             "cashbackCounted": 0,
@@ -1297,7 +1297,7 @@
           "amount": 7095
         }
       ],
-      "adminFee": 3500,
+      "adminFee": 6050,
       "constructionFee": {
         "monthlySchedule": [
           {
@@ -1308,12 +1308,12 @@
           {
             "fromMonth": 2,
             "toMonth": 2,
-            "amount": 2420
+            "amount": 3300
           },
           {
             "fromMonth": 3,
             "toMonth": 24,
-            "amount": 1210
+            "amount": 1650
           },
           {
             "fromMonth": 25,
@@ -1330,12 +1330,12 @@
           {
             "fromMonth": 2,
             "toMonth": 2,
-            "amount": 2420
+            "amount": 3300
           },
           {
             "fromMonth": 3,
             "toMonth": 24,
-            "amount": 1210
+            "amount": 1650
           },
           {
             "fromMonth": 25,
@@ -1358,14 +1358,14 @@
       "verified": true,
       "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=7095円 / 特典表の一覧=7095円）",
       "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
-      "observedAt": "2026-08-30T21:25:06.547Z",
+      "observedAt": "2026-08-31T21:25:29.755Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 7241,
-          "total": 173780,
+          "effectiveMonthly": 7347,
+          "total": 176330,
           "breakdown": {
             "monthlyTotal": 170280,
-            "adminFee": 3500,
+            "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
             "cashbackCounted": 0,
@@ -1375,11 +1375,11 @@
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 7192,
-          "total": 258920,
+          "effectiveMonthly": 7263,
+          "total": 261470,
           "breakdown": {
             "monthlyTotal": 255420,
-            "adminFee": 3500,
+            "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
             "cashbackCounted": 0,
@@ -1414,7 +1414,7 @@
           "amount": 5995
         }
       ],
-      "adminFee": 3500,
+      "adminFee": 6050,
       "constructionFee": {
         "monthlySchedule": [
           {
@@ -1425,12 +1425,12 @@
           {
             "fromMonth": 2,
             "toMonth": 2,
-            "amount": 2420
+            "amount": 3300
           },
           {
             "fromMonth": 3,
             "toMonth": 24,
-            "amount": 1210
+            "amount": 1650
           },
           {
             "fromMonth": 25,
@@ -1447,12 +1447,12 @@
           {
             "fromMonth": 2,
             "toMonth": 2,
-            "amount": 2420
+            "amount": 3300
           },
           {
             "fromMonth": 3,
             "toMonth": 24,
-            "amount": 1210
+            "amount": 1650
           },
           {
             "fromMonth": 25,
@@ -1475,14 +1475,14 @@
       "verified": true,
       "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=5995円 / 特典表の一覧=5995円）",
       "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
-      "observedAt": "2026-08-30T21:25:06.547Z",
+      "observedAt": "2026-08-31T21:25:29.755Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 6141,
-          "total": 147380,
+          "effectiveMonthly": 6247,
+          "total": 149930,
           "breakdown": {
             "monthlyTotal": 143880,
-            "adminFee": 3500,
+            "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
             "cashbackCounted": 0,
@@ -1492,11 +1492,11 @@
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 6092,
-          "total": 219320,
+          "effectiveMonthly": 6163,
+          "total": 221870,
           "breakdown": {
             "monthlyTotal": 215820,
-            "adminFee": 3500,
+            "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
             "cashbackCounted": 0,
@@ -1531,7 +1531,7 @@
           "amount": 7095
         }
       ],
-      "adminFee": 3500,
+      "adminFee": 6050,
       "constructionFee": {
         "monthlySchedule": [
           {
@@ -1562,14 +1562,14 @@
       "verified": true,
       "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=7095円 / 特典表の一覧=7095円）",
       "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
-      "observedAt": "2026-08-30T21:25:06.547Z",
+      "observedAt": "2026-08-31T21:25:29.755Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 7241,
-          "total": 173780,
+          "effectiveMonthly": 7347,
+          "total": 176330,
           "breakdown": {
             "monthlyTotal": 170280,
-            "adminFee": 3500,
+            "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
             "cashbackCounted": 0,
@@ -1579,11 +1579,11 @@
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 7192,
-          "total": 258920,
+          "effectiveMonthly": 7263,
+          "total": 261470,
           "breakdown": {
             "monthlyTotal": 255420,
-            "adminFee": 3500,
+            "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
             "cashbackCounted": 0,
@@ -1618,7 +1618,7 @@
           "amount": 5995
         }
       ],
-      "adminFee": 3500,
+      "adminFee": 6050,
       "constructionFee": {
         "monthlySchedule": [
           {
@@ -1649,14 +1649,14 @@
       "verified": true,
       "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=5995円 / 特典表の一覧=5995円）",
       "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
-      "observedAt": "2026-08-30T21:25:06.547Z",
+      "observedAt": "2026-08-31T21:25:29.755Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 6141,
-          "total": 147380,
+          "effectiveMonthly": 6247,
+          "total": 149930,
           "breakdown": {
             "monthlyTotal": 143880,
-            "adminFee": 3500,
+            "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
             "cashbackCounted": 0,
@@ -1666,11 +1666,11 @@
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 6092,
-          "total": 219320,
+          "effectiveMonthly": 6163,
+          "total": 221870,
           "breakdown": {
             "monthlyTotal": 215820,
-            "adminFee": 3500,
+            "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
             "cashbackCounted": 0,
