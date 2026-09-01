@@ -5,6 +5,53 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-09-01",
+      "title": "「docomo Starlink Direct」国際ローミング接続を開始 -米国・フィリピン・カナダで利用可能に-",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/09/01_01.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-09-01T21:28:18.790Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-09-01",
+      "title": "「d払い（モバイルオーダー）」で「デジタルeギフト」の提供を開始 -「Google Playギフトコード」を「d払い」アプリ内で購入可能に-（PDF形式：541KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260901_x1.pdf",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-09-01T21:28:18.790Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-09-01",
+      "title": "「ドコモ MAX」「ドコモ ポイ活 MAX」をご契約のお客さま限定！東京ディズニーシー(R)の完全貸切イベントに、合計10,000名さまを抽選でご招待！（PDF形式：507KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260901_f1.pdf",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-09-01T21:28:18.790Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-09-01",
+      "title": "【NTTドコモグループ新規事業創出プログラム「docomo STARTUP」からスタートアップが誕生】AIを活用しリベート予算の最適化をめざす「RebateX」をスピンアウト -サプライチェーンにおける複雑なリベート業務をDXし、取引の最適化を実現-",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/09/01_00.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-09-01T21:28:18.790Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-09-01",
+      "title": "【ドコモFG】「d払い残高へのチャージ＆d払い残高でのお買物で最大10,000ポイントが当たる！キャンペーン」を開催！（PDF形式：554KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/docomofg/20260901101000.pdf",
+      "categories": [
+        "campaign"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-09-01T21:28:18.790Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-08-31",
       "title": "自律共創人材を育成する「docomo academy」、社外企業へ参加対象を拡大 -企業・業界を越えた学びと共創の場へ発展、第7期を2026年10月から開講-（PDF形式：566KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260831_a.pdf",
@@ -236,6 +283,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-08-31T21:24:46.340Z",
-  "totalNotices": 24
+  "lastCollectedAt": "2026-09-01T21:28:18.790Z",
+  "totalNotices": 29
 }

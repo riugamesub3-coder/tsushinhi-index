@@ -5,6 +5,15 @@
   "firstCollectedAt": "2026-08-23T09:31:28.541Z",
   "notices": [
     {
+      "date": "2026-09-01",
+      "title": "【重要】「BIGLOBEメール」セキュリティ強化に伴う設定確認および変更のお願い",
+      "url": "https://support.biglobe.ne.jp/news/news799.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-09-01T21:28:13.161Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
       "date": "2026-08-01",
       "title": "BIGLOBE会員規約改定のお知らせ（2026年8月1日施行）",
       "url": "https://support.biglobe.ne.jp/kiyaku/youten260801.html",
@@ -584,6 +593,6 @@
       "sourceUrl": "https://support.biglobe.ne.jp/news/"
     }
   ],
-  "lastCollectedAt": "2026-08-31T21:24:41.415Z",
-  "totalNotices": 58
+  "lastCollectedAt": "2026-09-01T21:28:13.161Z",
+  "totalNotices": 59
 }
