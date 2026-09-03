@@ -5,6 +5,35 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-09-03",
+      "title": "「KONAMI ID」と「dアカウント」を連携でdポイントプレゼント！「総勢5万名にあたる！総額2,000万ポイントプレゼントキャンペーン」を開催（PDF形式：593KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260903_x2.pdf",
+      "categories": [
+        "campaign"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-09-03T21:28:06.694Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-09-03",
+      "title": "「NBA docomo」の新アンバサダーに、プロバスケットボールプレーヤー・河村勇輝選手が就任！ -NBA 2026-27シーズンパスを本日から販売開始-（PDF形式：696KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260903_f1.pdf",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-09-03T21:28:06.694Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-09-03",
+      "title": "三井不動産、NTTドコモ、三井不動産ネットワークイノベーション資本業務提携契約を締結 -不動産と通信の融合により、都市の新たな価値向上につなげる街づくりを推進-",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/09/03_00.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-09-03T21:28:06.694Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-09-01",
       "title": "「docomo Starlink Direct」国際ローミング接続を開始 -米国・フィリピン・カナダで利用可能に-",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/09/01_01.html",
@@ -283,6 +312,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-09-02T21:28:07.906Z",
-  "totalNotices": 29
+  "lastCollectedAt": "2026-09-03T21:28:06.694Z",
+  "totalNotices": 32
 }
