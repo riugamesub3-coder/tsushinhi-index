@@ -848,7 +848,11 @@ ${raw((o.cashbacks ?? []).length ? html`
 ${raw(o.constructionFee ? html`
 <h2>工事費</h2>
 <p>
-  定価 ${yen(o.constructionFee.list)}${raw(o.constructionFee.installmentMonths ? html`／${o.constructionFee.installmentMonths}回の分割` : '')}。
+  ${raw(typeof o.constructionFee.list === 'number'
+    // ★定価が読めていないときに「定価 —。」とは書かない。
+    //   分からないことを、分かったような書式で出さない。
+    ? html`定価 ${yen(o.constructionFee.list)}${raw(o.constructionFee.installmentMonths ? html`／${o.constructionFee.installmentMonths}回の分割` : '')}。`
+    : html`<strong>工事費の定価を出典ページから読み取れていません。</strong>実質月額には、出典に書かれている割引後の実負担額（${yen(b?.constructionBorne ?? 0)}）を入れています。`)}
   ${raw(o.constructionFee.residualOnEarlyExit ? '<strong>途中解約すると残債が請求されます。</strong>' : '')}
 </p>` : '')}
 
