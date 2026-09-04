@@ -71,6 +71,7 @@ jobs:
       #   「サイトの数字とデータの数字が食い違う」状態で配信されることがない。
       - name: サイトを生成して検証する
         if: always()
+        id: gen
         run: |
           node site/build.mjs
           node site/verify.mjs
@@ -101,7 +102,24 @@ jobs:
 
       - name: Xserver へ配信する
         # main 以外のブランチからは配信しない。検証用ブランチが本番を書き換えないため
-        if: steps.deploy_ready.outputs.ready == 'true' && github.ref == 'refs/heads/main'
+        #
+        # ★★2026-09-04: ここが6日間の配信断の**真犯人**だった。
+        #   以前の条件は `steps.deploy_ready... && github.ref == ...` だけ。
+        #   GitHub Actions は if にステータス関数が無いと**暗黙に success() を付ける**ので、
+        #   「それより前のどれか1ステップでも失敗したら配信しない」という意味になっていた。
+        #   collect/effective.mjs は1社でも算出に失敗すると exit 1 する。
+        #   NURO光のアダプタが 2026-08-31 に壊れた瞬間から、**毎回ここがスキップされ**、
+        #   最後に配信できたのが 2026-08-30 のまま止まった。
+        #
+        #   1社の不調で**サイト全体の更新が止まるのは間違い**。生成物は
+        #   検算を通らない値を最初から載せないし、更新の止まった事業者は
+        #   「更新停止中」と明示する。だから配信の可否は
+        #   **「生成と検証が通ったか」だけ**に依存させる。収集の失敗はジョブを赤くして知らせる。
+        id: deploy
+        if: always()
+          && steps.gen.outcome == 'success'
+          && steps.deploy_ready.outputs.ready == 'true'
+          && github.ref == 'refs/heads/main'
         env:
           FTP_HOST: ${{ secrets.FTP_HOST }}
           FTP_USER: ${{ secrets.FTP_USER }}
@@ -150,7 +168,7 @@ jobs:
       #   lftp が成功を返しても中身が古ければここで落ちる。
       #   2026-08-30〜09-04 の配信断は、この確認が無かったせいで6日間気づけなかった。
       - name: 公開サイトが実際に更新されたか確かめる
-        if: steps.deploy_ready.outputs.ready == 'true' && github.ref == 'refs/heads/main'
+        if: always() && steps.deploy.outcome == 'success'
         run: |
           # 反映の取りこぼしを誤検知しないよう、間を置いて数回試す
           for i in 1 2 3; do
