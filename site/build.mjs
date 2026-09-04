@@ -16,6 +16,9 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { html, raw, layout, jsonLd, e } from './lib/html.mjs';
 import { yen, yenSigned, jstDateTime, jstDate, isoDate, daysSince, host, planName } from './lib/format.mjs';
+import { planSlugsFor, reconstructSeries } from './lib/series.mjs';
+import { stepChart, CHART_CSS } from './lib/chart.mjs';
+import { staleInfo } from './lib/stale.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -60,6 +63,15 @@ async function main() {
   await page('about/index.html', renderAbout(data), disclosure);
   await page('privacy/index.html', renderPrivacy(data), disclosure);
   await page('contact/index.html', renderContact(data), disclosure);
+
+  // 事業者ページとプランページ。掲載可のものだけ（要確認の値をURLで指せるようにしない）
+  for (const id of providerIds(data)) {
+    await page(`p/${id}/index.html`, renderProvider(data, id), disclosure);
+  }
+  for (const o of data.publishable) {
+    await page(`p/${o.providerId}/${o.slug}/index.html`, renderPlan(data, o), disclosure);
+  }
+  console.log(`  事業者ページ ${providerIds(data).length}件 / プランページ ${data.publishable.length}件`);
 
   await out('style.css', STYLE);
   await out('favicon.svg', FAVICON);
@@ -109,6 +121,9 @@ async function loadAds() {
   return { same, different };
 }
 
+/** 掲載可の観測がある事業者だけ。1件も無い事業者のページを作らない（中身が空になる） */
+const providerIds = (data) => [...new Set(data.publishable.map((o) => o.providerId))];
+
 /** 広告リンクを1本でも出すか。出さないなら広告表記も出さない（無いのに「広告あり」と書くのも嘘） */
 const hasAds = (data) => data.ads.same.size > 0 || data.ads.different.length > 0;
 
@@ -137,7 +152,11 @@ async function loadAll() {
 
   const offers = [];
   for (const snap of effective) {
+    // ★URLは事業者ごとに一括で作る。衝突していたら例外を投げてビルドを止める。
+    //   同じURLの2プランを黙って出すと、片方が消えたことに誰も気づけない。
+    const slugs = planSlugsFor(snap.offers.map((o) => ({ ...o, providerId: snap.providerId })));
     for (const o of snap.offers) {
+      const slug = slugs.get(o.planKey);
       offers.push({
         ...o,
         providerName: snap.providerName,
@@ -148,7 +167,9 @@ async function loadAll() {
         entry: normalizeEntry(o),
         effectiveMonthly: o.effective?.[HORIZON]?.effectiveMonthly ?? null,
         breakdown: o.effective?.[HORIZON]?.breakdown ?? null,
-        stale: staleInfo(failures, o.sourceUrl),
+        stale: staleInfo(failures, o.sourceUrl, snap.providerId),
+        slug,
+        path: `/p/${snap.providerId}/${slug}/`,
       });
     }
   }
@@ -226,14 +247,6 @@ function normalizeEntry(o) {
   return '新規';
 }
 
-function staleInfo(failures, url) {
-  const rec = Object.entries(failures.sources ?? {}).find(([k]) => k.endsWith(url));
-  if (!rec) return null;
-  const [, v] = rec;
-  if (!v.staleSince) return null;
-  const days = daysSince(v.staleSince);
-  return { since: v.staleSince, days, consecutive: v.consecutive };
-}
 
 // ── 表示前の検証（黙って壊れたものを出さない）──────────────────
 
@@ -365,7 +378,7 @@ function rankRow(o, data) {
 <tr${raw(o.stale ? ' class="stale"' : '')}>
   <td class="num strong">${yen(o.effectiveMonthly)}</td>
   <td>${o.providerName}</td>
-  <td>${planName(o)}${raw(notes.length ? `<br><span class="tag">${notes.map(e).join(' / ')}</span>` : '')}</td>
+  <td><a href="${o.path}">${planName(o)}</a>${raw(notes.length ? `<br><span class="tag">${notes.map(e).join(' / ')}</span>` : '')}</td>
   <td class="breakdown">
     ${raw(b ? `月額計 ${e(yen(b.monthlyTotal))}<br>事務手数料 ${e(yen(b.adminFee))}<br>工事費実負担 ${e(yen(b.constructionBorne))}<br>CB −${e(yen(b.cashbackCounted))}` : '—')}
   </td>
@@ -668,6 +681,196 @@ function renderData(data) {
     title: `データを使う（CC BY 4.0）｜${SITE_NAME}`,
     description: '光回線の実質月額データセットの入手方法とライセンス。CC BY 4.0 で、出典表示のみを条件に商用・AI利用を含めて自由に使えます。',
     canonical: `${SITE_URL}/data/`,
+    body,
+    updatedAt: data.updatedAt,
+  };
+}
+
+// ── 事業者ページ・プランページ ──────────────────────────────────
+//
+// ★このサイトが持っているのに画面に出していなかったものを出す。
+//   トップの一覧は「今日いくらか」しか見せていない。実測インデックスの本体は
+//   **その値がどう作られていて、いつ動いたか**のほうにある。
+
+function renderProvider(data, providerId) {
+  const mine = data.publishable.filter((o) => o.providerId === providerId)
+    .sort((a, b) => a.effectiveMonthly - b.effectiveMonthly);
+  const first = mine[0];
+  const op = data.operators[providerId];
+  const evs = data.events.filter((c) => c.providerId === providerId);
+  const sources = [...new Set(mine.map((o) => o.sourceUrl))];
+
+  const staleHere = mine.filter((o) => o.stale);
+  const body = html`
+<h1>${first.providerName}の実質月額</h1>
+${raw(staleHere.length ? html`
+<p class="stale-note">
+  <strong>この事業者は${staleHere[0].stale.days}日前から更新できていません</strong>（${mine.length}件中${staleHere.length}件）。
+  ${jstDate(staleHere[0].stale.since)}以降、収集または算出に失敗し続けています。
+  <strong>下の値は現在の条件とは違う可能性があります。</strong>
+</p>` : '')}
+<p class="lead">
+  ${first.providerName}の料金ページを毎日1回自動で読み、
+  <strong>${HORIZON}か月使ったときの実質月額</strong>に直しています。現在<strong>${mine.length}件</strong>を掲載中です。
+  ${raw(op?.name ? html`運営会社は<strong>${op.name}</strong>。` : '')}
+</p>
+
+<h2>掲載中のプラン</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>実質月額</th><th>プラン</th><th>内訳</th><th>取得</th></tr></thead>
+  <tbody>${raw(mine.map((o) => html`
+    <tr>
+      <td class="num strong">${yen(o.effectiveMonthly)}</td>
+      <td><a href="${o.path}">${planName(o)}</a></td>
+      <td class="breakdown">${raw(o.breakdown
+        ? `月額計 ${e(yen(o.breakdown.monthlyTotal))}<br>工事費実負担 ${e(yen(o.breakdown.constructionBorne))}<br>CB −${e(yen(o.breakdown.cashbackCounted))}`
+        : '—')}</td>
+      <td class="src"><time datetime="${o.observedAt}">${jstDateTime(o.observedAt)}</time></td>
+    </tr>`).join(''))}
+  </tbody>
+</table>
+</div>
+
+<h2>この事業者で検知した変化</h2>
+${raw(evs.length ? html`
+<ul class="events">${raw(evs.slice(0, 30).map((c) => html`
+  <li>
+    <time datetime="${c.detectedAt}">${jstDate(c.detectedAt)}</time>
+    <strong>${planName(c)}</strong>
+    ${raw(c.type === 'effective-monthly-changed'
+      ? html`実質月額 ${yen(c.before)} → <strong>${yen(c.after)}</strong>（${yenSigned(c.effectiveMonthlyDelta)}）`
+      : html`${c.type}`)}
+    ${raw((c.cause ?? []).map((x) => `<br><span class="tag">${e(x.label)}: ${e(yen(x.before))} → ${e(yen(x.after))}</span>`).join(''))}
+  </li>`).join(''))}
+</ul>` : html`
+<p class="note">この事業者では、観測を始めてから実質月額の変化を検知していません。</p>`)}
+
+<h2>出典</h2>
+<ul>${raw(sources.map((u) => `<li><a href="${e(u)}" rel="nofollow noopener">${e(u)}</a></li>`).join(''))}</ul>
+<p class="note">
+  掲載しているのは<strong>各社が公開している事実の値だけ</strong>です。
+  <a href="/method/">計算方法</a>は全社共通で、事業者ごとに変えていません。
+</p>
+`;
+  return {
+    title: `${first.providerName}の実質月額（${HORIZON}か月換算）｜${SITE_NAME}`,
+    description: `${first.providerName}の料金を毎日自動収集し、${HORIZON}か月の実質月額に換算した${mine.length}件。工事費・割引・キャッシュバックを含めた内訳と、料金が動いた履歴つき。`,
+    canonical: `${SITE_URL}/p/${providerId}/`,
+    body,
+    updatedAt: data.updatedAt,
+  };
+}
+
+function renderPlan(data, o) {
+  const series = reconstructSeries({
+    planKey: o.planKey,
+    currentValue: o.effectiveMonthly,
+    currentAt: o.observedAt,
+    events: data.events.filter((c) => c.providerId === o.providerId),
+    horizonMonths: HORIZON,
+  });
+  if (!series.ok) console.warn(`  ⚠ 推移を描けません（${o.providerName} ${planName(o)}）: ${series.why}`);
+
+  const svg = series.ok ? stepChart(series.points, { label: '実質月額' }) : null;
+  const b = o.breakdown;
+  const e24 = o.effective?.[24]?.effectiveMonthly ?? null;
+  const rank = data.publishable
+    .filter((x) => x.building === o.building)
+    .sort((a, c) => a.effectiveMonthly - c.effectiveMonthly);
+  const place = rank.findIndex((x) => x === o) + 1;
+
+  const body = html`
+<h1>${o.providerName} ${planName(o)}</h1>
+${raw(o.stale ? html`
+<p class="stale-note">
+  <strong>この値は${o.stale.days}日前から更新できていません。</strong>
+  ${jstDate(o.stale.since)}以降、収集または算出に失敗し続けています。
+  <strong>表示しているのは${jstDate(o.observedAt)}時点の値で、現在の条件とは違う可能性があります。</strong>
+  古い値を消さずに残しているのは、いつから止まっているかを隠さないためです。
+</p>` : '')}
+<p class="lead">
+  ${HORIZON}か月使ったときの実質月額は <strong class="big">${yen(o.effectiveMonthly)}</strong>。
+  ${raw(place > 0 ? html`同じ条件（${o.building}）の${rank.length}件中<strong>${place}番目</strong>に安い値です。` : '')}
+  <br><small>${jstDateTime(o.observedAt)} 時点 ／ 出典 <a href="${o.sourceUrl}" rel="nofollow noopener">${host(o.sourceUrl)}</a></small>
+</p>
+
+<h2>実質月額の推移</h2>
+${raw(svg ? html`
+${raw(svg)}
+<p class="note">
+  料金は改定された日に飛ぶので、階段で描いています。<strong>点と点の間を直線で結んでいません</strong>
+  （実際には存在しなかった中間の値をグラフ上に作らないためです）。
+</p>` : series.ok && series.flat ? html`
+<p class="note">
+  <strong>観測を始めてから、この値は変わっていません。</strong>変化を検知した時点でここにグラフが出ます。
+  いつから観測しているかは記録していないため、過去に線を伸ばすことはしていません。
+</p>` : html`
+<p class="note">推移を復元できませんでした（${series.why}）。値そのものは下の内訳のとおりです。</p>`)}
+
+<h2>この金額の内訳（${HORIZON}か月）</h2>
+${raw(b ? html`
+<div class="table-wrap">
+<table>
+  <tbody>
+    <tr><th>月額料金の合計</th><td class="num">${yen(b.monthlyTotal)}</td></tr>
+    <tr><th>事務手数料</th><td class="num">${yen(b.adminFee)}</td></tr>
+    <tr><th>工事費の実負担</th><td class="num">${yen(b.constructionBorne)}</td></tr>
+    <tr><th>必須オプション</th><td class="num">${yen(b.optionTotal)}</td></tr>
+    <tr><th>キャッシュバック</th><td class="num">−${yen(b.cashbackCounted)}</td></tr>
+    <tr><th>その他の割引</th><td class="num">−${yen(b.otherDiscounts)}</td></tr>
+    <tr class="total"><th>${HORIZON}か月の総額</th><td class="num strong">${yen(o.effective[HORIZON].total)}</td></tr>
+    <tr class="total"><th>1か月あたり</th><td class="num strong">${yen(o.effectiveMonthly)}</td></tr>
+  </tbody>
+</table>
+</div>` : '<p class="note">内訳を出せません。</p>')}
+${raw(e24 != null ? html`
+<p class="note">
+  <strong>24か月で解約する場合は ${yen(e24)}</strong>／月です。工事費の分割が終わる前に解約すると残債が乗るため、
+  期間によって順位は入れ替わります。
+</p>` : '')}
+
+<h2>月額料金の推移（契約からの月数）</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>期間</th><th>月額</th></tr></thead>
+  <tbody>${raw((o.publishedMonthly ?? []).map((s) => html`
+    <tr><td>${s.fromMonth}〜${s.toMonth ?? ''}か月目</td><td class="num">${yen(s.amount)}</td></tr>`).join(''))}
+  </tbody>
+</table>
+</div>
+
+${raw((o.cashbacks ?? []).length ? html`
+<h2>キャッシュバック</h2>
+<ul>${raw(o.cashbacks.map((c) => `<li>${e(yen(c.amount))}（${e(c.receiveAtMonth)}か月目に受け取り）${c.note ? `<br><span class="tag">${e(c.note)}</span>` : ''}</li>`).join(''))}</ul>
+<p class="note">受け取りが${HORIZON}か月より先になるキャッシュバックは計算に入れていません。</p>` : '')}
+
+${raw(o.constructionFee ? html`
+<h2>工事費</h2>
+<p>
+  定価 ${yen(o.constructionFee.list)}${raw(o.constructionFee.installmentMonths ? html`／${o.constructionFee.installmentMonths}回の分割` : '')}。
+  ${raw(o.constructionFee.residualOnEarlyExit ? '<strong>途中解約すると残債が請求されます。</strong>' : '')}
+</p>` : '')}
+
+${raw(series.events.length ? html`
+<h2>この値が動いた日</h2>
+<ul class="events">${raw(series.events.slice().reverse().map((c) => html`
+  <li>
+    <time datetime="${c.detectedAt}">${jstDate(c.detectedAt)}</time>
+    ${yen(c.before)} → <strong>${yen(c.after)}</strong>（${yenSigned(c.effectiveMonthlyDelta)}）
+    ${raw((c.cause ?? []).map((x) => `<br><span class="tag">${e(x.label)}: ${e(yen(x.before))} → ${e(yen(x.after))}</span>`).join(''))}
+  </li>`).join(''))}
+</ul>` : '')}
+
+<p class="note">
+  この値は<a href="/method/">全社共通の計算式</a>で出しています。
+  <a href="/p/${o.providerId}/">${o.providerName}の他のプラン</a>／<a href="/">全社の一覧</a>
+</p>
+`;
+  return {
+    title: `${o.providerName} ${planName(o)}の実質月額 ${yen(o.effectiveMonthly)}｜${SITE_NAME}`,
+    description: `${o.providerName} ${planName(o)}を${HORIZON}か月使ったときの実質月額は${yen(o.effectiveMonthly)}（${jstDate(o.observedAt)}時点）。月額・事務手数料・工事費・キャッシュバックの内訳と、料金が動いた履歴。`,
+    canonical: `${SITE_URL}${o.path}`,
     body,
     updatedAt: data.updatedAt,
   };
@@ -1098,6 +1301,8 @@ ${top}
 - ${SITE_URL}/changes/ : 料金が動いた履歴（実質月額への影響つき）
 - ${SITE_URL}/method/ : 計算方法の全公開（統一規則・検算方法・故障時の挙動）
 - ${SITE_URL}/data/ : データの入手方法とライセンス
+- ${SITE_URL}/p/<事業者ID>/ : 事業者ごとの全プランと、料金が動いた履歴
+- ${SITE_URL}/p/<事業者ID>/<プランID>/ : 1プランの実質月額・その内訳・推移
 - ${SITE_URL}/about/ : 運営者と、数字の作り方について守っていること
 - ${SITE_URL}/contact/ : 誤りの指摘・掲載事業者からの訂正依頼の窓口
 - ${SITE_URL}/privacy/ : プライバシーポリシー
@@ -1111,7 +1316,11 @@ ${top}
 }
 
 function renderSitemap(data) {
-  const urls = ['/', '/changes/', '/method/', '/data/', '/about/', '/privacy/', '/contact/'];
+  const urls = [
+    '/', '/changes/', '/method/', '/data/', '/about/', '/privacy/', '/contact/',
+    ...providerIds(data).map((id) => `/p/${id}/`),
+    ...data.publishable.map((o) => o.path),
+  ];
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map((u) => `  <url>
@@ -1228,6 +1437,13 @@ code{background:#f2f2f2;padding:.1rem .3rem;border-radius:3px;font-size:.85em}
 .site-foot a{color:var(--muted)}
 .foot-nav{display:flex;gap:1.2rem;flex-wrap:wrap;margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--line)}
 .disclaimer{background:#fafafa;padding:.75rem;border-radius:4px}
+.big{font-size:1.5rem}
+.stale-note{background:var(--warn);border-left:4px solid var(--up);padding:.8rem 1rem;border-radius:4px;margin:1rem 0}
+.events{list-style:none;padding:0}
+.events li{padding:.6rem 0;border-bottom:1px solid var(--line)}
+.events time{color:var(--muted);margin-right:.6rem;font-variant-numeric:tabular-nums}
+tr.total th,tr.total td{border-top:2px solid var(--line)}
+${CHART_CSS}
 @media(max-width:600px){h1{font-size:1.35rem}main{padding:0 .75rem 3rem}}
 `;
 

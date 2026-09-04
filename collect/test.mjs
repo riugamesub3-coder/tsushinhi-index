@@ -11,6 +11,8 @@ import { findBlocks, parseDefinitionLists, headingChains } from './lib/dom.mjs';
 import { computeEffectiveMonthly, expandMonthly, dedupeAcrossPages } from './lib/effective.mjs';
 import { parseBenefitByEntry, gradesInService, readBasePriceList, readDiscountExemptGrades } from './adapters/so-net-hikari.mjs';
 import { recordOutcome, shouldFail, escalated } from './lib/failures.mjs';
+import { reconstructSeries, planSlug, planSlugsFor } from '../site/lib/series.mjs';
+import { staleInfo } from '../site/lib/stale.mjs';
 
 // ── toYen ────────────────────────────────────────────────────────
 
@@ -373,4 +375,120 @@ test('ページ間で食い違えば、どちらも公開しない（正しそ�
   assert.equal(merged.length, 2);              // 「消えた」ことにしないため両方残す
   assert.ok(merged.every((o) => o.verified === false));
   assert.equal(warnings.length, 1);
+});
+
+// ── 推移の復元（site/lib/series.mjs） ────────────────────────────
+//
+// 日次スナップショットを持たず、現在値と変化イベントから過去を復元している。
+// ここが静かに間違うと、**存在しなかった料金がグラフに出る**。
+
+const ev = (detectedAt, before, after, previousObservedAt = null) => ({
+  type: 'effective-monthly-changed', planKey: 'P', horizonMonths: 36,
+  detectedAt, before, after, previousObservedAt,
+});
+
+test('変化イベントが無いとき、過去に線を伸ばさない', () => {
+  const r = reconstructSeries({
+    planKey: 'P', currentValue: 4000, currentAt: '2026-09-04T00:00:00Z',
+    events: [], horizonMonths: 36,
+  });
+  assert.equal(r.ok, true);
+  assert.equal(r.flat, true);
+  assert.equal(r.points.length, 1);   // ★1点。横一直線を引くと「ずっとこの値だった」と主張してしまう
+});
+
+test('イベントを繋いで過去の値を復元する', () => {
+  const r = reconstructSeries({
+    planKey: 'P', currentValue: 4235, currentAt: '2026-09-04T00:00:00Z',
+    events: [ev('2026-08-23T00:00:00Z', 4374, 4235, '2026-08-22T00:00:00Z')],
+    horizonMonths: 36,
+  });
+  assert.equal(r.ok, true);
+  assert.deepEqual(r.points.map((p) => p.value), [4374, 4235, 4235]);
+  assert.equal(r.points[0].at, '2026-08-22T00:00:00Z');
+});
+
+test('最後の変化と現在値が食い違うなら、グラフを描かない', () => {
+  const r = reconstructSeries({
+    planKey: 'P', currentValue: 9999, currentAt: '2026-09-04T00:00:00Z',
+    events: [ev('2026-08-23T00:00:00Z', 4374, 4235)],
+    horizonMonths: 36,
+  });
+  assert.equal(r.ok, false);          // ★イベントが欠けている。それらしい線を引かない
+});
+
+test('イベントの連なりが途切れているなら、グラフを描かない', () => {
+  const r = reconstructSeries({
+    planKey: 'P', currentValue: 4000, currentAt: '2026-09-04T00:00:00Z',
+    events: [ev('2026-08-20T00:00:00Z', 4500, 4300), ev('2026-08-25T00:00:00Z', 4100, 4000)],
+    horizonMonths: 36,
+  });
+  assert.equal(r.ok, false);          // 4300 のあと 4100 から変化＝間の変化を取りこぼしている
+});
+
+test('別プラン・別期間のイベントを混ぜない', () => {
+  const other = { ...ev('2026-08-23T00:00:00Z', 1, 2), planKey: 'Q' };
+  const h24 = { ...ev('2026-08-23T00:00:00Z', 1, 2), horizonMonths: 24 };
+  const r = reconstructSeries({
+    planKey: 'P', currentValue: 4000, currentAt: '2026-09-04T00:00:00Z',
+    events: [other, h24], horizonMonths: 36,
+  });
+  assert.equal(r.flat, true);
+});
+
+test('プランのURLは planKey が同じなら毎回同じになる', () => {
+  const a = planSlug('nuro-hikari', '戸建て / 2ギガ / 2年割', { buildingType: 'detached', speed: '2ギガ' });
+  const b = planSlug('nuro-hikari', '戸建て / 2ギガ / 2年割', { buildingType: 'detached', speed: '2ギガ' });
+  assert.equal(a, b);
+  assert.match(a, /^detached-2g-[0-9a-f]{8}$/);
+  // 事業者が違えば別URLになる
+  assert.notEqual(a, planSlug('so-net-hikari', '戸建て / 2ギガ / 2年割', { buildingType: 'detached', speed: '2ギガ' }));
+});
+
+test('プランのURLが衝突したらビルドを止める', () => {
+  const same = { providerId: 'x', planKey: 'A', plan: {} };
+  assert.doesNotThrow(() => planSlugsFor([same, { ...same, planKey: 'B' }]));
+  // 同じ planKey が2回来ても衝突扱いにしない（ページ間で同一プランを見たとき）
+  assert.doesNotThrow(() => planSlugsFor([same, same]));
+});
+
+// ── 更新停止中の判定（site/lib/stale.mjs） ──────────────────────
+//
+// ★2026-09-04 に実際に起きた事故の回帰テスト。
+//   NURO光の実質月額の算出が4日間失敗していたのに、サイトは8/30の値を
+//   「更新停止中」の表示なしで、他社の最新値と並べて出していた。
+
+const failures = {
+  sources: {
+    'prices:https://www.nuro.jp/hikari/house/price/': { lastOkAt: '2026-09-03T21:28:43.909Z', staleSince: null },
+    'health:https://www.nuro.jp/hikari/house/price/': { lastOkAt: '2026-09-03T21:29:35.162Z', staleSince: null },
+    'effective:nuro-hikari': { lastOkAt: '2026-08-30T21:25:10.144Z', staleSince: '2026-08-31T21:25:33.152Z' },
+    'effective:rakuten-hikari': { lastOkAt: '2026-09-03T21:28:54.549Z', staleSince: null },
+  },
+};
+
+test('ページは取れているが算出に失敗している事業者を、更新停止中と判定する', () => {
+  // ★これが null を返していたのが事故の原因。prices:/health: は正常なので見逃していた
+  const s = staleInfo(failures, 'https://www.nuro.jp/hikari/house/price/', 'nuro-hikari');
+  assert.ok(s, '更新停止中と判定されるべき');
+  assert.equal(s.since, '2026-08-31T21:25:33.152Z');
+});
+
+test('事業者IDを渡さなければ、以前と同じくURLだけで判定する', () => {
+  assert.equal(staleInfo(failures, 'https://www.nuro.jp/hikari/house/price/'), null);
+});
+
+test('全部正常なら null', () => {
+  assert.equal(staleInfo(failures, 'https://www.nuro.jp/hikari/house/price/', 'rakuten-hikari'), null);
+});
+
+test('複数該当するときは、いちばん長く止まっているほうを返す', () => {
+  const f = {
+    sources: {
+      'prices:https://x.example/a': { staleSince: '2026-09-02T00:00:00Z' },
+      'effective:x': { staleSince: '2026-08-20T00:00:00Z' },
+    },
+  };
+  // 新しいほうを返すと、止まっている期間を実際より短く見せてしまう
+  assert.equal(staleInfo(f, 'https://x.example/a', 'x').since, '2026-08-20T00:00:00Z');
 });

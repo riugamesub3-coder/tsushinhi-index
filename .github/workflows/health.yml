@@ -75,16 +75,28 @@ jobs:
           node site/build.mjs
           node site/verify.mjs
 
-      # 認証情報が未設定なら黙って飛ばす（セットアップ前でもワークフローを壊さない）
+      # ★2026-09-04: ここは以前「FTP_HOST が無ければ黙って飛ばす」だった。
+      #   セットアップ前でもワークフローを壊さないための配慮だったが、
+      #   **配信を飛ばしてもジョブが緑のまま**という抜け穴になっていた。
+      #   実際 2026-08-30〜09-04 の6日間、収集は動き続けているのに公開サイトだけが
+      #   止まっていたことに誰も気づけなかった。セットアップはとうに終わっているので、
+      #   main で配信できないのは**事故**として扱う。赤くする。
       - name: 配信できるか確認する
         if: always()
         id: deploy_ready
         env:
           FTP_HOST: ${{ secrets.FTP_HOST }}
         run: |
-          if [ -n "$FTP_HOST" ]; then echo "ready=true" >> "$GITHUB_OUTPUT"; else
+          if [ -n "$FTP_HOST" ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          elif [ "$GITHUB_REF" = "refs/heads/main" ]; then
             echo "ready=false" >> "$GITHUB_OUTPUT"
-            echo "FTP_HOST が未設定のため配信を飛ばします（Secrets を設定すると配信されます）"
+            echo "### 配信できません: FTP_HOST が未設定です" >> "$GITHUB_STEP_SUMMARY"
+            echo "Secrets の FTP_HOST が空です。サイトは更新されません。" >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "main 以外かつ FTP_HOST 未設定のため配信を飛ばします"
           fi
 
       - name: Xserver へ配信する
@@ -132,6 +144,23 @@ jobs:
               | tail -40 >> "$GITHUB_STEP_SUMMARY"
             exit "$status"
           fi
+
+      # ★配信したつもりで届いていない、を検出する唯一の手段。
+      #   直前の生成物ではなく**公開URLを実際に取りに行って** data/ と突き合わせる。
+      #   lftp が成功を返しても中身が古ければここで落ちる。
+      #   2026-08-30〜09-04 の配信断は、この確認が無かったせいで6日間気づけなかった。
+      - name: 公開サイトが実際に更新されたか確かめる
+        if: steps.deploy_ready.outputs.ready == 'true' && github.ref == 'refs/heads/main'
+        run: |
+          # 反映の取りこぼしを誤検知しないよう、間を置いて数回試す
+          for i in 1 2 3; do
+            if node site/verify.mjs https://tsushinhi-index.com/; then exit 0; fi
+            echo "…$i 回目は不一致。20秒待って再確認します"
+            sleep 20
+          done
+          echo "### 公開サイトが更新されていません" >> "$GITHUB_STEP_SUMMARY"
+          echo "配信そのものは成功と報告されましたが、公開URLの内容が data/ と一致しません。" >> "$GITHUB_STEP_SUMMARY"
+          exit 1
 
       - name: 結果をコミットする
         if: always()

@@ -14,7 +14,7 @@
 
   "email": "info@tsushinhi-index.com",
   "emailConfirmedAt": "2026-09-04",
-  "emailConfirmedNote": "本人が info@tsushinhi-index.com 宛にテスト送信し、Xserver の WEBメール受信箱で実物の到着を確認。MX=tsushinhi-index.com / SPF=Xserver 向きであることも DNS で確認済み。★Gmail への転送が働いているかは未検証（同一 Message-ID のメールを Gmail が破棄するため、本人の Gmail からの自己送信では確かめられない）。転送が止まっても受信箱に残る設定なので、問い合わせが消えることはない。",
+  "emailConfirmedNote": "2026-09-04 に本人が確認。(1) Xserver の WEBメール受信箱で実物の到着を確認 (2) 転送先一覧に Gmail が入っていることを画面で確認 (3) Gmail への転送が届くことを確認。MX=tsushinhi-index.com / SPF=Xserver 向きであることも DNS で確認済み。受信箱に「残す」設定なので、転送が止まっても問い合わせは消えない。",
 
   "issuesUrl": "https://github.com/riugamesub3-coder/tsushinhi-index/issues",
 
