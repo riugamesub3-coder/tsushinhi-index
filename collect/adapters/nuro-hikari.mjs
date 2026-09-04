@@ -45,6 +45,10 @@ export function extract(html, url) {
   const initial = readInitialFees(tables);
   if (initial.adminFee == null) warnings.push('契約事務手数料が読めない');
 
+  // 「月額基本料金とは別に、ホームゲートウェイ(Wi-Fiルーター)料金550円/月が必要です」
+  // という本文の宣言。表の読み落としを検出する“もう一つの目”として使う。
+  const requiresGateway = declaresGatewayFee(cellText(clean));
+
   const labels = tabLabels(clean);
   const groups = tabGroups(clean);
   const panels = panelPositions(clean);
@@ -63,6 +67,14 @@ export function extract(html, url) {
     }
     if (published.periods.length !== detail.columns) {
       warnings.push(`期間数と内訳の列数が一致しない（table#${i}）: ${published.periods.length} vs ${detail.columns}`);
+      continue;
+    }
+
+    // ★ページ本文が「別途必要」と言っている必須の月額費用が、内訳表に行として
+    //   見つからない場合は通さない。**足し忘れは料金を安く見せる方向の誤り**で、
+    //   しかも公開値との突き合わせが偶然通ってしまうと気づけない。
+    if (requiresGateway && !detail.gateway) {
+      warnings.push(`ページは「ホームゲートウェイ料金が別途必要」と書いているが、内訳表に該当行が無い（table#${i}）。安く出る恐れがあるので通さない`);
       continue;
     }
 
@@ -160,8 +172,16 @@ function asPublishedTable(t) {
   return { periods, amounts };
 }
 
+/**
+ * ページ本文が「月額基本料金とは別に○○が必要」と宣言しているか。
+ * 内訳表の読み落としを検出する“もう一つの目”。表と本文の両方を見る。
+ */
+export function declaresGatewayFee(text) {
+  return /月額基本料金とは別に[\s\S]{0,40}?(?:ホームゲートウェイ|Wi-?Fi\s*ルーター)[\s\S]{0,40}?必要/i.test(String(text ?? ''));
+}
+
 /** 「料金内訳」表: 各行が 月額基本料金 / 基本工事費 / ○○割 / 工事費相当割引 / キャンペーン */
-function asDetailTable(t) {
+export function asDetailTable(t) {
   if (!t || t.rows.length < 2) return null;
   const rows = t.rows.filter((r) => r.length > 0);
   const flat = rows.map((r) => r.join(' '));
@@ -176,6 +196,10 @@ function asDetailTable(t) {
     base: pick(/月額基本料金/),
     construction: pick(/基本工事費/),
     constructionDiscount: pick(/工事費相当割引/),
+    // ★2026-08-31 に増えた行。NUROが「月額基本料金とは別に、ホームゲートウェイ
+    //   (Wi-Fiルーター)料金550円/月が必要です」と分離した。
+    //   契約に必ず付くので月額に足す。足さないと36か月で19,800円ぶん安く出る。
+    gateway: rows.find((r) => /ホームゲートウェイ|Wi-?Fi\s*ルーター/i.test(r.join(' '))),
     monthlyDiscount: rows.find((r) => {
       const s = r.join(' ');
       return /割/.test(s) && !/工事費/.test(s) && !/月額基本料金/.test(s);
@@ -250,14 +274,20 @@ function anchorPositions(html, re, toValue) {
 
 /** 表の位置から、各タブ群で「直前に開いていたパネル」のラベルを集める */
 function identify(tableAt, { labels, groups, panels, typeAnchors }) {
-  const parts = [];
+  const found = [];
   for (const g of groups) {
     const last = panels.filter((p) => g.includes(p.id) && p.at < tableAt).pop();
     if (last) {
       const label = labels.get(last.id);
-      if (label) parts.push(label);
+      if (label) found.push({ label, at: last.at });
     }
   }
+  // ★タブ群の並び順ではなく、**パネルが開いた位置**で並べる。表に近いほど内側＝具体的。
+  //   これをしないと、前のタブ群に残った古いラベル（NURO 光 10ギガ(H)）が
+  //   後ろのタブ群の正しいラベル（NURO 光(M)）より後ろに来て、プランを取り違える。
+  //   2026-08-31 のページ再編で実際に取り違えた。
+  found.sort((a, b) => a.at - b.at);
+  const parts = found.map((f) => f.label);
   const type = typeAnchors.filter((a) => a.at < tableAt).pop();
   if (type) parts.unshift(type.value);
   return parts;
@@ -277,11 +307,19 @@ function buildOffer({ url, buildingType, initial, published, detail, id }) {
       amount: sign * (at(row, i) ?? 0),
     }));
 
-  // 月額 = 月額基本料金 + 月額割引（割引は負値で入っている）
+  // 月額 = 月額基本料金 + ホームゲートウェイ + 月額割引（割引は負値で入っている）
+  //
+  // ★ホームゲートウェイ(Wi-Fiルーター)550円/月は 2026-08-31 に別行へ分離された。
+  //   ページは「月額基本料金とは別に…必要です」と書いており、外せる選択肢ではない。
+  //   NURO自身が掲げる「月額負担料金」にも含まれているので、月額に足す。
+  //   ★行が有るのに読めない列は null に倒す。0円として扱わない
+  //   （欠測を黙って0円と読み替える欠陥は 2026-08-25 に一度踏んでいる）。
   const monthlySchedule = periods.map((p, i) => {
     const base = at(detail.base, i);
     const disc = at(detail.monthlyDiscount, i) ?? 0;
-    return { fromMonth: p.from, toMonth: p.to, amount: base == null ? null : base + disc };
+    const gw = detail.gateway ? at(detail.gateway, i) : 0;
+    const amount = (base == null || gw == null) ? null : base + gw + disc;
+    return { fromMonth: p.from, toMonth: p.to, amount };
   });
 
   const cashbacks = [];
@@ -298,12 +336,26 @@ function buildOffer({ url, buildingType, initial, published, detail, id }) {
   const axes = classifyAxes(id);
   // ★キーは軸の種類で順序を固定する。ページのタブの並び順に従うと、
   //   NURO側がタブを入れ替えただけでキーが変わり、**偽の「プラン追加/削除」**を出してしまう。
-  const planKey = [
-    buildingType === 'apartment' ? 'マンション' : '戸建て',
-    axes.mansionType,
-    axes.speed,
-    axes.discount,
-  ].filter(Boolean).join(' / ');
+  const home = buildingType === 'apartment' ? 'マンション' : '戸建て';
+  const planName = axes.plan ?? axes.speed;
+
+  // ★2026-08-31 の改称に対する扱い。**戸建てとマンションで結論が違う。**
+  //
+  //   戸建て: 「2ギガ」→「NURO 光(H)」、「10ギガ」→「NURO 光 10ギガ(H)」は**同じ商品の改称**。
+  //     根拠は数字。25か月目以降の月額が 5,720円 / 6,600円 で改称の前後で完全に一致し、
+  //     戸建てページの系列は (H) ひとつだけ。よって**識別子(planKey)は旧のまま維持**し、
+  //     表示名(planLabel)だけ新しい名前にする。ここでキーを変えると
+  //     「実在するプランが廃止された」という**嘘のイベント**を配信してしまう。
+  //
+  //   マンション: 旧「タイプS / タイプL」は消え、(H)/(M) に再編された。
+  //     25か月目以降が 4,235円 → (M)4,730円 / (H)5,720円 とどれとも一致せず、
+  //     対応関係を数字で決められない。**裏が取れないので旧キーに寄せない。**
+  //     新しいプランとして記録し、旧プランは掲載終了として扱う。
+  const LEGACY_DETACHED = { 'NURO 光(H)': '2ギガ', 'NURO 光 10ギガ(H)': '10ギガ' };
+  const keyPlan = (buildingType === 'detached' && LEGACY_DETACHED[planName]) || planName;
+
+  const planKey = [home, axes.mansionType, keyPlan, axes.discount].filter(Boolean).join(' / ');
+  const planLabel = [home, axes.mansionType, planName, axes.discount].filter(Boolean).join(' / ');
 
   return {
     providerId,
@@ -311,10 +363,15 @@ function buildOffer({ url, buildingType, initial, published, detail, id }) {
     channelId,
     sourceUrl: url,
     planKey,
+    planLabel: planLabel === planKey ? undefined : planLabel,
     plan: { buildingType, ...axes, labels: id },
     contractMonths: null, // NUROは契約期間の縛りなし。36か月正規化で比較する
     contractNote: '契約期間の縛りなし（解約金0円）',
     monthlySchedule,
+    // 月額に何が入っているかを画面に出すため。金額を足したことを黙っておかない
+    monthlyNote: detail.gateway
+      ? 'ホームゲートウェイ（Wi-Fiルーター）料金を含む（NUROが必須としているため）'
+      : null,
     adminFee: initial.adminFee,
     constructionFee: {
       list: initial.constructionList,
@@ -330,11 +387,23 @@ function buildOffer({ url, buildingType, initial, published, detail, id }) {
   };
 }
 
-/** タブのラベル群を、意味の軸（回線速度・割引・マンションのタイプ）に振り分ける */
-function classifyAxes(labels) {
-  const axes = { mansionType: null, speed: null, discount: null, unknown: [] };
+/**
+ * NUROが 2026-08-31 に導入したプラン名。
+ * 「NURO 光(H)」「NURO 光 10ギガ(H)」「NURO 光(M)」「NURO 光 10ギガ(M)」。
+ * それ以前は 戸建てが「2ギガ / 10ギガ」、マンションが「タイプS / タイプL」だった。
+ */
+export const PLAN_NAME = /NURO\s*光[^（(]*[（(]\s*[HM]\s*[）)]/;
+
+/** タブのラベル群を、意味の軸（プラン名・回線速度・割引・マンションのタイプ）に振り分ける */
+export function classifyAxes(labels) {
+  const axes = { mansionType: null, plan: null, speed: null, discount: null, unknown: [] };
   for (const l of labels) {
     if (/^タイプ[SL]$/.test(l)) axes.mansionType = l;
+    // ★プラン名を先に見る。「NURO 光 10ギガ(H)」は /ギガ/ にも当たるので、
+    //   順序を逆にすると速度として拾われ、(H)/(M) の区別が消えて**別プランが同じキー**になる。
+    // ★後勝ちにする。labels は表に近い順（identify で位置順に並べ替え済み）なので、
+    //   最後に来るものがいちばん内側＝そのプランの名前。
+    else if (PLAN_NAME.test(l)) axes.plan = l.replace(/プラン$/, '').trim();
     else if (/ギガ/.test(l)) axes.speed = l.replace(/プラン$/, '');
     else if (/割/.test(l)) axes.discount = l;
     else axes.unknown.push(l);

@@ -3,6 +3,251 @@
   "providerName": "NURO光",
   "events": [
     {
+      "detectedAt": "2026-09-04T14:36:53.051Z",
+      "changes": [
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "戸建て / 2ギガ / 2年割",
+          "planLabel": "戸建て / NURO 光(H) / 2年割",
+          "horizonMonths": 36,
+          "before": 4235,
+          "after": 5011,
+          "effectiveMonthlyDelta": 776,
+          "direction": "up",
+          "cause": [
+            {
+              "field": "monthlyTotal",
+              "label": "月額の合計",
+              "before": 164160,
+              "after": 177360,
+              "delta": 13200
+            },
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 3300,
+              "after": 6050,
+              "delta": 2750
+            },
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 15000,
+              "after": 3000,
+              "delta": -12000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.nuro.jp/hikari/house/price/",
+          "previousObservedAt": "2026-08-30T21:24:58.151Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "戸建て / 10ギガ / 2年割",
+          "planLabel": "戸建て / NURO 光 10ギガ(H) / 2年割",
+          "horizonMonths": 36,
+          "before": 4528,
+          "after": 5110,
+          "effectiveMonthlyDelta": 582,
+          "direction": "up",
+          "cause": [
+            {
+              "field": "monthlyTotal",
+              "label": "月額の合計",
+              "before": 174720,
+              "after": 187920,
+              "delta": 13200
+            },
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 3300,
+              "after": 6050,
+              "delta": 2750
+            },
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 15000,
+              "after": 10000,
+              "delta": -5000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.nuro.jp/hikari/house/price/",
+          "previousObservedAt": "2026-08-30T21:24:58.151Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "戸建て / 2ギガ / U29応援割",
+          "planLabel": "戸建て / NURO 光(H) / U29応援割",
+          "horizonMonths": 36,
+          "before": 3655,
+          "after": 4615,
+          "effectiveMonthlyDelta": 960,
+          "direction": "up",
+          "cause": [
+            {
+              "field": "monthlyTotal",
+              "label": "月額の合計",
+              "before": 143280,
+              "after": 163080,
+              "delta": 19800
+            },
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 3300,
+              "after": 6050,
+              "delta": 2750
+            },
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 15000,
+              "after": 3000,
+              "delta": -12000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.nuro.jp/hikari/house/price/",
+          "previousObservedAt": "2026-08-30T21:24:58.151Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "戸建て / 10ギガ / U29応援割",
+          "planLabel": "戸建て / NURO 光 10ギガ(H) / U29応援割",
+          "horizonMonths": 36,
+          "before": 3655,
+          "after": 4420,
+          "effectiveMonthlyDelta": 765,
+          "direction": "up",
+          "cause": [
+            {
+              "field": "monthlyTotal",
+              "label": "月額の合計",
+              "before": 143280,
+              "after": 163080,
+              "delta": 19800
+            },
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 3300,
+              "after": 6050,
+              "delta": 2750
+            },
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 15000,
+              "after": 10000,
+              "delta": -5000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.nuro.jp/hikari/house/price/",
+          "previousObservedAt": "2026-08-30T21:24:58.151Z"
+        },
+        {
+          "type": "plan-added",
+          "planKey": "マンション / NURO 光(H) / 2年割",
+          "planLabel": "マンション / NURO 光(H) / 2年割",
+          "after": 5011
+        },
+        {
+          "type": "plan-added",
+          "planKey": "マンション / NURO 光 10ギガ(H) / 2年割",
+          "planLabel": "マンション / NURO 光 10ギガ(H) / 2年割",
+          "after": 5110
+        },
+        {
+          "type": "plan-added",
+          "planKey": "マンション / NURO 光(H) / U29応援割",
+          "planLabel": "マンション / NURO 光(H) / U29応援割",
+          "after": 4615
+        },
+        {
+          "type": "plan-added",
+          "planKey": "マンション / NURO 光 10ギガ(H) / U29応援割",
+          "planLabel": "マンション / NURO 光 10ギガ(H) / U29応援割",
+          "after": 4420
+        },
+        {
+          "type": "plan-added",
+          "planKey": "マンション / NURO 光(M) / 2年割",
+          "planLabel": "マンション / NURO 光(M) / 2年割",
+          "after": 4015
+        },
+        {
+          "type": "plan-added",
+          "planKey": "マンション / NURO 光 10ギガ(M) / 2年割",
+          "planLabel": "マンション / NURO 光 10ギガ(M) / 2年割",
+          "after": 4334
+        },
+        {
+          "type": "plan-added",
+          "planKey": "マンション / NURO 光(M) / U29応援割",
+          "planLabel": "マンション / NURO 光(M) / U29応援割",
+          "after": 3615
+        },
+        {
+          "type": "plan-added",
+          "planKey": "マンション / NURO 光 10ギガ(M) / U29応援割",
+          "planLabel": "マンション / NURO 光 10ギガ(M) / U29応援割",
+          "after": 3420
+        },
+        {
+          "type": "plan-removed",
+          "planKey": "マンション / タイプS / 2ギガ / 2年割",
+          "planLabel": "マンション / タイプS / 2ギガ / 2年割",
+          "before": 4046
+        },
+        {
+          "type": "plan-removed",
+          "planKey": "マンション / タイプS / 2ギガ / U29応援割",
+          "planLabel": "マンション / タイプS / 2ギガ / U29応援割",
+          "before": 3961
+        },
+        {
+          "type": "plan-removed",
+          "planKey": "マンション / タイプS / 10ギガ / 2年割",
+          "planLabel": "マンション / タイプS / 10ギガ / 2年割",
+          "before": 4248
+        },
+        {
+          "type": "plan-removed",
+          "planKey": "マンション / タイプS / 10ギガ / U29応援割",
+          "planLabel": "マンション / タイプS / 10ギガ / U29応援割",
+          "before": 3961
+        },
+        {
+          "type": "plan-removed",
+          "planKey": "マンション / タイプL / 2ギガ / 2年割",
+          "planLabel": "マンション / タイプL / 2ギガ / 2年割",
+          "before": 2991
+        },
+        {
+          "type": "plan-removed",
+          "planKey": "マンション / タイプL / 2ギガ / U29応援割",
+          "planLabel": "マンション / タイプL / 2ギガ / U29応援割",
+          "before": 2572
+        },
+        {
+          "type": "plan-removed",
+          "planKey": "マンション / タイプL / 10ギガ / 2年割",
+          "planLabel": "マンション / タイプL / 10ギガ / 2年割",
+          "before": 3192
+        },
+        {
+          "type": "plan-removed",
+          "planKey": "マンション / タイプL / 10ギガ / U29応援割",
+          "planLabel": "マンション / タイプL / 10ギガ / U29応援割",
+          "before": 2572
+        }
+      ]
+    },
+    {
       "detectedAt": "2026-08-23T21:56:25.617Z",
       "changes": [
         {
@@ -176,6 +421,6 @@
       ]
     }
   ],
-  "lastEventAt": "2026-08-23T21:56:25.617Z",
-  "totalEvents": 1
+  "lastEventAt": "2026-09-04T14:36:53.051Z",
+  "totalEvents": 2
 }

@@ -13,6 +13,7 @@ import { parseBenefitByEntry, gradesInService, readBasePriceList, readDiscountEx
 import { recordOutcome, shouldFail, escalated } from './lib/failures.mjs';
 import { reconstructSeries, planSlug, planSlugsFor } from '../site/lib/series.mjs';
 import { staleInfo } from '../site/lib/stale.mjs';
+import { asDetailTable, declaresGatewayFee } from './adapters/nuro-hikari.mjs';
 
 // ── toYen ────────────────────────────────────────────────────────
 
@@ -491,4 +492,53 @@ test('複数該当するときは、いちばん長く止まっているほう�
   };
   // 新しいほうを返すと、止まっている期間を実際より短く見せてしまう
   assert.equal(staleInfo(f, 'https://x.example/a', 'x').since, '2026-08-20T00:00:00Z');
+});
+
+// ── NURO光: 必須のホームゲートウェイ料金（2026-08-31 の実際の変更）─────
+//
+// NUROが「月額基本料金とは別に、ホームゲートウェイ(Wi-Fiルーター)料金550円/月が
+// 必要です」と分離し、内訳表に行が増えた。足し忘れると月額が550円/月ぶん安く出る。
+// 検算（内訳の計算値 ＝ ページ公開の月額負担料金）が全プランで落ち、
+// 「検算を通った観測が 12件 → 0件」で収集が5日間止まった。
+
+const nuroDetailRows = (extra = []) => ({
+  rows: [
+    ['月額基本料金 ※1 5,170円 (最大)', '月額基本料金 ※1 5,170円', '月額基本料金 ※1 5,170円', '月額基本料金 ※1 5,170円'],
+    ...extra,
+    ['基本工事費 ※2 1,555円', '基本工事費 ※2 1,527円', '基本工事費 ※2 1,527円', '基本工事費 ※2 ー'],
+    ['2年割 -1,190円/月 (最大)', '2年割 -1,190円/月', '2年割 ー', '2年割 ー'],
+    ['工事費相当割引 -1,555円', '工事費相当割引 -1,527円', '工事費相当割引 -1,527円', '工事費相当割引 ー'],
+  ],
+});
+const GW_ROW = ['ホームゲートウェイ （Wi-Fiルーター） 550円', 'ホームゲートウェイ （Wi-Fiルーター） 550円',
+                'ホームゲートウェイ （Wi-Fiルーター） 550円', 'ホームゲートウェイ （Wi-Fiルーター） 550円'];
+
+test('ホームゲートウェイの行を内訳表から見つける', () => {
+  const d = asDetailTable(nuroDetailRows([GW_ROW]));
+  assert.ok(d.gateway, '行が取れていない');
+  assert.equal(toYen(d.gateway[0]), 550);
+});
+
+test('ホームゲートウェイの行を「月額割引」と取り違えない', () => {
+  // ★取り違えると割引として負値に扱われ、月額が1,100円ずれる
+  const d = asDetailTable(nuroDetailRows([GW_ROW]));
+  assert.match(d.monthlyDiscount.join(' '), /2年割/);
+  assert.doesNotMatch(d.monthlyDiscount.join(' '), /ホームゲートウェイ/);
+});
+
+test('ホームゲートウェイの行が無いページでも壊れない', () => {
+  const d = asDetailTable(nuroDetailRows());
+  assert.equal(d.gateway, undefined);
+  assert.match(d.base.join(' '), /月額基本料金/);
+});
+
+test('本文の「別途必要」宣言を読み取る（表の読み落としを検出する第2の目）', () => {
+  assert.equal(declaresGatewayFee(
+    '月額基本料金とは別に、ホームゲートウェイ(Wi-Fiルーター)料金550円/月が必要です。'), true);
+  assert.equal(declaresGatewayFee(
+    '月額基本料金とは別に、Wi-Fiルーター料金が必要です'), true);
+  // 無関係な文で誤検知しない
+  assert.equal(declaresGatewayFee('ホームゲートウェイを無料でレンタルできます'), false);
+  assert.equal(declaresGatewayFee('月額基本料金は5,170円です'), false);
+  assert.equal(declaresGatewayFee(null), false);
 });
