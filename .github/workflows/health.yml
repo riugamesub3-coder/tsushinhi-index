@@ -140,26 +140,44 @@ jobs:
           #   共用サーバーはアカウントあたりの同時FTP接続数を絞っていることがあり、
           #   2本張ると片方が蹴られて転送ごと失敗しうる。速度より確実さを取る。
           #   再試行の間隔も空ける（間を置かず叩き直すと締め出されやすい）。
+          # ★debug 3 でサーバとのやり取りを残す。
+          #   2026-09-04、失敗しても "mirror: Fatal error: max-retries exceeded" の
+          #   1行しか残らず原因を切り分けられなかった。lftp は接続の詳細を
+          #   「進行表示」に書くので、パイプに繋いだ時点で消えていた。
+          # ★このリポジトリは Public。実行ログもジョブ概要も**誰でも読める。**
+          #   だから debug の出力をそのまま貼らない。**サーバの応答行だけを抜き、
+          #   認証情報を含みうる行は捨ててから**貼る（下の redact 参照）。
+          # ★再試行は2回に減らす。5回だと失敗の確定に6分かかり、原因究明が遅くなる。
           set +e
           lftp -c "
+            debug 3;
             set ftp:ssl-force true;
             set ftp:ssl-protect-data true;
             set ssl:verify-certificate true;
             set ftp:passive-mode true;
-            set net:max-retries 5;
+            set net:max-retries 2;
             set net:reconnect-interval-base 10;
             set net:timeout 30;
             set mirror:parallel-transfer-count 1;
             open -u '$FTP_USER','$FTP_PASS' '$FTP_HOST';
             mirror -R --delete --verbose -X .htaccess -X .well-known/ site/dist/ '$FTP_DIR';
-          " 2>&1 | tee /tmp/lftp.log
-          status=${PIPESTATUS[0]}
+          " > /tmp/lftp.log 2>&1
+          status=$?
           set -e
           if [ "$status" -ne 0 ]; then
-            echo "### 配信に失敗しました" >> "$GITHUB_STEP_SUMMARY"
-            # 認証情報が混ざらないよう、ユーザー名とホスト名は伏せてから出す
-            sed -e "s#$FTP_USER#***USER***#g" -e "s#$FTP_HOST#***HOST***#g" /tmp/lftp.log \
-              | tail -40 >> "$GITHUB_STEP_SUMMARY"
+            {
+              echo "### 配信に失敗しました"
+              echo ''
+              echo '```'
+              # ★パスワードが載りうるのは「---> PASS ...」の行だけ。**その行は中身を見ずに捨てる。**
+              #   サーバ側の応答（<--- 331 など）は原因の切り分けに要るので残し、
+              #   ユーザー名とホスト名だけ伏字にする。
+              grep -avE '^-+> *PASS' /tmp/lftp.log \
+                | grep -aiE '^(<---|--->)|error|refus|timed? ?out|denied|ssl|tls|certificate|^mirror:' \
+                | sed -e "s#$FTP_USER#***USER***#g" -e "s#$FTP_HOST#***HOST***#g" \
+                | tail -40
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
             exit "$status"
           fi
 
