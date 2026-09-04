@@ -57,6 +57,9 @@ async function main() {
   await page('changes/index.html', renderChanges(data), disclosure);
   await page('method/index.html', renderMethod(data), disclosure);
   await page('data/index.html', renderData(data), disclosure);
+  await page('about/index.html', renderAbout(data), disclosure);
+  await page('privacy/index.html', renderPrivacy(data), disclosure);
+  await page('contact/index.html', renderContact(data), disclosure);
 
   await out('style.css', STYLE);
   await out('favicon.svg', FAVICON);
@@ -109,6 +112,23 @@ async function loadAds() {
 /** 広告リンクを1本でも出すか。出さないなら広告表記も出さない（無いのに「広告あり」と書くのも嘘） */
 const hasAds = (data) => data.ads.same.size > 0 || data.ads.different.length > 0;
 
+/**
+ * 運営者情報を読む。
+ *
+ * ★メールアドレスは `emailConfirmedAt` が入るまで出さない。
+ *   まだ作られていない受信箱を問い合わせ先として掲げると、
+ *   送った人のメールが**どこにも届かないまま黙って消える**。それが一番やってはいけない壊れ方。
+ *   出せない間も窓口を閉じないため、GitHub Issues を必ず開けておく。
+ */
+async function loadOwner() {
+  const o = (await readJson(join(HERE, 'owner.json'))) ?? {};
+  const emailUsable = Boolean(o.email && o.emailConfirmedAt);
+  if (o.email && !emailUsable) {
+    console.warn(`  ⚠ ${o.email} は site/owner.json の emailConfirmedAt が空なので画面に出しません（受信できる確認が取れていない）`);
+  }
+  return { ...o, emailUsable, email: emailUsable ? o.email : null };
+}
+
 async function loadAll() {
   const effective = await readDir(join(ROOT, 'data', 'effective'));
   const changes = await readDir(join(ROOT, 'data', 'effective-changes'));
@@ -154,6 +174,7 @@ async function loadAll() {
   return {
     effective, offers, publishable, needsReview, events, failures, health, updatedAt,
     ads: await loadAds(),
+    owner: await loadOwner(),
     operators,
     // ★「3社」と書かない。NURO光とSo-net光は同じ会社なので、サービス数と会社数は違う。
     serviceCount: new Set(publishable.map((o) => o.providerId)).size,
@@ -652,6 +673,223 @@ function renderData(data) {
   };
 }
 
+// ── 運営者・プライバシー・問い合わせ ────────────────────────────
+//
+// ★この3ページは owner.json だけを見て描く。ここに事実を直書きしない。
+//   直書きすると、実態が変わった日にページだけが古い嘘になる。
+
+/** 連絡手段の一覧。メールは確認が取れているときだけ出す（loadOwner を参照） */
+function contactChannels(owner) {
+  const items = [];
+  if (owner.emailUsable) {
+    items.push(html`<li><strong>メール</strong>: <a href="mailto:${owner.email}">${owner.email}</a></li>`);
+  }
+  if (owner.issuesUrl) {
+    items.push(html`<li><strong>GitHub Issues</strong>: <a href="${owner.issuesUrl}" rel="noopener">${owner.issuesUrl}</a>（GitHubのアカウントが要ります）</li>`);
+  }
+  // ★raw で返す。html`` に素の配列を渡すと各要素がエスケープされ、タグが文字として出る
+  return raw(items.join(''));
+}
+
+function renderAbout(data) {
+  const o = data.owner;
+  const body = html`
+<h1>運営者情報</h1>
+<p class="lead">
+  通信費インデックスは、光回線の料金を<strong>毎日1回</strong>自動で集め、各社をそろえた1つの計算式で
+  <strong>${HORIZON}か月の実質月額</strong>に直して公開している${o.kind ?? '個人'}サイトです。
+</p>
+
+<h2>運営者</h2>
+<div class="table-wrap">
+<table>
+  <tbody>
+    <tr><th>運営者</th><td>${o.name ?? '—'}</td></tr>
+    <tr><th>運営形態</th><td>${o.kind ?? '個人'}（法人ではありません）</td></tr>
+    <tr><th>公開開始</th><td>${o.sinceMonth ?? '—'}</td></tr>
+    <tr><th>連絡先</th><td><a href="/contact/">お問い合わせ</a></td></tr>
+    <tr><th>掲載中の観測数</th><td class="num">${data.publishable.length}</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>なぜ作っているか</h2>
+<p>
+  光回線の料金は、月額だけを見ても比べられません。工事費、割引の期間、キャッシュバックの受け取り時期、
+  必須オプションが絡み、<strong>各社が別々の見せ方をしている</strong>からです。
+  しかも条件は静かに変わり、<strong>変わったことがどこにも記録されません。</strong>
+</p>
+<p>
+  そこで、公式サイトの数字を毎日そのまま記録し、<a href="/method/">1つの計算式</a>で並べ、
+  <a href="/changes/">変わった日</a>を残しています。<strong>広告の紹介文ではなく、記録です。</strong>
+</p>
+
+<h2>数字について守っていること</h2>
+<ul>
+  <li><strong>取れなかった日を前日の値で埋めません。</strong>失敗は失敗として残し、画面にも出します</li>
+  <li>掲載する値には<strong>すべて出典URLと取得日時</strong>を付けます</li>
+  <li><a href="/method/">計算式を全部公開</a>します。特定の事業者が有利になるよう手で調整しません</li>
+  <li>検算に通らなかった値は<strong>画面に出しません</strong>（「たぶん合っている」を載せません）</li>
+  <li>収集するのは料金・日数・条件といった<strong>事実の値だけ</strong>で、各社の文章は複製しません</li>
+</ul>
+
+<h2>収益について</h2>
+${raw(hasAds(data) ? html`
+<p>
+  このサイトには<strong>アフィリエイト広告を掲載しています。</strong>広告が表示されるページには、
+  ページ上部にその旨を明記しています。
+</p>` : html`
+<p>
+  <strong>現時点で、このサイトに広告は1本もありません。</strong>
+  将来アフィリエイト広告を掲載する場合は、掲載しているページの上部に必ずその旨を明記します。
+</p>`)}
+<p>
+  広告の有無で<strong>並び順や数字を変えることはしません。</strong>
+  実質月額は各社同じ式で計算した結果をそのまま並べており、提携の有無は計算に入りません。
+  広告の飛び先が、このサイトが集めている公式ページと<strong>違う条件のとき</strong>は、
+  同じ表に混ぜず、別条件であることを書いたうえで分けて置きます。
+</p>
+
+<h2>このサイトができないこと</h2>
+<ul>
+  <li><strong>申し込みの窓口ではありません。</strong>契約・解約・工事・請求のご相談はお受けできません。各社の公式窓口へお願いします</li>
+  <li>自動収集のため<strong>誤りが混じることがあります。</strong>契約前には必ず公式サイトで最新の条件をご確認ください</li>
+  <li>個別のご家庭に最適な回線を診断するサービスではありません</li>
+</ul>
+`;
+  return {
+    title: `運営者情報｜${SITE_NAME}`,
+    description: '通信費インデックスの運営者と、数字の作り方について守っていること。光回線の実質月額を毎日自動収集して公開している個人サイトです。',
+    canonical: `${SITE_URL}/about/`,
+    body,
+    updatedAt: data.updatedAt,
+  };
+}
+
+function renderPrivacy(data) {
+  const o = data.owner;
+  const body = html`
+<h1>プライバシーポリシー</h1>
+<p class="lead">
+  このサイトは<strong>静的なHTMLだけ</strong>で公開しています。
+  会員登録もログイン機能もなく、フォームも置いていません。
+</p>
+
+<h2>アクセス解析</h2>
+${raw(o.analytics ? html`
+<p>
+  アクセス状況の把握のため <strong>${o.analytics}</strong> を利用しています。
+  これはCookieなどを用いて閲覧の記録を収集しますが、<strong>個人を特定する情報は含みません。</strong>
+  ブラウザの設定でCookieを無効にすると、収集を拒否できます。
+</p>` : html`
+<p>
+  <strong>現時点でアクセス解析ツールを導入していません。</strong>
+  このサイトのページは、閲覧者を識別するためのCookieを発行しません。
+</p>`)}
+<p class="note">
+  ただし、サイトを置いているレンタルサーバーでは、一般的なWebサーバーと同様に
+  アクセスログ（IPアドレス・日時・閲覧ページなど）が記録されます。
+</p>
+
+<h2>お問い合わせでいただいた情報</h2>
+<ul>
+  <li>ご連絡の内容とメールアドレスは、<strong>返信と、指摘いただいた点の確認のためだけ</strong>に使います</li>
+  <li>第三者へ提供・販売しません</li>
+  <li>データの誤りをご指摘いただいた場合、<strong>どこをどう直したかを公開の記録に残す</strong>ことがあります。
+      その際、送っていただいた方が特定される情報は載せません</li>
+</ul>
+
+<h2>外部へのリンク</h2>
+<p>
+  各社公式サイトへのリンクを多数掲載しています。<strong>リンク先での個人情報の扱いは、各サイトの方針に従います。</strong>
+  当サイトは責任を負えません。
+</p>
+${raw(hasAds(data) ? html`
+<p>
+  また、アフィリエイト広告を掲載しています。広告の配信事業者がCookie等を用いて、
+  当サイトや他サイトの閲覧情報を取得する場合があります。
+</p>` : '')}
+
+<h2>データの引用について</h2>
+<p>
+  当サイトが公開している料金データは <a href="https://creativecommons.org/licenses/by/4.0/deed.ja" rel="license">CC BY 4.0</a> です。
+  <a href="/data/">出典を書いていただければ自由にお使いいただけます</a>。これは個人情報とは無関係の、事実データの話です。
+</p>
+
+<h2>改定</h2>
+<p>
+  内容を変更したときは、このページを更新します。
+  <strong>解析ツールを導入した場合は、導入と同時にこのページに書きます。</strong>
+</p>
+
+<h2>連絡先</h2>
+<ul>${contactChannels(o)}</ul>
+`;
+  return {
+    title: `プライバシーポリシー｜${SITE_NAME}`,
+    description: '通信費インデックスにおける、アクセス解析・お問い合わせ情報・外部リンクの取り扱いについて。',
+    canonical: `${SITE_URL}/privacy/`,
+    body,
+    updatedAt: data.updatedAt,
+  };
+}
+
+function renderContact(data) {
+  const o = data.owner;
+  const body = html`
+<h1>お問い合わせ</h1>
+<p class="lead">
+  <strong>掲載している数字の誤りのご指摘を、いちばん歓迎します。</strong>
+  このサイトは自動収集で作られているため、各社のページ構成が変わると誤った値を出すことがあります。
+  お気づきの点は遠慮なくお知らせください。
+</p>
+
+<h2>連絡先</h2>
+<ul>${contactChannels(o)}</ul>
+${raw(o.emailUsable ? '' : html`
+<p class="note">
+  メールでの窓口は準備中です。それまでは上記の GitHub Issues でお受けしています。
+</p>`)}
+
+<h2>とくにお受けしたいこと</h2>
+<ul>
+  <li><strong>掲載値の誤り</strong> — 「この事業者のこのプランが公式と違う」。該当ページのURLを添えていただけると助かります</li>
+  <li><strong>計算方法への指摘</strong> — <a href="/method/">計算式</a>の考え方がおかしい、この費用が抜けている、など</li>
+  <li><strong>収集対象への追加のご要望</strong></li>
+  <li><strong>データの利用に関するご相談</strong> — <a href="/data/">CC BY 4.0</a> の範囲でご自由にお使いいただけますが、判断に迷う場合はお尋ねください</li>
+</ul>
+
+<h2>掲載されている事業者の方へ</h2>
+<p>
+  当サイトは各社が<strong>公開している料金情報を、事実の値だけ</strong>記録しています。
+  robots.txt で自動アクセスを禁じているページや、ログインが必要な情報は収集していません。
+</p>
+<p>
+  <strong>掲載内容の訂正・削除のご依頼はこの窓口でお受けします。</strong>
+  訂正のご依頼は最優先で確認し、対応した内容は
+  <a href="https://github.com/riugamesub3-coder/tsushinhi-index">公開リポジトリの履歴</a>に残します。
+</p>
+
+<h2>お受けできないこと</h2>
+<ul>
+  <li><strong>回線の契約・解約・工事・請求に関するご相談</strong> — 当サイトは申し込み窓口ではありません。各社の公式窓口へお願いします</li>
+  <li>どの回線を契約すべきかの個別のご相談</li>
+  <li>広告掲載・相互リンク・記事寄稿の営業</li>
+</ul>
+<p class="note">
+  個人で運営しているため、返信までにお時間をいただくことがあります。
+  上記「お受けできないこと」には返信いたしません。
+</p>
+`;
+  return {
+    title: `お問い合わせ｜${SITE_NAME}`,
+    description: '通信費インデックスへのご連絡先。掲載値の誤りのご指摘、掲載事業者からの訂正・削除のご依頼をお受けしています。',
+    canonical: `${SITE_URL}/contact/`,
+    body,
+    updatedAt: data.updatedAt,
+  };
+}
+
 // ── 構造化データ ─────────────────────────────────────────────────
 
 function datasetLd(data) {
@@ -860,6 +1098,9 @@ ${top}
 - ${SITE_URL}/changes/ : 料金が動いた履歴（実質月額への影響つき）
 - ${SITE_URL}/method/ : 計算方法の全公開（統一規則・検算方法・故障時の挙動）
 - ${SITE_URL}/data/ : データの入手方法とライセンス
+- ${SITE_URL}/about/ : 運営者と、数字の作り方について守っていること
+- ${SITE_URL}/contact/ : 誤りの指摘・掲載事業者からの訂正依頼の窓口
+- ${SITE_URL}/privacy/ : プライバシーポリシー
 - ${SITE_URL}/feed.xml : 変化のRSS
 
 ## 注意
@@ -870,7 +1111,7 @@ ${top}
 }
 
 function renderSitemap(data) {
-  const urls = ['/', '/changes/', '/method/', '/data/'];
+  const urls = ['/', '/changes/', '/method/', '/data/', '/about/', '/privacy/', '/contact/'];
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map((u) => `  <url>
@@ -985,6 +1226,7 @@ blockquote{margin:0;padding:.75rem 1rem;background:#f6f8fa;border-left:3px solid
 code{background:#f2f2f2;padding:.1rem .3rem;border-radius:3px;font-size:.85em}
 .site-foot{max-width:1000px;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid var(--line);color:var(--muted);font-size:.82rem}
 .site-foot a{color:var(--muted)}
+.foot-nav{display:flex;gap:1.2rem;flex-wrap:wrap;margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--line)}
 .disclaimer{background:#fafafa;padding:.75rem;border-radius:4px}
 @media(max-width:600px){h1{font-size:1.35rem}main{padding:0 .75rem 3rem}}
 `;

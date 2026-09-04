@@ -82,6 +82,11 @@ ${body}
     自動収集のため誤りが含まれる可能性があります。<strong>契約前には必ず各社の公式サイトで最新の条件をご確認ください。</strong>
     掲載している値には出典URLと取得日時を併記しています。
   </p>
+  <nav class="foot-nav">
+    <a href="/about/">運営者情報</a>
+    <a href="/contact/">お問い合わせ</a>
+    <a href="/privacy/">プライバシーポリシー</a>
+  </nav>
 </footer>
 </body>
 </html>

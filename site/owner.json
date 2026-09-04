@@ -1,0 +1,22 @@
+{
+  "_comment": [
+    "運営者情報。/about/ /privacy/ /contact/ はここだけを見て描画する。",
+    "★email は emailConfirmedAt が入るまで画面に出さない。",
+    "  存在しないアドレスを問い合わせ先として掲げると、送った人のメールが黙って消える。",
+    "  affiliate.json と同じ考え方：人が実物を確認した証跡が無いものは出さない。",
+    "★analytics は導入したら書き換える。null のままだと /privacy/ は「解析していない」と書く。",
+    "  解析を入れたのにここが null だと、プライバシーポリシーが嘘になる。"
+  ],
+
+  "name": "ぐらた",
+  "kind": "個人",
+  "sinceMonth": "2026-08",
+
+  "email": "info@tsushinhi-index.com",
+  "emailConfirmedAt": "2026-09-04",
+  "emailConfirmedNote": "本人が info@tsushinhi-index.com 宛にテスト送信し、Xserver の WEBメール受信箱で実物の到着を確認。MX=tsushinhi-index.com / SPF=Xserver 向きであることも DNS で確認済み。★Gmail への転送が働いているかは未検証（同一 Message-ID のメールを Gmail が破棄するため、本人の Gmail からの自己送信では確かめられない）。転送が止まっても受信箱に残る設定なので、問い合わせが消えることはない。",
+
+  "issuesUrl": "https://github.com/riugamesub3-coder/tsushinhi-index/issues",
+
+  "analytics": null
+}
