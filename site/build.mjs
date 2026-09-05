@@ -12,6 +12,7 @@
 //   node site/build.mjs --check         # 出力せず、表示予定の値とdata/の一致を検証
 
 import { readFile, writeFile, mkdir, readdir, rm } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { html, raw, layout, jsonLd, e } from './lib/html.mjs';
@@ -1480,7 +1481,7 @@ const xml = (s) => String(s).replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt
 // ── 出力 ─────────────────────────────────────────────────────────
 
 async function page(path, spec, disclosure = '', siteHead = '') {
-  await out(path, layout({ ...spec, head: (spec.head ?? '') + siteHead, siteUrl: SITE_URL, disclosure }));
+  await out(path, layout({ ...spec, head: (spec.head ?? '') + siteHead, siteUrl: SITE_URL, disclosure, cssVer }));
 }
 
 async function out(path, content) {
@@ -1668,6 +1669,10 @@ ${CHART_CSS}
   .site-head nav a{transition:color .12s ease,border-color .12s ease}
 }
 `;
+
+// CSS本文のハッシュ。中身が変わったときだけ変わる＝変わらない限りキャッシュは効いたまま。
+// ★STYLE の定義より後に置くこと（const は巻き上げても初期化前は参照できない）。
+export const cssVer = createHash('sha1').update(STYLE).digest('hex').slice(0, 8);
 
 main().catch((err) => {
   console.error('失敗:', err);

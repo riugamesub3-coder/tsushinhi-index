@@ -36,8 +36,14 @@ export function jsonLd(obj) {
 /**
  * ページの外枠。
  * CSSは1枚を全ページで共有する（外部依存なし・キャッシュが効く）。
+ *
+ * ★cssVer（CSS本文のハッシュ）を必ずクエリに付ける。
+ *   Xserver は .css に `Cache-Control: max-age=604800`（7日）を付けて返す。
+ *   URLが同じままだと、CSSを直しても**再訪問者は最大7日間ずっと古い見た目のまま**になる。
+ *   実際に2026-09-05、配信は成功しているのに旧CSSが当たっていた（HTMLだけ新しい＝崩れた表示）。
+ *   ファイル名ではなくクエリを変えるのは、配信中の一瞬でも参照先が消えないようにするため。
  */
-export function layout({ title, description, canonical, siteUrl, bodyClass = '', head = '', body, updatedAt, disclosure = '' }) {
+export function layout({ title, description, canonical, siteUrl, bodyClass = '', head = '', body, updatedAt, disclosure = '', cssVer = '' }) {
   return `<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -47,7 +53,7 @@ export function layout({ title, description, canonical, siteUrl, bodyClass = '',
 <meta name="description" content="${attr(description)}">
 <link rel="canonical" href="${attr(canonical)}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/style.css${cssVer ? '?v=' + attr(cssVer) : ''}">
 <link rel="alternate" type="application/rss+xml" title="料金の変化" href="/feed.xml">
 <meta property="og:title" content="${attr(title)}">
 <meta property="og:description" content="${attr(description)}">

@@ -15,6 +15,7 @@ import { reconstructSeries, planSlug, planSlugsFor } from '../site/lib/series.mj
 import { staleInfo } from '../site/lib/stale.mjs';
 import { asDetailTable, declaresGatewayFee } from './adapters/nuro-hikari.mjs';
 import { searchConsoleToken } from '../site/lib/owner.mjs';
+import { layout } from '../site/lib/html.mjs';
 
 // ── toYen ────────────────────────────────────────────────────────
 
@@ -568,4 +569,28 @@ test('未設定なら null（例外にしない。設定前でもビルドは通
 test('形が違えば例外にする（黙って未確認のままにしない）', () => {
   assert.throws(() => searchConsoleToken({ searchConsoleVerification: '貼り間違えた文字列 <script>' }));
   assert.throws(() => searchConsoleToken({ searchConsoleVerification: 'short' }));
+});
+
+// ── CSSのキャッシュ破棄（2026-09-05 に実際に踏んだ）───────────────
+//
+// Xserver は .css に max-age=604800（7日）を付ける。URLが変わらないと
+// 「配信は成功しているのに、再訪問者だけ古いCSSで崩れて見える」が起きる。
+// 画面を見に行かない限り気づけない壊れ方なので、リンクの形をここで固定する。
+
+const stub = (extra) => layout({
+  title: 't', description: 'd', canonical: 'https://example.com/',
+  siteUrl: 'https://example.com', body: '<p>x</p>', updatedAt: null, ...extra,
+});
+
+test('cssVer を渡すと style.css にクエリが付く', () => {
+  const h = stub({ cssVer: 'a1b2c3d4' });
+  assert.ok(h.includes('href="/style.css?v=a1b2c3d4"'), h.match(/style\.css[^"]*/)?.[0]);
+});
+
+test('cssVer が無いときはクエリを付けない（形が壊れない）', () => {
+  assert.ok(stub({}).includes('href="/style.css"'));
+});
+
+test('cssVer は属性としてエスケープされる', () => {
+  assert.ok(!stub({ cssVer: '"><script>' }).includes('"><script>'));
 });
