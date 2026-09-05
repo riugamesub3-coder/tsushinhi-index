@@ -2,7 +2,7 @@
   "providerId": "so-net-hikari",
   "providerName": "So-net光",
   "channelId": "official",
-  "observedAt": "2026-09-05T05:08:02.045Z",
+  "observedAt": "2026-09-05T05:24:59.969Z",
   "formula": "実質月額 = ( 月額の合計 + 工事費の実負担額 + 事務手数料 + 必須オプション費用×加入必要月数 - キャッシュバック額 - その他割引の総額 ) ÷ 契約月数",
   "primaryHorizonMonths": 36,
   "sourceUrls": [
@@ -142,7 +142,7 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-09-05T05:08:02.045Z",
+      "observedAt": "2026-09-05T05:24:59.969Z",
       "effective": {
         "24": {
           "effectiveMonthly": 3815,
@@ -267,7 +267,7 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-09-05T05:08:02.045Z",
+      "observedAt": "2026-09-05T05:24:59.969Z",
       "effective": {
         "24": {
           "effectiveMonthly": 5377,
@@ -422,7 +422,7 @@
       "alsoSeenAt": [
         "https://www.so-net.ne.jp/access/hikari/1g/"
       ],
-      "observedAt": "2026-09-05T05:08:02.045Z",
+      "observedAt": "2026-09-05T05:24:59.969Z",
       "effective": {
         "24": {
           "effectiveMonthly": 5115,
@@ -577,7 +577,7 @@
       "alsoSeenAt": [
         "https://www.so-net.ne.jp/access/hikari/1g/"
       ],
-      "observedAt": "2026-09-05T05:08:02.045Z",
+      "observedAt": "2026-09-05T05:24:59.969Z",
       "effective": {
         "24": {
           "effectiveMonthly": 4565,
@@ -705,7 +705,7 @@
       "alsoSeenAt": [
         "https://www.so-net.ne.jp/access/hikari/1g/"
       ],
-      "observedAt": "2026-09-05T05:08:02.045Z",
+      "observedAt": "2026-09-05T05:24:59.969Z",
       "effective": {
         "24": {
           "effectiveMonthly": 5743,
@@ -833,7 +833,7 @@
       "alsoSeenAt": [
         "https://www.so-net.ne.jp/access/hikari/1g/"
       ],
-      "observedAt": "2026-09-05T05:08:02.045Z",
+      "observedAt": "2026-09-05T05:24:59.969Z",
       "effective": {
         "24": {
           "effectiveMonthly": 4918,
@@ -950,7 +950,7 @@
       "verified": true,
       "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=4500円 / 特典表の一覧=4500円）",
       "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
-      "observedAt": "2026-09-05T05:08:02.045Z",
+      "observedAt": "2026-09-05T05:24:59.969Z",
       "effective": {
         "24": {
           "effectiveMonthly": 4752,
@@ -1067,7 +1067,7 @@
       "verified": true,
       "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=3400円 / 特典表の一覧=3400円）",
       "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
-      "observedAt": "2026-09-05T05:08:02.045Z",
+      "observedAt": "2026-09-05T05:24:59.969Z",
       "effective": {
         "24": {
           "effectiveMonthly": 3652,
@@ -1154,7 +1154,7 @@
       "verified": true,
       "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=4500円 / 特典表の一覧=4500円）",
       "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
-      "observedAt": "2026-09-05T05:08:02.045Z",
+      "observedAt": "2026-09-05T05:24:59.969Z",
       "effective": {
         "24": {
           "effectiveMonthly": 4752,
@@ -1241,7 +1241,7 @@
       "verified": true,
       "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=3400円 / 特典表の一覧=3400円）",
       "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
-      "observedAt": "2026-09-05T05:08:02.045Z",
+      "observedAt": "2026-09-05T05:24:59.969Z",
       "effective": {
         "24": {
           "effectiveMonthly": 3652,
@@ -1358,7 +1358,7 @@
       "verified": true,
       "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=7095円 / 特典表の一覧=7095円）",
       "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
-      "observedAt": "2026-09-05T05:08:02.045Z",
+      "observedAt": "2026-09-05T05:24:59.969Z",
       "effective": {
         "24": {
           "effectiveMonthly": 7347,
@@ -1475,7 +1475,7 @@
       "verified": true,
       "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=5995円 / 特典表の一覧=5995円）",
       "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
-      "observedAt": "2026-09-05T05:08:02.045Z",
+      "observedAt": "2026-09-05T05:24:59.969Z",
       "effective": {
         "24": {
           "effectiveMonthly": 6247,
@@ -1562,7 +1562,7 @@
       "verified": true,
       "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=7095円 / 特典表の一覧=7095円）",
       "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
-      "observedAt": "2026-09-05T05:08:02.045Z",
+      "observedAt": "2026-09-05T05:24:59.969Z",
       "effective": {
         "24": {
           "effectiveMonthly": 7347,
@@ -1649,7 +1649,7 @@
       "verified": true,
       "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=5995円 / 特典表の一覧=5995円）",
       "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
-      "observedAt": "2026-09-05T05:08:02.045Z",
+      "observedAt": "2026-09-05T05:24:59.969Z",
       "effective": {
         "24": {
           "effectiveMonthly": 6247,
