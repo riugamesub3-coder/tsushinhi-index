@@ -2,7 +2,7 @@
   "providerId": "nuro-hikari",
   "providerName": "NURO光",
   "channelId": "official",
-  "observedAt": "2026-09-05T04:28:19.310Z",
+  "observedAt": "2026-09-05T04:44:36.827Z",
   "formula": "実質月額 = ( 月額の合計 + 工事費の実負担額 + 事務手数料 + 必須オプション費用×加入必要月数 - キャッシュバック額 - その他割引の総額 ) ÷ 契約月数",
   "primaryHorizonMonths": 36,
   "sourceUrls": [
@@ -137,7 +137,7 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-09-05T04:28:19.310Z",
+      "observedAt": "2026-09-05T04:44:36.827Z",
       "effective": {
         "24": {
           "effectiveMonthly": 4657,
@@ -296,7 +296,7 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-09-05T04:28:19.310Z",
+      "observedAt": "2026-09-05T04:44:36.827Z",
       "effective": {
         "24": {
           "effectiveMonthly": 4365,
@@ -455,7 +455,7 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-09-05T04:28:19.310Z",
+      "observedAt": "2026-09-05T04:44:36.827Z",
       "effective": {
         "24": {
           "effectiveMonthly": 4657,
@@ -614,7 +614,7 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-09-05T04:28:19.310Z",
+      "observedAt": "2026-09-05T04:44:36.827Z",
       "effective": {
         "24": {
           "effectiveMonthly": 4365,
@@ -772,7 +772,7 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-09-05T04:28:19.310Z",
+      "observedAt": "2026-09-05T04:44:36.827Z",
       "effective": {
         "24": {
           "effectiveMonthly": 4657,
@@ -930,7 +930,7 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-09-05T04:28:19.310Z",
+      "observedAt": "2026-09-05T04:44:36.827Z",
       "effective": {
         "24": {
           "effectiveMonthly": 4365,
@@ -1088,7 +1088,7 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-09-05T04:28:19.310Z",
+      "observedAt": "2026-09-05T04:44:36.827Z",
       "effective": {
         "24": {
           "effectiveMonthly": 4657,
@@ -1246,7 +1246,7 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-09-05T04:28:19.310Z",
+      "observedAt": "2026-09-05T04:44:36.827Z",
       "effective": {
         "24": {
           "effectiveMonthly": 4365,
@@ -1405,7 +1405,7 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-09-05T04:28:19.310Z",
+      "observedAt": "2026-09-05T04:44:36.827Z",
       "effective": {
         "24": {
           "effectiveMonthly": 3657,
@@ -1564,7 +1564,7 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-09-05T04:28:19.310Z",
+      "observedAt": "2026-09-05T04:44:36.827Z",
       "effective": {
         "24": {
           "effectiveMonthly": 3365,
@@ -1723,7 +1723,7 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-09-05T04:28:19.310Z",
+      "observedAt": "2026-09-05T04:44:36.827Z",
       "effective": {
         "24": {
           "effectiveMonthly": 3657,
@@ -1882,7 +1882,7 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-09-05T04:28:19.310Z",
+      "observedAt": "2026-09-05T04:44:36.827Z",
       "effective": {
         "24": {
           "effectiveMonthly": 3365,

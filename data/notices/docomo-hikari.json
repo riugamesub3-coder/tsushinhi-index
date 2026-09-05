@@ -5,6 +5,15 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-09-05",
+      "title": "令和8年台風第24号及び前線による大雨に伴う支援措置",
+      "url": "https://www.docomo.ne.jp/info/news_release/detail/20260905_00_m.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-09-05T04:44:03.168Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-09-03",
       "title": "「KONAMI ID」と「dアカウント」を連携でdポイントプレゼント！「総勢5万名にあたる！総額2,000万ポイントプレゼントキャンペーン」を開催（PDF形式：593KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260903_x2.pdf",
@@ -312,6 +321,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-09-05T04:27:45.417Z",
-  "totalNotices": 32
+  "lastCollectedAt": "2026-09-05T04:44:03.168Z",
+  "totalNotices": 33
 }
