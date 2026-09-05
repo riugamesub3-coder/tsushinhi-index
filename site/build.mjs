@@ -19,6 +19,7 @@ import { yen, yenSigned, jstDateTime, jstDate, isoDate, daysSince, host, planNam
 import { planSlugsFor, reconstructSeries } from './lib/series.mjs';
 import { stepChart, CHART_CSS } from './lib/chart.mjs';
 import { staleInfo } from './lib/stale.mjs';
+import { searchConsoleToken } from './lib/owner.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -56,20 +57,29 @@ async function main() {
 
   // 広告表記は全ページのヘッダ直下（ファーストビュー）に置く。広告が無ければ空文字
   const disclosure = adDisclosure(data);
-  await page('index.html', renderIndex(data), disclosure);
-  await page('changes/index.html', renderChanges(data), disclosure);
-  await page('method/index.html', renderMethod(data), disclosure);
-  await page('data/index.html', renderData(data), disclosure);
-  await page('about/index.html', renderAbout(data), disclosure);
-  await page('privacy/index.html', renderPrivacy(data), disclosure);
-  await page('contact/index.html', renderContact(data), disclosure);
+
+  // ★所有権確認タグは全ページに入れる。Googleはトップにあれば足りるが、
+  //   確認後に外すと所有権が失効する。1か所にしか無いと、ページ構成を
+  //   いじった拍子に黙って消える。
+  const siteHead = data.owner.searchConsoleToken
+    ? `<meta name="google-site-verification" content="${data.owner.searchConsoleToken}">
+`
+    : '';
+  if (!siteHead) console.warn('  ⚠ Search Console の所有権確認タグが未設定です（インデックス状況を確認できません）');
+  await page('index.html', renderIndex(data), disclosure, siteHead);
+  await page('changes/index.html', renderChanges(data), disclosure, siteHead);
+  await page('method/index.html', renderMethod(data), disclosure, siteHead);
+  await page('data/index.html', renderData(data), disclosure, siteHead);
+  await page('about/index.html', renderAbout(data), disclosure, siteHead);
+  await page('privacy/index.html', renderPrivacy(data), disclosure, siteHead);
+  await page('contact/index.html', renderContact(data), disclosure, siteHead);
 
   // 事業者ページとプランページ。掲載可のものだけ（要確認の値をURLで指せるようにしない）
   for (const id of providerIds(data)) {
-    await page(`p/${id}/index.html`, renderProvider(data, id), disclosure);
+    await page(`p/${id}/index.html`, renderProvider(data, id), disclosure, siteHead);
   }
   for (const o of data.publishable) {
-    await page(`p/${o.providerId}/${o.slug}/index.html`, renderPlan(data, o), disclosure);
+    await page(`p/${o.providerId}/${o.slug}/index.html`, renderPlan(data, o), disclosure, siteHead);
   }
   console.log(`  事業者ページ ${providerIds(data).length}件 / プランページ ${data.publishable.length}件`);
 
@@ -141,8 +151,9 @@ async function loadOwner() {
   if (o.email && !emailUsable) {
     console.warn(`  ⚠ ${o.email} は site/owner.json の emailConfirmedAt が空なので画面に出しません（受信できる確認が取れていない）`);
   }
-  return { ...o, emailUsable, email: emailUsable ? o.email : null };
+  return { ...o, emailUsable, email: emailUsable ? o.email : null, searchConsoleToken: searchConsoleToken(o) };
 }
+
 
 async function loadAll() {
   const effective = await readDir(join(ROOT, 'data', 'effective'));
@@ -1367,8 +1378,8 @@ const xml = (s) => String(s).replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt
 
 // ── 出力 ─────────────────────────────────────────────────────────
 
-async function page(path, spec, disclosure = '') {
-  await out(path, layout({ ...spec, siteUrl: SITE_URL, disclosure }));
+async function page(path, spec, disclosure = '', siteHead = '') {
+  await out(path, layout({ ...spec, head: (spec.head ?? '') + siteHead, siteUrl: SITE_URL, disclosure }));
 }
 
 async function out(path, content) {

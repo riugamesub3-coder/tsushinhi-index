@@ -18,5 +18,14 @@
 
   "issuesUrl": "https://github.com/riugamesub3-coder/tsushinhi-index/issues",
 
-  "analytics": null
+  "analytics": null,
+
+  "_searchConsole": [
+    "Search Console の所有権確認トークン（HTMLタグ方式）。",
+    "URLプレフィックスプロパティ https://tsushinhi-index.com/ で発行されるもの。",
+    "画面に出た <meta name=\"google-site-verification\" content=\"...\"> の content の値を貼る。",
+    "タグまるごと貼っても中身だけ取り出す。形式が違えばビルドを止める（黙って未確認のままにしない）。",
+    "確認が済んだ後もタグは外さない。外すと所有権が失効する（Google公式）。"
+  ],
+  "searchConsoleVerification": null
 }

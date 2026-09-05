@@ -14,6 +14,7 @@ import { recordOutcome, shouldFail, escalated } from './lib/failures.mjs';
 import { reconstructSeries, planSlug, planSlugsFor } from '../site/lib/series.mjs';
 import { staleInfo } from '../site/lib/stale.mjs';
 import { asDetailTable, declaresGatewayFee } from './adapters/nuro-hikari.mjs';
+import { searchConsoleToken } from '../site/lib/owner.mjs';
 
 // ── toYen ────────────────────────────────────────────────────────
 
@@ -541,4 +542,30 @@ test('本文の「別途必要」宣言を読み取る（表の読み落とし�
   assert.equal(declaresGatewayFee('ホームゲートウェイを無料でレンタルできます'), false);
   assert.equal(declaresGatewayFee('月額基本料金は5,170円です'), false);
   assert.equal(declaresGatewayFee(null), false);
+});
+
+// ── Search Console の所有権確認トークン ─────────────────────────
+//
+// 「入れたつもりで入っていない」が最悪。その間インデックス状況を誰も確認できない。
+
+test('タグまるごと貼られても content だけ取り出す', () => {
+  const t = searchConsoleToken({
+    searchConsoleVerification: '<meta name="google-site-verification" content="AbCdEf1234567890_-XyZabcdefghijklmnopq" />',
+  });
+  assert.equal(t, 'AbCdEf1234567890_-XyZabcdefghijklmnopq');
+});
+
+test('トークンだけ貼られてもそのまま使える', () => {
+  const v = 'AbCdEf1234567890_-XyZabcdefghijklmnopq';
+  assert.equal(searchConsoleToken({ searchConsoleVerification: v }), v);
+});
+
+test('未設定なら null（例外にしない。設定前でもビルドは通す）', () => {
+  assert.equal(searchConsoleToken({}), null);
+  assert.equal(searchConsoleToken({ searchConsoleVerification: '   ' }), null);
+});
+
+test('形が違えば例外にする（黙って未確認のままにしない）', () => {
+  assert.throws(() => searchConsoleToken({ searchConsoleVerification: '貼り間違えた文字列 <script>' }));
+  assert.throws(() => searchConsoleToken({ searchConsoleVerification: 'short' }));
 });
