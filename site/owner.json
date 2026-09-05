@@ -5,7 +5,8 @@
     "  存在しないアドレスを問い合わせ先として掲げると、送った人のメールが黙って消える。",
     "  affiliate.json と同じ考え方：人が実物を確認した証跡が無いものは出さない。",
     "★analytics は導入したら書き換える。null のままだと /privacy/ は「解析していない」と書く。",
-    "  解析を入れたのにここが null だと、プライバシーポリシーが嘘になる。"
+    "  kind は server-log（サーバーログ型・JS/Cookie不要）か client-js（GA4等・外部送信あり）。",
+    "  方式で文面が変わる。使っていない技術を書くのも、導入した事実を書かないのも、同じく嘘になる。"
   ],
   "name": "ぐらた",
   "kind": "個人",
@@ -14,7 +15,11 @@
   "emailConfirmedAt": "2026-09-04",
   "emailConfirmedNote": "2026-09-04 に本人が確認。(1) Xserver の WEBメール受信箱で実物の到着を確認 (2) 転送先一覧に Gmail が入っていることを画面で確認 (3) Gmail への転送が届くことを確認。MX=tsushinhi-index.com / SPF=Xserver 向きであることも DNS で確認済み。受信箱に「残す」設定なので、転送が止まっても問い合わせは消えない。",
   "issuesUrl": "https://github.com/riugamesub3-coder/tsushinhi-index/issues",
-  "analytics": null,
+  "analytics": {
+    "name": "エックスサーバーのアクセス解析",
+    "kind": "server-log",
+    "since": "2026-09-04"
+  },
   "_searchConsole": [
     "Search Console の所有権確認トークン（HTMLタグ方式）。",
     "URLプレフィックスプロパティ https://tsushinhi-index.com/ で発行されるもの。",

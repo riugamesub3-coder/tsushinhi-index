@@ -984,6 +984,49 @@ ${raw(hasAds(data) ? html`
   };
 }
 
+/**
+ * アクセス解析の説明。**解析の「方式」で文面を変える。**
+ *
+ * ★ここを1つの文面で済ませると必ず嘘になる。
+ *   2026-09-04、Xserverのアクセス解析（サーバーログ型）をONにした。
+ *   これはJavaScriptもCookieも使わない。それなのに従来の分岐は
+ *   「Cookieを用いて収集します」「Cookieを無効にすれば拒否できます」と書いていた。
+ *   **導入した事実を書かないのも嘘だが、使っていない技術を書くのも同じく嘘。**
+ * ★未知の kind はビルドを止める。黙って間違った説明を出さない。
+ */
+function analyticsSection(a) {
+  if (!a) {
+    return html`
+<p>
+  <strong>現時点でアクセス解析ツールを導入していません。</strong>
+  このサイトのページは、閲覧者を識別するためのCookieを発行しません。
+</p>`;
+  }
+  if (a.kind === 'server-log') {
+    return html`
+<p>
+  アクセス状況の把握のため <strong>${a.name}</strong> を利用しています（${a.since}〜）。
+  これは<strong>サーバーに記録されたアクセスログを集計するもの</strong>で、
+  <strong>JavaScriptもCookieも使いません。</strong>閲覧者のブラウザに何かを保存したり、
+  閲覧の情報を外部の事業者へ送ったりはしていません。
+</p>
+<p>
+  そのため<strong>ブラウザ側で拒否する設定はありません。</strong>
+  記録されるのはWebサーバーが通常残すログ（IPアドレス・日時・閲覧ページ・リンク元など）の範囲です。
+</p>`;
+  }
+  if (a.kind === 'client-js') {
+    return html`
+<p>
+  アクセス状況の把握のため <strong>${a.name}</strong> を利用しています（${a.since}〜）。
+  これは<strong>閲覧者のブラウザから外部の事業者へ閲覧情報を送信します。</strong>
+  Cookie等を用いますが、個人を特定する情報は含みません。
+  ブラウザの設定でCookieを無効にすると、収集を拒否できます。
+</p>`;
+  }
+  throw new Error(`site/owner.json の analytics.kind が不明です: ${JSON.stringify(a.kind)}（server-log か client-js）`);
+}
+
 function renderPrivacy(data) {
   const o = data.owner;
   const body = html`
@@ -994,20 +1037,12 @@ function renderPrivacy(data) {
 </p>
 
 <h2>アクセス解析</h2>
-${raw(o.analytics ? html`
-<p>
-  アクセス状況の把握のため <strong>${o.analytics}</strong> を利用しています。
-  これはCookieなどを用いて閲覧の記録を収集しますが、<strong>個人を特定する情報は含みません。</strong>
-  ブラウザの設定でCookieを無効にすると、収集を拒否できます。
-</p>` : html`
-<p>
-  <strong>現時点でアクセス解析ツールを導入していません。</strong>
-  このサイトのページは、閲覧者を識別するためのCookieを発行しません。
-</p>`)}
+${raw(analyticsSection(o.analytics))}
+${raw(o.analytics?.kind === 'server-log' ? '' : html`
 <p class="note">
-  ただし、サイトを置いているレンタルサーバーでは、一般的なWebサーバーと同様に
+  なお、サイトを置いているレンタルサーバーでは、一般的なWebサーバーと同様に
   アクセスログ（IPアドレス・日時・閲覧ページなど）が記録されます。
-</p>
+</p>`)}
 
 <h2>お問い合わせでいただいた情報</h2>
 <ul>
