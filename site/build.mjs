@@ -315,6 +315,25 @@ ${raw(buildings.map((b) => rankingSection(data, b)).join(''))}
 ${raw(linkOnlyOffers(data))}
 
 <section>
+  <h2>事業者ごとに見る</h2>
+  <p>
+    比較表に出しているのは条件ごとの上位だけです。
+    <strong>各社の全プランと、料金が動いた履歴</strong>は事業者ごとのページにあります。
+  </p>
+  <ul class="providers">${raw(providerIds(data).map((id) => {
+    const mine = data.publishable.filter((o) => o.providerId === id);
+    const evs = data.events.filter((c) => c.providerId === id).length;
+    return html`
+    <li>
+      <a href="/p/${id}/"><strong>${mine[0].providerName}</strong></a>
+      — ${mine.length}プラン${raw(evs ? html` ／ 検知した変化 ${evs}件` : '')}
+      ${raw(mine.some((o) => o.stale) ? '<span class="tag">更新停止中</span>' : '')}
+    </li>`;
+  }).join(''))}
+  </ul>
+</section>
+
+<section>
   <h2>最近の変化</h2>
   ${raw(recent.length
     ? `<ul class="changes">${recent.map(changeItem).join('')}</ul>
@@ -1488,6 +1507,8 @@ code{background:#f2f2f2;padding:.1rem .3rem;border-radius:3px;font-size:.85em}
 .foot-nav{display:flex;gap:1.2rem;flex-wrap:wrap;margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--line)}
 .disclaimer{background:#fafafa;padding:.75rem;border-radius:4px}
 .big{font-size:1.5rem}
+.providers{list-style:none;padding:0}
+.providers li{padding:.5rem 0;border-bottom:1px solid var(--line)}
 .stale-note{background:var(--warn);border-left:4px solid var(--up);padding:.8rem 1rem;border-radius:4px;margin:1rem 0}
 .events{list-style:none;padding:0}
 .events li{padding:.6rem 0;border-bottom:1px solid var(--line)}

@@ -1,0 +1,20 @@
+ページ総数: 54
+
+被リンク0（どこからも辿れない）: 0件
+
+被リンク数が少ない順（上位10）:
+    1  /p/rakuten-hikari/1f809d47/
+    1  /p/rakuten-hikari/2fb751e7/
+    1  /p/rakuten-hikari/363b236e/
+    1  /p/rakuten-hikari/6217a002/
+    1  /p/rakuten-hikari/72ad01c5/
+    1  /p/rakuten-hikari/8c42a8e7/
+    1  /p/rakuten-hikari/92ec3dc4/
+    1  /p/rakuten-hikari/b35bdd40/
+    1  /p/rakuten-hikari/c51c9139/
+    1  /p/rakuten-hikari/dfe12bf9/
+
+トップページから直接辿れる先:
+  静的ページ: /, /about/, /changes/, /contact/, /data/, /method/, /privacy/
+  プランページ: 25件
+  事業者ページ: 3件
