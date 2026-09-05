@@ -301,10 +301,12 @@ function renderIndex(data) {
     <strong>全社を同一の計算式に通した「実質月額」</strong>として${HORIZON}か月で均した値です。
     計算式は<a href="/method/">すべて公開</a>しています。
   </p>
-  <p class="meta">
-    ${data.publishable.length}件の観測 ／ ${data.serviceCount}サービス（運営${data.operatorCount}社） ／
-    最終取得 ${jstDateTime(data.updatedAt)}
-  </p>
+  <div class="stats">
+    <div class="stat"><b>${data.publishable.length}</b><span>掲載中の観測</span></div>
+    <div class="stat"><b>${data.serviceCount}</b><span>サービス（運営${data.operatorCount}社）</span></div>
+    <div class="stat"><b>${data.events.length}</b><span>検知した料金の変化</span></div>
+    <div class="stat"><b>毎日</b><span><span class="live"></span>最終取得 ${jstDate(data.updatedAt)}</span></div>
+  </div>
   ${raw(operatorNote(data))}
 </section>
 
@@ -320,17 +322,18 @@ ${raw(linkOnlyOffers(data))}
     比較表に出しているのは条件ごとの上位だけです。
     <strong>各社の全プランと、料金が動いた履歴</strong>は事業者ごとのページにあります。
   </p>
-  <ul class="providers">${raw(providerIds(data).map((id) => {
+  <div class="pcards">${raw(providerIds(data).map((id) => {
     const mine = data.publishable.filter((o) => o.providerId === id);
     const evs = data.events.filter((c) => c.providerId === id).length;
+    const cheapest = Math.min(...mine.map((o) => o.effectiveMonthly));
     return html`
-    <li>
-      <a href="/p/${id}/"><strong>${mine[0].providerName}</strong></a>
-      — ${mine.length}プラン${raw(evs ? html` ／ 検知した変化 ${evs}件` : '')}
-      ${raw(mine.some((o) => o.stale) ? '<span class="tag">更新停止中</span>' : '')}
-    </li>`;
+    <a class="pcard" href="/p/${id}/">
+      <span class="pname">${mine[0].providerName}${raw(mine.some((o) => o.stale) ? ' <span class="tag">更新停止中</span>' : '')}</span>
+      <span class="pmin"><b>${yen(cheapest)}</b><small>最安の実質月額</small></span>
+      <span class="pmeta">${mine.length}プラン${raw(evs ? html` ・ 変化${evs}件` : '')}</span>
+    </a>`;
   }).join(''))}
-  </ul>
+  </div>
 </section>
 
 <section>
@@ -373,16 +376,16 @@ function rankingSection(data, building) {
   return html`
 <section>
   <h2>${building}：実質月額の安い順（新規申込・${HORIZON}か月換算）</h2>
-  <div class="table-wrap">
+  <div class="card"><div class="table-wrap">
   <table>
     <thead>
-      <tr><th>実質月額</th><th>事業者</th><th>プラン</th><th>内訳</th><th>出典・取得日時</th>${raw(ads ? '<th>申込</th>' : '')}</tr>
+      <tr><th class="rank">#</th><th>実質月額</th><th>事業者</th><th>プラン</th><th>内訳</th><th>出典・取得日時</th>${raw(ads ? '<th>申込</th>' : '')}</tr>
     </thead>
     <tbody>
-      ${raw(rows.map((o) => rankRow(o, data)).join(''))}
+      ${raw(rows.map((o, i) => rankRow(o, data, i + 1)).join(''))}
     </tbody>
   </table>
-  </div>
+  </div></div>
   <p class="note">
     ${HORIZON}か月換算です。契約期間は各社ばらばら（NURO光は縛りなし）なので、揃えないと比較になりません。
     数え方の統一規則は<a href="/method/">計算方法</a>に書いています。
@@ -396,7 +399,7 @@ function rankingSection(data, building) {
 `;
 }
 
-function rankRow(o, data) {
+function rankRow(o, data, rank) {
   const ad = data.ads.same.get(o.providerId);
   const b = o.breakdown;
   const notes = [];
@@ -405,7 +408,8 @@ function rankRow(o, data) {
   if (o.stale) notes.push(`更新停止中（${o.stale.days}日）`);
 
   return html`
-<tr${raw(o.stale ? ' class="stale"' : '')}>
+<tr class="${raw([rank <= 3 ? 'top' : '', o.stale ? 'stale' : ''].filter(Boolean).join(' '))}">
+  <td class="rank">${raw(rank <= 3 ? html`<span>${rank}</span>` : String(rank))}</td>
   <td class="num strong">${yen(o.effectiveMonthly)}</td>
   <td>${o.providerName}</td>
   <td><a href="${o.path}">${planName(o)}</a>${raw(notes.length ? `<br><span class="tag">${notes.map(e).join(' / ')}</span>` : '')}</td>
@@ -565,7 +569,8 @@ function changeItem(c) {
 <li class="${dir}">
   <time datetime="${c.detectedAt}">${jstDate(c.detectedAt)}</time>
   <strong>${c.providerName}</strong> ${planName(c)}
-  <span class="delta">実質月額 ${yen(c.before)} → ${yen(c.after)}（${yenSigned(c.effectiveMonthlyDelta)}）</span>
+  <span class="delta">実質月額 ${yen(c.before)} → ${yen(c.after)}
+    <em class="pill">${raw(c.effectiveMonthlyDelta < 0 ? '▼' : '▲')} ${yenSigned(c.effectiveMonthlyDelta)}</em></span>
   ${raw(cause ? `<span class="cause">${e(cause)}</span>` : '')}
   ${raw(c.sourceUrl ? `<a class="src" href="${e(c.sourceUrl)}" rel="nofollow noopener">出典</a>` : '')}
 </li>
@@ -599,7 +604,7 @@ function renderMethod(data) {
 
 <h2>事業者間で揃えていること</h2>
 <p>同じ「${HORIZON}か月」でも、各社の数え方・載せ方が違います。<strong>揃えずに並べた比較は嘘になります。</strong></p>
-<div class="table-wrap">
+<div class="card"><div class="table-wrap">
 <table>
   <thead><tr><th>揃えている点</th><th>なぜ</th></tr></thead>
   <tbody>
@@ -611,7 +616,7 @@ function renderMethod(data) {
     <tr><td>比較は新規申込で揃える</td><td>転用・事業者変更は工事費もキャッシュバックも条件が違うため、混ぜると比較になりません</td></tr>
   </tbody>
 </table>
-</div>
+</div></div>
 
 <h2>数字を検算しています</h2>
 <p>
@@ -622,12 +627,12 @@ function renderMethod(data) {
 <p>
   ただし検算の手段は事業者によって異なります。<strong>弱い検算しかできない事業者を、強い検算ができたかのように扱いません。</strong>
 </p>
-<div class="table-wrap">
+<div class="card"><div class="table-wrap">
 <table>
   <thead><tr><th>事業者</th><th>検算の方法</th></tr></thead>
   <tbody>${raw(verificationRows(data))}</tbody>
 </table>
-</div>
+</div></div>
 
 <h2>壊れたときにどうなるか</h2>
 <p>
@@ -686,7 +691,7 @@ function renderData(data) {
 </blockquote>
 
 <h2>収録している事業者</h2>
-<div class="table-wrap">
+<div class="card"><div class="table-wrap">
 <table>
   <thead><tr><th>事業者</th><th>観測数</th><th>最終取得</th><th>出典</th></tr></thead>
   <tbody>${raw(data.effective.map((s) => html`
@@ -698,7 +703,7 @@ function renderData(data) {
     </tr>`).join(''))}
   </tbody>
 </table>
-</div>
+</div></div>
 
 <h2>収集していないもの</h2>
 <ul>
@@ -780,7 +785,7 @@ ${raw(staleHere.length ? html`
 </p>
 
 <h2>掲載中のプラン</h2>
-<div class="table-wrap">
+<div class="card"><div class="table-wrap">
 <table>
   <thead><tr><th>実質月額</th><th>プラン</th><th>内訳</th><th>取得</th></tr></thead>
   <tbody>${raw(mine.map((o) => html`
@@ -794,7 +799,7 @@ ${raw(staleHere.length ? html`
     </tr>`).join(''))}
   </tbody>
 </table>
-</div>
+</div></div>
 
 <h2>この事業者で検知した変化</h2>
 ${raw(evs.length ? html`
@@ -868,7 +873,7 @@ ${raw(o.stale ? html`
 
 <h2>実質月額の推移</h2>
 ${raw(svg ? html`
-${raw(svg)}
+<div class="chart-card">${raw(svg)}</div>
 <p class="note">
   料金は改定された日に飛ぶので、階段で描いています。<strong>点と点の間を直線で結んでいません</strong>
   （実際には存在しなかった中間の値をグラフ上に作らないためです）。
@@ -881,7 +886,7 @@ ${raw(svg)}
 
 <h2>この金額の内訳（${HORIZON}か月）</h2>
 ${raw(b ? html`
-<div class="table-wrap">
+<div class="card"><div class="table-wrap">
 <table>
   <tbody>
     <tr><th>月額料金の合計</th><td class="num">${yen(b.monthlyTotal)}</td></tr>
@@ -894,7 +899,7 @@ ${raw(b ? html`
     <tr class="total"><th>1か月あたり</th><td class="num strong">${yen(o.effectiveMonthly)}</td></tr>
   </tbody>
 </table>
-</div>` : '<p class="note">内訳を出せません。</p>')}
+</div></div>` : '<p class="note">内訳を出せません。</p>')}
 ${raw(e24 != null ? html`
 <p class="note">
   <strong>24か月で解約する場合は ${yen(e24)}</strong>／月です。工事費の分割が終わる前に解約すると残債が乗るため、
@@ -902,14 +907,14 @@ ${raw(e24 != null ? html`
 </p>` : '')}
 
 <h2>月額料金の推移（契約からの月数）</h2>
-<div class="table-wrap">
+<div class="card"><div class="table-wrap">
 <table>
   <thead><tr><th>期間</th><th>月額</th></tr></thead>
   <tbody>${raw((o.publishedMonthly ?? []).map((s) => html`
     <tr><td>${s.fromMonth}〜${s.toMonth ?? ''}か月目</td><td class="num">${yen(s.amount)}</td></tr>`).join(''))}
   </tbody>
 </table>
-</div>
+</div></div>
 
 ${raw((o.cashbacks ?? []).length ? html`
 <h2>キャッシュバック</h2>
@@ -980,7 +985,7 @@ function renderAbout(data) {
 </p>
 
 <h2>運営者</h2>
-<div class="table-wrap">
+<div class="card"><div class="table-wrap">
 <table>
   <tbody>
     <tr><th>運営者</th><td>${o.name ?? '—'}</td></tr>
@@ -990,7 +995,7 @@ function renderAbout(data) {
     <tr><th>掲載中の観測数</th><td class="num">${data.publishable.length}</td></tr>
   </tbody>
 </table>
-</div>
+</div></div>
 
 <h2>なぜ作っているか</h2>
 <p>
@@ -1492,74 +1497,176 @@ const FAVICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
 </svg>
 `;
 
-const STYLE = `:root{--fg:#1a1a1a;--muted:#666;--line:#e2e2e2;--bg:#fff;--accent:#0b5fff;--down:#0a7d3f;--up:#c2340a;--warn:#fff8e1}
+const STYLE = `:root{
+  --bg:#fff; --surface:#f7f9fb; --surface-2:#eef2f7;
+  --fg:#16202b; --muted:#5b6875; --line:#dfe5ec;
+  --brand:#12395c; --accent:#0b5fbd; --accent-soft:#e8f0fb;
+  --down:#0a7d3f; --up:#c2340a;
+  --warn-bg:#fff8e6; --warn-line:#e0be62;
+  --r:10px; --r-sm:6px;
+  --shadow:0 1px 2px rgba(16,32,48,.05), 0 6px 20px rgba(16,32,48,.06);
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+}
+@media(prefers-color-scheme:dark){:root{
+  --bg:#0f1620; --surface:#151f2b; --surface-2:#1b2836;
+  --fg:#e6edf4; --muted:#9aa8b8; --line:#26333f;
+  --brand:#cfe4f5; --accent:#6fb4ff; --accent-soft:#152435;
+  --down:#4ade80; --up:#ff9270;
+  --warn-bg:#2a2416; --warn-line:#6b5a2a;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.25);
+}}
 *{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;color:var(--fg);background:var(--bg);line-height:1.75}
-main{max-width:1000px;margin:0 auto;padding:0 1rem 4rem}
-.site-head{max-width:1000px;margin:0 auto;padding:1rem;display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;align-items:baseline;border-bottom:1px solid var(--line)}
-.brand{font-weight:700;font-size:1.1rem;text-decoration:none;color:var(--fg)}
-.site-head nav{display:flex;gap:1rem;flex-wrap:wrap}
-.site-head a{color:var(--muted);text-decoration:none;font-size:.9rem}
-.site-head nav a:hover{color:var(--accent)}
-h1{font-size:1.6rem;line-height:1.4;margin:2rem 0 .5rem}
-h2{font-size:1.2rem;margin:2.5rem 0 .75rem;padding-bottom:.3rem;border-bottom:2px solid var(--line)}
-.lead{font-size:1.02rem}
-.meta,.note{color:var(--muted);font-size:.85rem}
-a{color:var(--accent)}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);line-height:1.8;
+  font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif;
+  font-feature-settings:"palt";}
+main{max-width:1080px;margin:0 auto;padding:0 1.25rem 5rem}
+a{color:var(--accent);text-underline-offset:2px}
+
+/* ── ヘッダ ───────────────────────────── */
+.site-head{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:saturate(1.6) blur(10px);border-bottom:1px solid var(--line)}
+.head-in{max-width:1080px;margin:0 auto;padding:.7rem 1.25rem;display:flex;flex-wrap:wrap;
+  gap:.4rem 1.5rem;align-items:center}
+.brand{display:flex;align-items:center;gap:.5rem;font-weight:800;font-size:1.05rem;
+  letter-spacing:.01em;text-decoration:none;color:var(--fg)}
+.brand svg{display:block;border-radius:6px}
+.brand small{display:block;font-weight:500;font-size:.68rem;color:var(--muted);letter-spacing:.02em}
+.site-head nav{display:flex;gap:1.1rem;flex-wrap:wrap;margin-left:auto}
+.site-head nav a{color:var(--muted);text-decoration:none;font-size:.88rem;font-weight:600;
+  padding:.15rem 0;border-bottom:2px solid transparent}
+.site-head nav a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+
+/* ── 見出し ───────────────────────────── */
+h1{font-size:clamp(1.5rem,1.1rem + 1.6vw,2.1rem);line-height:1.35;letter-spacing:-.01em;margin:1.6rem 0 .6rem}
+h2{font-size:clamp(1.15rem,1rem + .6vw,1.4rem);line-height:1.4;margin:3rem 0 1rem;
+  padding-left:.7rem;border-left:4px solid var(--accent)}
+h3{font-size:1.02rem;margin:1.8rem 0 .5rem}
+.lead{font-size:1.05rem;color:var(--fg)}
+.meta,.note{color:var(--muted);font-size:.86rem}
+
+/* ── ヒーロー ─────────────────────────── */
+.hero{background:linear-gradient(160deg,var(--surface),var(--bg) 70%);
+  border:1px solid var(--line);border-radius:var(--r);padding:1.6rem 1.5rem 1.4rem;margin-top:1.5rem}
+.hero h1{margin-top:0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.75rem;margin:1.4rem 0 0}
+.stat{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);padding:.7rem .9rem}
+.stat b{display:block;font-size:1.45rem;font-weight:800;line-height:1.2;
+  font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.stat span{display:block;font-size:.74rem;color:var(--muted);letter-spacing:.02em}
+.live{display:inline-block;width:.5rem;height:.5rem;border-radius:50%;background:var(--down);
+  margin-right:.35rem;vertical-align:middle}
+
+/* ── 表 ───────────────────────────────── */
+.card{background:var(--bg);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--shadow);overflow:hidden}
 .table-wrap{overflow-x:auto}
-table{border-collapse:collapse;width:100%;font-size:.9rem;min-width:640px}
-th,td{border-bottom:1px solid var(--line);padding:.6rem .5rem;text-align:left;vertical-align:top}
-th{background:#fafafa;font-weight:600;white-space:nowrap}
-.num{text-align:right;white-space:nowrap}
-.strong{font-weight:700;font-size:1.05rem}
-.breakdown{font-size:.78rem;color:var(--muted);white-space:nowrap}
+table{border-collapse:collapse;width:100%;font-size:.9rem;min-width:660px}
+thead th{position:sticky;top:0;background:var(--surface-2);font-weight:700;white-space:nowrap;
+  font-size:.78rem;letter-spacing:.03em;color:var(--muted);text-align:left;
+  padding:.6rem .7rem;border-bottom:1px solid var(--line)}
+td{padding:.75rem .7rem;border-bottom:1px solid var(--line);vertical-align:top}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface) 55%,transparent)}
+tbody tr:hover{background:var(--accent-soft)}
+tbody th{text-align:left;font-weight:600;padding:.75rem .7rem;border-bottom:1px solid var(--line);color:var(--muted)}
+tbody tr.total th{color:var(--fg);font-weight:700}
+.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.strong{font-weight:800;font-size:1.12rem;letter-spacing:-.02em}
+.rank{width:2.6rem;text-align:center;color:var(--muted);font-size:.8rem;
+  font-variant-numeric:tabular-nums;font-weight:700}
+tr.top .rank{color:var(--bg);}
+tr.top .rank span{display:inline-block;min-width:1.5rem;padding:.05rem 0;border-radius:99px;
+  background:var(--accent);color:#fff;font-size:.75rem}
+.breakdown{font-size:.78rem;color:var(--muted);white-space:nowrap;line-height:1.6}
 .src{font-size:.75rem;color:var(--muted)}
 .src a{color:var(--muted)}
-.tag{display:inline-block;font-size:.72rem;color:var(--muted);background:#f2f2f2;padding:.05rem .4rem;border-radius:3px}
-tr.stale{background:var(--warn)}
-.banner{padding:.9rem 1rem;border-radius:6px;margin:1.5rem 0;font-size:.9rem}
-.banner.warn{background:var(--warn);border:1px solid #f0d78a}
-.changes{list-style:none;padding:0}
-.changes li{padding:.7rem 0;border-bottom:1px solid var(--line);font-size:.92rem}
-.changes time{color:var(--muted);font-size:.8rem;margin-right:.6rem}
-.changes .delta{display:block;font-weight:600}
+.tag{display:inline-block;font-size:.71rem;color:var(--muted);background:var(--surface-2);
+  padding:.08rem .45rem;border-radius:99px;line-height:1.6}
+tr.stale{background:var(--warn-bg)}
+tr.total th,tr.total td{border-top:2px solid var(--line);background:var(--surface)}
+
+/* ── 変化・イベント ───────────────────── */
+.changes,.events,.providers{list-style:none;padding:0;margin:0}
+.changes li,.events li{padding:.85rem 0;border-bottom:1px solid var(--line);font-size:.93rem}
+.changes li:last-child,.events li:last-child{border-bottom:0}
+.changes time,.events time{color:var(--muted);font-size:.8rem;margin-right:.6rem;
+  font-variant-numeric:tabular-nums}
+.changes .delta{display:block;font-weight:700}
 .changes li.down .delta{color:var(--down)}
 .changes li.up .delta{color:var(--up)}
 .changes .cause{display:block;font-size:.8rem;color:var(--muted)}
-.ad-disclosure{max-width:1000px;margin:0 auto;padding:.6rem 1rem;font-size:.8rem;color:var(--muted);background:#f6f6f6;border-bottom:1px solid var(--line)}
+.pcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.9rem}
+.pcard{display:flex;flex-direction:column;gap:.35rem;padding:1rem 1.1rem;text-decoration:none;
+  color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--shadow)}
+.pcard:hover{border-color:var(--accent);transform:translateY(-1px)}
+.pname{font-weight:700;font-size:1.02rem}
+.pmin b{font-size:1.5rem;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;
+  color:var(--accent);margin-right:.4rem}
+.pmin small{font-size:.72rem;color:var(--muted)}
+.pmeta{font-size:.78rem;color:var(--muted)}
+.pill{display:inline-block;font-style:normal;font-size:.78rem;font-weight:700;padding:.05rem .5rem;
+  border-radius:99px;margin-left:.4rem;font-variant-numeric:tabular-nums}
+li.down .pill{background:color-mix(in srgb,var(--down) 14%,transparent);color:var(--down)}
+li.up .pill{background:color-mix(in srgb,var(--up) 14%,transparent);color:var(--up)}
+
+/* ── 部品 ─────────────────────────────── */
+.crumbs{font-size:.82rem;color:var(--muted);margin:1.2rem 0 .2rem}
+.crumbs a{color:var(--muted);text-decoration:none}
+.crumbs a:hover{color:var(--accent);text-decoration:underline}
+.crumbs .sep{opacity:.5;margin:0 .1rem}
+.big{font-size:1.9rem;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.banner{padding:.95rem 1.1rem;border-radius:var(--r-sm);margin:1.5rem 0;font-size:.9rem}
+.banner.warn,.stale-note{background:var(--warn-bg);border:1px solid var(--warn-line);
+  border-left-width:4px;border-radius:var(--r-sm);padding:.9rem 1.1rem;margin:1.2rem 0}
+.ad-disclosure{background:var(--surface-2);border-bottom:1px solid var(--line)}
+.ad-disclosure p{max-width:1080px;margin:0 auto;padding:.55rem 1.25rem;font-size:.8rem;color:var(--muted)}
 .cta{white-space:nowrap}
-.link-only{background:#f4f8ff;border:1px solid #cfe0ff;border-radius:6px;padding:1rem 1.2rem;margin:2rem 0}
+.link-only{background:var(--accent-soft);border:1px solid var(--line);border-radius:var(--r);
+  padding:1.1rem 1.3rem;margin:2rem 0}
 .link-only ul{list-style:none;padding:0}
-.link-only li{padding:.8rem 0;border-bottom:1px solid #dbe7ff;font-size:.92rem}
+.link-only li{padding:.85rem 0;border-bottom:1px solid var(--line);font-size:.92rem}
 .link-only li:last-child{border-bottom:none}
-.link-only .btn{margin-top:.4rem}
+.link-only .btn{margin-top:.5rem}
 .ad-unit{display:inline-block}
-.btn{display:inline-block;padding:.35rem .7rem;background:#0b5fff;color:#fff;border-radius:4px;text-decoration:none;font-size:.82rem;font-weight:600}
-.btn:hover{background:#0847c4}
-.faq dt{font-weight:600;margin-top:1.2rem}
-.faq dd{margin:.4rem 0 0;padding-left:0;color:var(--muted)}
-.review{background:#fafafa;padding:1rem;border-radius:6px;margin-top:3rem}
-.review h2{border:0;margin-top:0}
+.btn{display:inline-block;padding:.45rem .9rem;background:var(--accent);color:#fff;border-radius:99px;
+  text-decoration:none;font-size:.83rem;font-weight:700}
+.btn:hover{filter:brightness(1.1)}
+.faq dt{font-weight:700;margin-top:1.4rem}
+.faq dd{margin:.4rem 0 0;color:var(--muted)}
+.review{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  padding:1.2rem 1.3rem;margin-top:3rem}
+.review h2{border:0;padding:0;margin-top:0}
 .review-list{font-size:.85rem}
-.formula{background:#f6f8fa;padding:1rem;border-radius:6px;overflow-x:auto;font-size:.85rem;white-space:pre-wrap}
-blockquote{margin:0;padding:.75rem 1rem;background:#f6f8fa;border-left:3px solid var(--accent);font-size:.9rem}
-code{background:#f2f2f2;padding:.1rem .3rem;border-radius:3px;font-size:.85em}
-.site-foot{max-width:1000px;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid var(--line);color:var(--muted);font-size:.82rem}
+.formula{background:var(--surface);border:1px solid var(--line);padding:1rem;border-radius:var(--r-sm);
+  overflow-x:auto;font-size:.85rem;white-space:pre-wrap;font-family:var(--mono)}
+blockquote{margin:0;padding:.85rem 1.1rem;background:var(--surface);border-left:3px solid var(--accent);
+  border-radius:0 var(--r-sm) var(--r-sm) 0;font-size:.9rem}
+code{background:var(--surface-2);padding:.1rem .35rem;border-radius:4px;font-size:.85em;font-family:var(--mono)}
+
+/* ── フッタ ───────────────────────────── */
+.site-foot{border-top:1px solid var(--line);background:var(--surface);margin-top:3rem}
+.foot-in{max-width:1080px;margin:0 auto;padding:2rem 1.25rem 3rem;color:var(--muted);font-size:.83rem}
 .site-foot a{color:var(--muted)}
-.foot-nav{display:flex;gap:1.2rem;flex-wrap:wrap;margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--line)}
-.disclaimer{background:#fafafa;padding:.75rem;border-radius:4px}
-.big{font-size:1.5rem}
-.providers{list-style:none;padding:0}
-.providers li{padding:.5rem 0;border-bottom:1px solid var(--line)}
-.crumbs{font-size:.85rem;color:var(--muted);margin:.5rem 0 1rem}
-.crumbs .sep{opacity:.6}
-.stale-note{background:var(--warn);border-left:4px solid var(--up);padding:.8rem 1rem;border-radius:4px;margin:1rem 0}
-.events{list-style:none;padding:0}
-.events li{padding:.6rem 0;border-bottom:1px solid var(--line)}
-.events time{color:var(--muted);margin-right:.6rem;font-variant-numeric:tabular-nums}
-tr.total th,tr.total td{border-top:2px solid var(--line)}
+.foot-nav{display:flex;gap:1.3rem;flex-wrap:wrap;margin-top:1.3rem;padding-top:1.1rem;
+  border-top:1px solid var(--line)}
+.foot-nav a{font-weight:600}
+.disclaimer{background:var(--bg);border:1px solid var(--line);padding:.85rem 1rem;border-radius:var(--r-sm)}
 ${CHART_CSS}
-@media(max-width:600px){h1{font-size:1.35rem}main{padding:0 .75rem 3rem}}
+@media(max-width:640px){
+  main{padding:0 1rem 3.5rem}
+  .hero{padding:1.2rem 1.1rem;border-radius:var(--r-sm)}
+  .stat b{font-size:1.25rem}
+  h2{margin:2.2rem 0 .8rem}
+  .site-head nav{gap:.85rem;margin-left:0;width:100%}
+  .site-head nav a{font-size:.82rem}
+}
+@media(prefers-reduced-motion:no-preference){
+  tbody tr{transition:background .12s ease}
+  .pcard{transition:border-color .12s ease,transform .12s ease}
+  .site-head nav a{transition:color .12s ease,border-color .12s ease}
+}
 `;
 
 main().catch((err) => {

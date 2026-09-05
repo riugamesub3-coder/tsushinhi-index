@@ -59,39 +59,51 @@ ${head}
 </head>
 <body class="${attr(bodyClass)}">
 <header class="site-head">
-  <a class="brand" href="/">通信費インデックス</a>
-  <nav>
-    <a href="/">実質月額</a>
-    <a href="/changes/">料金の変化</a>
-    <a href="/method/">計算方法</a>
-    <a href="/data/">データを使う</a>
-  </nav>
+  <div class="head-in">
+    <a class="brand" href="/">${MARK}<span>通信費インデックス<small>光回線の実質月額を毎日記録</small></span></a>
+    <nav>
+      <a href="/">実質月額</a>
+      <a href="/changes/">料金の変化</a>
+      <a href="/method/">計算方法</a>
+      <a href="/data/">データを使う</a>
+    </nav>
+  </div>
 </header>
 ${disclosure}
 <main>
 ${body}
 </main>
 <footer class="site-foot">
-  <p>最終更新: <time datetime="${attr(updatedAt ?? '')}">${e(updatedAtLabel(updatedAt))}</time></p>
-  <p>
-    データは <a href="https://creativecommons.org/licenses/by/4.0/deed.ja" rel="license">CC BY 4.0</a>。
-    出典を表示すれば自由にお使いいただけます。
-    収集の仕組みは <a href="https://github.com/riugamesub3-coder/tsushinhi-index">GitHub で公開</a>しています。
-  </p>
-  <p class="disclaimer">
-    自動収集のため誤りが含まれる可能性があります。<strong>契約前には必ず各社の公式サイトで最新の条件をご確認ください。</strong>
-    掲載している値には出典URLと取得日時を併記しています。
-  </p>
-  <nav class="foot-nav">
-    <a href="/about/">運営者情報</a>
-    <a href="/contact/">お問い合わせ</a>
-    <a href="/privacy/">プライバシーポリシー</a>
-  </nav>
+  <div class="foot-in">
+    <p>最終更新: <time datetime="${attr(updatedAt ?? '')}">${e(updatedAtLabel(updatedAt))}</time></p>
+    <p>
+      データは <a href="https://creativecommons.org/licenses/by/4.0/deed.ja" rel="license">CC BY 4.0</a>。
+      出典を表示すれば自由にお使いいただけます。
+      収集の仕組みは <a href="https://github.com/riugamesub3-coder/tsushinhi-index">GitHub で公開</a>しています。
+    </p>
+    <p class="disclaimer">
+      自動収集のため誤りが含まれる可能性があります。<strong>契約前には必ず各社の公式サイトで最新の条件をご確認ください。</strong>
+      掲載している値には出典URLと取得日時を併記しています。
+    </p>
+    <nav class="foot-nav">
+      <a href="/about/">運営者情報</a>
+      <a href="/contact/">お問い合わせ</a>
+      <a href="/privacy/">プライバシーポリシー</a>
+    </nav>
+  </div>
 </footer>
 </body>
 </html>
 `;
 }
+
+// ロゴ。折れ線＝時系列で、ファビコンと同じ形にそろえる。
+// ★画像ファイルにしない。インラインSVGなら追加のリクエストが1つも増えず、
+//   外部から何も読み込まない（/privacy/ に「外部へ送っていない」と書いている）。
+const MARK = `<svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+<rect width="32" height="32" rx="7" fill="#0b5fbd"/>
+<polyline points="5,22 12,15 18,19 27,8" fill="none" stroke="#fff" stroke-width="3"
+  stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
 function updatedAtLabel(iso) {
   if (!iso) return '—';
