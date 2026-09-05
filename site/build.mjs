@@ -308,7 +308,7 @@ function renderIndex(data) {
         <div class="rail-item"><b>${data.publishable.length}</b><span>掲載中の観測</span></div>
         <div class="rail-item"><b>${data.serviceCount}</b><span>サービス（運営${data.operatorCount}社）</span></div>
         <div class="rail-item"><b>${data.events.length}</b><span>検知した料金の変化</span></div>
-        <div class="rail-item"><b>毎日</b><span><span class="live"></span>${jstDate(data.updatedAt)} 取得</span></div>
+        ${raw(railDays(data))}
       </div>
     </div>
     ${raw(distributionPanel(data))}
@@ -317,6 +317,8 @@ function renderIndex(data) {
 </section>
 
 ${raw(staleBanner(data))}
+
+${raw(legend())}
 
 ${raw(buildings.map((b, i) => rankingSection(data, b, i + 1)).join(''))}
 
@@ -332,13 +334,17 @@ ${raw(linkOnlyOffers(data))}
   </p>
   <div class="pcards">${raw(providerIds(data).map((id) => {
     const mine = data.publishable.filter((o) => o.providerId === id);
-    const evs = data.events.filter((c) => c.providerId === id).length;
+    const evAll = data.events.filter((c) => c.providerId === id);
+    const lastAt = evAll.map((c) => c.detectedAt).sort().pop() ?? null;
     const cheapest = mine.reduce((a, b) => (a.effectiveMonthly <= b.effectiveMonthly ? a : b));
     return html`
     <a class="pcard" href="/p/${id}/">
       <span class="pname">${mine[0].providerName}${raw(mine.some((o) => o.stale) ? ' <span class="tag">更新停止中</span>' : '')}</span>
-      <span class="pmin"><b>${yen(cheapest.effectiveMonthly)}</b><small>全条件の最安</small></span>
-      <span class="pmeta">${mine.length}プラン${raw(evs ? html` ／ 変化${evs}件` : ' ／ 変化はまだ検知していません')}</span>
+      <span class="pmin"><b>${yenMark(cheapest.effectiveMonthly)}</b><small>全条件の最安</small></span>
+      <span class="pmeta">
+        <span>${mine.length}プラン ／ 記録した変化 ${evAll.length}件</span>
+        <span>${raw(lastAt ? html`最後に料金が動いた日 ${jstDate(lastAt)}` : 'まだ料金は動いていません')}</span>
+      </span>
     </a>`;
   }).join(''))}
   </div>
@@ -374,6 +380,26 @@ ${raw(needsReviewSection(data))}
 }
 
 /**
+ * 金額の「円」だけを小さく落として返す。
+ * ★数字そのものは1文字も変えない。yen() の結果の末尾を包むだけ。
+ *   検算する側（site/verify.mjs）はタグを剥がしてから数字を読む。
+ */
+function yenMark(n) {
+  const t = e(yen(n));
+  return raw(t.endsWith('円') ? `${t.slice(0, -1)}<small class="cur">円</small>` : t);
+}
+
+/**
+ * 観測を続けている日数。**後から資金で買えない資産はこれだけ**なので正面に出す。
+ * ★起点は「記録に残っている最も古い観測時刻」。観測そのものの履歴は
+ *   保存していないので、これより前には遡らない。
+ */
+function observedSince(data) {
+  const ts = data.events.map((c) => c.previousObservedAt ?? c.detectedAt).filter(Boolean).sort();
+  return ts[0] ?? null;
+}
+
+/**
  * その日の分布。**目盛り1本＝観測1件**で、掲載中の実質月額をそのまま並べる。
  *
  * ★平均も中央値も出さない。3サービスしか無い段階の代表値は誤解を招く。
@@ -381,6 +407,41 @@ ${raw(needsReviewSection(data))}
  * ★横位置は最安〜最高を100%に伸ばした相対位置。絶対値ではないので、
  *   両端に必ず金額を書く。
  */
+/**
+ * 表を読むための言葉の説明。
+ *
+ * ★「実質月額」も「事務手数料」も、知っている人にしか通じない。
+ *   比較表の直前に置いて、読む前に言葉が揃うようにする。
+ *   略語は使わない（「CB」と書いていて意味が通じなかった）。
+ */
+function legend() {
+  const items = [
+    ['実質月額',
+     `${HORIZON}か月（3年）使い続けたとき、ならすと毎月いくら払ったことになるかの金額です。`
+     + '毎月の料金だけでなく、工事費もキャッシュバックも全部ふくめて計算しています。'],
+    ['月額の合計', `毎月はらう料金を、${HORIZON}か月ぶん全部たした金額です。`],
+    ['事務手数料', '申し込むときに1回だけかかるお金です。毎月はかかりません。'],
+    ['工事費', '回線を家に引く工事の代金です。割引が出る会社もあるので、引いたあとの自己負担だけを数えています。'],
+    ['キャッシュバック', 'あとから受け取れるお金です。受け取れる分だけを総額から引いています。'],
+    ['推移', 'その料金がこれまでどう動いたかの形です。赤は上がった、緑は下がったことを表します。'],
+  ];
+  return html`
+<section class="legend">
+  <p class="kicker"><b>00</b> この表の見かた</p>
+  <dl>${raw(items.map(([t, d]) => html`<div><dt>${t}</dt><dd>${d}</dd></div>`).join(''))}</dl>
+</section>`;
+}
+
+function railDays(data) {
+  const since = observedSince(data);
+  if (!since) {
+    return html`<div class="rail-item"><b>毎日</b><span><span class="live"></span>自動収集</span></div>`;
+  }
+  return html`
+        <div class="rail-item"><b>${daysSince(since) + 1}<small class="cur">日目</small></b>
+          <span><span class="live"></span>${jstDate(since)}から記録</span></div>`;
+}
+
 function distributionPanel(data) {
   const vals = data.publishable.map((o) => o.effectiveMonthly).filter((v) => typeof v === 'number');
   if (vals.length < 2) return '';
@@ -398,7 +459,7 @@ function distributionPanel(data) {
   return html`
 <div class="dist">
   <p class="kicker">本日の最安（${HORIZON}か月換算）</p>
-  <p class="dist-lead"><b>${yen(best.effectiveMonthly)}</b><span>／ 月</span></p>
+  <p class="dist-lead"><b>${yenMark(best.effectiveMonthly)}</b><span>／ 月</span></p>
   <p class="dist-plan">
     <a href="${best.path}">${best.providerName} ${planName(best)}</a><br>
     ${jstDateTime(best.observedAt)} 時点
@@ -479,12 +540,12 @@ function rankRow(o, data, rank) {
   return html`
 <tr class="${raw([rank <= 3 ? 'top' : '', o.stale ? 'stale' : ''].filter(Boolean).join(' '))}">
   <td class="rank">${rank}</td>
-  <td class="num strong">${yen(o.effectiveMonthly)}</td>
+  <td class="num strong">${yenMark(o.effectiveMonthly)}</td>
   <td>${o.providerName}</td>
   <td><a class="plan-name" href="${o.path}">${planName(o)}</a>${raw(notes.length ? `<br><span class="tag">${notes.map(e).join(' / ')}</span>` : '')}</td>
   <td>${raw(rowSpark(data, o))}</td>
   <td class="breakdown">
-    ${raw(b ? `<i>月額計</i>${e(yen(b.monthlyTotal))}<br><i>事務手数料</i>${e(yen(b.adminFee))}<br><i>工事費</i>${e(yen(b.constructionBorne))}<br><i>CB</i>−${e(yen(b.cashbackCounted))}` : '—')}
+    ${raw(b ? `<i>月額の合計</i>${e(yen(b.monthlyTotal))}<br><i>事務手数料</i>${e(yen(b.adminFee))}<br><i>工事費</i>${e(yen(b.constructionBorne))}<br><i>キャッシュバック</i>−${e(yen(b.cashbackCounted))}` : '—')}
   </td>
   <td class="src">
     <a href="${o.sourceUrl}" rel="nofollow noopener">${host(o.sourceUrl)}</a><br>
@@ -860,7 +921,7 @@ ${raw(staleHere.length ? html`
   <thead><tr><th>実質月額</th><th>プラン</th><th>内訳</th><th>取得</th></tr></thead>
   <tbody>${raw(mine.map((o) => html`
     <tr>
-      <td class="num strong">${yen(o.effectiveMonthly)}</td>
+      <td class="num strong">${yenMark(o.effectiveMonthly)}</td>
       <td><a href="${o.path}">${planName(o)}</a></td>
       <td class="breakdown">${raw(o.breakdown
         ? `月額計 ${e(yen(o.breakdown.monthlyTotal))}<br>工事費実負担 ${e(yen(o.breakdown.constructionBorne))}<br>CB −${e(yen(o.breakdown.cashbackCounted))}`
@@ -936,7 +997,7 @@ ${raw(o.stale ? html`
   古い値を消さずに残しているのは、いつから止まっているかを隠さないためです。
 </p>` : '')}
 <p class="lead">
-  ${HORIZON}か月使ったときの実質月額は <strong class="big">${yen(o.effectiveMonthly)}</strong>。
+  ${HORIZON}か月使ったときの実質月額は <strong class="big">${yenMark(o.effectiveMonthly)}</strong>。
   ${raw(place > 0 ? html`同じ条件（${o.building}）の${rank.length}件中<strong>${place}番目</strong>に安い値です。` : '')}
   <br><small>${jstDateTime(o.observedAt)} 時点 ／ 出典 <a href="${o.sourceUrl}" rel="nofollow noopener">${host(o.sourceUrl)}</a></small>
 </p>
@@ -961,7 +1022,7 @@ ${raw(b ? html`
   <tbody>
     <tr><th>月額料金の合計</th><td class="num">${yen(b.monthlyTotal)}</td></tr>
     <tr><th>事務手数料</th><td class="num">${yen(b.adminFee)}</td></tr>
-    <tr><th>工事費の実負担</th><td class="num">${yen(b.constructionBorne)}</td></tr>
+    <tr><th>工事費（割引を引いた自己負担）</th><td class="num">${yen(b.constructionBorne)}</td></tr>
     <tr><th>必須オプション</th><td class="num">${yen(b.optionTotal)}</td></tr>
     <tr><th>キャッシュバック</th><td class="num">−${yen(b.cashbackCounted)}</td></tr>
     <tr><th>その他の割引</th><td class="num">−${yen(b.otherDiscounts)}</td></tr>
@@ -1588,8 +1649,6 @@ const STYLE = `/* ── 色と文字 ──────────────
   --up:#b23a2b;             /* 値上げ＝朱 */
   --down:#0c6a4f;           /* 値下げ＝緑青 */
   --warn-bg:#fdf6e3; --warn-line:#d8b563; --warn-ink:#7a5a12;
-  --serif:"Hiragino Mincho ProN","Hiragino Mincho Pro","Yu Mincho",YuMincho,
-    "Noto Serif JP","Source Han Serif JP","MS PMincho",serif;
   --sans:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Yu Gothic",
     "Noto Sans JP","Meiryo",sans-serif;
   --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
@@ -1611,6 +1670,9 @@ body{margin:0;background:var(--paper);color:var(--ink);
   font-feature-settings:"palt";text-rendering:optimizeLegibility}
 main{max-width:var(--wrap);margin:0 auto;padding:0 1.5rem 5rem}
 a{color:var(--indigo);text-underline-offset:.18em;text-decoration-thickness:1px}
+a:focus-visible,.pcard:focus-visible{outline:2px solid var(--indigo);outline-offset:2px}
+/* 「円」は数字より一段小さく、色も落とす。桁の並びが主役になる */
+.cur{font-size:.62em;font-weight:600;color:var(--ink-2);letter-spacing:0;margin-left:.1em}
 img,svg{max-width:100%}
 ::selection{background:var(--indigo-soft)}
 
@@ -1627,8 +1689,8 @@ img,svg{max-width:100%}
   display:flex;align-items:flex-end;gap:1.5rem;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--ink)}
 .brand svg{display:block;flex:none}
-.brand strong{display:block;font-family:var(--serif);font-weight:600;
-  font-size:1.5rem;letter-spacing:.06em;line-height:1.25}
+.brand strong{display:block;font-weight:800;font-size:1.32rem;
+  letter-spacing:.01em;line-height:1.25}
 .brand small{display:block;font-size:.7rem;color:var(--ink-2);letter-spacing:.05em;
   font-weight:400;margin-top:.15rem}
 .plate-meta{margin-left:auto;text-align:right;font-size:.73rem;color:var(--ink-2);
@@ -1649,24 +1711,24 @@ img,svg{max-width:100%}
 
 /* ── 見出し ────────────────────────────────────────────────
    見出しは明朝、本文と数字は角ゴシック。この対比だけで「紙面」になる。 */
-h1{font-family:var(--serif);font-weight:600;
-  font-size:clamp(1.5rem,1.15rem + 1.35vw,2.1rem);line-height:1.38;
-  letter-spacing:.01em;margin:1.6rem 0 .8rem}
+h1{font-weight:800;font-size:clamp(1.5rem,1.15rem + 1.35vw,2.1rem);line-height:1.42;
+  letter-spacing:-.02em;margin:1.6rem 0 .8rem}
 /* 冒頭の見出しだけは大きく取る。ここが紙面の第一印象になる */
-.hero h1{font-size:clamp(1.85rem,1.2rem + 2.4vw,2.85rem);line-height:1.3}
-h2{font-family:var(--serif);font-weight:600;
-  font-size:clamp(1.3rem,1.1rem + .9vw,1.7rem);line-height:1.4;
-  letter-spacing:.02em;margin:2.9rem 0 1.1rem}
+.hero h1{font-size:clamp(1.8rem,1.15rem + 2.3vw,2.7rem);line-height:1.3;letter-spacing:-.035em}
+h2{font-weight:800;font-size:clamp(1.25rem,1.05rem + .85vw,1.6rem);line-height:1.45;
+  letter-spacing:-.02em;margin:2.9rem 0 1.1rem}
 /* 節番号を置いた直後だけは、見出しを詰める */
 .kicker + section > h2:first-child,.kicker + h2{margin-top:.2rem}
-h3{font-family:var(--serif);font-weight:600;font-size:1.15rem;letter-spacing:.02em;
-  margin:2rem 0 .5rem}
+h3{font-weight:700;font-size:1.08rem;letter-spacing:-.01em;margin:2rem 0 .5rem}
 
 /* 節の通し番号。紙面の「見出し前の小見出し」 */
-.kicker{font-size:.7rem;letter-spacing:.18em;color:var(--ink-3);font-weight:700;
-  margin:3.4rem 0 .5rem;display:flex;align-items:center;gap:.7rem}
-.kicker::after{content:"";flex:1;height:1px;background:var(--rule)}
-.kicker b{color:var(--indigo);font-weight:700}
+.kicker{font-size:.72rem;letter-spacing:.2em;color:var(--ink-3);font-weight:700;
+  margin:3.4rem 0 .6rem;display:flex;align-items:baseline;gap:.75rem}
+.kicker::after{content:"";flex:1;height:1px;background:var(--rule);
+  transform:translateY(-.28em)}
+.kicker b{color:var(--indigo);font-weight:800;font-size:.95rem;letter-spacing:.04em;
+  font-variant-numeric:tabular-nums;border-bottom:2px solid var(--indigo);
+  padding-bottom:.18rem}
 
 .lead{font-size:1.06rem;line-height:1.95;max-width:44em;color:var(--ink-2)}
 .lead strong{color:var(--ink)}
@@ -1712,11 +1774,21 @@ h3{font-family:var(--serif);font-weight:600;font-size:1.15rem;letter-spacing:.02
   color:var(--ink-2);margin-top:.35rem;font-variant-numeric:tabular-nums}
 .dist-note{font-size:.72rem;color:var(--ink-3);margin:.9rem 0 0;line-height:1.6}
 
+/* 表を読むための言葉。ここを読めば表が読める、という位置に置く */
+.legend{margin-top:2.6rem}
+.legend dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
+  gap:0;margin:0;border-top:1px solid var(--rule-2);border-left:1px solid var(--rule)}
+.legend div{padding:1rem 1.2rem 1.1rem;border-right:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);background:var(--card)}
+.legend dt{font-weight:800;font-size:.92rem;letter-spacing:-.01em;color:var(--indigo);
+  margin-bottom:.25rem}
+.legend dd{margin:0;font-size:.82rem;line-height:1.85;color:var(--ink-2)}
+
 /* ── 表 ────────────────────────────────────────────────────
    影も角丸も使わない。**罫線だけ**で組むほうが情報が濃く見える。 */
 .card{background:var(--card);border:1px solid var(--rule)}
 .table-wrap{overflow-x:auto}
-table{border-collapse:collapse;width:100%;font-size:.9rem;min-width:760px}
+table{border-collapse:collapse;width:100%;font-size:.9rem;min-width:880px}
 thead th{background:var(--card);
   font-size:.68rem;font-weight:700;letter-spacing:.12em;color:var(--ink-3);
   text-align:left;white-space:nowrap;padding:.85rem .8rem .5rem;
@@ -1730,8 +1802,8 @@ th[scope=row],tbody th{text-align:left;font-weight:600;padding:1.05rem .8rem;
 /* 実質月額。この数字がこのサイトの主役なので、他と桁違いに強くする */
 .strong{font-weight:700;font-size:1.35rem;letter-spacing:-.03em;line-height:1.3}
 th.rank{width:3.2rem}
-td.rank{width:3.2rem;text-align:left;font-family:var(--serif);font-size:1.2rem;
-  color:var(--ink-3);font-weight:600;padding-top:1.05rem;font-variant-numeric:tabular-nums}
+td.rank{width:3.2rem;text-align:left;font-size:1rem;color:var(--ink-3);font-weight:700;
+  padding-top:1.25rem;font-variant-numeric:tabular-nums}
 tr.top td.rank{color:var(--indigo)}
 tr.top{box-shadow:inset 3px 0 0 var(--indigo)}
 .plan-name{font-weight:600;font-size:.95rem;line-height:1.55;text-decoration:none;
@@ -1741,14 +1813,17 @@ tr.top{box-shadow:inset 3px 0 0 var(--indigo)}
 .ranking{table-layout:fixed}
 .ranking th:nth-child(2){width:7.2rem}
 .ranking th:nth-child(3){width:6.4rem}
-.ranking th:nth-child(5){width:7.4rem}
-.ranking th:nth-child(6){width:9.6rem}
-.ranking th:nth-child(7){width:10.4rem}
+.ranking th:nth-child(5){width:6.9rem}
+.ranking th:nth-child(6){width:12.4rem}
+.ranking th:nth-child(7){width:9.6rem}
 .ranking th:nth-child(8){width:6rem}
 .ranking tbody td:nth-child(3){white-space:nowrap}
+/* ★左4列＝値そのもの、右3列＝その裏づけ。境目に細い縦罫を1本だけ入れる */
+.ranking th:nth-child(5),.ranking tbody td:nth-child(5){
+  border-left:1px solid var(--rule);padding-left:1.15rem}
 .breakdown{font-size:.76rem;color:var(--ink-2);white-space:nowrap;line-height:1.75;
   font-variant-numeric:tabular-nums}
-.breakdown i{font-style:normal;color:var(--ink-3);display:inline-block;min-width:5.4em}
+.breakdown i{font-style:normal;color:var(--ink-3);display:inline-block;min-width:7.2em}
 .src{font-size:.73rem;color:var(--ink-3);line-height:1.7}
 .src a{color:var(--ink-2)}
 .tag{display:inline-block;font-size:.68rem;color:var(--ink-2);border:1px solid var(--rule-2);
@@ -1764,14 +1839,16 @@ tr.total th,tr.total td{border-top:1px solid var(--rule-2);background:var(--pape
   border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);
   background:var(--card)}
 .pcard:hover{background:var(--indigo-soft)}
-.pname{display:block;font-family:var(--serif);font-size:1.2rem;font-weight:600;
-  letter-spacing:.03em;margin-bottom:.9rem}
+.pname{display:block;font-size:1.12rem;font-weight:800;
+  letter-spacing:-.01em;margin-bottom:.9rem}
 .pmin{display:flex;align-items:baseline;gap:.5rem}
 .pmin b{font-size:1.85rem;font-weight:700;letter-spacing:-.03em;line-height:1;
   font-variant-numeric:tabular-nums;color:var(--indigo)}
 .pmin small{font-size:.7rem;color:var(--ink-2);letter-spacing:.04em}
 .pmeta{display:block;font-size:.75rem;color:var(--ink-2);margin-top:.75rem;
   padding-top:.7rem;border-top:1px solid var(--rule);letter-spacing:.03em}
+.pmeta span{display:block}
+.pmeta span + span{color:var(--ink-3);margin-top:.15rem}
 
 /* ── 変化 ──────────────────────────────────────────────────
    年表として組む。左の縦罫が「毎日続いている」ことの表現になる。 */
@@ -1824,8 +1901,7 @@ tr.total th,tr.total td{border-top:1px solid var(--rule-2);background:var(--pape
 .btn{display:inline-block;padding:.5rem 1.15rem;background:var(--indigo);color:#fff;
   text-decoration:none;font-size:.82rem;font-weight:700;letter-spacing:.04em}
 .btn:hover{background:var(--indigo-deep)}
-.faq dt{font-family:var(--serif);font-weight:600;font-size:1.05rem;margin-top:1.8rem;
-  letter-spacing:.02em}
+.faq dt{font-weight:800;font-size:1.02rem;margin-top:1.8rem;letter-spacing:-.01em}
 .faq dd{margin:.4rem 0 0;color:var(--ink-2)}
 .review{background:var(--card);border:1px solid var(--rule);padding:1.4rem 1.6rem;
   margin-top:3.5rem}
@@ -1846,7 +1922,7 @@ code{background:var(--indigo-soft);padding:.08rem .35rem;font-size:.87em;
 .foot-in{max-width:var(--wrap);margin:0 auto;padding:2.8rem 1.5rem 3.5rem;
   font-size:.82rem;line-height:1.9}
 .site-foot a{color:#dbe6f2}
-.foot-in>p:first-child{font-family:var(--serif);font-size:1rem;letter-spacing:.06em;
+.foot-in>p:first-child{font-weight:800;font-size:.95rem;letter-spacing:.02em;
   color:#fff;margin:0 0 1.2rem;padding-bottom:1.2rem;
   border-bottom:1px solid rgba(255,255,255,.16)}
 .disclaimer{border:1px solid rgba(255,255,255,.18);padding:1rem 1.2rem;
