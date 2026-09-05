@@ -722,6 +722,35 @@ function renderData(data) {
 //   トップの一覧は「今日いくらか」しか見せていない。実測インデックスの本体は
 //   **その値がどう作られていて、いつ動いたか**のほうにある。
 
+/**
+ * パンくず。**見える表示と構造化データを同じ関数から作る。**
+ *
+ * ★片方だけ足さない。JSON-LD にだけ書いて画面に無いのは
+ *   「ページに無いものを構造化データで主張する」ことになり、Googleの規約違反にあたる。
+ * ★Product は使わない（当サイトは売主ではない → docs/事故防止リスト.md）。
+ *   BreadcrumbList は「このページがサイトのどこにあるか」を言うだけで、
+ *   商品や在庫や価格の主体を偽らない。
+ */
+function breadcrumb(trail) {
+  const visible = html`
+<nav class="crumbs" aria-label="パンくず">
+  ${raw(trail.map((t, i) => (t.path
+    ? `<a href="${e(t.path)}">${e(t.name)}</a>`
+    : `<span>${e(t.name)}</span>`) + (i < trail.length - 1 ? ' <span class="sep">›</span> ' : '')).join(''))}
+</nav>`;
+  const ld = jsonLd({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: trail.map((t, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: t.name,
+      ...(t.path ? { item: `${SITE_URL}${t.path}` } : {}),
+    })),
+  }).value;
+  return { visible, ld };
+}
+
 function renderProvider(data, providerId) {
   const mine = data.publishable.filter((o) => o.providerId === providerId)
     .sort((a, b) => a.effectiveMonthly - b.effectiveMonthly);
@@ -731,7 +760,12 @@ function renderProvider(data, providerId) {
   const sources = [...new Set(mine.map((o) => o.sourceUrl))];
 
   const staleHere = mine.filter((o) => o.stale);
+  const crumb = breadcrumb([
+    { name: '実質月額', path: '/' },
+    { name: first.providerName },
+  ]);
   const body = html`
+${raw(crumb.visible)}
 <h1>${first.providerName}の実質月額</h1>
 ${raw(staleHere.length ? html`
 <p class="stale-note">
@@ -787,6 +821,7 @@ ${raw(evs.length ? html`
     title: `${first.providerName}の実質月額（${HORIZON}か月換算）｜${SITE_NAME}`,
     description: `${first.providerName}の料金を毎日自動収集し、${HORIZON}か月の実質月額に換算した${mine.length}件。工事費・割引・キャッシュバックを含めた内訳と、料金が動いた履歴つき。`,
     canonical: `${SITE_URL}/p/${providerId}/`,
+    head: crumb.ld,
     body,
     updatedAt: data.updatedAt,
   };
@@ -810,7 +845,13 @@ function renderPlan(data, o) {
     .sort((a, c) => a.effectiveMonthly - c.effectiveMonthly);
   const place = rank.findIndex((x) => x === o) + 1;
 
+  const crumb = breadcrumb([
+    { name: '実質月額', path: '/' },
+    { name: o.providerName, path: `/p/${o.providerId}/` },
+    { name: planName(o) },
+  ]);
   const body = html`
+${raw(crumb.visible)}
 <h1>${o.providerName} ${planName(o)}</h1>
 ${raw(o.stale ? html`
 <p class="stale-note">
@@ -905,6 +946,7 @@ ${raw(series.events.length ? html`
     title: `${o.providerName} ${planName(o)}の実質月額 ${yen(o.effectiveMonthly)}｜${SITE_NAME}`,
     description: `${o.providerName} ${planName(o)}を${HORIZON}か月使ったときの実質月額は${yen(o.effectiveMonthly)}（${jstDate(o.observedAt)}時点）。月額・事務手数料・工事費・キャッシュバックの内訳と、料金が動いた履歴。`,
     canonical: `${SITE_URL}${o.path}`,
+    head: crumb.ld,
     body,
     updatedAt: data.updatedAt,
   };
@@ -1509,6 +1551,8 @@ code{background:#f2f2f2;padding:.1rem .3rem;border-radius:3px;font-size:.85em}
 .big{font-size:1.5rem}
 .providers{list-style:none;padding:0}
 .providers li{padding:.5rem 0;border-bottom:1px solid var(--line)}
+.crumbs{font-size:.85rem;color:var(--muted);margin:.5rem 0 1rem}
+.crumbs .sep{opacity:.6}
 .stale-note{background:var(--warn);border-left:4px solid var(--up);padding:.8rem 1rem;border-radius:4px;margin:1rem 0}
 .events{list-style:none;padding:0}
 .events li{padding:.6rem 0;border-bottom:1px solid var(--line)}
