@@ -415,7 +415,7 @@ function observedSince(data) {
  *   略語は使わない（「CB」と書いていて意味が通じなかった）。
  */
 function legend() {
-  const items = [
+  const money = [
     ['実質月額',
      `${HORIZON}か月（3年）使い続けたとき、ならすと毎月いくら払ったことになるかの金額です。`
      + '毎月の料金だけでなく、工事費もキャッシュバックも全部ふくめて計算しています。'],
@@ -425,10 +425,27 @@ function legend() {
     ['キャッシュバック', 'あとから受け取れるお金です。受け取れる分だけを総額から引いています。'],
     ['推移', 'その料金がこれまでどう動いたかの形です。赤は上がった、緑は下がったことを表します。'],
   ];
+  // ★プラン名は各社の公式表記をそのまま出している（勝手に言い換えない）。
+  //   そのぶん、意味はここで説明する。
+  const words = [
+    ['戸建て / マンション', '一戸建て向けか、集合住宅向けかの違いです。同じ会社でも料金が変わります。'],
+    ['1ギガ / 10ギガ', '通信速度の上限です。数字が大きいほど速く、そのぶん高くなるのがふつうです。'],
+    ['新規 / 転用', '新規は、はじめて回線を引く申し込みです。転用は、いま使っている回線をそのまま使って会社だけ変えることです。'
+      + 'この表に並べているのは新規だけです。'],
+    ['派遣工事', '工事の人が家に来る工事のことです。来ない場合（派遣工事なし）より費用がかかります。'],
+    ['2年割 / U29応援割', '会社がつけている割引の名前です。その割引を使った状態で計算しています。'],
+    ['セット特典は不算入', 'スマホとのセット割引などは計算に入れていません。'
+      + '契約している携帯会社によって割引額が変わり、同じ条件で比べられなくなるためです。'],
+  ];
+  const grid = (items) => html`<dl>${raw(items.map(([t, d]) =>
+    html`<div><dt>${t}</dt><dd>${d}</dd></div>`).join(''))}</dl>`;
   return html`
 <section class="legend">
   <p class="kicker"><b>00</b> この表の見かた</p>
-  <dl>${raw(items.map(([t, d]) => html`<div><dt>${t}</dt><dd>${d}</dd></div>`).join(''))}</dl>
+  <h3 class="legend-h">お金の言葉</h3>
+  ${raw(grid(money))}
+  <h3 class="legend-h">プラン名に出てくる言葉</h3>
+  ${raw(grid(words))}
 </section>`;
 }
 
@@ -1776,6 +1793,9 @@ h3{font-weight:700;font-size:1.08rem;letter-spacing:-.01em;margin:2rem 0 .5rem}
 
 /* 表を読むための言葉。ここを読めば表が読める、という位置に置く */
 .legend{margin-top:2.6rem}
+.legend-h{font-size:.76rem;letter-spacing:.14em;color:var(--ink-3);font-weight:700;
+  margin:2rem 0 .6rem}
+.legend-h:first-of-type{margin-top:.4rem}
 .legend dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
   gap:0;margin:0;border-top:1px solid var(--rule-2);border-left:1px solid var(--rule)}
 .legend div{padding:1rem 1.2rem 1.1rem;border-right:1px solid var(--rule);
