@@ -18,7 +18,7 @@ import { fileURLToPath } from 'node:url';
 import { html, raw, layout, jsonLd, e } from './lib/html.mjs';
 import { yen, yenSigned, jstDateTime, jstDate, isoDate, daysSince, host, planName } from './lib/format.mjs';
 import { planSlugsFor, reconstructSeries } from './lib/series.mjs';
-import { stepChart, CHART_CSS } from './lib/chart.mjs';
+import { stepChart, sparkline, CHART_CSS } from './lib/chart.mjs';
 import { staleInfo } from './lib/stale.mjs';
 import { searchConsoleToken } from './lib/owner.mjs';
 
@@ -296,49 +296,61 @@ function renderIndex(data) {
 
   const body = html`
 <section class="hero">
-  <h1>光回線の実質月額インデックス</h1>
-  <p class="lead">
-    各社が公表している料金・工事費・割引・キャッシュバックを毎日自動で収集し、
-    <strong>全社を同一の計算式に通した「実質月額」</strong>として${HORIZON}か月で均した値です。
-    計算式は<a href="/method/">すべて公開</a>しています。
-  </p>
-  <div class="stats">
-    <div class="stat"><b>${data.publishable.length}</b><span>掲載中の観測</span></div>
-    <div class="stat"><b>${data.serviceCount}</b><span>サービス（運営${data.operatorCount}社）</span></div>
-    <div class="stat"><b>${data.events.length}</b><span>検知した料金の変化</span></div>
-    <div class="stat"><b>毎日</b><span><span class="live"></span>最終取得 ${jstDate(data.updatedAt)}</span></div>
+  <div class="hero-grid">
+    <div>
+      <h1>光回線の実質月額インデックス</h1>
+      <p class="lead">
+        各社が公表している料金・工事費・割引・キャッシュバックを毎日自動で収集し、
+        <strong>全社を同一の計算式に通した「実質月額」</strong>として${HORIZON}か月で均した値です。
+        おすすめ順ではありません。<a href="/method/">計算式</a>も<a href="/data/">元データ</a>も全部出しています。
+      </p>
+      <div class="rail">
+        <div class="rail-item"><b>${data.publishable.length}</b><span>掲載中の観測</span></div>
+        <div class="rail-item"><b>${data.serviceCount}</b><span>サービス（運営${data.operatorCount}社）</span></div>
+        <div class="rail-item"><b>${data.events.length}</b><span>検知した料金の変化</span></div>
+        <div class="rail-item"><b>毎日</b><span><span class="live"></span>${jstDate(data.updatedAt)} 取得</span></div>
+      </div>
+    </div>
+    ${raw(distributionPanel(data))}
   </div>
   ${raw(operatorNote(data))}
 </section>
 
 ${raw(staleBanner(data))}
 
-${raw(buildings.map((b) => rankingSection(data, b)).join(''))}
+${raw(buildings.map((b, i) => rankingSection(data, b, i + 1)).join(''))}
 
 ${raw(linkOnlyOffers(data))}
 
+<p class="kicker"><b>03</b> 事業者</p>
 <section>
   <h2>事業者ごとに見る</h2>
-  <p>
-    比較表に出しているのは条件ごとの上位だけです。
-    <strong>各社の全プランと、料金が動いた履歴</strong>は事業者ごとのページにあります。
+  <p class="note">
+    上の表は<strong>新規申込・${HORIZON}か月換算</strong>に絞っています。
+    下のカードの金額は<strong>条件を絞らない全観測の最安</strong>（転用やマンションを含む）なので、
+    上の表の1位と一致しないことがあります。各社の全プランと料金が動いた履歴は事業者ページにあります。
   </p>
   <div class="pcards">${raw(providerIds(data).map((id) => {
     const mine = data.publishable.filter((o) => o.providerId === id);
     const evs = data.events.filter((c) => c.providerId === id).length;
-    const cheapest = Math.min(...mine.map((o) => o.effectiveMonthly));
+    const cheapest = mine.reduce((a, b) => (a.effectiveMonthly <= b.effectiveMonthly ? a : b));
     return html`
     <a class="pcard" href="/p/${id}/">
       <span class="pname">${mine[0].providerName}${raw(mine.some((o) => o.stale) ? ' <span class="tag">更新停止中</span>' : '')}</span>
-      <span class="pmin"><b>${yen(cheapest)}</b><small>最安の実質月額</small></span>
-      <span class="pmeta">${mine.length}プラン${raw(evs ? html` ・ 変化${evs}件` : '')}</span>
+      <span class="pmin"><b>${yen(cheapest.effectiveMonthly)}</b><small>全条件の最安</small></span>
+      <span class="pmeta">${mine.length}プラン${raw(evs ? html` ／ 変化${evs}件` : ' ／ 変化はまだ検知していません')}</span>
     </a>`;
   }).join(''))}
   </div>
 </section>
 
+<p class="kicker"><b>04</b> 変化</p>
 <section>
   <h2>最近の変化</h2>
+  <p class="note">
+    <strong>このサイトの中心は一覧表ではなく、ここです。</strong>
+    毎日の値を突き合わせて、変わった瞬間だけを記録しています。
+  </p>
   ${raw(recent.length
     ? `<ul class="changes">${recent.map(changeItem).join('')}</ul>
        <p><a href="/changes/">変化の履歴をすべて見る</a></p>`
@@ -361,7 +373,62 @@ ${raw(needsReviewSection(data))}
   };
 }
 
-function rankingSection(data, building) {
+/**
+ * その日の分布。**目盛り1本＝観測1件**で、掲載中の実質月額をそのまま並べる。
+ *
+ * ★平均も中央値も出さない。3サービスしか無い段階の代表値は誤解を招く。
+ *   出すのは「一番安い値」と「幅」だけ。どちらも数えるだけで作れる事実。
+ * ★横位置は最安〜最高を100%に伸ばした相対位置。絶対値ではないので、
+ *   両端に必ず金額を書く。
+ */
+function distributionPanel(data) {
+  const vals = data.publishable.map((o) => o.effectiveMonthly).filter((v) => typeof v === 'number');
+  if (vals.length < 2) return '';
+
+  const lo = Math.min(...vals), hi = Math.max(...vals);
+  if (!(hi > lo)) return '';
+  const best = data.publishable.reduce((a, b) => (a.effectiveMonthly <= b.effectiveMonthly ? a : b));
+
+  const ticks = vals.map((v) => {
+    const pct = ((v - lo) / (hi - lo)) * 100;
+    const edge = v === lo ? ' lo' : v === hi ? ' hi' : '';
+    return `<span class="dist-tick${edge}" style="left:${pct.toFixed(2)}%"></span>`;
+  }).join('');
+
+  return html`
+<div class="dist">
+  <p class="kicker">本日の最安（${HORIZON}か月換算）</p>
+  <p class="dist-lead"><b>${yen(best.effectiveMonthly)}</b><span>／ 月</span></p>
+  <p class="dist-plan">
+    <a href="${best.path}">${best.providerName} ${planName(best)}</a><br>
+    ${jstDateTime(best.observedAt)} 時点
+  </p>
+  <div class="dist-bar">${raw(ticks)}</div>
+  <p class="dist-axis"><span>${yen(lo)}</span><span>${yen(hi)}</span></p>
+  <p class="dist-note">
+    縦線1本が観測1件（掲載中${vals.length}件）。最安から最高までを幅いっぱいに伸ばした相対位置です。
+    平均や中央値は出していません — ${data.serviceCount}サービスの代表値として意味を持たないためです。
+  </p>
+</div>`;
+}
+
+/**
+ * 表の行に入れる推移。イベントから復元できたときだけ描く。
+ * ★描けないときに横棒を引かない。「ずっと横ばいだった」は確かめていない。
+ */
+function rowSpark(data, o) {
+  const s = reconstructSeries({
+    planKey: o.planKey,
+    currentValue: o.effectiveMonthly,
+    currentAt: o.observedAt,
+    events: data.events.filter((c) => c.providerId === o.providerId),
+    horizonMonths: HORIZON,
+  });
+  const svg = s.ok ? sparkline(s.points) : null;
+  return svg ?? '<span class="spark-none">変化なし</span>';
+}
+
+function rankingSection(data, building, no = 1) {
   // 「共通」は戸建て・マンションのどちらにも当てはまるので両方に出す
   const rows = data.publishable
     .filter((o) => o.entry === '新規')
@@ -375,12 +442,13 @@ function rankingSection(data, building) {
   const ads = data.ads.same.size > 0;
 
   return html`
+<p class="kicker"><b>0${no}</b> ${building}</p>
 <section>
   <h2>${building}：実質月額の安い順（新規申込・${HORIZON}か月換算）</h2>
   <div class="card"><div class="table-wrap">
-  <table>
+  <table class="ranking">
     <thead>
-      <tr><th class="rank">#</th><th>実質月額</th><th>事業者</th><th>プラン</th><th>内訳</th><th>出典・取得日時</th>${raw(ads ? '<th>申込</th>' : '')}</tr>
+      <tr><th class="rank">順位</th><th>実質月額</th><th>事業者</th><th>プラン</th><th>推移</th><th>内訳</th><th>出典・取得日時</th>${raw(ads ? '<th>申込</th>' : '')}</tr>
     </thead>
     <tbody>
       ${raw(rows.map((o, i) => rankRow(o, data, i + 1)).join(''))}
@@ -410,12 +478,13 @@ function rankRow(o, data, rank) {
 
   return html`
 <tr class="${raw([rank <= 3 ? 'top' : '', o.stale ? 'stale' : ''].filter(Boolean).join(' '))}">
-  <td class="rank">${raw(rank <= 3 ? html`<span>${rank}</span>` : String(rank))}</td>
+  <td class="rank">${rank}</td>
   <td class="num strong">${yen(o.effectiveMonthly)}</td>
   <td>${o.providerName}</td>
-  <td><a href="${o.path}">${planName(o)}</a>${raw(notes.length ? `<br><span class="tag">${notes.map(e).join(' / ')}</span>` : '')}</td>
+  <td><a class="plan-name" href="${o.path}">${planName(o)}</a>${raw(notes.length ? `<br><span class="tag">${notes.map(e).join(' / ')}</span>` : '')}</td>
+  <td>${raw(rowSpark(data, o))}</td>
   <td class="breakdown">
-    ${raw(b ? `月額計 ${e(yen(b.monthlyTotal))}<br>事務手数料 ${e(yen(b.adminFee))}<br>工事費実負担 ${e(yen(b.constructionBorne))}<br>CB −${e(yen(b.cashbackCounted))}` : '—')}
+    ${raw(b ? `<i>月額計</i>${e(yen(b.monthlyTotal))}<br><i>事務手数料</i>${e(yen(b.adminFee))}<br><i>工事費</i>${e(yen(b.constructionBorne))}<br><i>CB</i>−${e(yen(b.cashbackCounted))}` : '—')}
   </td>
   <td class="src">
     <a href="${o.sourceUrl}" rel="nofollow noopener">${host(o.sourceUrl)}</a><br>
@@ -1492,182 +1561,337 @@ async function out(path, content) {
 
 // 折れ線＝時系列。このサイトが持っているものをそのまま記号にする
 const FAVICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-<rect width="32" height="32" rx="6" fill="#0b5fff"/>
-<polyline points="5,22 12,15 18,19 27,8" fill="none" stroke="#fff" stroke-width="3"
-  stroke-linecap="round" stroke-linejoin="round"/>
+<rect width="32" height="32" fill="#1c3f6e"/>
+<path d="M4 24 h6.5 v-5.5 h6.5 v-5.5 h6.5 v-4.5 h4.5" fill="none" stroke="#fff"
+  stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter"/>
 </svg>
 `;
 
-const STYLE = `:root{
-  --bg:#fff; --surface:#f7f9fb; --surface-2:#eef2f7;
-  --fg:#16202b; --muted:#5b6875; --line:#dfe5ec;
-  --brand:#12395c; --accent:#0b5fbd; --accent-soft:#e8f0fb;
-  --down:#0a7d3f; --up:#c2340a;
-  --warn-bg:#fff8e6; --warn-line:#e0be62;
-  --r:10px; --r-sm:6px;
-  --shadow:0 1px 2px rgba(16,32,48,.05), 0 6px 20px rgba(16,32,48,.06);
+const STYLE = `/* ── 色と文字 ─────────────────────────────────────────────────
+   ★参照しているのは比較サイトではなく、経済紙・調査機関の紙面。
+     このサイトが売っているのは「毎日測り続けている事実」であって、
+     おすすめ順の主観ではない。見た目もそちら側に寄せる。
+   ★外部フォント・外部CSSは1つも読み込まない。/privacy/ に
+     「閲覧の情報を外部の事業者へ送っていない」と書いている以上、破れない。
+     そのぶん、明朝と角ゴシックの対比・罫線・余白だけで作る。 */
+:root{
+  --paper:#faf8f4;          /* 地。純白にしない（白すぎる画面は素っ気ない） */
+  --card:#fff;
+  --ink:#15191e;            /* 本文。真っ黒にしない */
+  --ink-2:#4d5560;
+  --ink-3:#8a929c;
+  --rule:#e0dcd3;           /* 罫線。紙に寄せて少し温かい灰 */
+  --rule-2:#cdc7bb;
+  --indigo:#1c3f6e;         /* 構造色。リンクと図表 */
+  --indigo-deep:#122a4a;
+  --indigo-soft:#eaeff6;
+  --up:#b23a2b;             /* 値上げ＝朱 */
+  --down:#0c6a4f;           /* 値下げ＝緑青 */
+  --warn-bg:#fdf6e3; --warn-line:#d8b563; --warn-ink:#7a5a12;
+  --serif:"Hiragino Mincho ProN","Hiragino Mincho Pro","Yu Mincho",YuMincho,
+    "Noto Serif JP","Source Han Serif JP","MS PMincho",serif;
+  --sans:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Yu Gothic",
+    "Noto Sans JP","Meiryo",sans-serif;
   --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --wrap:1120px;
 }
 @media(prefers-color-scheme:dark){:root{
-  --bg:#0f1620; --surface:#151f2b; --surface-2:#1b2836;
-  --fg:#e6edf4; --muted:#9aa8b8; --line:#26333f;
-  --brand:#cfe4f5; --accent:#6fb4ff; --accent-soft:#152435;
-  --down:#4ade80; --up:#ff9270;
-  --warn-bg:#2a2416; --warn-line:#6b5a2a;
-  --shadow:0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.25);
+  --paper:#12151a; --card:#181c22;
+  --ink:#e9e6e0; --ink-2:#a8b0ba; --ink-3:#79818c;
+  --rule:#2b3139; --rule-2:#3b434d;
+  --indigo:#8fb6e6; --indigo-deep:#0d1620; --indigo-soft:#1b2634;
+  --up:#e8836c; --down:#5cc79c;
+  --warn-bg:#2a2416; --warn-line:#6b5a2a; --warn-ink:#e0c98a;
 }}
+
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--fg);line-height:1.8;
-  font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif;
-  font-feature-settings:"palt";}
-main{max-width:1080px;margin:0 auto;padding:0 1.25rem 5rem}
-a{color:var(--accent);text-underline-offset:2px}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.85;
+  font-feature-settings:"palt";text-rendering:optimizeLegibility}
+main{max-width:var(--wrap);margin:0 auto;padding:0 1.5rem 5rem}
+a{color:var(--indigo);text-underline-offset:.18em;text-decoration-thickness:1px}
+img,svg{max-width:100%}
+::selection{background:var(--indigo-soft)}
 
-/* ── ヘッダ ───────────────────────────── */
-.site-head{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);
-  backdrop-filter:saturate(1.6) blur(10px);border-bottom:1px solid var(--line)}
-.head-in{max-width:1080px;margin:0 auto;padding:.7rem 1.25rem;display:flex;flex-wrap:wrap;
-  gap:.4rem 1.5rem;align-items:center}
-.brand{display:flex;align-items:center;gap:.5rem;font-weight:800;font-size:1.05rem;
-  letter-spacing:.01em;text-decoration:none;color:var(--fg)}
-.brand svg{display:block;border-radius:6px}
-.brand small{display:block;font-weight:500;font-size:.68rem;color:var(--muted);letter-spacing:.02em}
-.site-head nav{display:flex;gap:1.1rem;flex-wrap:wrap;margin-left:auto}
-.site-head nav a{color:var(--muted);text-decoration:none;font-size:.88rem;font-weight:600;
-  padding:.15rem 0;border-bottom:2px solid transparent}
-.site-head nav a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+/* ── 題字まわり ────────────────────────────────────────────
+   ナビゲーションバーではなく「題字」として組む。
+   上の細い帯には、この事業の約束（毎日・出典つき）を常に置く。 */
+.topbar{background:var(--indigo-deep);color:#cddaea}
+.topbar div{max-width:var(--wrap);margin:0 auto;padding:.4rem 1.5rem;
+  font-size:.72rem;letter-spacing:.08em;display:flex;gap:1.4rem;flex-wrap:wrap}
+.topbar b{color:#fff;font-weight:600}
 
-/* ── 見出し ───────────────────────────── */
-h1{font-size:clamp(1.5rem,1.1rem + 1.6vw,2.1rem);line-height:1.35;letter-spacing:-.01em;margin:1.6rem 0 .6rem}
-h2{font-size:clamp(1.15rem,1rem + .6vw,1.4rem);line-height:1.4;margin:3rem 0 1rem;
-  padding-left:.7rem;border-left:4px solid var(--accent)}
-h3{font-size:1.02rem;margin:1.8rem 0 .5rem}
-.lead{font-size:1.05rem;color:var(--fg)}
-.meta,.note{color:var(--muted);font-size:.86rem}
+.site-head{background:var(--paper);border-bottom:1px solid var(--rule-2)}
+.head-in{max-width:var(--wrap);margin:0 auto;padding:1.15rem 1.5rem .9rem;
+  display:flex;align-items:flex-end;gap:1.5rem;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--ink)}
+.brand svg{display:block;flex:none}
+.brand strong{display:block;font-family:var(--serif);font-weight:600;
+  font-size:1.5rem;letter-spacing:.06em;line-height:1.25}
+.brand small{display:block;font-size:.7rem;color:var(--ink-2);letter-spacing:.05em;
+  font-weight:400;margin-top:.15rem}
+.plate-meta{margin-left:auto;text-align:right;font-size:.73rem;color:var(--ink-2);
+  letter-spacing:.04em;line-height:1.7}
+.plate-meta b{font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+.plate-sub{display:block}
 
-/* ── ヒーロー ─────────────────────────── */
-.hero{background:linear-gradient(160deg,var(--surface),var(--bg) 70%);
-  border:1px solid var(--line);border-radius:var(--r);padding:1.6rem 1.5rem 1.4rem;margin-top:1.5rem}
-.hero h1{margin-top:0}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.75rem;margin:1.4rem 0 0}
-.stat{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);padding:.7rem .9rem}
-.stat b{display:block;font-size:1.45rem;font-weight:800;line-height:1.2;
-  font-variant-numeric:tabular-nums;letter-spacing:-.02em}
-.stat span{display:block;font-size:.74rem;color:var(--muted);letter-spacing:.02em}
-.live{display:inline-block;width:.5rem;height:.5rem;border-radius:50%;background:var(--down);
-  margin-right:.35rem;vertical-align:middle}
+.site-nav{position:sticky;top:0;z-index:30;background:var(--paper);
+  border-bottom:1px solid var(--rule)}
+.site-nav div{max-width:var(--wrap);margin:0 auto;padding:0 1.5rem;
+  display:flex;gap:1.9rem;flex-wrap:wrap;overflow-x:auto;
+  scrollbar-width:none;-ms-overflow-style:none}
+.site-nav div::-webkit-scrollbar{display:none}
+.site-nav a{color:var(--ink-2);text-decoration:none;font-size:.83rem;font-weight:600;
+  line-height:1.6;letter-spacing:.06em;padding:.72rem 0;
+  border-bottom:2px solid transparent;white-space:nowrap}
+.site-nav a:hover{color:var(--indigo);border-bottom-color:var(--indigo)}
 
-/* ── 表 ───────────────────────────────── */
-.card{background:var(--bg);border:1px solid var(--line);border-radius:var(--r);
-  box-shadow:var(--shadow);overflow:hidden}
-.table-wrap{overflow-x:auto}
-table{border-collapse:collapse;width:100%;font-size:.9rem;min-width:660px}
-thead th{position:sticky;top:0;background:var(--surface-2);font-weight:700;white-space:nowrap;
-  font-size:.78rem;letter-spacing:.03em;color:var(--muted);text-align:left;
-  padding:.6rem .7rem;border-bottom:1px solid var(--line)}
-td{padding:.75rem .7rem;border-bottom:1px solid var(--line);vertical-align:top}
-tbody tr:last-child td{border-bottom:0}
-tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface) 55%,transparent)}
-tbody tr:hover{background:var(--accent-soft)}
-tbody th{text-align:left;font-weight:600;padding:.75rem .7rem;border-bottom:1px solid var(--line);color:var(--muted)}
-tbody tr.total th{color:var(--fg);font-weight:700}
-.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
-.strong{font-weight:800;font-size:1.12rem;letter-spacing:-.02em}
-.rank{width:2.6rem;text-align:center;color:var(--muted);font-size:.8rem;
-  font-variant-numeric:tabular-nums;font-weight:700}
-tr.top .rank{color:var(--bg);}
-tr.top .rank span{display:inline-block;min-width:1.5rem;padding:.05rem 0;border-radius:99px;
-  background:var(--accent);color:#fff;font-size:.75rem}
-.breakdown{font-size:.78rem;color:var(--muted);white-space:nowrap;line-height:1.6}
-.src{font-size:.75rem;color:var(--muted)}
-.src a{color:var(--muted)}
-.tag{display:inline-block;font-size:.71rem;color:var(--muted);background:var(--surface-2);
-  padding:.08rem .45rem;border-radius:99px;line-height:1.6}
-tr.stale{background:var(--warn-bg)}
-tr.total th,tr.total td{border-top:2px solid var(--line);background:var(--surface)}
+/* ── 見出し ────────────────────────────────────────────────
+   見出しは明朝、本文と数字は角ゴシック。この対比だけで「紙面」になる。 */
+h1{font-family:var(--serif);font-weight:600;
+  font-size:clamp(1.5rem,1.15rem + 1.35vw,2.1rem);line-height:1.38;
+  letter-spacing:.01em;margin:1.6rem 0 .8rem}
+/* 冒頭の見出しだけは大きく取る。ここが紙面の第一印象になる */
+.hero h1{font-size:clamp(1.85rem,1.2rem + 2.4vw,2.85rem);line-height:1.3}
+h2{font-family:var(--serif);font-weight:600;
+  font-size:clamp(1.3rem,1.1rem + .9vw,1.7rem);line-height:1.4;
+  letter-spacing:.02em;margin:2.9rem 0 1.1rem}
+/* 節番号を置いた直後だけは、見出しを詰める */
+.kicker + section > h2:first-child,.kicker + h2{margin-top:.2rem}
+h3{font-family:var(--serif);font-weight:600;font-size:1.15rem;letter-spacing:.02em;
+  margin:2rem 0 .5rem}
 
-/* ── 変化・イベント ───────────────────── */
-.changes,.events,.providers{list-style:none;padding:0;margin:0}
-.changes li,.events li{padding:.85rem 0;border-bottom:1px solid var(--line);font-size:.93rem}
-.changes li:last-child,.events li:last-child{border-bottom:0}
-.changes time,.events time{color:var(--muted);font-size:.8rem;margin-right:.6rem;
+/* 節の通し番号。紙面の「見出し前の小見出し」 */
+.kicker{font-size:.7rem;letter-spacing:.18em;color:var(--ink-3);font-weight:700;
+  margin:3.4rem 0 .5rem;display:flex;align-items:center;gap:.7rem}
+.kicker::after{content:"";flex:1;height:1px;background:var(--rule)}
+.kicker b{color:var(--indigo);font-weight:700}
+
+.lead{font-size:1.06rem;line-height:1.95;max-width:44em;color:var(--ink-2)}
+.lead strong{color:var(--ink)}
+.note,.meta{color:var(--ink-2);font-size:.85rem;line-height:1.8;max-width:52em}
+.note strong{color:var(--ink)}
+
+/* ── 冒頭 ──────────────────────────────────────────────────
+   統計を4つ並べるだけの箱をやめ、**その日の分布そのもの**を出す。
+   これはテンプレートには無い図で、かつ持っているデータからしか描けない。 */
+.hero{border-bottom:1px solid var(--rule-2);padding-bottom:2.2rem;margin-bottom:.5rem}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);
+  gap:2.6rem;align-items:start}
+.hero h1{margin-top:1.8rem}
+
+.rail{display:flex;flex-wrap:wrap;gap:0;margin-top:1.6rem;
+  border-top:1px solid var(--rule)}
+.rail-item{padding:.85rem 1.5rem .2rem 0;margin-right:1.5rem;
+  border-right:1px solid var(--rule);flex:0 0 auto}
+.rail-item:last-child{border-right:0;margin-right:0}
+.rail-item b{display:block;font-size:1.6rem;font-weight:700;line-height:1.15;
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.rail-item span{display:block;font-size:.72rem;color:var(--ink-2);letter-spacing:.06em}
+.live{display:inline-block;width:.45rem;height:.45rem;border-radius:50%;
+  background:var(--down);margin-right:.35rem;vertical-align:middle}
+
+/* その日の分布。目盛りは1本＝1観測 */
+.dist{background:var(--card);border:1px solid var(--rule);padding:1.3rem 1.4rem 1.1rem}
+.dist .kicker{margin:0 0 1rem}
+.dist-lead{display:flex;align-items:baseline;gap:.5rem;margin-bottom:.1rem}
+.dist-lead b{font-size:2.5rem;font-weight:700;letter-spacing:-.03em;line-height:1;
   font-variant-numeric:tabular-nums}
-.changes .delta{display:block;font-weight:700}
-.changes li.down .delta{color:var(--down)}
+.dist-lead span{font-size:.75rem;color:var(--ink-2);letter-spacing:.06em}
+.dist-plan{font-size:.8rem;color:var(--ink-2);margin:.35rem 0 1.3rem;line-height:1.6}
+.dist-plan a{color:var(--ink-2)}
+.dist-bar{position:relative;height:44px;border-left:1px solid var(--rule-2);
+  border-right:1px solid var(--rule-2)}
+.dist-bar::before{content:"";position:absolute;left:0;right:0;top:50%;
+  height:1px;background:var(--rule-2)}
+.dist-tick{position:absolute;top:9px;width:1px;height:26px;background:var(--indigo);
+  opacity:.5}
+.dist-tick.lo,.dist-tick.hi{opacity:1;height:38px;top:3px;width:2px}
+.dist-axis{display:flex;justify-content:space-between;font-size:.72rem;
+  color:var(--ink-2);margin-top:.35rem;font-variant-numeric:tabular-nums}
+.dist-note{font-size:.72rem;color:var(--ink-3);margin:.9rem 0 0;line-height:1.6}
+
+/* ── 表 ────────────────────────────────────────────────────
+   影も角丸も使わない。**罫線だけ**で組むほうが情報が濃く見える。 */
+.card{background:var(--card);border:1px solid var(--rule)}
+.table-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.9rem;min-width:760px}
+thead th{background:var(--card);
+  font-size:.68rem;font-weight:700;letter-spacing:.12em;color:var(--ink-3);
+  text-align:left;white-space:nowrap;padding:.85rem .8rem .5rem;
+  border-bottom:1px solid var(--rule-2)}
+td{padding:1.05rem .8rem;border-bottom:1px solid var(--rule);vertical-align:top}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--indigo-soft)}
+th[scope=row],tbody th{text-align:left;font-weight:600;padding:1.05rem .8rem;
+  border-bottom:1px solid var(--rule)}
+.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+/* 実質月額。この数字がこのサイトの主役なので、他と桁違いに強くする */
+.strong{font-weight:700;font-size:1.35rem;letter-spacing:-.03em;line-height:1.3}
+th.rank{width:3.2rem}
+td.rank{width:3.2rem;text-align:left;font-family:var(--serif);font-size:1.2rem;
+  color:var(--ink-3);font-weight:600;padding-top:1.05rem;font-variant-numeric:tabular-nums}
+tr.top td.rank{color:var(--indigo)}
+tr.top{box-shadow:inset 3px 0 0 var(--indigo)}
+.plan-name{font-weight:600;font-size:.95rem;line-height:1.55;text-decoration:none;
+  display:inline-block}
+.plan-name:hover{text-decoration:underline}
+/* 比較表の列幅。プラン名だけが伸び、数字の列は動かないようにする */
+.ranking{table-layout:fixed}
+.ranking th:nth-child(2){width:7.2rem}
+.ranking th:nth-child(3){width:6.4rem}
+.ranking th:nth-child(5){width:7.4rem}
+.ranking th:nth-child(6){width:9.6rem}
+.ranking th:nth-child(7){width:10.4rem}
+.ranking th:nth-child(8){width:6rem}
+.ranking tbody td:nth-child(3){white-space:nowrap}
+.breakdown{font-size:.76rem;color:var(--ink-2);white-space:nowrap;line-height:1.75;
+  font-variant-numeric:tabular-nums}
+.breakdown i{font-style:normal;color:var(--ink-3);display:inline-block;min-width:5.4em}
+.src{font-size:.73rem;color:var(--ink-3);line-height:1.7}
+.src a{color:var(--ink-2)}
+.tag{display:inline-block;font-size:.68rem;color:var(--ink-2);border:1px solid var(--rule-2);
+  padding:.02rem .42rem;letter-spacing:.03em;line-height:1.7;margin-top:.3rem}
+tr.stale{background:var(--warn-bg)}
+tr.stale .tag{border-color:var(--warn-line);color:var(--warn-ink)}
+tr.total th,tr.total td{border-top:1px solid var(--rule-2);background:var(--paper)}
+
+/* ── 事業者 ────────────────────────────────────────────────*/
+.pcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:0;border-top:1px solid var(--rule-2);border-left:1px solid var(--rule)}
+.pcard{display:block;padding:1.4rem 1.5rem 1.5rem;text-decoration:none;color:var(--ink);
+  border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  background:var(--card)}
+.pcard:hover{background:var(--indigo-soft)}
+.pname{display:block;font-family:var(--serif);font-size:1.2rem;font-weight:600;
+  letter-spacing:.03em;margin-bottom:.9rem}
+.pmin{display:flex;align-items:baseline;gap:.5rem}
+.pmin b{font-size:1.85rem;font-weight:700;letter-spacing:-.03em;line-height:1;
+  font-variant-numeric:tabular-nums;color:var(--indigo)}
+.pmin small{font-size:.7rem;color:var(--ink-2);letter-spacing:.04em}
+.pmeta{display:block;font-size:.75rem;color:var(--ink-2);margin-top:.75rem;
+  padding-top:.7rem;border-top:1px solid var(--rule);letter-spacing:.03em}
+
+/* ── 変化 ──────────────────────────────────────────────────
+   年表として組む。左の縦罫が「毎日続いている」ことの表現になる。 */
+.changes,.events{list-style:none;padding:0 0 0 1.5rem;margin:1rem 0 0;
+  border-left:1px solid var(--rule-2)}
+.changes li,.events li{position:relative;padding:1.1rem 0;
+  border-bottom:1px solid var(--rule)}
+.changes li:last-child,.events li:last-child{border-bottom:0}
+.changes li::before,.events li::before{content:"";position:absolute;
+  left:-1.5rem;top:1.75rem;width:7px;height:7px;border-radius:50%;
+  background:var(--paper);border:1.5px solid var(--rule-2);
+  transform:translateX(-4px)}
+.changes li.up::before{border-color:var(--up);background:var(--up)}
+.changes li.down::before{border-color:var(--down);background:var(--down)}
+.changes time,.events time{color:var(--ink-3);font-size:.74rem;letter-spacing:.06em;
+  margin-right:.7rem;font-variant-numeric:tabular-nums}
+.changes .delta{display:block;font-weight:700;font-size:1.02rem;margin-top:.15rem;
+  font-variant-numeric:tabular-nums;letter-spacing:-.01em}
 .changes li.up .delta{color:var(--up)}
-.changes .cause{display:block;font-size:.8rem;color:var(--muted)}
-.pcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.9rem}
-.pcard{display:flex;flex-direction:column;gap:.35rem;padding:1rem 1.1rem;text-decoration:none;
-  color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:var(--r);
-  box-shadow:var(--shadow)}
-.pcard:hover{border-color:var(--accent);transform:translateY(-1px)}
-.pname{font-weight:700;font-size:1.02rem}
-.pmin b{font-size:1.5rem;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;
-  color:var(--accent);margin-right:.4rem}
-.pmin small{font-size:.72rem;color:var(--muted)}
-.pmeta{font-size:.78rem;color:var(--muted)}
-.pill{display:inline-block;font-style:normal;font-size:.78rem;font-weight:700;padding:.05rem .5rem;
-  border-radius:99px;margin-left:.4rem;font-variant-numeric:tabular-nums}
-li.down .pill{background:color-mix(in srgb,var(--down) 14%,transparent);color:var(--down)}
-li.up .pill{background:color-mix(in srgb,var(--up) 14%,transparent);color:var(--up)}
+.changes li.down .delta{color:var(--down)}
+.changes .cause{display:block;font-size:.78rem;color:var(--ink-2);margin-top:.2rem;
+  font-variant-numeric:tabular-nums}
+.pill{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.02em;
+  padding:.05rem .5rem;margin-left:.5rem;vertical-align:.08em;
+  border:1px solid currentColor;font-variant-numeric:tabular-nums}
 
-/* ── 部品 ─────────────────────────────── */
-.crumbs{font-size:.82rem;color:var(--muted);margin:1.2rem 0 .2rem}
-.crumbs a{color:var(--muted);text-decoration:none}
-.crumbs a:hover{color:var(--accent);text-decoration:underline}
-.crumbs .sep{opacity:.5;margin:0 .1rem}
-.big{font-size:1.9rem;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.banner{padding:.95rem 1.1rem;border-radius:var(--r-sm);margin:1.5rem 0;font-size:.9rem}
+/* ── 部品 ──────────────────────────────────────────────────*/
+.crumbs{font-size:.76rem;color:var(--ink-3);margin:1.6rem 0 .2rem;letter-spacing:.04em}
+.crumbs a{color:var(--ink-2);text-decoration:none}
+.crumbs a:hover{color:var(--indigo);text-decoration:underline}
+.crumbs .sep{margin:0 .45rem;color:var(--rule-2)}
+.big{font-size:2.1rem;font-weight:700;letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums;color:var(--ink)}
+.banner{padding:1rem 1.2rem;margin:1.6rem 0;font-size:.88rem}
 .banner.warn,.stale-note{background:var(--warn-bg);border:1px solid var(--warn-line);
-  border-left-width:4px;border-radius:var(--r-sm);padding:.9rem 1.1rem;margin:1.2rem 0}
-.ad-disclosure{background:var(--surface-2);border-bottom:1px solid var(--line)}
-.ad-disclosure p{max-width:1080px;margin:0 auto;padding:.55rem 1.25rem;font-size:.8rem;color:var(--muted)}
+  border-left-width:3px;color:var(--warn-ink);padding:1rem 1.2rem;margin:1.4rem 0;
+  font-size:.88rem;line-height:1.8}
+.stale-note strong{color:var(--warn-ink)}
+.ad-disclosure{background:var(--indigo-soft);border-bottom:1px solid var(--rule)}
+.ad-disclosure p{max-width:var(--wrap);margin:0 auto;padding:.6rem 1.5rem;
+  font-size:.78rem;color:var(--ink-2);letter-spacing:.03em}
 .cta{white-space:nowrap}
-.link-only{background:var(--accent-soft);border:1px solid var(--line);border-radius:var(--r);
-  padding:1.1rem 1.3rem;margin:2rem 0}
-.link-only ul{list-style:none;padding:0}
-.link-only li{padding:.85rem 0;border-bottom:1px solid var(--line);font-size:.92rem}
+.link-only{background:var(--card);border:1px solid var(--rule);
+  border-top:3px solid var(--indigo);padding:1.3rem 1.5rem;margin:2.2rem 0}
+.link-only ul{list-style:none;padding:0;margin:0}
+.link-only li{padding:1rem 0;border-bottom:1px solid var(--rule);font-size:.9rem}
 .link-only li:last-child{border-bottom:none}
-.link-only .btn{margin-top:.5rem}
+.link-only .btn{margin-top:.6rem}
 .ad-unit{display:inline-block}
-.btn{display:inline-block;padding:.45rem .9rem;background:var(--accent);color:#fff;border-radius:99px;
-  text-decoration:none;font-size:.83rem;font-weight:700}
-.btn:hover{filter:brightness(1.1)}
-.faq dt{font-weight:700;margin-top:1.4rem}
-.faq dd{margin:.4rem 0 0;color:var(--muted)}
-.review{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
-  padding:1.2rem 1.3rem;margin-top:3rem}
-.review h2{border:0;padding:0;margin-top:0}
+.btn{display:inline-block;padding:.5rem 1.15rem;background:var(--indigo);color:#fff;
+  text-decoration:none;font-size:.82rem;font-weight:700;letter-spacing:.04em}
+.btn:hover{background:var(--indigo-deep)}
+.faq dt{font-family:var(--serif);font-weight:600;font-size:1.05rem;margin-top:1.8rem;
+  letter-spacing:.02em}
+.faq dd{margin:.4rem 0 0;color:var(--ink-2)}
+.review{background:var(--card);border:1px solid var(--rule);padding:1.4rem 1.6rem;
+  margin-top:3.5rem}
+.review h2{margin-top:0}
 .review-list{font-size:.85rem}
-.formula{background:var(--surface);border:1px solid var(--line);padding:1rem;border-radius:var(--r-sm);
-  overflow-x:auto;font-size:.85rem;white-space:pre-wrap;font-family:var(--mono)}
-blockquote{margin:0;padding:.85rem 1.1rem;background:var(--surface);border-left:3px solid var(--accent);
-  border-radius:0 var(--r-sm) var(--r-sm) 0;font-size:.9rem}
-code{background:var(--surface-2);padding:.1rem .35rem;border-radius:4px;font-size:.85em;font-family:var(--mono)}
+.formula{background:var(--card);border:1px solid var(--rule);padding:1.1rem 1.2rem;
+  overflow-x:auto;font-size:.83rem;white-space:pre-wrap;font-family:var(--mono);
+  line-height:1.9}
+blockquote{margin:1.2rem 0;padding:.9rem 1.3rem;background:var(--card);
+  border-left:2px solid var(--indigo);font-size:.9rem;color:var(--ink-2)}
+code{background:var(--indigo-soft);padding:.08rem .35rem;font-size:.87em;
+  font-family:var(--mono)}
 
-/* ── フッタ ───────────────────────────── */
-.site-foot{border-top:1px solid var(--line);background:var(--surface);margin-top:3rem}
-.foot-in{max-width:1080px;margin:0 auto;padding:2rem 1.25rem 3rem;color:var(--muted);font-size:.83rem}
-.site-foot a{color:var(--muted)}
-.foot-nav{display:flex;gap:1.3rem;flex-wrap:wrap;margin-top:1.3rem;padding-top:1.1rem;
-  border-top:1px solid var(--line)}
-.foot-nav a{font-weight:600}
-.disclaimer{background:var(--bg);border:1px solid var(--line);padding:.85rem 1rem;border-radius:var(--r-sm)}
-${CHART_CSS}
+/* ── 奥付 ──────────────────────────────────────────────────
+   最後まで紙面らしく閉じる。ここが白いままだと下端が締まらない。 */
+.site-foot{background:var(--indigo-deep);color:#b9c6d6;margin-top:0;
+  border-top:3px solid var(--indigo)}
+.foot-in{max-width:var(--wrap);margin:0 auto;padding:2.8rem 1.5rem 3.5rem;
+  font-size:.82rem;line-height:1.9}
+.site-foot a{color:#dbe6f2}
+.foot-in>p:first-child{font-family:var(--serif);font-size:1rem;letter-spacing:.06em;
+  color:#fff;margin:0 0 1.2rem;padding-bottom:1.2rem;
+  border-bottom:1px solid rgba(255,255,255,.16)}
+.disclaimer{border:1px solid rgba(255,255,255,.18);padding:1rem 1.2rem;
+  background:rgba(255,255,255,.04)}
+.disclaimer strong{color:#fff}
+.foot-nav{display:flex;gap:1.8rem;flex-wrap:wrap;margin-top:1.6rem;padding-top:1.3rem;
+  border-top:1px solid rgba(255,255,255,.16)}
+.foot-nav a{font-weight:600;letter-spacing:.05em;text-decoration:none}
+.foot-nav a:hover{text-decoration:underline}
+
+/* ── 画面が狭いとき ────────────────────────────────────────*/
+@media(max-width:860px){
+  .hero-grid{grid-template-columns:1fr;gap:2rem}
+}
 @media(max-width:640px){
-  main{padding:0 1rem 3.5rem}
-  .hero{padding:1.2rem 1.1rem;border-radius:var(--r-sm)}
-  .stat b{font-size:1.25rem}
-  h2{margin:2.2rem 0 .8rem}
-  .site-head nav{gap:.85rem;margin-left:0;width:100%}
-  .site-head nav a{font-size:.82rem}
+  body{font-size:15px}
+  main{padding:0 1.1rem 4rem}
+  .head-in{padding:.85rem 1.1rem .7rem;gap:.5rem}
+  .brand strong{font-size:1.25rem}
+  .brand small{font-size:.66rem}
+  /* 題字の下に情報を積むと本文が画面から押し出される。最終更新だけ残す */
+  .plate-meta{margin-left:0;text-align:left;width:100%;font-size:.7rem}
+  .plate-sub{display:none}
+  .topbar div{padding:.4rem 1.1rem;gap:.9rem;font-size:.68rem}
+  /* 折り返さず横スクロールさせる。2段になると題字がさらに伸びる */
+  .site-nav div{padding:0 1.1rem;gap:1.35rem;flex-wrap:nowrap}
+  .rail{display:grid;grid-template-columns:1fr 1fr;border-left:0}
+  .rail-item{padding:.75rem 0 .55rem;margin:0;border-right:0;
+    border-bottom:1px solid var(--rule)}
+  .rail-item:nth-child(odd){border-right:1px solid var(--rule);padding-right:1rem}
+  .rail-item:nth-child(even){padding-left:1rem}
+  .rail-item b{font-size:1.35rem}
+  .dist{padding:1.1rem 1.1rem 1rem}
+  .dist-lead b{font-size:2.1rem}
+  .kicker{margin-top:2.6rem}
 }
 @media(prefers-reduced-motion:no-preference){
-  tbody tr{transition:background .12s ease}
-  .pcard{transition:border-color .12s ease,transform .12s ease}
-  .site-head nav a{transition:color .12s ease,border-color .12s ease}
+  tbody tr,.pcard{transition:background .13s ease}
+  .site-nav a{transition:color .13s ease,border-color .13s ease}
 }
+@media print{
+  .site-nav,.topbar{display:none}
+  body{background:#fff}
+}
+${CHART_CSS}
 `;
 
 // CSS本文のハッシュ。中身が変わったときだけ変わる＝変わらない限りキャッシュは効いたまま。

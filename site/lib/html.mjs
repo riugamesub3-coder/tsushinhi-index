@@ -64,24 +64,37 @@ export function layout({ title, description, canonical, siteUrl, bodyClass = '',
 ${head}
 </head>
 <body class="${attr(bodyClass)}">
+<div class="topbar"><div>
+  <span><b>毎日 06:17</b> 自動収集</span>
+  <span>全件に<b>出典URLと取得時刻</b>を併記</span>
+  <span>計算式と収集コードは<b>全公開</b></span>
+</div></div>
 <header class="site-head">
   <div class="head-in">
-    <a class="brand" href="/">${MARK}<span>通信費インデックス<small>光回線の実質月額を毎日記録</small></span></a>
-    <nav>
-      <a href="/">実質月額</a>
-      <a href="/changes/">料金の変化</a>
-      <a href="/method/">計算方法</a>
-      <a href="/data/">データを使う</a>
-    </nav>
+    <a class="brand" href="/">${MARK}<span>
+      <strong>通信費インデックス</strong>
+      <small>光回線の実質月額を毎日記録する独立系インデックス</small>
+    </span></a>
+    <p class="plate-meta">
+      最終更新 <b>${e(updatedAtLabel(updatedAt))}</b>
+      <span class="plate-sub">出典・取得時刻つき ／ データは CC BY 4.0</span>
+    </p>
   </div>
 </header>
+<nav class="site-nav"><div>
+  <a href="/">実質月額</a>
+  <a href="/changes/">料金の変化</a>
+  <a href="/method/">計算方法</a>
+  <a href="/data/">データを使う</a>
+  <a href="/about/">運営者情報</a>
+</div></nav>
 ${disclosure}
 <main>
 ${body}
 </main>
 <footer class="site-foot">
   <div class="foot-in">
-    <p>最終更新: <time datetime="${attr(updatedAt ?? '')}">${e(updatedAtLabel(updatedAt))}</time></p>
+    <p>通信費インデックス ／ 最終更新 <time datetime="${attr(updatedAt ?? '')}">${e(updatedAtLabel(updatedAt))}</time></p>
     <p>
       データは <a href="https://creativecommons.org/licenses/by/4.0/deed.ja" rel="license">CC BY 4.0</a>。
       出典を表示すれば自由にお使いいただけます。
@@ -103,13 +116,14 @@ ${body}
 `;
 }
 
-// ロゴ。折れ線＝時系列で、ファビコンと同じ形にそろえる。
+// ロゴ。**階段**＝料金の動き方そのもの。サイト内のグラフと同じ形にそろえる。
+// 折れ線ではなく階段にしているのは、料金は改定日に飛ぶものだから（chart.mjs と同じ理由）。
 // ★画像ファイルにしない。インラインSVGなら追加のリクエストが1つも増えず、
 //   外部から何も読み込まない（/privacy/ に「外部へ送っていない」と書いている）。
-const MARK = `<svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-<rect width="32" height="32" rx="7" fill="#0b5fbd"/>
-<polyline points="5,22 12,15 18,19 27,8" fill="none" stroke="#fff" stroke-width="3"
-  stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const MARK = `<svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true" focusable="false">
+<rect width="36" height="36" fill="#1c3f6e"/>
+<path d="M5 26 h7 v-6 h7 v-6 h7 v-5 h5" fill="none" stroke="#fff" stroke-width="2.6"
+  stroke-linecap="square" stroke-linejoin="miter"/></svg>`;
 
 function updatedAtLabel(iso) {
   if (!iso) return '—';

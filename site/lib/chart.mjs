@@ -77,21 +77,66 @@ export function stepChart(points, { label = '実質月額' } = {}) {
 </svg>`;
 }
 
+/**
+ * 表の行に入れる極小の推移。軸も目盛りも無い「形だけ」。
+ *
+ * ★形だけでも階段で描く。ここだけ直線にすると、詳細ページのグラフと形が違ってしまう。
+ * ★点が2つ未満なら**何も描かない**（null を返す）。
+ *   横棒を1本引くと「ずっと横ばいだった」という、確かめていないことを主張してしまう。
+ *   呼ぶ側は null のときに「変化なし」と文字で書くこと。線で嘘をつかない。
+ */
+export function sparkline(points, { w = 104, h = 30, pad = 3 } = {}) {
+  if (!Array.isArray(points) || points.length < 2) return null;
+
+  const xs = points.map((p) => new Date(p.at).getTime());
+  const ys = points.map((p) => p.value);
+  const x0 = Math.min(...xs), x1 = Math.max(...xs);
+  const lo = Math.min(...ys), hi = Math.max(...ys);
+  if (!(x1 > x0)) return null;
+
+  const px = (t) => pad + ((t - x0) / (x1 - x0)) * (w - pad * 2);
+  // 上下は必ず余白いっぱいに使う。行ごとに縦の縮尺が違うので、
+  // **高さを行同士で比べてはいけない**。読めるのは「形」だけ。
+  const py = (v) => (hi === lo ? h / 2 : pad + (1 - (v - lo) / (hi - lo)) * (h - pad * 2));
+
+  let d = `M ${px(xs[0]).toFixed(1)} ${py(ys[0]).toFixed(1)}`;
+  for (let i = 1; i < points.length; i++) {
+    d += ` L ${px(xs[i]).toFixed(1)} ${py(ys[i - 1]).toFixed(1)} L ${px(xs[i]).toFixed(1)} ${py(ys[i]).toFixed(1)}`;
+  }
+
+  const last = ys[ys.length - 1];
+  const dir = last > ys[0] ? 'up' : last < ys[0] ? 'down' : 'flat';
+  return `<svg class="spark ${dir}" viewBox="0 0 ${w} ${h}" role="img" `
+    + `aria-label="推移 ${yen(ys[0])}から${yen(last)}へ" preserveAspectRatio="none">`
+    + `<path d="${d}"/>`
+    + `<circle cx="${px(xs[xs.length - 1]).toFixed(1)}" cy="${py(last).toFixed(1)}" r="2.6"/></svg>`;
+}
+
 const yen = (n) => `${Number(n).toLocaleString('ja-JP')}円`;
 const date = (iso) => new Intl.DateTimeFormat('ja-JP', { timeZone: 'Asia/Tokyo', month: 'numeric', day: 'numeric' }).format(new Date(iso));
 
 export const CHART_CSS = `
-.chart-card{background:var(--bg);border:1px solid var(--line);border-radius:var(--r);
-  box-shadow:var(--shadow);padding:1rem 1.1rem .6rem;margin:1rem 0}
+.chart-card{background:var(--card);border:1px solid var(--rule);
+  padding:1.4rem 1.5rem .8rem;margin:1.2rem 0}
 .chart{width:100%;height:auto;display:block;overflow:visible}
-.c-grid{stroke:var(--line);stroke-width:1;stroke-dasharray:3 3}
-.c-line{fill:none;stroke:var(--accent);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.c-grid{stroke:var(--rule);stroke-width:1;stroke-dasharray:2 4}
+.c-line{fill:none;stroke:var(--indigo);stroke-width:2.25;stroke-linejoin:round;stroke-linecap:round}
 .c-area{stroke:none}
-.c-g0{stop-color:var(--accent);stop-opacity:.20}
-.c-g1{stop-color:var(--accent);stop-opacity:.05}
-.c-dot{fill:var(--bg);stroke:var(--accent);stroke-width:2}
-.c-now{fill:var(--accent);stroke:var(--bg);stroke-width:2}
-.c-nowlab{font-size:12px;font-weight:700;text-anchor:end;fill:var(--fg)}
-.c-ylab{fill:var(--muted);font-size:11px;text-anchor:end}
-.c-xlab{fill:var(--muted);font-size:11px}
+.c-g0{stop-color:var(--indigo);stop-opacity:.16}
+.c-g1{stop-color:var(--indigo);stop-opacity:.03}
+.c-dot{fill:var(--card);stroke:var(--indigo);stroke-width:2}
+.c-now{fill:var(--indigo);stroke:var(--card);stroke-width:2}
+.c-nowlab{font-size:13px;font-weight:700;text-anchor:end;fill:var(--ink);
+  font-variant-numeric:tabular-nums}
+.c-ylab{fill:var(--ink-3);font-size:11px;text-anchor:end;letter-spacing:.02em}
+.c-xlab{fill:var(--ink-3);font-size:11px;letter-spacing:.04em}
+
+/* 表の行に入る極小の推移。★縦の縮尺は行ごとに違う（形だけを読む） */
+.spark{width:104px;height:30px;display:block;overflow:visible}
+.spark path{fill:none;stroke-width:1.75;stroke-linejoin:round;stroke-linecap:round}
+.spark circle{stroke:none}
+.spark.up path{stroke:var(--up)} .spark.up circle{fill:var(--up)}
+.spark.down path{stroke:var(--down)} .spark.down circle{fill:var(--down)}
+.spark.flat path{stroke:var(--ink-3)} .spark.flat circle{fill:var(--ink-3)}
+.spark-none{color:var(--ink-3);font-size:.72rem;letter-spacing:.04em;white-space:nowrap}
 `;
