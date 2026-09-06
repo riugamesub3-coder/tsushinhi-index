@@ -3,6 +3,275 @@
   "providerName": "NURO光",
   "events": [
     {
+      "detectedAt": "2026-09-06T21:27:33.824Z",
+      "changes": [
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "戸建て / 2ギガ / 2年割",
+          "planLabel": "戸建て / NURO 光(H) / 2年割",
+          "horizonMonths": 36,
+          "before": 5011,
+          "after": 4956,
+          "effectiveMonthlyDelta": -55,
+          "direction": "down",
+          "cause": [
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 3000,
+              "after": 5000,
+              "delta": 2000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.nuro.jp/hikari/house/price/",
+          "previousObservedAt": "2026-09-05T21:27:14.407Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "戸建て / 10ギガ / 2年割",
+          "planLabel": "戸建て / NURO 光 10ギガ(H) / 2年割",
+          "horizonMonths": 36,
+          "before": 5110,
+          "after": 5249,
+          "effectiveMonthlyDelta": 139,
+          "direction": "up",
+          "cause": [
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 10000,
+              "after": 5000,
+              "delta": -5000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.nuro.jp/hikari/house/price/",
+          "previousObservedAt": "2026-09-05T21:27:14.407Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "戸建て / 2ギガ / U29応援割",
+          "planLabel": "戸建て / NURO 光(H) / U29応援割",
+          "horizonMonths": 36,
+          "before": 4615,
+          "after": 4559,
+          "effectiveMonthlyDelta": -56,
+          "direction": "down",
+          "cause": [
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 3000,
+              "after": 5000,
+              "delta": 2000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.nuro.jp/hikari/house/price/",
+          "previousObservedAt": "2026-09-05T21:27:14.407Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "戸建て / 10ギガ / U29応援割",
+          "planLabel": "戸建て / NURO 光 10ギガ(H) / U29応援割",
+          "horizonMonths": 36,
+          "before": 4420,
+          "after": 4559,
+          "effectiveMonthlyDelta": 139,
+          "direction": "up",
+          "cause": [
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 10000,
+              "after": 5000,
+              "delta": -5000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.nuro.jp/hikari/house/price/",
+          "previousObservedAt": "2026-09-05T21:27:14.407Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "マンション / NURO 光(H) / 2年割",
+          "planLabel": "マンション / NURO 光(H) / 2年割",
+          "horizonMonths": 36,
+          "before": 5011,
+          "after": 4956,
+          "effectiveMonthlyDelta": -55,
+          "direction": "down",
+          "cause": [
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 3000,
+              "after": 5000,
+              "delta": 2000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.nuro.jp/hikari/mansion/price/",
+          "previousObservedAt": "2026-09-05T21:27:14.407Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "マンション / NURO 光 10ギガ(H) / 2年割",
+          "planLabel": "マンション / NURO 光 10ギガ(H) / 2年割",
+          "horizonMonths": 36,
+          "before": 5110,
+          "after": 5249,
+          "effectiveMonthlyDelta": 139,
+          "direction": "up",
+          "cause": [
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 10000,
+              "after": 5000,
+              "delta": -5000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.nuro.jp/hikari/mansion/price/",
+          "previousObservedAt": "2026-09-05T21:27:14.407Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "マンション / NURO 光(H) / U29応援割",
+          "planLabel": "マンション / NURO 光(H) / U29応援割",
+          "horizonMonths": 36,
+          "before": 4615,
+          "after": 4559,
+          "effectiveMonthlyDelta": -56,
+          "direction": "down",
+          "cause": [
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 3000,
+              "after": 5000,
+              "delta": 2000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.nuro.jp/hikari/mansion/price/",
+          "previousObservedAt": "2026-09-05T21:27:14.407Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "マンション / NURO 光 10ギガ(H) / U29応援割",
+          "planLabel": "マンション / NURO 光 10ギガ(H) / U29応援割",
+          "horizonMonths": 36,
+          "before": 4420,
+          "after": 4559,
+          "effectiveMonthlyDelta": 139,
+          "direction": "up",
+          "cause": [
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 10000,
+              "after": 5000,
+              "delta": -5000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.nuro.jp/hikari/mansion/price/",
+          "previousObservedAt": "2026-09-05T21:27:14.407Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "マンション / NURO 光(M) / 2年割",
+          "planLabel": "マンション / NURO 光(M) / 2年割",
+          "horizonMonths": 36,
+          "before": 4015,
+          "after": 3959,
+          "effectiveMonthlyDelta": -56,
+          "direction": "down",
+          "cause": [
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 3000,
+              "after": 5000,
+              "delta": 2000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.nuro.jp/hikari/mansion/price/",
+          "previousObservedAt": "2026-09-05T21:27:14.407Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "マンション / NURO 光 10ギガ(M) / 2年割",
+          "planLabel": "マンション / NURO 光 10ギガ(M) / 2年割",
+          "horizonMonths": 36,
+          "before": 4334,
+          "after": 4473,
+          "effectiveMonthlyDelta": 139,
+          "direction": "up",
+          "cause": [
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 10000,
+              "after": 5000,
+              "delta": -5000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.nuro.jp/hikari/mansion/price/",
+          "previousObservedAt": "2026-09-05T21:27:14.407Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "マンション / NURO 光(M) / U29応援割",
+          "planLabel": "マンション / NURO 光(M) / U29応援割",
+          "horizonMonths": 36,
+          "before": 3615,
+          "after": 3559,
+          "effectiveMonthlyDelta": -56,
+          "direction": "down",
+          "cause": [
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 3000,
+              "after": 5000,
+              "delta": 2000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.nuro.jp/hikari/mansion/price/",
+          "previousObservedAt": "2026-09-05T21:27:14.407Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "マンション / NURO 光 10ギガ(M) / U29応援割",
+          "planLabel": "マンション / NURO 光 10ギガ(M) / U29応援割",
+          "horizonMonths": 36,
+          "before": 3420,
+          "after": 3559,
+          "effectiveMonthlyDelta": 139,
+          "direction": "up",
+          "cause": [
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 10000,
+              "after": 5000,
+              "delta": -5000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.nuro.jp/hikari/mansion/price/",
+          "previousObservedAt": "2026-09-05T21:27:14.407Z"
+        }
+      ]
+    },
+    {
       "detectedAt": "2026-09-04T14:36:53.051Z",
       "changes": [
         {
@@ -421,6 +690,6 @@
       ]
     }
   ],
-  "lastEventAt": "2026-09-04T14:36:53.051Z",
-  "totalEvents": 2
+  "lastEventAt": "2026-09-06T21:27:33.824Z",
+  "totalEvents": 3
 }

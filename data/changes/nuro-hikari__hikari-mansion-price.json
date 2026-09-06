@@ -5,6 +5,28 @@
   "sourceUrl": "https://www.nuro.jp/hikari/mansion/price/",
   "events": [
     {
+      "detectedAt": "2026-09-06T21:27:04.777Z",
+      "previousCollectedAt": "2026-09-05T21:26:43.752Z",
+      "sourceUrl": "https://www.nuro.jp/hikari/mansion/price/",
+      "source": "pricing-page",
+      "needsReview": false,
+      "changes": [
+        {
+          "label": "キャンペーン ー キャッシュバックキャンペーン",
+          "before": [
+            3000,
+            10000
+          ],
+          "after": [
+            5000
+          ],
+          "delta": null
+        }
+      ],
+      "addedLabels": 2,
+      "removedLabels": 4
+    },
+    {
       "detectedAt": "2026-08-31T21:24:51.368Z",
       "previousCollectedAt": "2026-08-30T21:24:24.865Z",
       "sourceUrl": "https://www.nuro.jp/hikari/mansion/price/",
@@ -251,6 +273,6 @@
       "removedLabels": 2
     }
   ],
-  "lastEventAt": "2026-08-31T21:24:51.368Z",
-  "totalEvents": 3
+  "lastEventAt": "2026-09-06T21:27:04.777Z",
+  "totalEvents": 4
 }
