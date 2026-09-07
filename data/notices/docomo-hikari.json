@@ -5,6 +5,17 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-09-07",
+      "title": "「ドコモのあんしん賃貸保証 まとめておトクキャンペーン」を開催 -対象サービスのご契約などでdポイント（期間・用途限定）最大15,600ポイントを進呈-（PDF形式：916KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260907_u1.pdf",
+      "categories": [
+        "campaign"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-09-07T21:29:18.445Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-09-05",
       "title": "令和8年台風第24号及び前線による大雨に伴う支援措置",
       "url": "https://www.docomo.ne.jp/info/news_release/detail/20260905_00_m.html",
@@ -321,6 +332,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-09-06T21:26:59.301Z",
-  "totalNotices": 33
+  "lastCollectedAt": "2026-09-07T21:29:18.445Z",
+  "totalNotices": 34
 }
