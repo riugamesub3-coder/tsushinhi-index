@@ -5,6 +5,15 @@
   "firstCollectedAt": "2026-08-23T09:31:26.876Z",
   "notices": [
     {
+      "date": "2026-09-10",
+      "title": "令和８年台風第24号及び前線による大雨に伴う災害に係る 災害救助法の適用について",
+      "url": "https://www.nuro.jp/news_release/20260910/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-09-09T21:28:46.169Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
       "date": "2026-08-27",
       "title": "NURO 光 Safe アプリ一部機能変更のお知らせ",
       "url": "https://www.nuro.jp/news_release/20260827/",
@@ -980,6 +989,6 @@
       "sourceUrl": "https://www.nuro.jp/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-09-08T21:27:32.386Z",
-  "totalNotices": 101
+  "lastCollectedAt": "2026-09-09T21:28:46.169Z",
+  "totalNotices": 102
 }
