@@ -5,6 +5,15 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-09-11",
+      "title": "世界初、ノキア製最新型基地局装置のマルチベンダー構成による商用運用を開始",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/09/11_00.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-09-11T21:27:09.337Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-09-10",
       "title": "ドコモ、「iPhone Duo」「iPhone 18 Pro」「iPhone 18 Pro Max」「Apple Watch Series 12」「Apple Watch Ultra 4」「AirPods 5」を発売",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/09/10_00.html",
@@ -350,6 +359,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-09-10T21:27:48.990Z",
-  "totalNotices": 36
+  "lastCollectedAt": "2026-09-11T21:27:09.337Z",
+  "totalNotices": 37
 }
