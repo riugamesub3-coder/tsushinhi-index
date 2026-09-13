@@ -3,6 +3,77 @@
   "providerName": "So-net光",
   "events": [
     {
+      "detectedAt": "2026-09-13T21:28:45.664Z",
+      "changes": [
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "10ギガ / 戸建・マンション共通 / 回線新設でお申し込み / 派遣工事",
+          "planLabel": "10ギガ / 戸建・マンション共通 / 回線新設でお申し込み / 派遣工事",
+          "horizonMonths": 36,
+          "before": 4773,
+          "after": 4634,
+          "effectiveMonthlyDelta": -139,
+          "direction": "down",
+          "cause": [
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 5000,
+              "after": 10000,
+              "delta": 5000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
+          "previousObservedAt": "2026-09-12T21:28:32.056Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "1ギガ / 戸建 / 回線新設でお申し込み / 派遣工事",
+          "planLabel": "1ギガ M / 戸建 / 回線新設でお申し込み / 派遣工事",
+          "horizonMonths": 36,
+          "before": 5353,
+          "after": 5408,
+          "effectiveMonthlyDelta": 55,
+          "direction": "up",
+          "cause": [
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 5000,
+              "after": 3000,
+              "delta": -2000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
+          "previousObservedAt": "2026-09-12T21:28:32.056Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "1ギガ / マンション / 回線新設でお申し込み / 派遣工事",
+          "planLabel": "1ギガ M / マンション / 回線新設でお申し込み / 派遣工事",
+          "horizonMonths": 36,
+          "before": 4619,
+          "after": 4675,
+          "effectiveMonthlyDelta": 56,
+          "direction": "up",
+          "cause": [
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 5000,
+              "after": 3000,
+              "delta": -2000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
+          "previousObservedAt": "2026-09-12T21:28:32.056Z"
+        }
+      ]
+    },
+    {
       "detectedAt": "2026-09-06T21:27:41.094Z",
       "changes": [
         {
@@ -436,6 +507,6 @@
       ]
     }
   ],
-  "lastEventAt": "2026-09-06T21:27:41.094Z",
-  "totalEvents": 2
+  "lastEventAt": "2026-09-13T21:28:45.664Z",
+  "totalEvents": 3
 }
