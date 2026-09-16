@@ -5,6 +5,24 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-09-16",
+      "title": "ドコモ、「iPhone 18 Pro/18 Pro Max」対応アクセサリーを発売 -MagSafe対応の「エアバンパーケース」やドコモ限定TORRAS社製ケースなどをラインナップ-（PDF形式：1,913KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260916_g1.pdf",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-09-16T21:29:57.402Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-09-16",
+      "title": "通信事業者間での5Gミリ波の利用エリア拡大に向けた共同検討を開始",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/09/16_00.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-09-16T21:29:57.402Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-09-11",
       "title": "世界初、ノキア製最新型基地局装置のマルチベンダー構成による商用運用を開始",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/09/11_00.html",
@@ -359,6 +377,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-09-15T21:27:54.674Z",
-  "totalNotices": 37
+  "lastCollectedAt": "2026-09-16T21:29:57.402Z",
+  "totalNotices": 39
 }
