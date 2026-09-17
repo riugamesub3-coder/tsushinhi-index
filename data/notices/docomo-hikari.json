@@ -5,6 +5,35 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-09-17",
+      "title": "10月開始の「dポイント」「d払い」自治体キャンペーン（PDF形式：441KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260917_g1.pdf",
+      "categories": [
+        "campaign"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-09-17T21:28:16.401Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-09-17",
+      "title": "NTTグループの男性育休取得推進の取り組みについて -「IKUKYU.PJT」への賛同と「育休を考える日」に寄せて-（PDF形式：1,788KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260917_u1.pdf",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-09-17T21:28:16.401Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-09-17",
+      "title": "役員の人事について",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/09/17_00.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-09-17T21:28:16.401Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-09-16",
       "title": "ドコモ、「iPhone 18 Pro/18 Pro Max」対応アクセサリーを発売 -MagSafe対応の「エアバンパーケース」やドコモ限定TORRAS社製ケースなどをラインナップ-（PDF形式：1,913KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260916_g1.pdf",
@@ -377,6 +406,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-09-16T21:29:57.402Z",
-  "totalNotices": 39
+  "lastCollectedAt": "2026-09-17T21:28:16.401Z",
+  "totalNotices": 42
 }

@@ -5,6 +5,17 @@
   "firstCollectedAt": "2026-08-23T09:31:28.541Z",
   "notices": [
     {
+      "date": "2026-09-17",
+      "title": "【重要】BIGLOBE光 auひかり公式Webページでの新規受付終了のご案内",
+      "url": "https://support.biglobe.ne.jp/news/news797.html",
+      "categories": [
+        "service-end"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-09-17T21:28:11.525Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
       "date": "2026-09-04",
       "title": "BIGLOBE会員規約改定の要点（2026年9月17日施行）",
       "url": "https://support.biglobe.ne.jp/kiyaku/youten260917.html",
@@ -604,6 +615,6 @@
       "sourceUrl": "https://support.biglobe.ne.jp/news/"
     }
   ],
-  "lastCollectedAt": "2026-09-16T21:29:52.591Z",
-  "totalNotices": 60
+  "lastCollectedAt": "2026-09-17T21:28:11.525Z",
+  "totalNotices": 61
 }
