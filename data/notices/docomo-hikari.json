@@ -5,6 +5,17 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-09-18",
+      "title": "「『スティール・ボール・ラン ジョジョの奇妙な冒険』×NTTドコモ 2nd ＆ 3rd STAGE 開幕記念キャンペーン」を開催！ -限定特典・ノベルティの進呈、及びオリジナルグッズの販売を実施-（PDF形式：3,135KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260918_g1.pdf",
+      "categories": [
+        "campaign"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-09-18T21:28:23.589Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-09-17",
       "title": "10月開始の「dポイント」「d払い」自治体キャンペーン（PDF形式：441KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260917_g1.pdf",
@@ -406,6 +417,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-09-17T21:28:16.401Z",
-  "totalNotices": 42
+  "lastCollectedAt": "2026-09-18T21:28:23.589Z",
+  "totalNotices": 43
 }
