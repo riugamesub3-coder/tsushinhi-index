@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-09-19T21:28:57.425Z",
+  "checkedAt": "2026-09-20T21:29:09.149Z",
   "summary": {
     "total": 18,
     "ok": 18,
@@ -27,9 +27,9 @@
       "status": "ok",
       "detail": null,
       "httpStatus": 200,
-      "hits": 209,
-      "bytes": 237780,
-      "elapsedMs": 1173,
+      "hits": 208,
+      "bytes": 237832,
+      "elapsedMs": 947,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -42,9 +42,9 @@
       "status": "ok",
       "detail": null,
       "httpStatus": 200,
-      "hits": 314,
-      "bytes": 324432,
-      "elapsedMs": 725,
+      "hits": 313,
+      "bytes": 324484,
+      "elapsedMs": 500,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -59,7 +59,7 @@
       "httpStatus": 200,
       "hits": 105,
       "bytes": 55971,
-      "elapsedMs": 435,
+      "elapsedMs": 301,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -74,7 +74,7 @@
       "httpStatus": 200,
       "hits": 75,
       "bytes": 33314,
-      "elapsedMs": 719,
+      "elapsedMs": 507,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -89,7 +89,7 @@
       "httpStatus": 200,
       "hits": 81,
       "bytes": 95832,
-      "elapsedMs": 36,
+      "elapsedMs": 20,
       "robotsNote": "Allow: /",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -104,7 +104,7 @@
       "httpStatus": 200,
       "hits": 44,
       "bytes": 30969,
-      "elapsedMs": 976,
+      "elapsedMs": 385,
       "robotsNote": "Allow: /",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -119,7 +119,7 @@
       "httpStatus": 200,
       "hits": 22,
       "bytes": 246355,
-      "elapsedMs": 309,
+      "elapsedMs": 376,
       "robotsNote": "robots.txt なし（制限なしとみなす）",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -134,7 +134,7 @@
       "httpStatus": 200,
       "hits": 33,
       "bytes": 220038,
-      "elapsedMs": 222,
+      "elapsedMs": 307,
       "robotsNote": "robots.txt なし（制限なしとみなす）",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -149,7 +149,7 @@
       "httpStatus": 200,
       "hits": 23,
       "bytes": 139797,
-      "elapsedMs": 266,
+      "elapsedMs": 335,
       "robotsNote": "robots.txt なし（制限なしとみなす）",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -164,7 +164,7 @@
       "httpStatus": 200,
       "hits": 4,
       "bytes": 83709,
-      "elapsedMs": 352,
+      "elapsedMs": 270,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -177,9 +177,9 @@
       "status": "ok",
       "detail": null,
       "httpStatus": 200,
-      "hits": 253,
-      "bytes": 310143,
-      "elapsedMs": 118,
+      "hits": 252,
+      "bytes": 310117,
+      "elapsedMs": 38,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -194,7 +194,7 @@
       "httpStatus": 200,
       "hits": 146,
       "bytes": 207854,
-      "elapsedMs": 50,
+      "elapsedMs": 34,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -209,7 +209,7 @@
       "httpStatus": 200,
       "hits": 115,
       "bytes": 99088,
-      "elapsedMs": 32,
+      "elapsedMs": 52,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -224,7 +224,7 @@
       "httpStatus": 200,
       "hits": 19,
       "bytes": 310304,
-      "elapsedMs": 16,
+      "elapsedMs": 28,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -239,7 +239,7 @@
       "httpStatus": 200,
       "hits": 8,
       "bytes": 38617,
-      "elapsedMs": 610,
+      "elapsedMs": 435,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -254,7 +254,7 @@
       "httpStatus": 200,
       "hits": 10,
       "bytes": 36185,
-      "elapsedMs": 639,
+      "elapsedMs": 483,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -269,7 +269,7 @@
       "httpStatus": 200,
       "hits": 6,
       "bytes": 28019,
-      "elapsedMs": 392,
+      "elapsedMs": 308,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -284,7 +284,7 @@
       "httpStatus": 200,
       "hits": 61,
       "bytes": 104499,
-      "elapsedMs": 617,
+      "elapsedMs": 390,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null

@@ -3,7 +3,7 @@
   "providerId": "so-net-hikari",
   "providerName": "So-net光（ソニーネットワークコミュニケーションズ）",
   "url": "https://www.so-net.ne.jp/access/hikari/1g/",
-  "collectedAt": "2026-09-19T21:27:49.249Z",
+  "collectedAt": "2026-09-20T21:28:06.459Z",
   "points": [
     {
       "label": "－ （最大） 回線工事費相当割引 － 1カ月目",
@@ -87,8 +87,8 @@
     },
     {
       "label": "net 光 S：対象外 So-net 光 M：",
-      "value": 3000,
-      "raw": "3,000円"
+      "value": 5000,
+      "raw": "5,000円"
     },
     {
       "label": "So-net 光 M： ・So-net 光 L：",
