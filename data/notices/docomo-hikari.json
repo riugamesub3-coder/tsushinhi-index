@@ -5,6 +5,26 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-09-24",
+      "title": "Amazonの「プライム感謝祭」に合わせて、dポイントと「d払い」でのお買物がよりおトクになる2つのキャンペーンを開催！（PDF形式：562KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260924_x2.pdf",
+      "categories": [
+        "campaign"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-09-24T23:53:48.696Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-09-24",
+      "title": "WOWOWとNTTドコモ、「Lemino」を共同事業化し、コンテンツを大幅拡充 -新生Lemino、10月1日（木曜）START-",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/09/24_00.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-09-24T23:53:48.696Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-09-22",
       "title": "令和8年台風第25号に伴う支援措置",
       "url": "https://www.docomo.ne.jp/info/news_release/detail/20260922_00_m.html",
@@ -426,6 +446,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-09-23T23:45:20.015Z",
-  "totalNotices": 44
+  "lastCollectedAt": "2026-09-24T23:53:48.696Z",
+  "totalNotices": 46
 }
