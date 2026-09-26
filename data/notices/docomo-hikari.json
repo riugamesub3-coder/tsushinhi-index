@@ -5,6 +5,18 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-09-25",
+      "title": "「ahamo」をリニューアル、「ドコモ mini2」「ドコモ MAX 60歳以上割」の提供を開始、および一部料金プランの月額料金を改定",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/09/25_00.html",
+      "categories": [
+        "plan-change",
+        "service-start"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-09-25T23:57:49.466Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-09-24",
       "title": "Amazonの「プライム感謝祭」に合わせて、dポイントと「d払い」でのお買物がよりおトクになる2つのキャンペーンを開催！（PDF形式：562KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260924_x2.pdf",
@@ -446,6 +458,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-09-24T23:53:48.696Z",
-  "totalNotices": 46
+  "lastCollectedAt": "2026-09-25T23:57:49.466Z",
+  "totalNotices": 47
 }
