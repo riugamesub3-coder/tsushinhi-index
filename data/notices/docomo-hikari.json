@@ -5,6 +5,35 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-09-29",
+      "title": "太陽光発電所と系統用蓄電所を組み合わせたHourly Matchingの実証実験を開始 -国内初、EnergyTag認定発行機関のプラットフォームを用いて、系統用蓄電池による時間単位のカーボンフリー電力供給率向上効果を検証-（PDF形式：602KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260929_e1.pdf",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-09-29T01:01:40.695Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-09-28",
+      "title": "「d払い・dカードで行こう！ユニバーサル・スタジオ・ジャパン 25周年 一部エリア貸切イベントご招待キャンペーン」を開催！（PDF形式：531KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260928_x1.pdf",
+      "categories": [
+        "campaign"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-09-29T01:01:40.695Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-09-28",
+      "title": "分析・予測対象の過去データが不足する環境でも高精度な予測を実現するAI技術を確立 -推薦システム分野の国際会議「ACM RecSys 2026」に採録-（PDF形式：462KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260928_c1.pdf",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-09-29T01:01:40.695Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-09-25",
       "title": "「ahamo」をリニューアル、「ドコモ mini2」「ドコモ MAX 60歳以上割」の提供を開始、および一部料金プランの月額料金を改定",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/09/25_00.html",
@@ -458,6 +487,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-09-27T23:49:47.510Z",
-  "totalNotices": 47
+  "lastCollectedAt": "2026-09-29T01:01:40.695Z",
+  "totalNotices": 50
 }
