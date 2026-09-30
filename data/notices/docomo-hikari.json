@@ -6,6 +6,24 @@
   "notices": [
     {
       "date": "2026-09-29",
+      "title": "ドコモ、電通、CARTA ZERO、インテージで、「docomo data square」をマーケットツインとしてアップデートし提供 -1億超の同一IDを起点に、生活者理解から広告配信・効果検証までを横断したデータ活用を実現-（PDF形式：500KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260929_x1.pdf",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-09-30T00:31:50.570Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-09-29",
+      "title": "ミリ波の普及を加速する「ドコモミリ波イニシアチブ」を始動",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/09/29_00.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-09-30T00:31:50.570Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-09-29",
       "title": "太陽光発電所と系統用蓄電所を組み合わせたHourly Matchingの実証実験を開始 -国内初、EnergyTag認定発行機関のプラットフォームを用いて、系統用蓄電池による時間単位のカーボンフリー電力供給率向上効果を検証-（PDF形式：602KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260929_e1.pdf",
       "categories": [],
@@ -487,6 +505,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-09-29T01:01:40.695Z",
-  "totalNotices": 50
+  "lastCollectedAt": "2026-09-30T00:31:50.570Z",
+  "totalNotices": 52
 }
