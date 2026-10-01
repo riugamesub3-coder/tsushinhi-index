@@ -41,5 +41,14 @@
     "  confirmedAt     YYYY-MM-DD",
     "  confirmedNote   確認の根拠"
   ],
-  "links": []
+  "links": [
+    {
+      "providerId": "docomo-hikari",
+      "adCode": "<a href=\"https://px.a8.net/svt/ejp?a8mat=4BE68N+15OGZE+447K+HVFKY\" rel=\"nofollow\">【＠nifty with ドコモ光】</a>\n<img border=\"0\" width=\"1\" height=\"1\" src=\"https://www15.a8.net/0.gif?a8mat=4BE68N+15OGZE+447K+HVFKY\" alt=\"\">",
+      "mode": "different",
+      "differenceNote": "申込先は、ドコモ光をプロバイダ経由で申し込むページです。上の表の実質月額はNTTドコモ公式の料金ページから計算した値で、申込先が独自に付けている特典は含んでいません。",
+      "confirmedAt": "2026-10-01",
+      "confirmedNote": "ASP管理画面で提携完了を確認。広告素材に表示された飛び先URLを広告リンクを通さず直接開き、ASP経由専用の申込ページで公式の料金ページと別の特典条件があること、提供はドコモ光タイプAであることを確認した"
+    }
+  ]
 }

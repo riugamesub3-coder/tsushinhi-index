@@ -592,7 +592,7 @@ function linkOnlyOffers(data) {
 
   return html`
 <section class="link-only">
-  <h2>このサイト経由の申込にだけ適用される特典</h2>
+  <h2>申込先によって条件が変わる特典（広告）</h2>
   <p>
     上の比較表は<strong>誰でも見られる公式の料金ページ</strong>を毎日計測した値です。
     下記は<strong>申込経路によって条件が変わるもの</strong>で、
