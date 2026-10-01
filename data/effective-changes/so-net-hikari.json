@@ -3,6 +3,106 @@
   "providerName": "So-net光",
   "events": [
     {
+      "detectedAt": "2026-10-01T00:36:27.029Z",
+      "changes": [
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "10ギガ / 戸建・マンション共通 / 回線新設でお申し込み / 派遣工事",
+          "planLabel": "10ギガ / 戸建・マンション共通 / 回線新設でお申し込み / 派遣工事",
+          "horizonMonths": 36,
+          "before": 4773,
+          "after": 4670,
+          "effectiveMonthlyDelta": -103,
+          "direction": "down",
+          "cause": [
+            {
+              "field": "monthlyTotal",
+              "label": "月額の合計",
+              "before": 170760,
+              "after": 172080,
+              "delta": 1320
+            },
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 5000,
+              "after": 10000,
+              "delta": 5000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
+          "previousObservedAt": "2026-09-30T00:32:30.679Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "10ギガ / 戸建・マンション共通 / 転用・事業者変更でのお申し込み / 10ギガ⇒10ギガ",
+          "planLabel": "10ギガ / 戸建・マンション共通 / 転用・事業者変更でのお申し込み / 10ギガ⇒10ギガ",
+          "horizonMonths": 36,
+          "before": 5675,
+          "after": 5748,
+          "effectiveMonthlyDelta": 73,
+          "direction": "up",
+          "cause": [
+            {
+              "field": "monthlyTotal",
+              "label": "月額の合計",
+              "before": 198240,
+              "after": 200880,
+              "delta": 2640
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
+          "previousObservedAt": "2026-09-30T00:32:30.679Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "1ギガ / 戸建 / 回線新設でお申し込み / 派遣工事",
+          "planLabel": "1ギガ M / 戸建 / 回線新設でお申し込み / 派遣工事",
+          "horizonMonths": 36,
+          "before": 5353,
+          "after": 5408,
+          "effectiveMonthlyDelta": 55,
+          "direction": "up",
+          "cause": [
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 5000,
+              "after": 3000,
+              "delta": -2000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
+          "previousObservedAt": "2026-09-30T00:32:30.679Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "1ギガ / マンション / 回線新設でお申し込み / 派遣工事",
+          "planLabel": "1ギガ M / マンション / 回線新設でお申し込み / 派遣工事",
+          "horizonMonths": 36,
+          "before": 4619,
+          "after": 4675,
+          "effectiveMonthlyDelta": 56,
+          "direction": "up",
+          "cause": [
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 5000,
+              "after": 3000,
+              "delta": -2000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
+          "previousObservedAt": "2026-09-30T00:32:30.679Z"
+        }
+      ]
+    },
+    {
       "detectedAt": "2026-09-20T21:28:28.652Z",
       "changes": [
         {
@@ -578,6 +678,6 @@
       ]
     }
   ],
-  "lastEventAt": "2026-09-20T21:28:28.652Z",
-  "totalEvents": 4
+  "lastEventAt": "2026-10-01T00:36:27.029Z",
+  "totalEvents": 5
 }

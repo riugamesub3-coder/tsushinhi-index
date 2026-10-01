@@ -5,6 +5,46 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-10-01",
+      "title": "ドコモ、「Xperia 10 VIII SO-52G」を発売",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/10/01_00.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-10-01T00:35:39.624Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-10-01",
+      "title": "令和8年台風第18号に伴う支援措置",
+      "url": "https://www.docomo.ne.jp/info/news_release/detail/20260930_02_m.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-10-01T00:35:39.624Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-09-30",
+      "title": "【ドコモFG】「ドコモの地震お見舞金保険」の新規契約および更新契約の受付を終了",
+      "url": "https://www.docomo-fg.com/info/news_release/20260930_001.html",
+      "categories": [
+        "service-end"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-10-01T00:35:39.624Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-09-30",
+      "title": "【ドコモFG】10月開始の「d払い」エリアキャンペーン -全国8地域の対象店舗で抽選によりdポイントを進呈-（PDF形式：603KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/docomofg/20260930151000.pdf",
+      "categories": [
+        "campaign"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-10-01T00:35:39.624Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-09-29",
       "title": "ドコモ、電通、CARTA ZERO、インテージで、「docomo data square」をマーケットツインとしてアップデートし提供 -1億超の同一IDを起点に、生活者理解から広告配信・効果検証までを横断したデータ活用を実現-（PDF形式：500KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260929_x1.pdf",
@@ -505,6 +545,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-09-30T00:31:50.570Z",
-  "totalNotices": 52
+  "lastCollectedAt": "2026-10-01T00:35:39.624Z",
+  "totalNotices": 56
 }

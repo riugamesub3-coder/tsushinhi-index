@@ -2,26 +2,14 @@
   "providerId": "so-net-hikari",
   "providerName": "So-net光",
   "channelId": "official",
-  "observedAt": "2026-09-30T00:32:30.679Z",
+  "observedAt": "2026-10-01T00:36:27.029Z",
   "formula": "実質月額 = ( 月額の合計 + 工事費の実負担額 + 事務手数料 + 必須オプション費用×加入必要月数 - キャッシュバック額 - その他割引の総額 ) ÷ 契約月数",
   "primaryHorizonMonths": 36,
   "sourceUrls": [
     "https://www.so-net.ne.jp/access/hikari/",
     "https://www.so-net.ne.jp/access/hikari/1g/"
   ],
-  "pageNotices": [
-    "So-net 光 10ギガは2026年10月1日に月額基本料金の改定を予定しており、6,270円が6,380円となります",
-    "料金改定以降、本ページの特典適用後の月額料金は4,090円/月です",
-    "（割引額も変更となる可能性があります） ※2026年9月以降、So-netの一部サービスにおける料金改定を予定しております",
-    "料金改定の詳細はこちら 注意 事項 ・記載の内容は、予告なく変更または終了する場合があります",
-    "10ギガ 1ギガ 2026年9月以降、So-netの一部サービスにおける料金改定を予定しております",
-    "月額基本料金 6,270 円/月 ※1 特典によりご利用開始月 ※2 と、1～23カ月目まで3,980円/月 ※1 So-net 光 10ギガは2026年10月1日に月額基本料金の改定を予定しており、6,270円が6,380円となります",
-    "料金改定以降、本ページの特典適用後のご利用開始月（開通月）の月額料金は最大4,090円/月、1～23カ月目の月額料金は4,090円/月です",
-    "月額基本料金 6,270 円/月 ※1 特典によりご利用開始月 ※2 と、1～11カ月目まで3,980円/月 ※1 So-net 光 10ギガは2026年10月1日に月額基本料金の改定を予定しており、6,270円が6,380円となります",
-    "2026年9月以降、So-netの一部サービスにおける料金改定を予定しております",
-    "便利なサービスいろいろ オプションサービス 同時申し込み 最大6カ月無料! 2026年9月以降、So-netの一部サービスにおける料金改定を予定しております",
-    "料金改定の詳細はこちら 詳細はこちら 詳細はこちら 詳細はこちら 詳細はこちら 詳細はこちら 詳細はこちら 詳細はこちら 詳細はこちら 詳細はこちら 現在のフレッツ光回線の利用状況によって、 ご利用までの流れが変わります"
-  ],
+  "pageNotices": [],
   "offers": [
     {
       "providerId": "so-net-hikari",
@@ -58,7 +46,7 @@
         {
           "fromMonth": 25,
           "toMonth": null,
-          "amount": 6270
+          "amount": 6380
         }
       ],
       "adminFee": 6050,
@@ -111,10 +99,10 @@
       },
       "cashbacks": [
         {
-          "amount": 5000,
+          "amount": 10000,
           "receiveAtMonth": 17,
           "note": "So-net 光 10ギガ / 新設 / 対象サービスのご利用開始（開通）から17カ月後の15日より45日間",
-          "campaignPeriod": "2026年9月21日～2026年9月30日"
+          "campaignPeriod": "2026年10月1日～2026年10月11日"
         }
       ],
       "requiredOptions": [],
@@ -138,35 +126,35 @@
         {
           "fromMonth": 25,
           "toMonth": null,
-          "amount": 6270
+          "amount": 6380
         }
       ],
       "verified": true,
-      "observedAt": "2026-09-30T00:32:30.679Z",
+      "observedAt": "2026-10-01T00:36:27.029Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 4024,
-          "total": 96570,
+          "effectiveMonthly": 3815,
+          "total": 91570,
           "breakdown": {
             "monthlyTotal": 95520,
             "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 10000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 4773,
-          "total": 171810,
+          "effectiveMonthly": 4670,
+          "total": 168130,
           "breakdown": {
-            "monthlyTotal": 170760,
+            "monthlyTotal": 172080,
             "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 10000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
@@ -205,7 +193,7 @@
         {
           "fromMonth": 13,
           "toMonth": null,
-          "amount": 6270
+          "amount": 6380
         }
       ],
       "adminFee": 6050,
@@ -263,17 +251,17 @@
         {
           "fromMonth": 13,
           "toMonth": null,
-          "amount": 6270
+          "amount": 6380
         }
       ],
       "verified": true,
-      "observedAt": "2026-09-30T00:32:30.679Z",
+      "observedAt": "2026-10-01T00:36:27.029Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 5377,
-          "total": 129050,
+          "effectiveMonthly": 5432,
+          "total": 130370,
           "breakdown": {
-            "monthlyTotal": 123000,
+            "monthlyTotal": 124320,
             "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
@@ -284,10 +272,10 @@
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 5675,
-          "total": 204290,
+          "effectiveMonthly": 5748,
+          "total": 206930,
           "breakdown": {
-            "monthlyTotal": 198240,
+            "monthlyTotal": 200880,
             "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
@@ -388,10 +376,10 @@
       },
       "cashbacks": [
         {
-          "amount": 5000,
+          "amount": 3000,
           "receiveAtMonth": 17,
           "note": "So-net 光 1ギガ（So-net 光 M） / 新設 / 対象サービスのご利用開始（開通）から17カ月後の15日より45日間",
-          "campaignPeriod": "2026年9月21日～2026年9月30日"
+          "campaignPeriod": "2026年10月1日～2026年10月11日"
         }
       ],
       "requiredOptions": [],
@@ -422,31 +410,31 @@
       "alsoSeenAt": [
         "https://www.so-net.ne.jp/access/hikari/1g/"
       ],
-      "observedAt": "2026-09-30T00:32:30.679Z",
+      "observedAt": "2026-10-01T00:36:27.029Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 5031,
-          "total": 120750,
+          "effectiveMonthly": 5115,
+          "total": 122750,
           "breakdown": {
             "monthlyTotal": 119700,
             "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 3000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 5353,
-          "total": 192690,
+          "effectiveMonthly": 5408,
+          "total": 194690,
           "breakdown": {
             "monthlyTotal": 191640,
             "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 3000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
@@ -543,10 +531,10 @@
       },
       "cashbacks": [
         {
-          "amount": 5000,
+          "amount": 3000,
           "receiveAtMonth": 17,
           "note": "So-net 光 1ギガ（So-net 光 M） / 新設 / 対象サービスのご利用開始（開通）から17カ月後の15日より45日間",
-          "campaignPeriod": "2026年9月21日～2026年9月30日"
+          "campaignPeriod": "2026年10月1日～2026年10月11日"
         }
       ],
       "requiredOptions": [],
@@ -577,31 +565,31 @@
       "alsoSeenAt": [
         "https://www.so-net.ne.jp/access/hikari/1g/"
       ],
-      "observedAt": "2026-09-30T00:32:30.679Z",
+      "observedAt": "2026-10-01T00:36:27.029Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 4481,
-          "total": 107550,
+          "effectiveMonthly": 4565,
+          "total": 109550,
           "breakdown": {
             "monthlyTotal": 106500,
             "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 3000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 4619,
-          "total": 166290,
+          "effectiveMonthly": 4675,
+          "total": 168290,
           "breakdown": {
             "monthlyTotal": 165240,
             "adminFee": 6050,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 3000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
@@ -705,7 +693,7 @@
       "alsoSeenAt": [
         "https://www.so-net.ne.jp/access/hikari/1g/"
       ],
-      "observedAt": "2026-09-30T00:32:30.679Z",
+      "observedAt": "2026-10-01T00:36:27.029Z",
       "effective": {
         "24": {
           "effectiveMonthly": 5743,
@@ -833,7 +821,7 @@
       "alsoSeenAt": [
         "https://www.so-net.ne.jp/access/hikari/1g/"
       ],
-      "observedAt": "2026-09-30T00:32:30.679Z",
+      "observedAt": "2026-10-01T00:36:27.029Z",
       "effective": {
         "24": {
           "effectiveMonthly": 4918,
@@ -950,7 +938,7 @@
       "verified": true,
       "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=4500円 / 特典表の一覧=4500円）",
       "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
-      "observedAt": "2026-09-30T00:32:30.679Z",
+      "observedAt": "2026-10-01T00:36:27.029Z",
       "effective": {
         "24": {
           "effectiveMonthly": 4752,
@@ -1067,7 +1055,7 @@
       "verified": true,
       "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=3400円 / 特典表の一覧=3400円）",
       "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
-      "observedAt": "2026-09-30T00:32:30.679Z",
+      "observedAt": "2026-10-01T00:36:27.029Z",
       "effective": {
         "24": {
           "effectiveMonthly": 3652,
@@ -1154,7 +1142,7 @@
       "verified": true,
       "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=4500円 / 特典表の一覧=4500円）",
       "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
-      "observedAt": "2026-09-30T00:32:30.679Z",
+      "observedAt": "2026-10-01T00:36:27.029Z",
       "effective": {
         "24": {
           "effectiveMonthly": 4752,
@@ -1241,7 +1229,7 @@
       "verified": true,
       "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=3400円 / 特典表の一覧=3400円）",
       "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
-      "observedAt": "2026-09-30T00:32:30.679Z",
+      "observedAt": "2026-10-01T00:36:27.029Z",
       "effective": {
         "24": {
           "effectiveMonthly": 3652,
@@ -1358,7 +1346,7 @@
       "verified": true,
       "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=7095円 / 特典表の一覧=7095円）",
       "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
-      "observedAt": "2026-09-30T00:32:30.679Z",
+      "observedAt": "2026-10-01T00:36:27.029Z",
       "effective": {
         "24": {
           "effectiveMonthly": 7347,
@@ -1475,7 +1463,7 @@
       "verified": true,
       "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=5995円 / 特典表の一覧=5995円）",
       "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
-      "observedAt": "2026-09-30T00:32:30.679Z",
+      "observedAt": "2026-10-01T00:36:27.029Z",
       "effective": {
         "24": {
           "effectiveMonthly": 6247,
@@ -1562,7 +1550,7 @@
       "verified": true,
       "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=7095円 / 特典表の一覧=7095円）",
       "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
-      "observedAt": "2026-09-30T00:32:30.679Z",
+      "observedAt": "2026-10-01T00:36:27.029Z",
       "effective": {
         "24": {
           "effectiveMonthly": 7347,
@@ -1649,7 +1637,7 @@
       "verified": true,
       "verifiedBy": "通常月額基本料金がページ内2か所で一致（プラン別ブロック=5995円 / 特典表の一覧=5995円）",
       "note": "割引特典の対象外プラン。通常月額基本料金が全期間そのまま適用される",
-      "observedAt": "2026-09-30T00:32:30.679Z",
+      "observedAt": "2026-10-01T00:36:27.029Z",
       "effective": {
         "24": {
           "effectiveMonthly": 6247,

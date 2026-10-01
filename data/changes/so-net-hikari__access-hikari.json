@@ -5,6 +5,168 @@
   "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
   "events": [
     {
+      "detectedAt": "2026-10-01T00:35:59.803Z",
+      "previousCollectedAt": "2026-09-30T00:32:07.120Z",
+      "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
+      "source": "pricing-page",
+      "needsReview": true,
+      "changes": [
+        {
+          "label": "～11カ月目",
+          "before": [
+            2290
+          ],
+          "after": [
+            2400
+          ],
+          "delta": 110
+        },
+        {
+          "label": "～23カ月目",
+          "before": [
+            2290
+          ],
+          "after": [
+            2400
+          ],
+          "delta": 110
+        },
+        {
+          "label": "■戸建・マンション共通 ・新設の場合：",
+          "before": [
+            5000
+          ],
+          "after": [
+            3000,
+            10000
+          ],
+          "delta": null
+        },
+        {
+          "label": "カ月目～ /月 （料金内訳） 月額基本料金",
+          "before": [
+            6270
+          ],
+          "after": [
+            6380
+          ],
+          "delta": 110
+        },
+        {
+          "label": "光 1ギガ（So-net 光 M）新設の場合に",
+          "before": [
+            5000
+          ],
+          "after": [
+            3000
+          ],
+          "delta": -2000
+        },
+        {
+          "label": "最大） 回線工事費 － 月額基本料金割引 －",
+          "before": [
+            2290
+          ],
+          "after": [
+            2400
+          ],
+          "delta": 110
+        },
+        {
+          "label": "務手数料 （料金内訳） 事務手数料 月額基本料金",
+          "before": [
+            6270
+          ],
+          "after": [
+            6380
+          ],
+          "delta": 110
+        },
+        {
+          "label": "当割引 － 1カ月目 （料金内訳） 月額基本料金",
+          "before": [
+            6270
+          ],
+          "after": [
+            6380
+          ],
+          "delta": 110
+        },
+        {
+          "label": "料金内訳） 月額基本料金 月額基本料金割引 －",
+          "before": [
+            2290
+          ],
+          "after": [
+            2400
+          ],
+          "delta": 110
+        },
+        {
+          "label": "月額基本料金",
+          "before": [
+            6270
+          ],
+          "after": [
+            6380
+          ],
+          "delta": 110
+        },
+        {
+          "label": "月額基本料金 回線工事費 月額基本料金割引 －",
+          "before": [
+            2290
+          ],
+          "after": [
+            2400
+          ],
+          "delta": 110
+        },
+        {
+          "label": "月額基本料金 月額基本料金割引 － 12カ月目～",
+          "before": [
+            6270
+          ],
+          "after": [
+            6380
+          ],
+          "delta": 110
+        },
+        {
+          "label": "目～11カ月目 /月 （料金内訳） 月額基本料金",
+          "before": [
+            6270
+          ],
+          "after": [
+            6380
+          ],
+          "delta": 110
+        },
+        {
+          "label": "目～23カ月目 /月 （料金内訳） 月額基本料金",
+          "before": [
+            6270
+          ],
+          "after": [
+            6380
+          ],
+          "delta": 110
+        },
+        {
+          "label": "金割引 － 回線工事費相当割引 － 24カ月目～",
+          "before": [
+            6270
+          ],
+          "after": [
+            6380
+          ],
+          "delta": 110
+        }
+      ],
+      "addedLabels": 2,
+      "removedLabels": 7
+    },
+    {
       "detectedAt": "2026-09-20T21:28:04.859Z",
       "previousCollectedAt": "2026-09-19T21:27:47.133Z",
       "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
@@ -541,6 +703,6 @@
       "removedLabels": 9
     }
   ],
-  "lastEventAt": "2026-09-20T21:28:04.859Z",
-  "totalEvents": 5
+  "lastEventAt": "2026-10-01T00:35:59.803Z",
+  "totalEvents": 6
 }
