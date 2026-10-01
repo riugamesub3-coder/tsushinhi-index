@@ -24,6 +24,11 @@
       "name": "楽天モバイル株式会社",
       "source": "https://network.mobile.rakuten.co.jp/hikari/",
       "confirmedAt": "2026-08-24"
+    },
+    "docomo-hikari": {
+      "name": "株式会社NTTドコモ",
+      "source": "https://www.docomo.ne.jp/corporate/about/outline/",
+      "confirmedAt": "2026-10-01"
     }
   }
 }

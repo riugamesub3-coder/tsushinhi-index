@@ -97,7 +97,7 @@ async function loadAdapters(only) {
   const out = [];
   for (const f of files.filter((f) => f.endsWith('.mjs')).sort()) {
     const mod = await import(`./adapters/${f}`);
-    if (!mod.providerId || typeof mod.extract !== 'function') continue;
+    if (!mod.providerId || (typeof mod.extract !== 'function' && typeof mod.extractAll !== 'function')) continue;
     if (only.length && !only.includes(mod.providerId)) continue;
     out.push(mod);
   }
@@ -109,6 +109,7 @@ async function runAdapter(adapter, urls, dryRun) {
   const notices = new Set();
   const warnings = [];
   const failedUrls = [];
+  const pages = [];
   const now = new Date().toISOString();
 
   for (const url of urls) {
@@ -127,6 +128,12 @@ async function runAdapter(adapter, urls, dryRun) {
       continue;
     }
 
+    // 月額と工事費が別ページにある事業者（ドコモ光）は、全ページを揃えてから1回で読む
+    if (typeof adapter.extractAll === 'function') {
+      pages.push({ html: res.text, url });
+      continue;
+    }
+
     let out;
     try {
       out = adapter.extract(res.text, url);
@@ -138,6 +145,20 @@ async function runAdapter(adapter, urls, dryRun) {
     offers.push(...out.offers);
     for (const n of out.notices ?? []) notices.add(n);
     warnings.push(...(out.warnings ?? []));
+  }
+
+  // ★1ページでも欠けたら extractAll を呼ばない（下の「観測不完全」で止める）。
+  //   欠けたページの値を推定で埋めることになるため。
+  if (typeof adapter.extractAll === 'function' && !failedUrls.length) {
+    try {
+      const out = adapter.extractAll(pages);
+      offers.push(...out.offers);
+      for (const n of out.notices ?? []) notices.add(n);
+      warnings.push(...(out.warnings ?? []));
+    } catch (e) {
+      warnings.push(`抽出で例外: ${e.message}`);
+      failedUrls.push({ url: urls.join(' + '), reason: `抽出で例外: ${e.message}` });
+    }
   }
 
   // ★★ 観測が欠けている状態で先に進まない。

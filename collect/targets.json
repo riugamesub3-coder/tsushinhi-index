@@ -73,6 +73,18 @@
       "note": "トップ /hikari/ からプラン別の料金ページへ差し替え。報道発表は全社共通のため光回線以外も混ざる（要精度改善）",
       "pages": [
         {
+          "url": "https://www.docomo.ne.jp/internet/hikari/charge/",
+          "type": "pricing",
+          "plan": "料金プラン一覧（1ギガ タイプA/C の月額）",
+          "priceHits": null
+        },
+        {
+          "url": "https://www.docomo.ne.jp/internet/hikari/1g_plan/",
+          "type": "pricing",
+          "plan": "1ギガ（事務手数料・工事料の例）",
+          "priceHits": null
+        },
+        {
           "url": "https://www.docomo.ne.jp/internet/hikari/charge/type_c/",
           "type": "pricing",
           "plan": "1ギガ タイプC",

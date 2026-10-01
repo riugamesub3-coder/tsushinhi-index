@@ -594,3 +594,78 @@ test('cssVer が無いときはクエリを付けない（形が壊れない）'
 test('cssVer は属性としてエスケープされる', () => {
   assert.ok(!stub({ cssVer: '"><script>' }).includes('"><script>'));
 });
+
+// ── ドコモ光（2026-10-01 追加）──────────────────────────────────
+//
+// 料金表が画像で、数字は alt にしか無い。以前の収集はタイプCのページから
+// 「戸建タイプ 5,500円」「マンションタイプ 4,180円」を拾っていたが、それは**解約金**で、
+// 月額（5,720円・4,400円）は1つも拾えていなかった。読む場所を固定する。
+
+import { flatText, readTypeAMonthly, readTypeCMonthly, readFees, readPointBenefits, extractAll as docomoExtractAll } from './adapters/docomo-hikari.mjs';
+
+const DOCOMO_PRICE = `
+<h4>マンションにお住まいの方</h4><img src="a.png" alt="1ギガ タイプAC※1 2年定期契約の場合※2 4,400円（税込） 定期契約なし 5,500円（税込） 1ギガ タイプB※1 2年定期契約の場合※2 4,620円（税込）">
+<img src="a_sp.png" alt="1ギガ タイプAC※1 2年定期契約の場合※2 4,400円（税込） 定期契約なし 5,500円（税込）">
+<h4>戸建てにお住まいの方</h4><img src="b.png" alt="1ギガ タイプAC※1 2年定期契約の場合※2 5,720円（税込） 定期契約なし 7,370円（税込）">`;
+const DOCOMO_FEE = `
+<p>新規お申込みの場合 ＜初期費用（例）＞ <img alt="契約事務手数料4,950円（税込）＋工事料（※代表例）戸建・マンション：28,600円（税込）"></p>
+<p>転用お申込みの場合（速度そのまま） ＜初期費用（例）＞ <img alt="契約事務手数料4,950円（税込）＋工事料（※代表例）：0円"></p>
+<p>当該期間内での解約などの場合、更新期間を除いて戸建タイプ5,500円（税込）、マンションタイプ4,180円（税込）の解約金がかかります。</p>
+<p>ドコモ光 新規工事料実質0円特典！ 新規お申込みで新規工事料相当のdポイント（期間・用途限定）をプレゼント！</p>`;
+const DOCOMO_TYPEC = `
+<img alt="戸建にお住まいの方 料金プラン 1ギガタイプC 月額料金 5,720円（税込） 定期契約なし7,370円">
+<img alt="マンションにお住まいの方 料金プラン 1ギガタイプC 月額料金 4,400円（税込） 定期契約なし5,500円">`;
+
+test('ドコモ光: alt の中の月額を読む（注記番号※1/※2を金額に混ぜない）', () => {
+  const t = flatText(DOCOMO_PRICE);
+  assert.equal(readTypeAMonthly(t, { key: 'マンション', heading: /マンションにお住まいの方/ }), 4400);
+  assert.equal(readTypeAMonthly(t, { key: '戸建て', heading: /戸建てにお住まいの方/ }), 5720);
+});
+
+test('ドコモ光: 解約金（5,500/4,180）を月額として拾わない', () => {
+  const t = flatText(DOCOMO_FEE); // 解約金の文はあるが月額の表は無いページ
+  const w = [];
+  assert.equal(readTypeAMonthly(t, { key: 'マンション', heading: /マンションにお住まいの方/ }, w), null);
+  assert.ok(w.length > 0);
+});
+
+test('ドコモ光: PC用とスマホ用の画像で値が食い違ったら読まない', () => {
+  const bad = DOCOMO_PRICE.replace('alt="1ギガ タイプAC※1 2年定期契約の場合※2 4,400円（税込） 定期契約なし 5,500円（税込）">', 'alt="1ギガ タイプAC※1 2年定期契約の場合※2 4,180円（税込） 定期契約なし 5,500円（税込）">');
+  const w = [];
+  assert.equal(readTypeAMonthly(flatText(bad), { key: 'マンション', heading: /マンションにお住まいの方/ }, w), null);
+  assert.match(w.join(), /食い違う/);
+});
+
+test('ドコモ光: 申込区分ごとの事務手数料と工事料（0円と未記載を区別）', () => {
+  const f = readFees(flatText(DOCOMO_FEE));
+  assert.deepEqual(f['新規'], { adminFee: 4950, work: 28600 });
+  assert.deepEqual(f['転用'], { adminFee: 4950, work: 0 });
+  assert.deepEqual(readFees(flatText('<p>なにもない</p>')), {});
+});
+
+test('ドコモ光: dポイント特典は値引きに入れず、事実として残す', () => {
+  const b = readPointBenefits(flatText(DOCOMO_FEE));
+  assert.equal(b.length, 1);
+  assert.match(b[0], /算入しない/);
+});
+
+test('ドコモ光: タイプC専用ページと月額が一致したときだけ verified', () => {
+  const pages = (typeC) => [
+    { url: 'https://www.docomo.ne.jp/internet/hikari/charge/', html: DOCOMO_PRICE },
+    { url: 'https://www.docomo.ne.jp/internet/hikari/1g_plan/', html: DOCOMO_FEE },
+    { url: 'https://www.docomo.ne.jp/internet/hikari/charge/type_c/', html: typeC },
+  ];
+  const ok = docomoExtractAll(pages(DOCOMO_TYPEC));
+  assert.equal(ok.offers.length, 4);
+  assert.ok(ok.offers.every((o) => o.verified));
+  const m = ok.offers.find((o) => o.planKey === '1ギガ タイプA / マンション / 新規');
+  assert.equal(computeEffectiveMonthly(m, 36).effectiveMonthly, Math.round((4400 * 36 + 4950 + 28600) / 36));
+
+  const ng = docomoExtractAll(pages(DOCOMO_TYPEC.replace('4,400円（税込） 定期契約なし5,500', '4,620円（税込） 定期契約なし5,500')));
+  assert.ok(ng.offers.filter((o) => o.plan.building === 'マンション').every((o) => !o.verified));
+});
+
+test('ドコモ光: ページが1枚でも欠けたら観測を作らない', () => {
+  const r = docomoExtractAll([{ url: 'https://www.docomo.ne.jp/internet/hikari/charge/', html: DOCOMO_PRICE }]);
+  assert.equal(r.offers.length, 0);
+});

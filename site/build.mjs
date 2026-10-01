@@ -434,8 +434,8 @@ function legend() {
       + 'この表に並べているのは新規だけです。'],
     ['派遣工事', '工事の人が家に来る工事のことです。来ない場合（派遣工事なし）より費用がかかります。'],
     ['2年割 / U29応援割', '会社がつけている割引の名前です。その割引を使った状態で計算しています。'],
-    ['セット特典は不算入', 'スマホとのセット割引などは計算に入れていません。'
-      + '契約している携帯会社によって割引額が変わり、同じ条件で比べられなくなるためです。'],
+    ['一部の特典は不算入', 'スマホとのセット割引や、期間・用途が限られたポイントの特典は計算に入れていません。'
+      + 'セット割引は契約している携帯会社で額が変わり、ポイントは現金と同じには使えないため、同じ条件で比べられなくなるからです。'],
   ];
   const grid = (items) => html`<dl>${raw(items.map(([t, d]) =>
     html`<div><dt>${t}</dt><dd>${d}</dd></div>`).join(''))}</dl>`;
@@ -550,7 +550,8 @@ function rankRow(o, data, rank) {
   const ad = data.ads.same.get(o.providerId);
   const b = o.breakdown;
   const notes = [];
-  if (o.setBenefits?.length) notes.push('セット特典は不算入');
+  if (o.setBenefits?.length) notes.push('一部の特典は不算入');
+  if (o.constructionFee?.note) notes.push('工事費は公式の代表例');
   if (o.plan?.work) notes.push(o.plan.work);
   if (o.stale) notes.push(`更新停止中（${o.stale.days}日）`);
 
@@ -910,7 +911,8 @@ function renderProvider(data, providerId) {
   const first = mine[0];
   const op = data.operators[providerId];
   const evs = data.events.filter((c) => c.providerId === providerId);
-  const sources = [...new Set(mine.map((o) => o.sourceUrl))];
+  // 月額と工事費を別ページから読む事業者（ドコモ光）は、工事費側のページも出典に出す
+  const sources = [...new Set(mine.flatMap((o) => [o.sourceUrl, ...(o.alsoSourcedFrom ?? [])]))];
 
   const staleHere = mine.filter((o) => o.stale);
   const crumb = breadcrumb([
@@ -1016,7 +1018,9 @@ ${raw(o.stale ? html`
 <p class="lead">
   ${HORIZON}か月使ったときの実質月額は <strong class="big">${yenMark(o.effectiveMonthly)}</strong>。
   ${raw(place > 0 ? html`同じ条件（${o.building}）の${rank.length}件中<strong>${place}番目</strong>に安い値です。` : '')}
-  <br><small>${jstDateTime(o.observedAt)} 時点 ／ 出典 <a href="${o.sourceUrl}" rel="nofollow noopener">${host(o.sourceUrl)}</a></small>
+  <br><small>${jstDateTime(o.observedAt)} 時点 ／ 出典 ${raw([o.sourceUrl, ...(o.alsoSourcedFrom ?? [])]
+    .map((u) => `<a href="${e(u)}" rel="nofollow noopener">${e(host(u))}${e(new URL(u).pathname)}</a>`).join('、'))}</small>
+  ${raw(o.constructionFee?.note ? html`<br><small>工事費: ${o.constructionFee.note}</small>` : '')}
 </p>
 
 <h2>実質月額の推移</h2>

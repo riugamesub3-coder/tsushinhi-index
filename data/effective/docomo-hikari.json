@@ -1,0 +1,323 @@
+{
+  "providerId": "docomo-hikari",
+  "providerName": "ドコモ光",
+  "channelId": "official",
+  "observedAt": "2026-10-01T01:45:06.825Z",
+  "formula": "実質月額 = ( 月額の合計 + 工事費の実負担額 + 事務手数料 + 必須オプション費用×加入必要月数 - キャッシュバック額 - その他割引の総額 ) ÷ 契約月数",
+  "primaryHorizonMonths": 36,
+  "sourceUrls": [
+    "https://www.docomo.ne.jp/internet/hikari/charge/",
+    "https://www.docomo.ne.jp/internet/hikari/1g_plan/",
+    "https://www.docomo.ne.jp/internet/hikari/charge/type_c/",
+    "https://www.docomo.ne.jp/internet/hikari/charge/10g_type_c/"
+  ],
+  "pageNotices": [
+    "2026年6月1日（月曜）以降のお申込み分より工事料を改定いたしました"
+  ],
+  "offers": [
+    {
+      "providerId": "docomo-hikari",
+      "providerName": "ドコモ光",
+      "channelId": "official",
+      "sourceUrl": "https://www.docomo.ne.jp/internet/hikari/charge/",
+      "alsoSourcedFrom": [
+        "https://www.docomo.ne.jp/internet/hikari/1g_plan/",
+        "https://www.docomo.ne.jp/internet/hikari/charge/type_c/"
+      ],
+      "planKey": "1ギガ タイプA / マンション / 新規",
+      "plan": {
+        "speed": "1ギガ",
+        "type": "タイプA",
+        "building": "マンション",
+        "entry": "新規"
+      },
+      "contractMonths": 24,
+      "contractNote": "2年定期契約（自動更新）。更新期間以外の解約は解約金4,180円。開通月は日割りだが、日割り額が確定しないため満額で数える（全社共通の規則）",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 4400
+        }
+      ],
+      "adminFee": 4950,
+      "constructionFee": {
+        "list": 28600,
+        "installmentMonths": null,
+        "borne": 28600,
+        "residualOnEarlyExit": true,
+        "note": "公式が「代表例」として示す額。設備状況により変動する"
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": false,
+      "verificationMethod": "料金一覧の「1ギガ タイプAC」の月額 ⇔ タイプC専用ページの月額 の一致（適用後月額の公開が無いため内訳との突き合わせは不可）",
+      "setBenefits": [
+        "新規工事料実質0円特典: 工事料相当のdポイント（期間・用途限定）を進呈。工事料は請求されるため実質月額には算入しない",
+        "乗り換え特典: 他社解約金をdポイント（期間・用途限定）で還元。人により額が違うため算入しない",
+        "公式Web新規申込特典: dポイント（期間・用途限定）。ポイントのため算入しない"
+      ],
+      "verified": true,
+      "observedAt": "2026-10-01T01:45:06.825Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 5798,
+          "total": 139150,
+          "breakdown": {
+            "monthlyTotal": 105600,
+            "adminFee": 4950,
+            "constructionBorne": 28600,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 5332,
+          "total": 191950,
+          "breakdown": {
+            "monthlyTotal": 158400,
+            "adminFee": 4950,
+            "constructionBorne": 28600,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "docomo-hikari",
+      "providerName": "ドコモ光",
+      "channelId": "official",
+      "sourceUrl": "https://www.docomo.ne.jp/internet/hikari/charge/",
+      "alsoSourcedFrom": [
+        "https://www.docomo.ne.jp/internet/hikari/1g_plan/",
+        "https://www.docomo.ne.jp/internet/hikari/charge/type_c/"
+      ],
+      "planKey": "1ギガ タイプA / マンション / 転用",
+      "plan": {
+        "speed": "1ギガ",
+        "type": "タイプA",
+        "building": "マンション",
+        "entry": "転用"
+      },
+      "contractMonths": 24,
+      "contractNote": "2年定期契約（自動更新）。更新期間以外の解約は解約金4,180円。開通月は日割りだが、日割り額が確定しないため満額で数える（全社共通の規則）",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 4400
+        }
+      ],
+      "adminFee": 4950,
+      "constructionFee": {
+        "list": 0,
+        "installmentMonths": null,
+        "borne": 0,
+        "residualOnEarlyExit": false,
+        "note": "公式が「代表例」として示す額。設備状況により変動する"
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": false,
+      "verificationMethod": "料金一覧の「1ギガ タイプAC」の月額 ⇔ タイプC専用ページの月額 の一致（適用後月額の公開が無いため内訳との突き合わせは不可）",
+      "setBenefits": [
+        "新規工事料実質0円特典: 工事料相当のdポイント（期間・用途限定）を進呈。工事料は請求されるため実質月額には算入しない",
+        "乗り換え特典: 他社解約金をdポイント（期間・用途限定）で還元。人により額が違うため算入しない",
+        "公式Web新規申込特典: dポイント（期間・用途限定）。ポイントのため算入しない"
+      ],
+      "verified": true,
+      "observedAt": "2026-10-01T01:45:06.825Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 4606,
+          "total": 110550,
+          "breakdown": {
+            "monthlyTotal": 105600,
+            "adminFee": 4950,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 4538,
+          "total": 163350,
+          "breakdown": {
+            "monthlyTotal": 158400,
+            "adminFee": 4950,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "docomo-hikari",
+      "providerName": "ドコモ光",
+      "channelId": "official",
+      "sourceUrl": "https://www.docomo.ne.jp/internet/hikari/charge/",
+      "alsoSourcedFrom": [
+        "https://www.docomo.ne.jp/internet/hikari/1g_plan/",
+        "https://www.docomo.ne.jp/internet/hikari/charge/type_c/"
+      ],
+      "planKey": "1ギガ タイプA / 戸建て / 新規",
+      "plan": {
+        "speed": "1ギガ",
+        "type": "タイプA",
+        "building": "戸建て",
+        "entry": "新規"
+      },
+      "contractMonths": 24,
+      "contractNote": "2年定期契約（自動更新）。更新期間以外の解約は解約金5,500円。開通月は日割りだが、日割り額が確定しないため満額で数える（全社共通の規則）",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 5720
+        }
+      ],
+      "adminFee": 4950,
+      "constructionFee": {
+        "list": 28600,
+        "installmentMonths": null,
+        "borne": 28600,
+        "residualOnEarlyExit": true,
+        "note": "公式が「代表例」として示す額。設備状況により変動する"
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": false,
+      "verificationMethod": "料金一覧の「1ギガ タイプAC」の月額 ⇔ タイプC専用ページの月額 の一致（適用後月額の公開が無いため内訳との突き合わせは不可）",
+      "setBenefits": [
+        "新規工事料実質0円特典: 工事料相当のdポイント（期間・用途限定）を進呈。工事料は請求されるため実質月額には算入しない",
+        "乗り換え特典: 他社解約金をdポイント（期間・用途限定）で還元。人により額が違うため算入しない",
+        "公式Web新規申込特典: dポイント（期間・用途限定）。ポイントのため算入しない"
+      ],
+      "verified": true,
+      "observedAt": "2026-10-01T01:45:06.825Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 7118,
+          "total": 170830,
+          "breakdown": {
+            "monthlyTotal": 137280,
+            "adminFee": 4950,
+            "constructionBorne": 28600,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 6652,
+          "total": 239470,
+          "breakdown": {
+            "monthlyTotal": 205920,
+            "adminFee": 4950,
+            "constructionBorne": 28600,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "docomo-hikari",
+      "providerName": "ドコモ光",
+      "channelId": "official",
+      "sourceUrl": "https://www.docomo.ne.jp/internet/hikari/charge/",
+      "alsoSourcedFrom": [
+        "https://www.docomo.ne.jp/internet/hikari/1g_plan/",
+        "https://www.docomo.ne.jp/internet/hikari/charge/type_c/"
+      ],
+      "planKey": "1ギガ タイプA / 戸建て / 転用",
+      "plan": {
+        "speed": "1ギガ",
+        "type": "タイプA",
+        "building": "戸建て",
+        "entry": "転用"
+      },
+      "contractMonths": 24,
+      "contractNote": "2年定期契約（自動更新）。更新期間以外の解約は解約金5,500円。開通月は日割りだが、日割り額が確定しないため満額で数える（全社共通の規則）",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 5720
+        }
+      ],
+      "adminFee": 4950,
+      "constructionFee": {
+        "list": 0,
+        "installmentMonths": null,
+        "borne": 0,
+        "residualOnEarlyExit": false,
+        "note": "公式が「代表例」として示す額。設備状況により変動する"
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": false,
+      "verificationMethod": "料金一覧の「1ギガ タイプAC」の月額 ⇔ タイプC専用ページの月額 の一致（適用後月額の公開が無いため内訳との突き合わせは不可）",
+      "setBenefits": [
+        "新規工事料実質0円特典: 工事料相当のdポイント（期間・用途限定）を進呈。工事料は請求されるため実質月額には算入しない",
+        "乗り換え特典: 他社解約金をdポイント（期間・用途限定）で還元。人により額が違うため算入しない",
+        "公式Web新規申込特典: dポイント（期間・用途限定）。ポイントのため算入しない"
+      ],
+      "verified": true,
+      "observedAt": "2026-10-01T01:45:06.825Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 5926,
+          "total": 142230,
+          "breakdown": {
+            "monthlyTotal": 137280,
+            "adminFee": 4950,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 5858,
+          "total": 210870,
+          "breakdown": {
+            "monthlyTotal": 205920,
+            "adminFee": 4950,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    }
+  ]
+}

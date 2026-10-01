@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-01T00:37:12.094Z",
+  "updatedAt": "2026-10-01T01:45:14.518Z",
   "sources": {
     "effective:nuro-hikari": {
       "consecutive": 0,
@@ -208,6 +208,12 @@
     "health:https://www.so-net.ne.jp/access/hikari/1g/": {
       "consecutive": 0,
       "lastOkAt": "2026-10-01T00:37:12.093Z",
+      "staleSince": null,
+      "lastStatus": "ok"
+    },
+    "effective:docomo-hikari": {
+      "consecutive": 0,
+      "lastOkAt": "2026-10-01T01:45:14.518Z",
       "staleSince": null,
       "lastStatus": "ok"
     }
