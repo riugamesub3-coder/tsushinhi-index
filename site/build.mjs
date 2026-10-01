@@ -290,39 +290,77 @@ function verify(data) {
 
 // ── トップページ ─────────────────────────────────────────────────
 
+// ── 読者がまず知りたいこと ─────────────────────────────────────
+//
+// 「結局どれがいちばん安いのか」を表の前に出す。表は根拠として下に残す。
+//
+// ★29歳以下限定の割引（U29応援割）を使った値は、**見出しの最安に入れない。**
+//   30歳以上は使えない値を「最安」と呼ぶと、ほとんどの読者に対して嘘になる。
+//   ただし隠さない。表には全件残し、安くなる場合は別行で明記する。
+const isAgeLimited = (o) => /U29/.test(o.planKey ?? '');
+
+function quickAnswer(data) {
+  const cols = [['戸建て', 'detached'], ['マンション', 'apartment']].map(([b, id]) => {
+    const rows = data.publishable
+      .filter((o) => o.entry === '新規')
+      .filter((o) => o.building === b || o.building === '共通')
+      .sort((x, y) => x.effectiveMonthly - y.effectiveMonthly);
+    const top = rows.filter((o) => !isAgeLimited(o)).slice(0, 3);
+    if (!top.length) return '';
+    const young = rows.find(isAgeLimited);
+    return html`
+  <section class="qa">
+    <h2 class="qa-h">${b}にお住まいの方</h2>
+    <ol class="qa-list">${raw(top.map((o, i) => html`
+      <li>
+        <span class="qa-rank">${i + 1}</span>
+        <span class="qa-body"><a class="qa-plan" href="${o.path}">${o.providerName}</a><small>${planName(o)}</small></span>
+        <span class="qa-price"><b>${yenMark(o.effectiveMonthly)}</b><small>／月</small></span>
+      </li>`).join(''))}
+    </ol>
+    ${raw(young && young.effectiveMonthly < top[0].effectiveMonthly ? html`
+    <p class="qa-young"><span class="tag">29歳以下限定</span>
+      ${young.providerName}の${planName(young)}は${yen(young.effectiveMonthly)}／月。<strong>29歳以下の人だけが使える割引</strong>を入れた金額なので、上の順位には入れていません。</p>` : '')}
+    <p class="qa-more"><a href="#rank-${id}">${b}の全プランを安い順に見る ↓</a></p>
+  </section>`;
+  });
+  return html`
+<div class="qa-grid">${raw(cols.join(''))}</div>
+<p class="note qa-note">
+  3年使ったとき、工事費・手数料・キャッシュバックを入れて<strong>1か月あたり</strong>にした金額です（新規申込）。
+  速さ（1ギガ・2ギガ・10ギガ）が違うプランが混ざっています。速さは各プランの名前で確かめてください。
+  スマホとのセット割引など、条件のある特典は入れていません。
+</p>`;
+}
+
+
 function renderIndex(data) {
   const buildings = ['戸建て', 'マンション'];
   const recent = data.events.slice(0, 8);
 
   const body = html`
-<section class="hero">
-  <div class="hero-grid">
-    <div>
-      <h1>光回線の実質月額インデックス</h1>
-      <p class="lead">
-        各社が公表している料金・工事費・割引・キャッシュバックを毎日自動で収集し、
-        <strong>全社を同一の計算式に通した「実質月額」</strong>として${HORIZON}か月で均した値です。
-        おすすめ順ではありません。<a href="/method/">計算式</a>も<a href="/data/">元データ</a>も全部出しています。
-      </p>
-      <div class="rail">
-        <div class="rail-item"><b>${data.publishable.length}</b><span>掲載中の観測</span></div>
-        <div class="rail-item"><b>${data.serviceCount}</b><span>サービス（運営${data.operatorCount}社）</span></div>
-        <div class="rail-item"><b>${data.events.length}</b><span>検知した料金の変化</span></div>
-        ${raw(railDays(data))}
-      </div>
-    </div>
-    ${raw(distributionPanel(data))}
-  </div>
-  ${raw(operatorNote(data))}
+<section class="hero hero-lite">
+  <h1>光回線、3年使うと<wbr>毎月いくら？</h1>
+  <p class="lead">
+    各社の公式ページの料金を毎日集めて、工事費・手数料・キャッシュバックまで入れた
+    <strong>「1か月あたり」</strong>に直しました。安い順に並べています。
+  </p>
 </section>
 
-${raw(staleBanner(data))}
+${raw(quickAnswer(data))}
 
-${raw(legend())}
+${raw(operatorNote(data))}
+
+${raw(staleBanner(data))}
 
 ${raw(buildings.map((b, i) => rankingSection(data, b, i + 1)).join(''))}
 
 ${raw(linkOnlyOffers(data))}
+
+<details class="fold">
+  <summary>言葉の説明（実質月額・新規と転用・派遣工事 など）</summary>
+  ${raw(legend())}
+</details>
 
 <p class="kicker"><b>03</b> 事業者</p>
 <section>
@@ -364,6 +402,25 @@ ${raw(linkOnlyOffers(data))}
 </section>
 
 ${raw(needsReviewSection(data))}
+
+<p class="kicker"><b>05</b> このサイトの記録</p>
+<section class="record">
+  <div class="hero-grid">
+    <div>
+      <p class="lead">
+        料金・工事費・割引・キャッシュバックを毎日自動で集め、<strong>全社を同じ計算式</strong>に通しています。
+        <a href="/method/">計算式</a>も<a href="/data/">元データ</a>も全部出しています。
+      </p>
+      <div class="rail">
+        <div class="rail-item"><b>${data.publishable.length}</b><span>掲載中のプラン</span></div>
+        <div class="rail-item"><b>${data.serviceCount}</b><span>サービス（運営${data.operatorCount}社）</span></div>
+        <div class="rail-item"><b>${data.events.length}</b><span>検知した料金の変化</span></div>
+        ${raw(railDays(data))}
+      </div>
+    </div>
+    ${raw(distributionPanel(data))}
+  </div>
+</section>
 `;
 
   return {
@@ -521,7 +578,7 @@ function rankingSection(data, building, no = 1) {
 
   return html`
 <p class="kicker"><b>0${no}</b> ${building}</p>
-<section>
+<section id="rank-${building === '戸建て' ? 'detached' : 'apartment'}">
   <h2>${building}：実質月額の安い順（新規申込・${HORIZON}か月換算）</h2>
   <div class="card"><div class="table-wrap">
   <table class="ranking">
@@ -550,6 +607,7 @@ function rankRow(o, data, rank) {
   const ad = data.ads.same.get(o.providerId);
   const b = o.breakdown;
   const notes = [];
+  if (isAgeLimited(o)) notes.push('29歳以下限定');
   if (o.setBenefits?.length) notes.push('一部の特典は不算入');
   if (o.constructionFee?.note) notes.push('工事費は公式の代表例');
   if (o.plan?.work) notes.push(o.plan.work);
@@ -1856,6 +1914,43 @@ tr.stale{background:var(--warn-bg)}
 tr.stale .tag{border-color:var(--warn-line);color:var(--warn-ink)}
 tr.total th,tr.total td{border-top:1px solid var(--rule-2);background:var(--paper)}
 
+
+/* ── 最初に見る「いちばん安い3つ」 ───────────────────────────
+   表の前に結論を置く。表は根拠として下に残す。 */
+.hero-lite{border-bottom:0;padding-bottom:0;margin-bottom:0}
+.hero-lite h1{margin-top:1.6rem}
+.qa-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:1.2rem;margin-top:1.4rem}
+.qa{background:var(--card);border:1px solid var(--rule);padding:1.2rem 1.3rem 1.1rem}
+.qa-h{font-size:1.02rem;margin:0 0 .6rem;letter-spacing:.02em}
+.qa-list{list-style:none;margin:0;padding:0}
+.qa-list li{display:grid;grid-template-columns:1.9rem minmax(0,1fr) auto;column-gap:.7rem;
+  align-items:center;padding:.8rem 0;border-top:1px solid var(--rule)}
+.qa-rank{font-weight:800;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.qa-list li:first-child .qa-rank{color:var(--indigo)}
+.qa-body{min-width:0}
+.qa-plan{display:block;font-weight:700;font-size:1rem;text-decoration:none}
+.qa-plan:hover{text-decoration:underline}
+.qa-body small{display:block;color:var(--ink-2);font-size:.76rem;line-height:1.55;margin-top:.1rem}
+.qa-price{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.qa-price b{font-size:1.55rem;font-weight:800;letter-spacing:-.03em}
+.qa-price small{color:var(--ink-3);font-size:.74rem;margin-left:.15rem}
+.qa-list li:first-child .qa-price b{color:var(--indigo)}
+.qa-young{font-size:.8rem;line-height:1.75;color:var(--ink-2);margin:.4rem 0 0;
+  padding-top:.7rem;border-top:1px dashed var(--rule-2)}
+.qa-young strong{color:var(--ink)}
+.qa-more{margin:.7rem 0 0;font-size:.82rem}
+.qa-note{margin-top:1rem}
+
+/* 言葉の説明は、知りたい人だけが開く */
+.fold{margin-top:2.4rem;border:1px solid var(--rule);background:var(--card)}
+.fold>summary{cursor:pointer;padding:.95rem 1.2rem;font-weight:700;font-size:.9rem;
+  color:var(--indigo);list-style:none}
+.fold>summary::-webkit-details-marker{display:none}
+.fold>summary::before{content:"＋ ";font-weight:800}
+.fold[open]>summary::before{content:"－ "}
+.fold .legend{margin-top:0;padding:0 1.2rem 1.2rem}
+.record .lead{font-size:.95rem}
+
 /* ── 事業者 ────────────────────────────────────────────────*/
 .pcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
   gap:0;border-top:1px solid var(--rule-2);border-left:1px solid var(--rule)}
@@ -1911,9 +2006,9 @@ tr.total th,tr.total td{border-top:1px solid var(--rule-2);background:var(--pape
   border-left-width:3px;color:var(--warn-ink);padding:1rem 1.2rem;margin:1.4rem 0;
   font-size:.88rem;line-height:1.8}
 .stale-note strong{color:var(--warn-ink)}
-.ad-disclosure{background:var(--indigo-soft);border-bottom:1px solid var(--rule)}
-.ad-disclosure p{max-width:var(--wrap);margin:0 auto;padding:.6rem 1.5rem;
-  font-size:.78rem;color:var(--ink-2);letter-spacing:.03em}
+.ad-disclosure{background:var(--indigo-soft);border-bottom:1px solid var(--rule);margin:0;
+  padding:.6rem max(1.5rem,calc((100% - var(--wrap)) / 2));
+  font-size:.78rem;line-height:1.7;color:var(--ink-2);letter-spacing:.03em}
 .cta{white-space:nowrap}
 .link-only{background:var(--card);border:1px solid var(--rule);
   border-top:3px solid var(--indigo);padding:1.3rem 1.5rem;margin:2.2rem 0}
@@ -1982,6 +2077,26 @@ code{background:var(--indigo-soft);padding:.08rem .35rem;font-size:.87em;
   .dist{padding:1.1rem 1.1rem 1rem}
   .dist-lead b{font-size:2.1rem}
   .kicker{margin-top:2.6rem}
+  /* 比較表は横スクロールさせず、1プラン＝1枚のカードに組み替える。
+     左右に動かさないと金額が見えない表は、スマホでは読まれない */
+  .table-wrap{overflow:visible}
+  table{min-width:0}
+  .ranking{table-layout:auto}
+  .ranking thead{display:none}
+  .ranking,.ranking tbody{display:block}
+  .ranking tbody tr{display:grid;grid-template-columns:1.8rem minmax(0,1fr) auto;
+    column-gap:.7rem;row-gap:.1rem;padding:.95rem .8rem;border-bottom:1px solid var(--rule)}
+  .ranking tbody td{display:block;padding:0;border:0}
+  .ranking tbody td.rank{grid-column:1;grid-row:1/span 3;padding-top:.15rem}
+  .ranking tbody td:nth-child(3){grid-column:2;grid-row:1;font-size:.76rem;color:var(--ink-2)}
+  .ranking tbody td.num{grid-column:3;grid-row:1/span 2;align-self:center}
+  .ranking tbody td:nth-child(4){grid-column:2;grid-row:2}
+  .ranking tbody td:nth-child(5),.ranking tbody td.breakdown{display:none}
+  .ranking tbody td.src{grid-column:2/4;grid-row:3;margin-top:.45rem}
+  .ranking tbody td:nth-child(8){grid-column:2/4}
+  .qa{padding:1rem 1rem .9rem}
+  .qa-price b{font-size:1.4rem}
+  .ad-disclosure{padding:.55rem 1.1rem}
 }
 @media(prefers-reduced-motion:no-preference){
   tbody tr,.pcard{transition:background .13s ease}
