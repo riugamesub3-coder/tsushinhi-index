@@ -5,6 +5,17 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-10-02",
+      "title": "東京靴流通センター、SHOE PLAZAなどを運営するチヨダに、dポイントを導入！ -「【チヨダ】dポイント導入記念！もれなく30倍キャンペーン」を開催！-（PDF形式：401KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261002_x1.pdf",
+      "categories": [
+        "campaign"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-10-03T00:32:30.044Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-10-01",
       "title": "【ドコモFG】ドコモFGとマネックス証券、「こどもNISA」の事前申込受付を開始",
       "url": "https://www.docomo-fg.com/info/news_release/20261001_001.html",
@@ -554,6 +565,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-10-02T00:51:16.291Z",
-  "totalNotices": 57
+  "lastCollectedAt": "2026-10-03T00:32:30.044Z",
+  "totalNotices": 58
 }
