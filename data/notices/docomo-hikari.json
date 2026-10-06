@@ -5,6 +5,15 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-10-05",
+      "title": "「熊本復興支援オリジナル券面」の提供を開始 -くまモンデザインのオリジナル券面を利用し、日常のお買い物を熊本県の応援に-（PDF形式：866KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261005_f1.pdf",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-10-06T01:46:33.170Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-10-02",
       "title": "東京靴流通センター、SHOE PLAZAなどを運営するチヨダに、dポイントを導入！ -「【チヨダ】dポイント導入記念！もれなく30倍キャンペーン」を開催！-（PDF形式：401KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261002_x1.pdf",
@@ -565,6 +574,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-10-04T23:58:36.721Z",
-  "totalNotices": 58
+  "lastCollectedAt": "2026-10-06T01:46:33.170Z",
+  "totalNotices": 59
 }
