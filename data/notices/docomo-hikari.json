@@ -5,6 +5,26 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-10-06",
+      "title": "「三井ショッピングパーク ＆mall」「三井アウトレットパーク オンライン」に「d払い」を導入！ -「【三井ショッピングパーク ＆mall・三井アウトレットパーク オンライン】d払い利用でもれなく+5%還元キャンペーン」を開催！-（PDF形式：482KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261006_x1.pdf",
+      "categories": [
+        "campaign"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-10-07T00:46:00.931Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-10-06",
+      "title": "北海道上ノ国町でクマ対策用電気柵の安定運用を支援する実証実験を開始 -遠隔電圧監視とリレー制御による部分切り離しにより、電気柵の運用を効率化-（PDF形式：655KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261006_c1.pdf",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-10-07T00:46:00.931Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-10-05",
       "title": "「熊本復興支援オリジナル券面」の提供を開始 -くまモンデザインのオリジナル券面を利用し、日常のお買い物を熊本県の応援に-（PDF形式：866KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261005_f1.pdf",
@@ -574,6 +594,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-10-06T01:46:33.170Z",
-  "totalNotices": 59
+  "lastCollectedAt": "2026-10-07T00:46:00.931Z",
+  "totalNotices": 61
 }

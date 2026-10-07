@@ -3,8 +3,13 @@
   "providerId": "au-hikari",
   "providerName": "auひかり（KDDI）",
   "url": "https://www.au.com/internet/",
-  "collectedAt": "2026-10-06T01:47:02.984Z",
+  "collectedAt": "2026-10-07T00:46:32.895Z",
   "points": [
+    {
+      "label": ";お申し込み必須&#xff09; 13カ月目まで",
+      "value": 5000,
+      "raw": "5,000 円"
+    },
     {
       "label": ";月&#xff5e; 37カ月目&#xff5e;",
       "value": 6160,
@@ -69,11 +74,6 @@
       "label": "ンサービス 詳しく Wi-Fiパック 月額利用料",
       "value": 770,
       "raw": "770円"
-    },
-    {
-      "label": "単おうちインターネット タイプ2 13カ月目まで",
-      "value": 5000,
-      "raw": "5,000 円"
     },
     {
       "label": "解約・プラン変更された場合は契約解除料",
