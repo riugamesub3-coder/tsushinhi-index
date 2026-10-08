@@ -5,6 +5,17 @@
   "firstCollectedAt": "2026-08-23T09:31:26.876Z",
   "notices": [
     {
+      "date": "2026-10-07",
+      "title": "【重要】「ひかりＴＶ for NURO」接続不具合に関するお知らせとご対応のお願い",
+      "url": "https://www.nuro.jp/news_release/20261007/",
+      "categories": [
+        "noise"
+      ],
+      "relevant": false,
+      "firstSeenAt": "2026-10-08T01:02:48.735Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
       "date": "2026-09-25",
       "title": "令和８年台風第25号に伴う災害に係る災害救助法の適用について",
       "url": "https://www.nuro.jp/news_release/20260925/",
@@ -998,6 +1009,6 @@
       "sourceUrl": "https://www.nuro.jp/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-10-07T00:45:51.780Z",
-  "totalNotices": 103
+  "lastCollectedAt": "2026-10-08T01:02:48.735Z",
+  "totalNotices": 104
 }
