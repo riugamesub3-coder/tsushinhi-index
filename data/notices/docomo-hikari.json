@@ -14,6 +14,15 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     },
     {
+      "date": "2026-10-08",
+      "title": "一人一人の回復状況に応じてリハビリテーションを最適化する実証実験を開始 -「FEEL TECH」と「パワーアシストミラーセラピーシステム」を連携-（PDF形式：675KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261008_c1.pdf",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-10-09T01:15:16.227Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-10-06",
       "title": "「三井ショッピングパーク ＆mall」「三井アウトレットパーク オンライン」に「d払い」を導入！ -「【三井ショッピングパーク ＆mall・三井アウトレットパーク オンライン】d払い利用でもれなく+5%還元キャンペーン」を開催！-（PDF形式：482KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261006_x1.pdf",
@@ -603,6 +612,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-10-08T01:02:57.029Z",
-  "totalNotices": 62
+  "lastCollectedAt": "2026-10-09T01:15:16.227Z",
+  "totalNotices": 63
 }
