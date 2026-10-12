@@ -5,6 +5,47 @@
   "sourceUrl": "https://www.so-net.ne.jp/access/hikari/1g/",
   "events": [
     {
+      "detectedAt": "2026-10-12T00:37:00.492Z",
+      "previousCollectedAt": "2026-10-11T00:15:59.349Z",
+      "sourceUrl": "https://www.so-net.ne.jp/access/hikari/1g/",
+      "source": "pricing-page",
+      "needsReview": false,
+      "changes": [
+        {
+          "label": "net 光 S：対象外 So-net 光 M：",
+          "before": [
+            3000
+          ],
+          "after": [
+            5000
+          ],
+          "delta": 2000
+        },
+        {
+          "label": "初回",
+          "before": [
+            2420
+          ],
+          "after": [
+            3300
+          ],
+          "delta": 880
+        },
+        {
+          "label": "初期費用として事務手数料",
+          "before": [
+            3500
+          ],
+          "after": [
+            6050
+          ],
+          "delta": 2550
+        }
+      ],
+      "addedLabels": 0,
+      "removedLabels": 0
+    },
+    {
       "detectedAt": "2026-10-01T00:36:02.376Z",
       "previousCollectedAt": "2026-09-30T00:32:08.668Z",
       "sourceUrl": "https://www.so-net.ne.jp/access/hikari/1g/",
@@ -368,6 +409,6 @@
       "removedLabels": 8
     }
   ],
-  "lastEventAt": "2026-10-01T00:36:02.376Z",
-  "totalEvents": 5
+  "lastEventAt": "2026-10-12T00:37:00.492Z",
+  "totalEvents": 6
 }
