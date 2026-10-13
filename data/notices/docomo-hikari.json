@@ -5,6 +5,17 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-10-13",
+      "title": "「ポイント交換でdポイント最大15％増量キャンペーン」を、11月から開催（PDF形式：504KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261013_x1.pdf",
+      "categories": [
+        "campaign"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-10-13T02:36:09.767Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-10-08",
       "title": "クリーン燃料証書制度実証事業への参画について -次世代燃料の普及拡大に向けた制度導入および制度設計上の課題の検証-（PDF形式：451KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261008_u1.pdf",
@@ -612,6 +623,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-10-12T00:36:35.533Z",
-  "totalNotices": 63
+  "lastCollectedAt": "2026-10-13T02:36:09.767Z",
+  "totalNotices": 64
 }
