@@ -5,6 +5,24 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-10-14",
+      "title": "【ドコモFG】ドコモとの資本業務提携発表から3年、ビジネスシナジーの現状と進捗について",
+      "url": "https://www.docomo-fg.com/info/news_release/20261014_001.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-10-14T23:57:26.371Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-10-14",
+      "title": "NTTドコモ、Abside NetworksとHAPSに関する基本合意書を締結 -AIを活用したHAPS向け通信技術の共同検討を開始-",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/10/14_00.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-10-14T23:57:26.371Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-10-13",
       "title": "「ポイント交換でdポイント最大15％増量キャンペーン」を、11月から開催（PDF形式：504KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261013_x1.pdf",
@@ -623,6 +641,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-10-14T00:20:09.114Z",
-  "totalNotices": 64
+  "lastCollectedAt": "2026-10-14T23:57:26.371Z",
+  "totalNotices": 66
 }
