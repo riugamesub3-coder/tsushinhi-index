@@ -5,6 +5,18 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-10-15",
+      "title": "dポイントの提供開始11周年を記念して、「【dポイント11周年】dポイント1億円分山分けキャンペーン」を開催！（PDF形式：514KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261015_x2.pdf",
+      "categories": [
+        "campaign",
+        "service-start"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-10-15T23:42:09.281Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-10-14",
       "title": "【ドコモFG】ドコモとの資本業務提携発表から3年、ビジネスシナジーの現状と進捗について",
       "url": "https://www.docomo-fg.com/info/news_release/20261014_001.html",
@@ -641,6 +653,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-10-14T23:57:26.371Z",
-  "totalNotices": 66
+  "lastCollectedAt": "2026-10-15T23:42:09.281Z",
+  "totalNotices": 67
 }
