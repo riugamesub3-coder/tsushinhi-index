@@ -5,6 +5,35 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-10-16",
+      "title": "「DAZN」を通じた「NBA docomo」の加入・視聴を開始",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/10/16_00.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-10-16T23:38:56.879Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-10-16",
+      "title": "11月より、自治体と連携した「dポイント」「d払い」キャンペーンを開始 -岩手県野田村でキャンペーンを開催-（PDF形式：419KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261016_g1.pdf",
+      "categories": [
+        "campaign"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-10-16T23:38:56.879Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-10-16",
+      "title": "東京都『希少資源緊急回収プロジェクト（携帯電話回収事業）』の実施事業者に採択 -都内のドコモショップで「データ移行サポート」を220円で提供し、使用済み携帯電話の回収を促進-（PDF形式：643KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261016_u1.pdf",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-10-16T23:38:56.879Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-10-15",
       "title": "dポイントの提供開始11周年を記念して、「【dポイント11周年】dポイント1億円分山分けキャンペーン」を開催！（PDF形式：514KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261015_x2.pdf",
@@ -653,6 +682,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-10-15T23:42:09.281Z",
-  "totalNotices": 67
+  "lastCollectedAt": "2026-10-16T23:38:56.879Z",
+  "totalNotices": 70
 }
