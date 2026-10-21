@@ -5,6 +5,24 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-10-20",
+      "title": "世界初、無線基地局におけるワークロードシフトとエネルギーマネジメントの協調制御の実現に向けた実証を開始 -再生可能エネルギー活用の最大化、電力系統安定化、および災害時の通信サービス継続に貢献-（PDF形式：624KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261020_c1.pdf",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-10-20T23:56:13.388Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-10-20",
+      "title": "報道発表資料の誤表記のお詫びと訂正（PDF形式：309KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261020_x2.pdf",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-10-20T23:56:13.388Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-10-16",
       "title": "「DAZN」を通じた「NBA docomo」の加入・視聴を開始",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/10/16_00.html",
@@ -682,6 +700,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-10-20T00:24:33.768Z",
-  "totalNotices": 70
+  "lastCollectedAt": "2026-10-20T23:56:13.388Z",
+  "totalNotices": 72
 }
