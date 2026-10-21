@@ -327,9 +327,8 @@ function quickAnswer(data) {
   return html`
 <div class="qa-grid">${raw(cols.join(''))}</div>
 <p class="note qa-note">
-  3年使ったとき、工事費・手数料・キャッシュバックを入れて<strong>1か月あたり</strong>にした金額です（新規申込）。
-  速さ（1ギガ・2ギガ・10ギガ）が違うプランが混ざっています。速さは各プランの名前で確かめてください。
-  スマホとのセット割引など、条件のある特典は入れていません。
+  新規申込で、3年使ったときの<strong>1か月あたり</strong>の金額です（工事費・手数料・キャッシュバックを含む）。
+  速さの違うプランが混ざっているので、速さはプラン名で確かめてください。
 </p>`;
 }
 
@@ -342,14 +341,12 @@ function renderIndex(data) {
 <section class="hero hero-lite">
   <h1>光回線、3年使うと<wbr>毎月いくら？</h1>
   <p class="lead">
-    各社の公式ページの料金を毎日集めて、工事費・手数料・キャッシュバックまで入れた
-    <strong>「1か月あたり」</strong>に直しました。安い順に並べています。
+    各社の公式料金を毎日集め、安い順に並べました。
+    <span class="stamp">毎日自動で集計 ／ 最終更新 ${jstDateTime(data.updatedAt)}</span>
   </p>
 </section>
 
 ${raw(quickAnswer(data))}
-
-${raw(operatorNote(data))}
 
 ${raw(staleBanner(data))}
 
@@ -362,14 +359,8 @@ ${raw(linkOnlyOffers(data))}
   ${raw(legend())}
 </details>
 
-<p class="kicker"><b>03</b> 事業者</p>
 <section>
   <h2>事業者ごとに見る</h2>
-  <p class="note">
-    上の表は<strong>新規申込・${HORIZON}か月換算</strong>に絞っています。
-    下のカードの金額は<strong>条件を絞らない全観測の最安</strong>（転用やマンションを含む）なので、
-    上の表の1位と一致しないことがあります。各社の全プランと料金が動いた履歴は事業者ページにあります。
-  </p>
   <div class="pcards">${raw(providerIds(data).map((id) => {
     const mine = data.publishable.filter((o) => o.providerId === id);
     const evAll = data.events.filter((c) => c.providerId === id);
@@ -386,25 +377,27 @@ ${raw(linkOnlyOffers(data))}
     </a>`;
   }).join(''))}
   </div>
+  <p class="note">
+    カードの金額は、新規・転用・マンションなど<strong>条件を絞らない全観測の最安</strong>です。
+    上の表（新規申込・${HORIZON}か月換算）の1位と一致しないことがあります。
+  </p>
 </section>
 
-<p class="kicker"><b>04</b> 変化</p>
 <section>
-  <h2>最近の変化</h2>
-  <p class="note">
-    <strong>このサイトの中心は一覧表ではなく、ここです。</strong>
-    毎日の値を突き合わせて、変わった瞬間だけを記録しています。
-  </p>
+  <h2>最近の料金の変化</h2>
+  <p class="note">毎日の値を突き合わせて、料金が変わった瞬間だけを記録しています。</p>
   ${raw(recent.length
     ? `<ul class="changes">${recent.map(changeItem).join('')}</ul>
        <p><a href="/changes/">変化の履歴をすべて見る</a></p>`
     : '<p>まだ変化を検知していません。収集は毎日走っています。</p>')}
 </section>
 
+${raw(operatorNote(data))}
+
 ${raw(needsReviewSection(data))}
 
-<p class="kicker"><b>05</b> このサイトの記録</p>
 <section class="record">
+  <h2>このサイトについて</h2>
   <div class="hero-grid">
     <div>
       <p class="lead">
@@ -498,7 +491,6 @@ function legend() {
     html`<div><dt>${t}</dt><dd>${d}</dd></div>`).join(''))}</dl>`;
   return html`
 <section class="legend">
-  <p class="kicker"><b>00</b> この表の見かた</p>
   <h3 class="legend-h">お金の言葉</h3>
   ${raw(grid(money))}
   <h3 class="legend-h">プラン名に出てくる言葉</h3>
@@ -576,29 +568,42 @@ function rankingSection(data, building, no = 1) {
   // 条件が違うリンクは行に混ぜない（数字と食い違うため）。別ブロックに出す。
   const ads = data.ads.same.size > 0;
 
-  return html`
-<p class="kicker"><b>0${no}</b> ${building}</p>
-<section id="rank-${building === '戸建て' ? 'detached' : 'apartment'}">
-  <h2>${building}：実質月額の安い順（新規申込・${HORIZON}か月換算）</h2>
-  <div class="card"><div class="table-wrap">
-  <table class="ranking">
-    <thead>
+  const head = html`<thead>
       <tr><th class="rank">順位</th><th>実質月額</th><th>事業者</th><th>プラン</th><th>推移</th><th>内訳</th><th>出典・取得日時</th>${raw(ads ? '<th>申込</th>' : '')}</tr>
-    </thead>
+    </thead>`;
+  const table = (list, from) => html`<div class="card"><div class="table-wrap">
+  <table class="ranking">
+    ${raw(head)}
     <tbody>
-      ${raw(rows.map((o, i) => rankRow(o, data, i + 1)).join(''))}
+      ${raw(list.map((o, i) => rankRow(o, data, from + i + 1)).join(''))}
     </tbody>
   </table>
-  </div></div>
-  <p class="note">
-    ${HORIZON}か月換算です。契約期間は各社ばらばら（NURO光は縛りなし）なので、揃えないと比較になりません。
-    数え方の統一規則は<a href="/method/">計算方法</a>に書いています。
-  </p>
-  <p class="note">
-    <strong>順位は実質月額の安い順で、それ以外の基準は入れていません。</strong>
-    速度（1ギガ／2ギガ／10ギガ）が異なるプランも同じ表に並べているので、速度は各行で確かめてください。
-    条件に合う観測は<strong>1件も除外していません</strong>（検算に通らなかったものはページ下部に理由つきで出しています）。
-  </p>
+  </div></div>`;
+  // 上位だけ先に見せ、残りは開いたら読めるようにする（行は1件も削らない）
+  const SHOW = 8;
+  const first = rows.slice(0, SHOW), rest = rows.slice(SHOW);
+
+  return html`
+<section id="rank-${building === '戸建て' ? 'detached' : 'apartment'}">
+  <h2>${building}：安い順の一覧</h2>
+  <p class="note">新規申込・${HORIZON}か月換算の実質月額です。</p>
+  ${raw(table(first, 0))}
+  ${raw(rest.length ? html`<details class="more-rows">
+    <summary>残り${rest.length}プランも見る</summary>
+    ${raw(table(rest, SHOW))}
+  </details>` : '')}
+  <details class="fold fold-note">
+    <summary>この順位の決め方</summary>
+    <p class="note">
+      ${HORIZON}か月換算です。契約期間は各社ばらばら（NURO光は縛りなし）なので、揃えないと比較になりません。
+      数え方の統一規則は<a href="/method/">計算方法</a>に書いています。
+    </p>
+    <p class="note">
+      <strong>順位は実質月額の安い順で、それ以外の基準は入れていません。</strong>
+      速度（1ギガ／2ギガ／10ギガ）が異なるプランも同じ表に並べているので、速度は各行で確かめてください。
+      条件に合う観測は<strong>1件も除外していません</strong>（検算に通らなかったものはページ下部に理由つきで出しています）。
+    </p>
+  </details>
 </section>
 `;
 }
@@ -1755,38 +1760,20 @@ a:focus-visible,.pcard:focus-visible{outline:2px solid var(--indigo);outline-off
 img,svg{max-width:100%}
 ::selection{background:var(--indigo-soft)}
 
-/* ── 題字まわり ────────────────────────────────────────────
-   ナビゲーションバーではなく「題字」として組む。
-   上の細い帯には、この事業の約束（毎日・出典つき）を常に置く。 */
-.topbar{background:var(--indigo-deep);color:#cddaea}
-.topbar div{max-width:var(--wrap);margin:0 auto;padding:.4rem 1.5rem;
-  font-size:.72rem;letter-spacing:.08em;display:flex;gap:1.4rem;flex-wrap:wrap}
-.topbar b{color:#fff;font-weight:600}
-
-.site-head{background:var(--paper);border-bottom:1px solid var(--rule-2)}
-.head-in{max-width:var(--wrap);margin:0 auto;padding:1.15rem 1.5rem .9rem;
-  display:flex;align-items:flex-end;gap:1.5rem;flex-wrap:wrap}
+/* ── ヘッダー ──────────────────────────────────────────────
+   読者が最初に知りたいのは答え。ヘッダーは「どこのサイトか」と「他のページへの道」だけにする。 */
+.site-head{background:var(--paper);border-bottom:1px solid var(--rule);
+  position:sticky;top:0;z-index:30}
+.head-in{max-width:var(--wrap);margin:0 auto;padding:.6rem 1.5rem;
+  display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--ink)}
 .brand svg{display:block;flex:none}
-.brand strong{display:block;font-weight:800;font-size:1.32rem;
-  letter-spacing:.01em;line-height:1.25}
-.brand small{display:block;font-size:.7rem;color:var(--ink-2);letter-spacing:.05em;
-  font-weight:400;margin-top:.15rem}
-.plate-meta{margin-left:auto;text-align:right;font-size:.73rem;color:var(--ink-2);
-  letter-spacing:.04em;line-height:1.7}
-.plate-meta b{font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
-.plate-sub{display:block}
-
-.site-nav{position:sticky;top:0;z-index:30;background:var(--paper);
-  border-bottom:1px solid var(--rule)}
-.site-nav div{max-width:var(--wrap);margin:0 auto;padding:0 1.5rem;
-  display:flex;gap:1.9rem;flex-wrap:wrap;overflow-x:auto;
-  scrollbar-width:none;-ms-overflow-style:none}
-.site-nav div::-webkit-scrollbar{display:none}
-.site-nav a{color:var(--ink-2);text-decoration:none;font-size:.83rem;font-weight:600;
-  line-height:1.6;letter-spacing:.06em;padding:.72rem 0;
-  border-bottom:2px solid transparent;white-space:nowrap}
-.site-nav a:hover{color:var(--indigo);border-bottom-color:var(--indigo)}
+.brand strong{display:block;font-weight:800;font-size:1.15rem;letter-spacing:.01em;line-height:1.25}
+.brand small{display:block;font-size:.7rem;color:var(--ink-2);font-weight:400;margin-top:.05rem}
+.site-nav{margin-left:auto;display:flex;gap:.2rem}
+.site-nav a{color:var(--ink-2);text-decoration:none;font-size:.88rem;font-weight:600;
+  padding:.6rem .8rem;white-space:nowrap;border-radius:6px}
+.site-nav a:hover{color:var(--indigo);background:var(--indigo-soft)}
 
 /* ── 見出し ────────────────────────────────────────────────
    見出しは明朝、本文と数字は角ゴシック。この対比だけで「紙面」になる。 */
@@ -1794,8 +1781,8 @@ h1{font-weight:800;font-size:clamp(1.5rem,1.15rem + 1.35vw,2.1rem);line-height:1
   letter-spacing:-.02em;margin:1.6rem 0 .8rem}
 /* 冒頭の見出しだけは大きく取る。ここが紙面の第一印象になる */
 .hero h1{font-size:clamp(1.8rem,1.15rem + 2.3vw,2.7rem);line-height:1.3;letter-spacing:-.035em}
-h2{font-weight:800;font-size:clamp(1.25rem,1.05rem + .85vw,1.6rem);line-height:1.45;
-  letter-spacing:-.02em;margin:2.9rem 0 1.1rem}
+h2{font-weight:800;font-size:clamp(1.2rem,1.05rem + .7vw,1.5rem);line-height:1.45;
+  letter-spacing:-.02em;margin:2.6rem 0 .9rem}
 /* 節番号を置いた直後だけは、見出しを詰める */
 .kicker + section > h2:first-child,.kicker + h2{margin-top:.2rem}
 h3{font-weight:700;font-size:1.08rem;letter-spacing:-.01em;margin:2rem 0 .5rem}
@@ -1918,8 +1905,10 @@ tr.total th,tr.total td{border-top:1px solid var(--rule-2);background:var(--pape
 /* ── 最初に見る「いちばん安い3つ」 ───────────────────────────
    表の前に結論を置く。表は根拠として下に残す。 */
 .hero-lite{border-bottom:0;padding-bottom:0;margin-bottom:0}
-.hero-lite h1{margin-top:1.6rem}
-.qa-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:1.2rem;margin-top:1.4rem}
+.hero-lite h1{margin:1.2rem 0 .4rem;font-size:clamp(1.45rem,1.1rem + 1.8vw,2.2rem);text-wrap:balance}
+.hero-lite .lead{font-size:.95rem;line-height:1.75;margin:0}
+.stamp{display:block;font-size:.78rem;color:var(--ink-3);margin-top:.15rem}
+.qa-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:1rem;margin-top:1rem}
 .qa{background:var(--card);border:1px solid var(--rule);padding:1.2rem 1.3rem 1.1rem}
 .qa-h{font-size:1.02rem;margin:0 0 .6rem;letter-spacing:.02em}
 .qa-list{list-style:none;margin:0;padding:0}
@@ -1939,7 +1928,15 @@ tr.total th,tr.total td{border-top:1px solid var(--rule-2);background:var(--pape
   padding-top:.7rem;border-top:1px dashed var(--rule-2)}
 .qa-young strong{color:var(--ink)}
 .qa-more{margin:.7rem 0 0;font-size:.82rem}
-.qa-note{margin-top:1rem}
+.qa-note{margin-top:.8rem}
+.more-rows{margin-top:.8rem}
+.more-rows>summary{cursor:pointer;padding:.85rem 1rem;font-weight:700;font-size:.9rem;
+  border:1px solid var(--rule);background:var(--card);color:var(--indigo);list-style:none;text-align:center}
+.more-rows>summary::-webkit-details-marker{display:none}
+.more-rows[open]>summary{margin-bottom:.8rem}
+.fold.fold-note{margin-top:.8rem}
+.fold-note>summary{font-size:.84rem;font-weight:600;padding:.7rem 1rem;color:var(--ink-2)}
+.fold-note .note{padding:0 1rem}
 
 /* 言葉の説明は、知りたい人だけが開く */
 .fold{margin-top:2.4rem;border:1px solid var(--rule);background:var(--card)}
@@ -2007,8 +2004,8 @@ tr.total th,tr.total td{border-top:1px solid var(--rule-2);background:var(--pape
   font-size:.88rem;line-height:1.8}
 .stale-note strong{color:var(--warn-ink)}
 .ad-disclosure{background:var(--indigo-soft);border-bottom:1px solid var(--rule);margin:0;
-  padding:.6rem max(1.5rem,calc((100% - var(--wrap)) / 2));
-  font-size:.78rem;line-height:1.7;color:var(--ink-2);letter-spacing:.03em}
+  padding:.4rem max(1.5rem,calc((100% - var(--wrap)) / 2 + 1.5rem));
+  font-size:.74rem;line-height:1.6;color:var(--ink-2);letter-spacing:.03em}
 .cta{white-space:nowrap}
 .link-only{background:var(--card);border:1px solid var(--rule);
   border-top:3px solid var(--indigo);padding:1.3rem 1.5rem;margin:2.2rem 0}
@@ -2059,15 +2056,15 @@ code{background:var(--indigo-soft);padding:.08rem .35rem;font-size:.87em;
 @media(max-width:640px){
   body{font-size:15px}
   main{padding:0 1.1rem 4rem}
-  .head-in{padding:.85rem 1.1rem .7rem;gap:.5rem}
-  .brand strong{font-size:1.25rem}
-  .brand small{font-size:.66rem}
-  /* 題字の下に情報を積むと本文が画面から押し出される。最終更新だけ残す */
-  .plate-meta{margin-left:0;text-align:left;width:100%;font-size:.7rem}
-  .plate-sub{display:none}
-  .topbar div{padding:.4rem 1.1rem;gap:.9rem;font-size:.68rem}
-  /* 折り返さず横スクロールさせる。2段になると題字がさらに伸びる */
-  .site-nav div{padding:0 1.1rem;gap:1.35rem;flex-wrap:nowrap}
+  .site-head{position:static}
+  .head-in{padding:.5rem 1.1rem 0;gap:0}
+  .brand strong{font-size:1.1rem}
+  .brand small{display:none}
+  /* 折り返さず横スクロール。2段になるとヘッダーが伸びて答えが下に押される */
+  .site-nav{margin:0 -1.1rem;padding:0 .6rem;width:calc(100% + 2.2rem);overflow-x:auto;
+    scrollbar-width:none;-ms-overflow-style:none}
+  .site-nav::-webkit-scrollbar{display:none}
+  .site-nav a{font-size:.86rem;padding:.65rem .7rem}
   .rail{display:grid;grid-template-columns:1fr 1fr;border-left:0}
   .rail-item{padding:.75rem 0 .55rem;margin:0;border-right:0;
     border-bottom:1px solid var(--rule)}
@@ -2092,7 +2089,9 @@ code{background:var(--indigo-soft);padding:.08rem .35rem;font-size:.87em;
   .ranking tbody td.num{grid-column:3;grid-row:1/span 2;align-self:center}
   .ranking tbody td:nth-child(4){grid-column:2;grid-row:2}
   .ranking tbody td:nth-child(5),.ranking tbody td.breakdown{display:none}
-  .ranking tbody td.src{grid-column:2/4;grid-row:3;margin-top:.45rem}
+  .ranking tbody td.src{grid-column:2/4;grid-row:3;margin-top:.3rem;font-size:.7rem;line-height:1.5}
+  .ranking tbody td.src br{display:none}
+  .ranking tbody td.src time{margin-left:.6rem}
   .ranking tbody td:nth-child(8){grid-column:2/4}
   .qa{padding:1rem 1rem .9rem}
   .qa-price b{font-size:1.4rem}
@@ -2103,7 +2102,7 @@ code{background:var(--indigo-soft);padding:.08rem .35rem;font-size:.87em;
   .site-nav a{transition:color .13s ease,border-color .13s ease}
 }
 @media print{
-  .site-nav,.topbar{display:none}
+  .site-head{display:none}
   body{background:#fff}
 }
 ${CHART_CSS}

@@ -64,30 +64,21 @@ export function layout({ title, description, canonical, siteUrl, bodyClass = '',
 ${head}
 </head>
 <body class="${attr(bodyClass)}">
-<div class="topbar"><div>
-  <span><b>毎日 06:17</b> 自動収集</span>
-  <span>全件に<b>出典URLと取得時刻</b>を併記</span>
-  <span>計算式と収集コードは<b>全公開</b></span>
-</div></div>
 <header class="site-head">
   <div class="head-in">
     <a class="brand" href="/">${MARK}<span>
       <strong>通信費インデックス</strong>
-      <small>光回線の実質月額を毎日記録する独立系インデックス</small>
+      <small>光回線の料金を毎日記録</small>
     </span></a>
-    <p class="plate-meta">
-      最終更新 <b>${e(updatedAtLabel(updatedAt))}</b>
-      <span class="plate-sub">出典・取得時刻つき ／ データは CC BY 4.0</span>
-    </p>
+    <nav class="site-nav" aria-label="主なページ">
+      <a href="/">料金比較</a>
+      <a href="/changes/">料金の変化</a>
+      <a href="/method/">計算方法</a>
+      <a href="/data/">データ</a>
+      <a href="/about/">運営者</a>
+    </nav>
   </div>
 </header>
-<nav class="site-nav"><div>
-  <a href="/">実質月額</a>
-  <a href="/changes/">料金の変化</a>
-  <a href="/method/">計算方法</a>
-  <a href="/data/">データを使う</a>
-  <a href="/about/">運営者情報</a>
-</div></nav>
 ${disclosure}
 <main>
 ${body}
