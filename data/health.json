@@ -1,10 +1,16 @@
 {
-  "checkedAt": "2026-10-21T02:57:52.016Z",
+  "checkedAt": "2026-10-21T03:06:11.671Z",
   "summary": {
     "total": 20,
     "ok": 19,
     "failed": 1,
-    "escalated": [],
+    "escalated": [
+      {
+        "key": "health:https://network.mobile.rakuten.co.jp/hikari/information/",
+        "consecutive": 2,
+        "staleSince": "2026-10-21T02:57:52.015Z"
+      }
+    ],
     "excludedProviders": [
       {
         "id": "commufa-hikari",
@@ -29,7 +35,7 @@
       "httpStatus": 200,
       "hits": 165,
       "bytes": 125374,
-      "elapsedMs": 1117,
+      "elapsedMs": 1097,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -44,7 +50,7 @@
       "httpStatus": 200,
       "hits": 250,
       "bytes": 172637,
-      "elapsedMs": 787,
+      "elapsedMs": 548,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -59,7 +65,7 @@
       "httpStatus": 200,
       "hits": 107,
       "bytes": 56594,
-      "elapsedMs": 475,
+      "elapsedMs": 332,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -74,7 +80,7 @@
       "httpStatus": 200,
       "hits": 75,
       "bytes": 33315,
-      "elapsedMs": 794,
+      "elapsedMs": 557,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -89,7 +95,7 @@
       "httpStatus": 200,
       "hits": 81,
       "bytes": 95876,
-      "elapsedMs": 895,
+      "elapsedMs": 210,
       "robotsNote": "Allow: /",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -104,7 +110,7 @@
       "httpStatus": 200,
       "hits": 0,
       "robotsNote": "Allow: /",
-      "consecutiveFailures": 1,
+      "consecutiveFailures": 2,
       "staleSince": "2026-10-21T02:57:52.015Z"
     },
     {
@@ -117,7 +123,7 @@
       "httpStatus": 200,
       "hits": 79,
       "bytes": 172984,
-      "elapsedMs": 372,
+      "elapsedMs": 421,
       "robotsNote": "robots.txt なし（制限なしとみなす）",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -132,7 +138,7 @@
       "httpStatus": 200,
       "hits": 22,
       "bytes": 184255,
-      "elapsedMs": 376,
+      "elapsedMs": 420,
       "robotsNote": "robots.txt なし（制限なしとみなす）",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -147,7 +153,7 @@
       "httpStatus": 200,
       "hits": 22,
       "bytes": 246404,
-      "elapsedMs": 407,
+      "elapsedMs": 451,
       "robotsNote": "robots.txt なし（制限なしとみなす）",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -162,7 +168,7 @@
       "httpStatus": 200,
       "hits": 33,
       "bytes": 220038,
-      "elapsedMs": 435,
+      "elapsedMs": 437,
       "robotsNote": "robots.txt なし（制限なしとみなす）",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -177,7 +183,7 @@
       "httpStatus": 200,
       "hits": 21,
       "bytes": 139626,
-      "elapsedMs": 203,
+      "elapsedMs": 204,
       "robotsNote": "robots.txt なし（制限なしとみなす）",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -192,7 +198,7 @@
       "httpStatus": 200,
       "hits": 4,
       "bytes": 82499,
-      "elapsedMs": 1090,
+      "elapsedMs": 874,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -207,7 +213,7 @@
       "httpStatus": 200,
       "hits": 233,
       "bytes": 308308,
-      "elapsedMs": 36,
+      "elapsedMs": 130,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -222,7 +228,7 @@
       "httpStatus": 200,
       "hits": 146,
       "bytes": 207912,
-      "elapsedMs": 26,
+      "elapsedMs": 131,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -237,7 +243,7 @@
       "httpStatus": 200,
       "hits": 110,
       "bytes": 98781,
-      "elapsedMs": 57,
+      "elapsedMs": 29,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -252,7 +258,7 @@
       "httpStatus": 200,
       "hits": 19,
       "bytes": 331766,
-      "elapsedMs": 15,
+      "elapsedMs": 2416,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -267,7 +273,7 @@
       "httpStatus": 200,
       "hits": 6,
       "bytes": 32023,
-      "elapsedMs": 661,
+      "elapsedMs": 469,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -282,7 +288,7 @@
       "httpStatus": 200,
       "hits": 10,
       "bytes": 36489,
-      "elapsedMs": 725,
+      "elapsedMs": 499,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -297,7 +303,7 @@
       "httpStatus": 200,
       "hits": 6,
       "bytes": 30836,
-      "elapsedMs": 175,
+      "elapsedMs": 251,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -312,7 +318,7 @@
       "httpStatus": 200,
       "hits": 47,
       "bytes": 104024,
-      "elapsedMs": 218,
+      "elapsedMs": 543,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
