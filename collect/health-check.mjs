@@ -143,7 +143,9 @@ async function checkOne(provider, page) {
     return {
       ...base,
       status: 'content-changed',
-      detail: `${type === 'notice' ? '日付' : '料金'}が${hits}件（期待${min}件以上）。構造変更の疑い`,
+      detail: `${type === 'notice' ? '日付' : '料金'}が${hits}件（期待${min}件以上）。構造変更の疑い` +
+        ` [取得内容: ${res.text.length}B / title=${(res.text.match(/<title[^>]*>([^<]*)/i)?.[1] ?? '').trim().slice(0, 60)}` +
+        ` / 先頭=${res.text.replace(/<(script|style)[\s\S]*?<\/\1>/gi, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 160)}]`,
       httpStatus: res.status,
       hits,
       robotsNote: robots.note ?? robots.error,
