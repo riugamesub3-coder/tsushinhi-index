@@ -7,13 +7,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { parseTables, toYen, cellText } from './lib/table.mjs';
-import { findBlocks, parseDefinitionLists, headingChains } from './lib/dom.mjs';
+import { findBlocks, parseDefinitionLists, headingChains, stripNoise } from './lib/dom.mjs';
 import { computeEffectiveMonthly, expandMonthly, dedupeAcrossPages } from './lib/effective.mjs';
 import { parseBenefitByEntry, gradesInService, readBasePriceList, readDiscountExemptGrades } from './adapters/so-net-hikari.mjs';
 import { recordOutcome, shouldFail, escalated } from './lib/failures.mjs';
 import { reconstructSeries, planSlug, planSlugsFor } from '../site/lib/series.mjs';
 import { staleInfo } from '../site/lib/stale.mjs';
-import { asDetailTable, declaresGatewayFee } from './adapters/nuro-hikari.mjs';
+import { asDetailTable, declaresGatewayFee, foldLabelRows, identifyByAriaLabel, extract as nuroExtract } from './adapters/nuro-hikari.mjs';
 import { searchConsoleToken } from '../site/lib/owner.mjs';
 import { layout } from '../site/lib/html.mjs';
 
@@ -668,4 +668,74 @@ test('ドコモ光: タイプC専用ページと月額が一致したときだ�
 test('ドコモ光: ページが1枚でも欠けたら観測を作らない', () => {
   const r = docomoExtractAll([{ url: 'https://www.docomo.ne.jp/internet/hikari/charge/', html: DOCOMO_PRICE }]);
   assert.equal(r.offers.length, 0);
+});
+
+// ── NURO光: 表が独自要素になり、内訳が「ラベル行＋値の行」に割れた（2026-10-12 までの実際の変更）──
+//
+// <table> が1枚も無くなり「契約事務手数料が読めない」で11回続けて失敗し、
+// 直したあとも planKey が全部「戸建て」だけになって衝突した。実際のページ構造を縮めた再現。
+
+const NURO_NEW_PAGE = `
+<l-table columns="2" aria-label="初期費用">
+  <l-table-row><l-table-cell row-header>契約事務手数料</l-table-cell><l-table-cell><p>6,050円</p></l-table-cell></l-table-row>
+</l-table>
+<l-tab label="特典別"><l-tab-item label="2年割"><l-table-price toggle-label="NURO 光(H)の内訳を見る">
+  <l-table slot="summary" columns="2" aria-label="2年割 NURO 光(H)のお支払いイメージ">
+    <l-table-row><l-table-cell header>1～24か月目</l-table-cell><l-table-cell header>25か月目～</l-table-cell></l-table-row>
+    <l-table-row><l-table-cell>4,530円</l-table-cell><l-table-cell>5,720円</l-table-cell></l-table-row>
+  </l-table>
+  <l-table slot="detail" columns="2" aria-label="2年割 NURO 光(H)の料金内訳">
+    <l-table-row><l-table-cell colspan="2">月額基本料金 ※1</l-table-cell></l-table-row>
+    <l-table-row><l-table-cell>5,170円</l-table-cell><l-table-cell>5,170円</l-table-cell></l-table-row>
+    <l-table-row><l-table-cell colspan="2">ホームゲートウェイ（Wi-Fiルーター）</l-table-cell></l-table-row>
+    <l-table-row><l-table-cell>550円</l-table-cell><l-table-cell>550円</l-table-cell></l-table-row>
+    <l-table-row><l-table-cell colspan="2">基本工事費 ※2</l-table-cell></l-table-row>
+    <l-table-row><l-table-cell>1,555円</l-table-cell><l-table-cell>ー</l-table-cell></l-table-row>
+    <l-table-row><l-table-cell colspan="2">2年割</l-table-cell></l-table-row>
+    <l-table-row><l-table-cell>-1,190円/月</l-table-cell><l-table-cell>ー</l-table-cell></l-table-row>
+    <l-table-row><l-table-cell colspan="2">工事費相当割引</l-table-cell></l-table-row>
+    <l-table-row><l-table-cell>-1,555円</l-table-cell><l-table-cell>ー</l-table-cell></l-table-row>
+  </l-table>
+</l-table-price></l-tab-item></l-tab>`;
+
+test('独自要素の表を標準の表として読む（旧形式の表には影響しない）', () => {
+  const { tables } = parseTables(NURO_NEW_PAGE);
+  assert.equal(tables.length, 3);
+  assert.deepEqual(tables[0].rows, [['契約事務手数料', '6,050円']]);
+  assert.equal(stripNoise('<table><tr><td>1</td></tr></table>'), '<table><tr><td>1</td></tr></table>');
+  assert.doesNotMatch(stripNoise('<l-table-price><l-table>x</l-table></l-table-price>'), /<(\/)?table-price/);
+});
+
+test('ラベル行と値の行を「ラベル 値」の1行に貼り合わせる', () => {
+  const rows = foldLabelRows([
+    ['月額基本料金 ※1', '月額基本料金 ※1'], ['5,170円 （最大）', '5,170円'],
+    ['ホームゲートウェイ', 'ホームゲートウェイ'], ['550円', '550円'],   // 値が全列同じでも値の行
+    ['2年割', '2年割'], ['ー', 'ー'],                                  // ダッシュだけの値の行
+  ]);
+  assert.deepEqual(rows, [
+    ['月額基本料金 ※1 5,170円 （最大）', '月額基本料金 ※1 5,170円'],
+    ['ホームゲートウェイ 550円', 'ホームゲートウェイ 550円'],
+    ['2年割 ー', '2年割 ー'],
+  ]);
+});
+
+test('旧形式（セルにラベル込み）の行は貼り合わせずにそのまま通す', () => {
+  const old = [['月額基本料金 ※1 5,170円', '月額基本料金 ※1 5,170円'], ['基本工事費 ※2 1,555円', '基本工事費 ※2 ー']];
+  assert.deepEqual(foldLabelRows(old), old);
+});
+
+test('内訳表の aria-label からプランを特定する（特典・プラン名の順）', () => {
+  assert.deepEqual(identifyByAriaLabel('<table slot="detail" aria-label="U29応援割 NURO 光 10ギガ(M)の料金内訳">'),
+    ['U29応援割', 'NURO 光 10ギガ(M)']);
+  assert.equal(identifyByAriaLabel('<table aria-label="初期費用">'), null);
+  assert.equal(identifyByAriaLabel('<table>'), null);
+});
+
+test('NURO光の新構造から、検算を通った観測が planKey つきで取れる', () => {
+  const r = nuroExtract(NURO_NEW_PAGE, 'https://www.nuro.jp/hikari/house/price/');
+  assert.deepEqual(r.warnings, []);
+  assert.equal(r.offers.length, 1);
+  assert.equal(r.offers[0].verified, true);
+  assert.equal(r.offers[0].planKey, '戸建て / 2ギガ / 2年割');   // 旧データと同じ識別子（変えない）
+  assert.equal(r.offers[0].adminFee, 6050);
 });

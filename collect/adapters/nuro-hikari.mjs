@@ -78,7 +78,8 @@ export function extract(html, url) {
       continue;
     }
 
-    const id = identify(tables[i].start, { labels, groups, panels, typeAnchors });
+    const id = identifyByAriaLabel(tables[i].html)
+      ?? identify(tables[i].start, { labels, groups, panels, typeAnchors });
     const offer = buildOffer({ url, buildingType, initial, published, detail, id });
 
     // ★内訳から計算した月額と、ページが公開している月額を突き合わせる。
@@ -180,10 +181,37 @@ export function declaresGatewayFee(text) {
   return /月額基本料金とは別に[\s\S]{0,40}?(?:ホームゲートウェイ|Wi-?Fi\s*ルーター)[\s\S]{0,40}?必要/i.test(String(text ?? ''));
 }
 
+/**
+ * 内訳表を「各セルが `ラベル 値`」の形にそろえる。
+ *
+ * ★NURO光は 2026-10-12 までに、内訳表を「ラベルだけの行（全列に同じ文字）」と
+ *   「値の行」が交互に並ぶ形に組み替えた。以前は1行の各セルに `月額基本料金 ※1 5,170円` と
+ *   ラベルごと入っていたので、アダプタは行の文字列にラベルがあることを前提にしている。
+ *   ラベル行と次の値行を貼り合わせて、以前と同じ形に戻す（以前の形のページもそのまま通る）。
+ *   ★金額を含まない全列同一の行だけをラベル行とみなす。「ー」だけの値行は値として扱う。
+ */
+export function foldLabelRows(rows) {
+  const isDash = (c) => /^[ー−–—－-]$/.test(String(c).trim());
+  const isLabelRow = (r) =>
+    r.length > 1 && r.every((c) => c === r[0]) && !isDash(r[0]) && toYen(r[0]) == null;
+  const out = [];
+  for (let i = 0; i < rows.length; i++) {
+    const r = rows[i];
+    const next = rows[i + 1];
+    if (isLabelRow(r) && next && next.length === r.length) {
+      out.push(next.map((v) => `${r[0]} ${v}`));
+      i++;
+    } else {
+      out.push(r);
+    }
+  }
+  return out;
+}
+
 /** 「料金内訳」表: 各行が 月額基本料金 / 基本工事費 / ○○割 / 工事費相当割引 / キャンペーン */
 export function asDetailTable(t) {
   if (!t || t.rows.length < 2) return null;
-  const rows = t.rows.filter((r) => r.length > 0);
+  const rows = foldLabelRows(t.rows.filter((r) => r.length > 0));
   const flat = rows.map((r) => r.join(' '));
   if (!flat.some((r) => /月額基本料金/.test(r))) return null;
   if (!flat.some((r) => /基本工事費/.test(r))) return null;
@@ -270,6 +298,23 @@ function anchorPositions(html, re, toValue) {
   re.lastIndex = 0;
   while ((m = re.exec(html)) !== null) out.push({ value: toValue(m), at: m.index });
   return out;
+}
+
+/**
+ * 新しいページ構造では、内訳表が自分で名乗っている:
+ *   <l-table slot="detail" aria-label="2年割 NURO 光(H)の料金内訳">
+ * 「特典 プラン名」の順で、旧方式（タブの入れ子）が返していた labels と同じ並びになる。
+ *
+ * ★NURO光は 2026-10-12 までに data-tab / data-panel を廃止し、<l-tab-item label=…> と
+ *   <l-table-price> に作り替えた。タブから拾う旧方式では全プランのラベルが空になり、
+ *   planKey が全部「戸建て」だけになって衝突する（planKey は識別子なので壊してはならない）。
+ *   読めなければ null を返し、旧方式に任せる。
+ */
+export function identifyByAriaLabel(tableHtml) {
+  const tag = /^<table\b[^>]*>/i.exec(String(tableHtml ?? '').trimStart())?.[0] ?? '';
+  const label = /aria-label=["']([^"']+)["']/i.exec(tag)?.[1];
+  const m = label && /^(\S+)\s+(.+?)の料金内訳$/.exec(label.trim());
+  return m ? [m[1], m[2].trim()] : null;
 }
 
 /** 表の位置から、各タブ群で「直前に開いていたパネル」のラベルを集める */

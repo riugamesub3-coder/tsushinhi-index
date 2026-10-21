@@ -128,11 +128,20 @@ export function cellText(html) {
     .trim();
 }
 
-/** コメント・script・style・noscript を落とす。表示されないものを値にしないため */
+/**
+ * コメント・script・style・noscript を落とす。表示されないものを値にしないため。
+ *
+ * ★NURO光は 2026-10-12 までに、表を <table>/<tr>/<td> から独自要素
+ *   <l-table>/<l-table-row>/<l-table-cell> に作り替えた。標準タグしか読まない走査では
+ *   表が1枚も見つからず、「契約事務手数料が読めない」で11回続けて失敗した。
+ *   同じ形の表として読めるよう、ここで標準タグに読み替える（見た目の属性は触らない）。
+ */
 export function stripNoise(html) {
   return html
     .replace(/<!--[\s\S]*?-->/g, '')
-    .replace(/<(script|style|noscript)\b[\s\S]*?<\/\1>/gi, '');
+    .replace(/<(script|style|noscript)\b[\s\S]*?<\/\1>/gi, '')
+    .replace(/<(\/?)l-table(?:-(row|cell))?(?=[\s>])/gi,
+      (_, slash, part) => `<${slash}${part === 'row' ? 'tr' : part === 'cell' ? 'td' : 'table'}`);
 }
 
 /**
