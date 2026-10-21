@@ -3,7 +3,7 @@
   "providerId": "softbank-hikari",
   "providerName": "ソフトバンク光",
   "url": "https://www.softbank.jp/ybb/sbhikari/",
-  "collectedAt": "2026-10-20T23:56:38.256Z",
+  "collectedAt": "2026-10-21T02:56:29.020Z",
   "points": [
     {
       "label": "・ 「SoftBank 光・1ギガへチェンジ！",
@@ -34,11 +34,6 @@
       "label": "「広告つきスタンダードプラン」は",
       "value": 6530,
       "raw": "6,530円"
-    },
-    {
-      "label": "※2 プレミアム：",
-      "value": 330,
-      "raw": "330円"
     },
     {
       "label": "※4 回線工事費",
@@ -76,11 +71,6 @@
       "raw": "1,980円"
     },
     {
-      "label": "スタンダード：",
-      "value": 110,
-      "raw": "110円"
-    },
-    {
       "label": "一括：",
       "value": 31680,
       "raw": "31,680円"
@@ -114,11 +104,6 @@
       "label": "年12月より月額基本料金を+",
       "value": 330,
       "raw": "330円"
-    },
-    {
-      "label": "広告つきスタンダード：",
-      "value": 80,
-      "raw": "80円"
     },
     {
       "label": "援割（10ギガ）」月額基本料金割引 ×25ヵ月=",
