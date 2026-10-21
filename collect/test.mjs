@@ -16,6 +16,7 @@ import { staleInfo } from '../site/lib/stale.mjs';
 import { asDetailTable, declaresGatewayFee, foldLabelRows, identifyByAriaLabel, extract as nuroExtract } from './adapters/nuro-hikari.mjs';
 import { searchConsoleToken } from '../site/lib/owner.mjs';
 import { layout } from '../site/lib/html.mjs';
+import { fetchWithRetry } from './lib/http.mjs';
 
 // ── toYen ────────────────────────────────────────────────────────
 
@@ -738,4 +739,22 @@ test('NURO光の新構造から、検算を通った観測が planKey つきで�
   assert.equal(r.offers[0].verified, true);
   assert.equal(r.offers[0].planKey, '戸建て / 2ギガ / 2年割');   // 旧データと同じ識別子（変えない）
   assert.equal(r.offers[0].adminFee, 6050);
+});
+
+test('本文が空の 200 は成功にしない（CI だけ0Bが返った実例）。再試行して中身が来れば採る', async () => {
+  const realFetch = globalThis.fetch;
+  try {
+    let n = 0;
+    globalThis.fetch = async () => new Response(n++ < 1 ? '' : '<html>x</html>', { status: 200 });
+    const ok = await fetchWithRetry('https://example.test/', { retries: 1, baseDelayMs: 1 });
+    assert.equal(ok.ok, true);
+    assert.equal(ok.attempts, 2);
+
+    globalThis.fetch = async () => new Response('   ', { status: 200 });
+    const ng = await fetchWithRetry('https://example.test/', { retries: 1, baseDelayMs: 1 });
+    assert.equal(ng.ok, false);
+    assert.match(ng.error, /empty body/);
+  } finally {
+    globalThis.fetch = realFetch;
+  }
 });

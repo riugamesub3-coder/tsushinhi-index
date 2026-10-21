@@ -13,7 +13,7 @@ export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /**
  * リトライ付き fetch。
- * 5xx とネットワークエラーは指数バックオフで再試行する。4xx は再試行しない。
+ * 5xx・ネットワークエラー・空本文の 200 は指数バックオフで再試行する。4xx は再試行しない。
  * @returns {Promise<{ok:boolean, status:number|null, text:string|null, error:string|null, attempts:number, elapsedMs:number}>}
  */
 export async function fetchWithRetry(
@@ -37,16 +37,21 @@ export async function fetchWithRetry(
       lastStatus = res.status;
 
       if (res.ok) {
-        return {
-          ok: true,
-          status: res.status,
-          text: await res.text(),
-          error: null,
-          attempts: attempt,
-          elapsedMs: Date.now() - startedAt,
-        };
-      }
-      if (res.status >= 400 && res.status < 500) {
+        const text = await res.text();
+        if (text.trim() !== '') {
+          return {
+            ok: true,
+            status: res.status,
+            text,
+            error: null,
+            attempts: attempt,
+            elapsedMs: Date.now() - startedAt,
+          };
+        }
+        // 本文が空の 200 はデータではない。収集元が GitHub Actions の IP に空応答を返すことがある
+        // （2026-10-21 楽天ひかりのお知らせで実測: 0B）。成功として通すと「日付0件=構造変更」と誤診される
+        lastError = 'empty body (HTTP 200)';
+      } else if (res.status >= 400 && res.status < 500) {
         return {
           ok: false,
           status: res.status,
@@ -55,8 +60,9 @@ export async function fetchWithRetry(
           attempts: attempt,
           elapsedMs: Date.now() - startedAt,
         };
+      } else {
+        lastError = `HTTP ${res.status}`;
       }
-      lastError = `HTTP ${res.status}`;
     } catch (e) {
       clearTimeout(timer);
       lastError = e.name === 'AbortError' ? `timeout after ${timeoutMs}ms` : String(e.message || e);
