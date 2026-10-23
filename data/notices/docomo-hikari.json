@@ -5,6 +5,33 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-10-23",
+      "title": "「docomo Starlink Direct」ニュージーランド・オーストラリアでも国際ローミング接続を開始 -対応国が5か国に拡大-（PDF形式：482KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261023_d1.pdf",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-10-23T23:52:28.010Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-10-23",
+      "title": "AIで一人一人の嗜好に合わせたライブ映像を自動構成する「パーソナライズ映像自動構成技術」を開発",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/10/23_01.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-10-23T23:52:28.010Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-10-23",
+      "title": "ドコモ、初めてでも使いやすいスマートウォッチ03を11月25日に発売",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/10/23_00.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-10-23T23:52:28.010Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-10-20",
       "title": "世界初、無線基地局におけるワークロードシフトとエネルギーマネジメントの協調制御の実現に向けた実証を開始 -再生可能エネルギー活用の最大化、電力系統安定化、および災害時の通信サービス継続に貢献-（PDF形式：624KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261020_c1.pdf",
@@ -700,6 +727,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-10-23T00:00:14.112Z",
-  "totalNotices": 72
+  "lastCollectedAt": "2026-10-23T23:52:28.010Z",
+  "totalNotices": 75
 }
