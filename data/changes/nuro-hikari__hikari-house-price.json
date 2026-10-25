@@ -5,6 +5,38 @@
   "sourceUrl": "https://www.nuro.jp/hikari/house/price/",
   "events": [
     {
+      "detectedAt": "2026-10-25T23:18:55.596Z",
+      "previousCollectedAt": "2026-10-24T23:19:54.742Z",
+      "sourceUrl": "https://www.nuro.jp/hikari/house/price/",
+      "source": "pricing-page",
+      "needsReview": false,
+      "changes": [
+        {
+          "label": "ー キャンペーン ー キャッシュバック",
+          "before": [
+            3000,
+            10000
+          ],
+          "after": [
+            5000
+          ],
+          "delta": null
+        },
+        {
+          "label": "ガ(M) NURO 光(H) NURO 光(M)",
+          "before": [
+            3000
+          ],
+          "after": [
+            5000
+          ],
+          "delta": 2000
+        }
+      ],
+      "addedLabels": 4,
+      "removedLabels": 5
+    },
+    {
       "detectedAt": "2026-10-18T23:18:35.159Z",
       "previousCollectedAt": "2026-10-17T23:10:04.654Z",
       "sourceUrl": "https://www.nuro.jp/hikari/house/price/",
@@ -447,6 +479,6 @@
       "removedLabels": 2
     }
   ],
-  "lastEventAt": "2026-10-18T23:18:35.159Z",
-  "totalEvents": 8
+  "lastEventAt": "2026-10-25T23:18:55.596Z",
+  "totalEvents": 9
 }

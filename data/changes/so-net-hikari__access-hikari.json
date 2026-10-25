@@ -5,6 +5,38 @@
   "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
   "events": [
     {
+      "detectedAt": "2026-10-25T23:19:14.751Z",
+      "previousCollectedAt": "2026-10-24T23:20:14.199Z",
+      "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
+      "source": "pricing-page",
+      "needsReview": false,
+      "changes": [
+        {
+          "label": "■戸建・マンション共通 ・新設の場合：",
+          "before": [
+            3000,
+            10000
+          ],
+          "after": [
+            5000
+          ],
+          "delta": null
+        },
+        {
+          "label": "光 1ギガ（So-net 光 M）新設の場合に",
+          "before": [
+            3000
+          ],
+          "after": [
+            5000
+          ],
+          "delta": 2000
+        }
+      ],
+      "addedLabels": 0,
+      "removedLabels": 1
+    },
+    {
       "detectedAt": "2026-10-18T23:18:54.132Z",
       "previousCollectedAt": "2026-10-17T23:10:22.711Z",
       "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
@@ -795,6 +827,6 @@
       "removedLabels": 9
     }
   ],
-  "lastEventAt": "2026-10-18T23:18:54.132Z",
-  "totalEvents": 8
+  "lastEventAt": "2026-10-25T23:19:14.751Z",
+  "totalEvents": 9
 }
