@@ -6,11 +6,58 @@
   "notices": [
     {
       "date": "2026-10-27",
+      "title": "AIとロボットが人と安全・快適に共存する世界へ、Physical AI連携基盤を開発",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/10/27_02.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-10-28T00:33:04.379Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-10-27",
       "title": "TVer、ドコモ、データ・ワンで、配信視聴データ、dポイントクラブ会員基盤データ、購買データの連携による「TVer」の事業成長に向けた共創を開始 -広告視聴から来店・購買までの横断的な分析と、利用者体験の向上をめざす-",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/10/26_00.html",
       "categories": [],
       "relevant": false,
       "firstSeenAt": "2026-10-27T00:31:08.789Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-10-27",
+      "title": "アカチャンホンポにdポイントを導入！ -「アカチャンホンポdポイント開始記念！総額1,000万ポイント山分けキャンペーン」も開催！-（PDF形式：503KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261027_x1.pdf",
+      "categories": [
+        "campaign"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-10-28T00:33:04.379Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-10-27",
+      "title": "スマートフォンの利用状況から睡眠の質を推定可能な「睡眠の質推定AI」の提供を開始 -専用機器を使用せず、手軽に睡眠の質を把握できる新機能を「HealthTech基盤」に搭載-",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/10/27_03.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-10-28T00:33:04.379Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-10-27",
+      "title": "ドコモ、まったく新しいiPad miniを発売",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/10/27_04.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-10-28T00:33:04.379Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-10-27",
+      "title": "ドコモ、未就学児の生活習慣づくりを支援するAI対話技術を開発 -月齢に応じた言葉での声かけ・対話で、子どもの行動変容と保護者の育児負担軽減をめざす-",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/10/27_01.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-10-28T00:33:04.379Z",
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     },
     {
@@ -754,6 +801,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-10-27T00:31:08.789Z",
-  "totalNotices": 78
+  "lastCollectedAt": "2026-10-28T00:33:04.379Z",
+  "totalNotices": 83
 }
