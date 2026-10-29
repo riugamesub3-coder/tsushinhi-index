@@ -5,6 +5,17 @@
   "firstCollectedAt": "2026-08-23T09:31:28.541Z",
   "notices": [
     {
+      "date": "2026-10-29",
+      "title": "【重要】BIGLOBE光 auひかり月額料金改定、一部契約タイプの名称変更のお知らせ",
+      "url": "https://support.biglobe.ne.jp/news/news801.html",
+      "categories": [
+        "price-change"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-10-29T01:00:58.539Z",
+      "sourceUrl": "https://support.biglobe.ne.jp/news/"
+    },
+    {
       "date": "2026-09-17",
       "title": "【重要】BIGLOBE光 auひかり公式Webページでの新規受付終了のご案内",
       "url": "https://support.biglobe.ne.jp/news/news797.html",
@@ -615,6 +626,6 @@
       "sourceUrl": "https://support.biglobe.ne.jp/news/"
     }
   ],
-  "lastCollectedAt": "2026-10-28T00:32:58.587Z",
-  "totalNotices": 61
+  "lastCollectedAt": "2026-10-29T01:00:58.539Z",
+  "totalNotices": 62
 }
