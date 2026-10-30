@@ -5,6 +5,17 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-10-29",
+      "title": "【ドコモFG】11月開始の「d払い」エリアキャンペーン -全国4地域の対象店舗で抽選によりdポイントを進呈-（PDF形式：532KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/docomofg/20261029151000.pdf",
+      "categories": [
+        "campaign"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-10-30T01:06:01.321Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-10-27",
       "title": "AIとロボットが人と安全・快適に共存する世界へ、Physical AI連携基盤を開発",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/10/27_02.html",
@@ -801,6 +812,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-10-29T01:01:03.851Z",
-  "totalNotices": 83
+  "lastCollectedAt": "2026-10-30T01:06:01.321Z",
+  "totalNotices": 84
 }
