@@ -5,6 +5,18 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-10-30",
+      "title": "「dバリューパス」に新たな特典を追加 -「 Uber 」や「 Uber Eats 」、「LUUP」でご利用になれる特典が追加！さらに、「デイリーチャンス」の拡充、サービス画面のリニューアルも実施-",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/10/30_00.html",
+      "categories": [
+        "campaign",
+        "service-start"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-10-31T00:51:07.238Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-10-29",
       "title": "【ドコモFG】11月開始の「d払い」エリアキャンペーン -全国4地域の対象店舗で抽選によりdポイントを進呈-（PDF形式：532KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/docomofg/20261029151000.pdf",
@@ -812,6 +824,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-10-30T01:06:01.321Z",
-  "totalNotices": 84
+  "lastCollectedAt": "2026-10-31T00:51:07.238Z",
+  "totalNotices": 85
 }
