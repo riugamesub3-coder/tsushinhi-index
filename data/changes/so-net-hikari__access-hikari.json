@@ -5,6 +5,25 @@
   "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
   "events": [
     {
+      "detectedAt": "2026-11-01T00:11:07.193Z",
+      "previousCollectedAt": "2026-10-31T00:51:33.170Z",
+      "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
+      "source": "pricing-page",
+      "needsReview": false,
+      "changes": [
+        {
+          "label": "■戸建・マンション共通 ・新設の場合：",
+          "before": [],
+          "after": [
+            12000
+          ],
+          "delta": null
+        }
+      ],
+      "addedLabels": 1,
+      "removedLabels": 0
+    },
+    {
       "detectedAt": "2026-10-25T23:19:14.751Z",
       "previousCollectedAt": "2026-10-24T23:20:14.199Z",
       "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
@@ -827,6 +846,6 @@
       "removedLabels": 9
     }
   ],
-  "lastEventAt": "2026-10-25T23:19:14.751Z",
-  "totalEvents": 9
+  "lastEventAt": "2026-11-01T00:11:07.193Z",
+  "totalEvents": 10
 }

@@ -3,6 +3,33 @@
   "providerName": "So-net光",
   "events": [
     {
+      "detectedAt": "2026-11-01T00:11:37.094Z",
+      "changes": [
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "10ギガ / 戸建・マンション共通 / 回線新設でお申し込み / 派遣工事",
+          "planLabel": "10ギガ / 戸建・マンション共通 / 回線新設でお申し込み / 派遣工事",
+          "horizonMonths": 36,
+          "before": 4809,
+          "after": 4615,
+          "effectiveMonthlyDelta": -194,
+          "direction": "down",
+          "cause": [
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 5000,
+              "after": 12000,
+              "delta": 7000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.so-net.ne.jp/access/hikari/",
+          "previousObservedAt": "2026-10-31T00:52:06.718Z"
+        }
+      ]
+    },
+    {
       "detectedAt": "2026-10-25T23:19:51.305Z",
       "changes": [
         {
@@ -891,6 +918,6 @@
       ]
     }
   ],
-  "lastEventAt": "2026-10-25T23:19:51.305Z",
-  "totalEvents": 8
+  "lastEventAt": "2026-11-01T00:11:37.094Z",
+  "totalEvents": 9
 }
