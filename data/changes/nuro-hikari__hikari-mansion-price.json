@@ -5,6 +5,58 @@
   "sourceUrl": "https://www.nuro.jp/hikari/mansion/price/",
   "events": [
     {
+      "detectedAt": "2026-11-02T00:48:26.715Z",
+      "previousCollectedAt": "2026-11-01T00:10:51.590Z",
+      "sourceUrl": "https://www.nuro.jp/hikari/mansion/price/",
+      "source": "pricing-page",
+      "needsReview": false,
+      "changes": [
+        {
+          "label": "～24か月目 25～36か月目 37か月目～",
+          "before": [
+            3530,
+            4530
+          ],
+          "after": [
+            2980,
+            3980
+          ],
+          "delta": null
+        },
+        {
+          "label": "ー キャンペーン ー キャッシュバック",
+          "before": [
+            5000
+          ],
+          "after": [
+            10000,
+            20000
+          ],
+          "delta": null
+        },
+        {
+          "label": "ガ(M) NURO 光(H) NURO 光(M)",
+          "before": [
+            5000
+          ],
+          "after": [
+            10000
+          ],
+          "delta": 5000
+        },
+        {
+          "label": "契約事務手数料",
+          "before": [],
+          "after": [
+            3300
+          ],
+          "delta": null
+        }
+      ],
+      "addedLabels": 29,
+      "removedLabels": 17
+    },
+    {
       "detectedAt": "2026-10-25T23:18:58.061Z",
       "previousCollectedAt": "2026-10-24T23:19:56.914Z",
       "sourceUrl": "https://www.nuro.jp/hikari/mansion/price/",
@@ -403,6 +455,6 @@
       "removedLabels": 2
     }
   ],
-  "lastEventAt": "2026-10-25T23:18:58.061Z",
-  "totalEvents": 9
+  "lastEventAt": "2026-11-02T00:48:26.715Z",
+  "totalEvents": 10
 }
