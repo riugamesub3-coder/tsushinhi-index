@@ -5,6 +5,15 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-11-02",
+      "title": "ドコモ、Android XR搭載の次世代XRグラス「XREAL AURA」を発売",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/11/02_00.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-11-03T02:56:27.728Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-10-30",
       "title": "「dバリューパス」に新たな特典を追加 -「 Uber 」や「 Uber Eats 」、「LUUP」でご利用になれる特典が追加！さらに、「デイリーチャンス」の拡充、サービス画面のリニューアルも実施-",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/10/30_00.html",
@@ -824,6 +833,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-11-02T00:48:21.287Z",
-  "totalNotices": 85
+  "lastCollectedAt": "2026-11-03T02:56:27.728Z",
+  "totalNotices": 86
 }
