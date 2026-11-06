@@ -5,6 +5,24 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-11-06",
+      "title": "ドコモ、快適な操作性を追求したドコモ純正「スタンダードタッチペン」を発売（PDF形式：508KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261106_g1.pdf",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-11-06T01:35:46.989Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-11-05",
+      "title": "17年分のモバイルICTや生成AI利用動向などをまとめた「モバイル社会白書2026-2027」を公開 -モバイル社会研究所の最新調査で女子のスマートフォン所有開始年齢が10歳未満に-",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/11/05_00.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-11-06T01:35:46.989Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-11-05",
       "title": "モバイル空間統計の応用技術2件が地方発明表彰「発明奨励賞」を受賞（PDF形式：558KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261105_c1.pdf",
@@ -860,6 +878,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-11-05T01:29:18.731Z",
-  "totalNotices": 89
+  "lastCollectedAt": "2026-11-06T01:35:46.989Z",
+  "totalNotices": 91
 }
