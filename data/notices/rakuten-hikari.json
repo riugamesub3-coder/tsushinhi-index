@@ -5,6 +5,17 @@
   "firstCollectedAt": "2026-08-23T09:31:30.121Z",
   "notices": [
     {
+      "date": "2026-11-06",
+      "title": "緊急メンテナンス（11/7）によるサービス停止のお知らせ ※楽天ひかりのお申し込みはご利用いただけます",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2026/1106_01/",
+      "categories": [
+        "noise"
+      ],
+      "relevant": false,
+      "firstSeenAt": "2026-11-07T00:57:40.001Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
       "date": "2026-10-28",
       "title": "計画メンテナンス（11/13）によるサービス停止のお知らせ ※楽天ひかりのお申し込みはご利用いただけます",
       "url": "https://network.mobile.rakuten.co.jp/hikari/information/2026/1028_01/",
@@ -362,6 +373,6 @@
       "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
     }
   ],
-  "lastCollectedAt": "2026-11-06T01:35:44.081Z",
-  "totalNotices": 35
+  "lastCollectedAt": "2026-11-07T00:57:40.001Z",
+  "totalNotices": 36
 }
