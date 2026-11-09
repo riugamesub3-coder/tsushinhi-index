@@ -5,6 +5,27 @@
   "sourceUrl": "https://www.so-net.ne.jp/access/hikari/1g/",
   "events": [
     {
+      "detectedAt": "2026-11-09T00:58:00.043Z",
+      "previousCollectedAt": "2026-11-08T00:42:52.645Z",
+      "sourceUrl": "https://www.so-net.ne.jp/access/hikari/1g/",
+      "source": "pricing-page",
+      "needsReview": false,
+      "changes": [
+        {
+          "label": "net 光 S：対象外 So-net 光 M：",
+          "before": [
+            5000
+          ],
+          "after": [
+            10000
+          ],
+          "delta": 5000
+        }
+      ],
+      "addedLabels": 0,
+      "removedLabels": 0
+    },
+    {
       "detectedAt": "2026-10-25T23:19:16.317Z",
       "previousCollectedAt": "2026-10-24T23:20:15.931Z",
       "sourceUrl": "https://www.so-net.ne.jp/access/hikari/1g/",
@@ -451,6 +472,6 @@
       "removedLabels": 8
     }
   ],
-  "lastEventAt": "2026-10-25T23:19:16.317Z",
-  "totalEvents": 8
+  "lastEventAt": "2026-11-09T00:58:00.043Z",
+  "totalEvents": 9
 }
