@@ -5,6 +5,15 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-11-09",
+      "title": "静岡県総合防災アプリ「静岡県防災」が衛星通信に対応 -静岡県、ファーストメディア、ドコモが連携し、災害時にも防災情報を取得可能に-",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/11/09_00.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-11-10T03:36:53.809Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-11-06",
       "title": "ドコモ、快適な操作性を追求したドコモ純正「スタンダードタッチペン」を発売（PDF形式：508KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261106_g1.pdf",
@@ -878,6 +887,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-11-09T00:57:35.832Z",
-  "totalNotices": 91
+  "lastCollectedAt": "2026-11-10T03:36:53.809Z",
+  "totalNotices": 92
 }
