@@ -1,13 +1,13 @@
 {
-  "checkedAt": "2026-11-10T03:38:42.075Z",
+  "checkedAt": "2026-11-11T01:18:36.005Z",
   "summary": {
     "total": 20,
-    "ok": 19,
-    "failed": 1,
+    "ok": 17,
+    "failed": 3,
     "escalated": [
       {
         "key": "health:https://www.nuro.jp/news_release/",
-        "consecutive": 16,
+        "consecutive": 17,
         "staleSince": "2026-10-25T23:20:41.116Z"
       }
     ],
@@ -35,7 +35,7 @@
       "httpStatus": 200,
       "hits": 188,
       "bytes": 136794,
-      "elapsedMs": 889,
+      "elapsedMs": 751,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -50,7 +50,7 @@
       "httpStatus": 200,
       "hits": 289,
       "bytes": 189783,
-      "elapsedMs": 631,
+      "elapsedMs": 532,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -65,7 +65,7 @@
       "httpStatus": 200,
       "hits": 0,
       "robotsNote": "該当ルールなし",
-      "consecutiveFailures": 16,
+      "consecutiveFailures": 17,
       "staleSince": "2026-10-25T23:20:41.116Z"
     },
     {
@@ -78,7 +78,7 @@
       "httpStatus": 200,
       "hits": 24,
       "bytes": 23305,
-      "elapsedMs": 646,
+      "elapsedMs": 459,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -93,7 +93,7 @@
       "httpStatus": 200,
       "hits": 81,
       "bytes": 95874,
-      "elapsedMs": 275,
+      "elapsedMs": 214,
       "robotsNote": "Allow: /",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -108,7 +108,7 @@
       "httpStatus": 200,
       "hits": 42,
       "bytes": 31233,
-      "elapsedMs": 902,
+      "elapsedMs": 775,
       "robotsNote": "Allow: /",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -123,7 +123,7 @@
       "httpStatus": 200,
       "hits": 79,
       "bytes": 175355,
-      "elapsedMs": 344,
+      "elapsedMs": 246,
       "robotsNote": "robots.txt なし（制限なしとみなす）",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -138,7 +138,7 @@
       "httpStatus": 200,
       "hits": 22,
       "bytes": 188804,
-      "elapsedMs": 305,
+      "elapsedMs": 239,
       "robotsNote": "robots.txt なし（制限なしとみなす）",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -153,7 +153,7 @@
       "httpStatus": 200,
       "hits": 22,
       "bytes": 248775,
-      "elapsedMs": 356,
+      "elapsedMs": 276,
       "robotsNote": "robots.txt なし（制限なしとみなす）",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -168,7 +168,7 @@
       "httpStatus": 200,
       "hits": 33,
       "bytes": 222409,
-      "elapsedMs": 378,
+      "elapsedMs": 282,
       "robotsNote": "robots.txt なし（制限なしとみなす）",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -183,7 +183,7 @@
       "httpStatus": 200,
       "hits": 25,
       "bytes": 142154,
-      "elapsedMs": 174,
+      "elapsedMs": 882,
       "robotsNote": "robots.txt なし（制限なしとみなす）",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -198,7 +198,7 @@
       "httpStatus": 200,
       "hits": 4,
       "bytes": 82514,
-      "elapsedMs": 859,
+      "elapsedMs": 925,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -208,30 +208,26 @@
       "providerName": "So-net光（ソニーネットワークコミュニケーションズ）",
       "url": "https://www.so-net.ne.jp/access/hikari/",
       "type": "pricing",
-      "status": "ok",
-      "detail": null,
+      "status": "content-changed",
+      "detail": "料金が0件（期待1件以上）。構造変更の疑い [取得内容: 1386B / title=ご利用頂けません | So-net / 先頭=ご利用頂けません | So-net So-netトップ So-netをご利用頂きましてありがとうございます。 現在、セキュリティ強化およびお客様の情報保護を目的として、通信環境の安全な接続が確認できない場合、ご指定のページが参照できない場合があります。 お客様にはご不便をおかけいたしますが、何卒ご理解とご協力を賜ります]",
       "httpStatus": 200,
-      "hits": 232,
-      "bytes": 310687,
-      "elapsedMs": 161,
+      "hits": 0,
       "robotsNote": "該当ルールなし",
-      "consecutiveFailures": 0,
-      "staleSince": null
+      "consecutiveFailures": 1,
+      "staleSince": "2026-11-11T01:18:36.005Z"
     },
     {
       "providerId": "so-net-hikari",
       "providerName": "So-net光（ソニーネットワークコミュニケーションズ）",
       "url": "https://www.so-net.ne.jp/access/hikari/1g/",
       "type": "pricing",
-      "status": "ok",
-      "detail": null,
+      "status": "content-changed",
+      "detail": "料金が0件（期待1件以上）。構造変更の疑い [取得内容: 1386B / title=ご利用頂けません | So-net / 先頭=ご利用頂けません | So-net So-netトップ So-netをご利用頂きましてありがとうございます。 現在、セキュリティ強化およびお客様の情報保護を目的として、通信環境の安全な接続が確認できない場合、ご指定のページが参照できない場合があります。 お客様にはご不便をおかけいたしますが、何卒ご理解とご協力を賜ります]",
       "httpStatus": 200,
-      "hits": 146,
-      "bytes": 209116,
-      "elapsedMs": 157,
+      "hits": 0,
       "robotsNote": "該当ルールなし",
-      "consecutiveFailures": 0,
-      "staleSince": null
+      "consecutiveFailures": 1,
+      "staleSince": "2026-11-11T01:18:36.005Z"
     },
     {
       "providerId": "softbank-hikari",
@@ -243,7 +239,7 @@
       "httpStatus": 200,
       "hits": 109,
       "bytes": 99206,
-      "elapsedMs": 142,
+      "elapsedMs": 33,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -258,7 +254,7 @@
       "httpStatus": 200,
       "hits": 19,
       "bytes": 331766,
-      "elapsedMs": 31,
+      "elapsedMs": 17,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -273,7 +269,7 @@
       "httpStatus": 200,
       "hits": 6,
       "bytes": 32110,
-      "elapsedMs": 537,
+      "elapsedMs": 455,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -288,7 +284,7 @@
       "httpStatus": 200,
       "hits": 10,
       "bytes": 36345,
-      "elapsedMs": 657,
+      "elapsedMs": 247,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -303,7 +299,7 @@
       "httpStatus": 200,
       "hits": 6,
       "bytes": 30469,
-      "elapsedMs": 294,
+      "elapsedMs": 339,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -318,7 +314,7 @@
       "httpStatus": 200,
       "hits": 49,
       "bytes": 105644,
-      "elapsedMs": 451,
+      "elapsedMs": 321,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
