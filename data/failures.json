@@ -1,257 +1,257 @@
 {
-  "updatedAt": "2026-11-12T02:19:28.486Z",
+  "updatedAt": "2026-11-13T01:55:00.699Z",
   "sources": {
     "effective:nuro-hikari": {
-      "consecutive": 11,
+      "consecutive": 12,
       "lastOkAt": "2026-11-01T00:11:40.309Z",
       "staleSince": "2026-11-02T00:49:22.609Z",
-      "lastFailedAt": "2026-11-12T02:18:40.397Z",
+      "lastFailedAt": "2026-11-13T01:54:13.825Z",
       "lastStatus": "offer-count-drop",
       "lastDetail": "検算を通った観測が 12件 → 0件 に減った"
     },
     "effective:rakuten-hikari": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:18:40.397Z",
+      "lastOkAt": "2026-11-13T01:54:13.825Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "effective:so-net-hikari": {
-      "consecutive": 2,
+      "consecutive": 3,
       "lastOkAt": "2026-11-10T03:37:56.557Z",
       "staleSince": "2026-11-11T01:17:52.735Z",
-      "lastFailedAt": "2026-11-12T02:18:40.397Z",
+      "lastFailedAt": "2026-11-13T01:54:13.825Z",
       "lastStatus": "extract-failed",
       "lastDetail": null
     },
     "health:https://www.nuro.jp/hikari/house/price/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:19:28.484Z",
+      "lastOkAt": "2026-11-13T01:55:00.697Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://www.nuro.jp/hikari/mansion/price/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:19:28.484Z",
+      "lastOkAt": "2026-11-13T01:55:00.697Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://www.nuro.jp/news_release/": {
-      "consecutive": 18,
+      "consecutive": 19,
       "lastOkAt": "2026-10-24T23:21:34.955Z",
       "staleSince": "2026-10-25T23:20:41.116Z",
-      "lastFailedAt": "2026-11-12T02:19:28.484Z",
+      "lastFailedAt": "2026-11-13T01:55:00.697Z",
       "lastStatus": "content-changed",
       "lastDetail": "日付が0件（期待3件以上）。構造変更の疑い [取得内容: 23276B / title=お知らせ | NURO / 先頭=お知らせ | NURO 戸建て 料金・プラン マンション 料金・プラン マイページ お申し込み 料金スペック オプション ご利用までの流れ お知らせ お知らせ よくあるご質問 お申し込み前の方 お申し込み済みの方 申込まで安心 LINE公式アカウント 開通まで安心 レンタルWi-Fi もっとおトクに お友達紹介クーポン]"
     },
     "health:https://support.biglobe.ne.jp/news/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:19:28.484Z",
+      "lastOkAt": "2026-11-13T01:55:00.697Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://network.mobile.rakuten.co.jp/hikari/fee/pricelist/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:19:28.484Z",
+      "lastOkAt": "2026-11-13T01:55:00.697Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://network.mobile.rakuten.co.jp/hikari/information/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:19:28.484Z",
+      "lastOkAt": "2026-11-13T01:55:00.697Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://www.docomo.ne.jp/internet/hikari/charge/type_c/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:19:28.484Z",
+      "lastOkAt": "2026-11-13T01:55:00.697Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://www.docomo.ne.jp/internet/hikari/charge/10g_type_c/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:19:28.484Z",
+      "lastOkAt": "2026-11-13T01:55:00.697Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://www.docomo.ne.jp/info/news_release/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:19:28.484Z",
+      "lastOkAt": "2026-11-13T01:55:00.697Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://flets-w.com/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:19:28.484Z",
+      "lastOkAt": "2026-11-13T01:55:00.697Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://www.so-net.ne.jp/access/hikari/": {
-      "consecutive": 2,
+      "consecutive": 3,
       "lastOkAt": "2026-11-10T03:38:42.075Z",
       "staleSince": "2026-11-11T01:18:36.005Z",
-      "lastFailedAt": "2026-11-12T02:19:28.484Z",
+      "lastFailedAt": "2026-11-13T01:55:00.697Z",
       "lastStatus": "content-changed",
       "lastDetail": "料金が0件（期待1件以上）。構造変更の疑い [取得内容: 1386B / title=ご利用頂けません | So-net / 先頭=ご利用頂けません | So-net So-netトップ So-netをご利用頂きましてありがとうございます。 現在、セキュリティ強化およびお客様の情報保護を目的として、通信環境の安全な接続が確認できない場合、ご指定のページが参照できない場合があります。 お客様にはご不便をおかけいたしますが、何卒ご理解とご協力を賜ります]"
     },
     "health:https://www.softbank.jp/ybb/sbhikari/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:19:28.484Z",
+      "lastOkAt": "2026-11-13T01:55:00.697Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://www.au.com/internet/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:19:28.484Z",
+      "lastOkAt": "2026-11-13T01:55:00.697Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://eonet.jp/go/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:19:28.484Z",
+      "lastOkAt": "2026-11-13T01:55:00.697Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://flets.com/flets-hikari/next/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:19:28.484Z",
+      "lastOkAt": "2026-11-13T01:55:00.697Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://flets.com/flets-hikari/priceplan/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:19:28.484Z",
+      "lastOkAt": "2026-11-13T01:55:00.697Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://setsuzoku.nifty.com/niftyhikari/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:19:28.484Z",
+      "lastOkAt": "2026-11-13T01:55:00.697Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "prices:https://www.nuro.jp/hikari/house/price/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:18:20.806Z",
+      "lastOkAt": "2026-11-13T01:53:53.626Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "prices:https://www.nuro.jp/hikari/mansion/price/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:18:20.806Z",
+      "lastOkAt": "2026-11-13T01:53:53.626Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "prices:https://network.mobile.rakuten.co.jp/hikari/fee/pricelist/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:18:20.806Z",
+      "lastOkAt": "2026-11-13T01:53:53.626Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "prices:https://www.docomo.ne.jp/internet/hikari/charge/type_c/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:18:20.806Z",
+      "lastOkAt": "2026-11-13T01:53:53.626Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "prices:https://www.docomo.ne.jp/internet/hikari/charge/10g_type_c/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:18:20.806Z",
+      "lastOkAt": "2026-11-13T01:53:53.626Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "prices:https://flets-w.com/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:18:20.806Z",
+      "lastOkAt": "2026-11-13T01:53:53.626Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "prices:https://www.so-net.ne.jp/access/hikari/": {
-      "consecutive": 2,
+      "consecutive": 3,
       "lastOkAt": "2026-11-10T03:37:36.221Z",
       "staleSince": "2026-11-11T01:17:34.390Z",
-      "lastFailedAt": "2026-11-12T02:18:20.806Z",
+      "lastFailedAt": "2026-11-13T01:53:53.626Z",
       "lastStatus": "extract-failed",
       "lastDetail": "金額0点（期待3点以上）"
     },
     "prices:https://www.softbank.jp/ybb/sbhikari/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:18:20.806Z",
+      "lastOkAt": "2026-11-13T01:53:53.626Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "prices:https://www.au.com/internet/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:18:20.806Z",
+      "lastOkAt": "2026-11-13T01:53:53.626Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "prices:https://eonet.jp/go/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:18:20.806Z",
+      "lastOkAt": "2026-11-13T01:53:53.626Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "prices:https://flets.com/flets-hikari/next/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:18:20.806Z",
+      "lastOkAt": "2026-11-13T01:53:53.626Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "prices:https://flets.com/flets-hikari/priceplan/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:18:20.806Z",
+      "lastOkAt": "2026-11-13T01:53:53.626Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "prices:https://setsuzoku.nifty.com/niftyhikari/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:18:20.806Z",
+      "lastOkAt": "2026-11-13T01:53:53.626Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "prices:https://www.so-net.ne.jp/access/hikari/1g/": {
-      "consecutive": 2,
+      "consecutive": 3,
       "lastOkAt": "2026-11-10T03:37:36.221Z",
       "staleSince": "2026-11-11T01:17:34.390Z",
-      "lastFailedAt": "2026-11-12T02:18:20.806Z",
+      "lastFailedAt": "2026-11-13T01:53:53.626Z",
       "lastStatus": "extract-failed",
       "lastDetail": "金額0点（期待3点以上）"
     },
     "health:https://www.so-net.ne.jp/access/hikari/1g/": {
-      "consecutive": 2,
+      "consecutive": 3,
       "lastOkAt": "2026-11-10T03:38:42.075Z",
       "staleSince": "2026-11-11T01:18:36.005Z",
-      "lastFailedAt": "2026-11-12T02:19:28.484Z",
+      "lastFailedAt": "2026-11-13T01:55:00.697Z",
       "lastStatus": "content-changed",
       "lastDetail": "料金が0件（期待1件以上）。構造変更の疑い [取得内容: 1386B / title=ご利用頂けません | So-net / 先頭=ご利用頂けません | So-net So-netトップ So-netをご利用頂きましてありがとうございます。 現在、セキュリティ強化およびお客様の情報保護を目的として、通信環境の安全な接続が確認できない場合、ご指定のページが参照できない場合があります。 お客様にはご不便をおかけいたしますが、何卒ご理解とご協力を賜ります]"
     },
     "effective:docomo-hikari": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:18:40.397Z",
+      "lastOkAt": "2026-11-13T01:54:13.825Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "prices:https://www.docomo.ne.jp/internet/hikari/charge/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:18:20.806Z",
+      "lastOkAt": "2026-11-13T01:53:53.626Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "prices:https://www.docomo.ne.jp/internet/hikari/1g_plan/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:18:20.806Z",
+      "lastOkAt": "2026-11-13T01:53:53.626Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://www.docomo.ne.jp/internet/hikari/charge/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:19:28.484Z",
+      "lastOkAt": "2026-11-13T01:55:00.697Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://www.docomo.ne.jp/internet/hikari/1g_plan/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-12T02:19:28.484Z",
+      "lastOkAt": "2026-11-13T01:55:00.697Z",
       "staleSince": null,
       "lastStatus": "ok"
     }
