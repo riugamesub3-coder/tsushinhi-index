@@ -5,6 +5,28 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-11-16",
+      "title": "12月から、自治体と連携した「dポイント」「d払い」キャンペーンを開始 -枚方市・鹿沼市ほか全国4自治体でキャンペーンを開催-（PDF形式：446KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261116_g1.pdf",
+      "categories": [
+        "campaign"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-11-16T01:05:58.065Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-11-16",
+      "title": "花王商品購入でdポイントが最大10%還元される「第1弾 花王トクトクフェス」を開催！ -対象店舗の会員ポイントも最大20%還元-（PDF形式：466KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261116_x1.pdf",
+      "categories": [
+        "campaign"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-11-16T01:05:58.065Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-11-09",
       "title": "静岡県総合防災アプリ「静岡県防災」が衛星通信に対応 -静岡県、ファーストメディア、ドコモが連携し、災害時にも防災情報を取得可能に-",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/11/09_00.html",
@@ -887,6 +909,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-11-15T01:05:19.786Z",
-  "totalNotices": 92
+  "lastCollectedAt": "2026-11-16T01:05:58.065Z",
+  "totalNotices": 94
 }

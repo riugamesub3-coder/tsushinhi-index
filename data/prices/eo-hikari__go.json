@@ -3,12 +3,22 @@
   "providerId": "eo-hikari",
   "providerName": "eo光（関西電力系）",
   "url": "https://eonet.jp/go/",
-  "collectedAt": "2026-11-15T01:05:51.005Z",
+  "collectedAt": "2026-11-16T01:06:30.701Z",
   "points": [
+    {
+      "label": "プルプラン Netflix パック 最大6カ月間",
+      "value": 1480,
+      "raw": "1,480円"
+    },
     {
       "label": "ホセット割 eo 光シンプルプラン 月額料金から",
       "value": 330,
       "raw": "330 円"
+    },
+    {
+      "label": "光ネット Netflix パック 最大6カ月間",
+      "value": 1480,
+      "raw": "1,480円"
     },
     {
       "label": "最大1年間 実質 /月 ※1 ※2 （2年目以降",
