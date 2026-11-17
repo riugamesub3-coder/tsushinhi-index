@@ -5,6 +5,35 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-11-17",
+      "title": "【ドコモFG】国内のクレジットカード会社22社と日本クレジットカード協会でフィッシングに関する注意喚起を実施",
+      "url": "https://www.docomo-fg.com/info/news_release/20261117_001.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-11-17T03:57:24.135Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-11-17",
+      "title": "ドコモ、「AQUOS sense11 SH-53G」を11月26日に発売",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/11/17_02.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-11-17T03:57:24.135Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-11-16",
+      "title": "【ドコモFG】dカード会員向け期間限定特典として「パティーナ大阪『World’s Best Hotel』受賞記念ダブルキャンペーン」を開催！（PDF形式：739KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/docomofg/20261116101000.pdf",
+      "categories": [
+        "campaign"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-11-17T03:57:24.135Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-11-16",
       "title": "12月から、自治体と連携した「dポイント」「d払い」キャンペーンを開始 -枚方市・鹿沼市ほか全国4自治体でキャンペーンを開催-（PDF形式：446KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261116_g1.pdf",
@@ -909,6 +938,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-11-16T01:05:58.065Z",
-  "totalNotices": 94
+  "lastCollectedAt": "2026-11-17T03:57:24.135Z",
+  "totalNotices": 97
 }
