@@ -23,6 +23,15 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     },
     {
+      "date": "2026-11-17",
+      "title": "役員の人事について",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/11/17_01.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-11-18T02:56:06.542Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-11-16",
       "title": "【ドコモFG】dカード会員向け期間限定特典として「パティーナ大阪『World’s Best Hotel』受賞記念ダブルキャンペーン」を開催！（PDF形式：739KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/docomofg/20261116101000.pdf",
@@ -938,6 +947,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-11-17T03:57:24.135Z",
-  "totalNotices": 97
+  "lastCollectedAt": "2026-11-18T02:56:06.542Z",
+  "totalNotices": 98
 }
