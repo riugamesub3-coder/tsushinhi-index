@@ -1,0 +1,1477 @@
+{
+  "providerId": "biglobe-hikari",
+  "providerName": "ビッグローブ光",
+  "channelId": "official",
+  "observedAt": "2026-11-20T14:26:27.609Z",
+  "formula": "実質月額 = ( 月額の合計 + 工事費の実負担額 + 事務手数料 + 必須オプション費用×加入必要月数 - キャッシュバック額 - その他割引の総額 ) ÷ 契約月数",
+  "primaryHorizonMonths": 36,
+  "sourceUrls": [
+    "https://join.biglobe.ne.jp/ftth/hikari/price/",
+    "https://join.biglobe.ne.jp/ftth/hikari/campaign/",
+    "https://support.biglobe.ne.jp/jimu/ryokin/course/bighikari_3years.html",
+    "https://support.biglobe.ne.jp/jimu/ryokin/course/bighikari_10g.html"
+  ],
+  "pageNotices": [],
+  "offers": [
+    {
+      "providerId": "biglobe-hikari",
+      "providerName": "ビッグローブ光",
+      "channelId": "official",
+      "sourceUrl": "https://join.biglobe.ne.jp/ftth/hikari/price/",
+      "alsoSourcedFrom": [
+        "https://join.biglobe.ne.jp/ftth/hikari/campaign/",
+        "https://support.biglobe.ne.jp/jimu/ryokin/course/bighikari_10g.html"
+      ],
+      "planKey": "10ギガ / 戸建て / 新規 / 屋内配線を新設する",
+      "plan": {
+        "speed": "10ギガ",
+        "building": "戸建て",
+        "entry": "新規",
+        "work": "屋内配線を新設する"
+      },
+      "contractMonths": 24,
+      "contractNote": "2年プラン（定期利用期間 24か月・自動更新）。更新月等以外の解約は違約金4,620円（不課税）。開通月の扱いは満額で数える（全社共通の規則）",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 6270
+        }
+      ],
+      "adminFee": 1100,
+      "constructionFee": {
+        "list": 28600,
+        "installmentMonths": 24,
+        "monthlySchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": 1,
+            "amount": 1276
+          },
+          {
+            "fromMonth": 2,
+            "toMonth": 24,
+            "amount": 1188
+          },
+          {
+            "fromMonth": 25,
+            "toMonth": null,
+            "amount": 0
+          }
+        ],
+        "residualOnEarlyExit": true,
+        "note": "屋内配線の有無など設置先の状況で工事の区分が決まる",
+        "discountSchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": 1,
+            "amount": 1276
+          },
+          {
+            "fromMonth": 2,
+            "toMonth": 24,
+            "amount": 1188
+          },
+          {
+            "fromMonth": 25,
+            "toMonth": null,
+            "amount": 0
+          }
+        ]
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": false,
+      "verificationMethod": "料金ページの月額・申込手数料 ⇔ サポートサイトの料金表（1ギガ3年プラン／10ギガ）の一致、工事費の「初回＋以降×回数」＝一括、特典は対象期間を観測日と照合",
+      "setBenefits": [
+        "auスマートバリュー・UQ自宅セット割: スマホとのセット割。スマホ側の契約が前提のため実質月額には算入しない",
+        "解約金サポート特典: 他社の解約金を補う特典。人により額が違うため算入しない",
+        "光テレビのキャッシュバック: 光テレビの同時申込が条件のため算入しない"
+      ],
+      "verified": true,
+      "observedAt": "2026-11-20T14:26:27.609Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 6316,
+          "total": 151580,
+          "breakdown": {
+            "monthlyTotal": 150480,
+            "adminFee": 1100,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 6301,
+          "total": 226820,
+          "breakdown": {
+            "monthlyTotal": 225720,
+            "adminFee": 1100,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "biglobe-hikari",
+      "providerName": "ビッグローブ光",
+      "channelId": "official",
+      "sourceUrl": "https://join.biglobe.ne.jp/ftth/hikari/price/",
+      "alsoSourcedFrom": [
+        "https://join.biglobe.ne.jp/ftth/hikari/campaign/",
+        "https://support.biglobe.ne.jp/jimu/ryokin/course/bighikari_10g.html"
+      ],
+      "planKey": "10ギガ / 戸建て / 新規 / 屋内配線を新設しない",
+      "plan": {
+        "speed": "10ギガ",
+        "building": "戸建て",
+        "entry": "新規",
+        "work": "屋内配線を新設しない"
+      },
+      "contractMonths": 24,
+      "contractNote": "2年プラン（定期利用期間 24か月・自動更新）。更新月等以外の解約は違約金4,620円（不課税）。開通月の扱いは満額で数える（全社共通の規則）",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 6270
+        }
+      ],
+      "adminFee": 1100,
+      "constructionFee": {
+        "list": 18260,
+        "installmentMonths": 24,
+        "monthlySchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": 1,
+            "amount": 803
+          },
+          {
+            "fromMonth": 2,
+            "toMonth": 24,
+            "amount": 759
+          },
+          {
+            "fromMonth": 25,
+            "toMonth": null,
+            "amount": 0
+          }
+        ],
+        "residualOnEarlyExit": true,
+        "note": "屋内配線の有無など設置先の状況で工事の区分が決まる",
+        "discountSchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": 1,
+            "amount": 803
+          },
+          {
+            "fromMonth": 2,
+            "toMonth": 24,
+            "amount": 759
+          },
+          {
+            "fromMonth": 25,
+            "toMonth": null,
+            "amount": 0
+          }
+        ]
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": false,
+      "verificationMethod": "料金ページの月額・申込手数料 ⇔ サポートサイトの料金表（1ギガ3年プラン／10ギガ）の一致、工事費の「初回＋以降×回数」＝一括、特典は対象期間を観測日と照合",
+      "setBenefits": [
+        "auスマートバリュー・UQ自宅セット割: スマホとのセット割。スマホ側の契約が前提のため実質月額には算入しない",
+        "解約金サポート特典: 他社の解約金を補う特典。人により額が違うため算入しない",
+        "光テレビのキャッシュバック: 光テレビの同時申込が条件のため算入しない"
+      ],
+      "verified": true,
+      "observedAt": "2026-11-20T14:26:27.609Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 6316,
+          "total": 151580,
+          "breakdown": {
+            "monthlyTotal": 150480,
+            "adminFee": 1100,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 6301,
+          "total": 226820,
+          "breakdown": {
+            "monthlyTotal": 225720,
+            "adminFee": 1100,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "biglobe-hikari",
+      "providerName": "ビッグローブ光",
+      "channelId": "official",
+      "sourceUrl": "https://join.biglobe.ne.jp/ftth/hikari/price/",
+      "alsoSourcedFrom": [
+        "https://join.biglobe.ne.jp/ftth/hikari/campaign/",
+        "https://support.biglobe.ne.jp/jimu/ryokin/course/bighikari_10g.html"
+      ],
+      "planKey": "10ギガ / 戸建て / 転用",
+      "plan": {
+        "speed": "10ギガ",
+        "building": "戸建て",
+        "entry": "転用"
+      },
+      "contractMonths": 24,
+      "contractNote": "2年プラン（定期利用期間 24か月・自動更新）。更新月等以外の解約は違約金4,620円（不課税）。開通月の扱いは満額で数える（全社共通の規則）",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 6270
+        }
+      ],
+      "adminFee": 2200,
+      "constructionFee": {
+        "list": 0,
+        "borne": 0,
+        "residualOnEarlyExit": false,
+        "note": "1ギガからの乗り換えで要るタイプ変更工事費は特典で無料"
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": false,
+      "verificationMethod": "料金ページの月額・申込手数料 ⇔ サポートサイトの料金表（1ギガ3年プラン／10ギガ）の一致、工事費の「初回＋以降×回数」＝一括、特典は対象期間を観測日と照合",
+      "setBenefits": [
+        "auスマートバリュー・UQ自宅セット割: スマホとのセット割。スマホ側の契約が前提のため実質月額には算入しない",
+        "解約金サポート特典: 他社の解約金を補う特典。人により額が違うため算入しない",
+        "光テレビのキャッシュバック: 光テレビの同時申込が条件のため算入しない"
+      ],
+      "verified": true,
+      "observedAt": "2026-11-20T14:26:27.609Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 6362,
+          "total": 152680,
+          "breakdown": {
+            "monthlyTotal": 150480,
+            "adminFee": 2200,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 6331,
+          "total": 227920,
+          "breakdown": {
+            "monthlyTotal": 225720,
+            "adminFee": 2200,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "biglobe-hikari",
+      "providerName": "ビッグローブ光",
+      "channelId": "official",
+      "sourceUrl": "https://join.biglobe.ne.jp/ftth/hikari/price/",
+      "alsoSourcedFrom": [
+        "https://join.biglobe.ne.jp/ftth/hikari/campaign/",
+        "https://support.biglobe.ne.jp/jimu/ryokin/course/bighikari_10g.html"
+      ],
+      "planKey": "10ギガ / 戸建て / 事業者変更",
+      "plan": {
+        "speed": "10ギガ",
+        "building": "戸建て",
+        "entry": "事業者変更"
+      },
+      "contractMonths": 24,
+      "contractNote": "2年プラン（定期利用期間 24か月・自動更新）。更新月等以外の解約は違約金4,620円（不課税）。開通月の扱いは満額で数える（全社共通の規則）",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 6270
+        }
+      ],
+      "adminFee": 3300,
+      "constructionFee": {
+        "list": 0,
+        "borne": 0,
+        "residualOnEarlyExit": false,
+        "note": "1ギガからの乗り換えで要るタイプ変更工事費は特典で無料"
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": false,
+      "verificationMethod": "料金ページの月額・申込手数料 ⇔ サポートサイトの料金表（1ギガ3年プラン／10ギガ）の一致、工事費の「初回＋以降×回数」＝一括、特典は対象期間を観測日と照合",
+      "setBenefits": [
+        "auスマートバリュー・UQ自宅セット割: スマホとのセット割。スマホ側の契約が前提のため実質月額には算入しない",
+        "解約金サポート特典: 他社の解約金を補う特典。人により額が違うため算入しない",
+        "光テレビのキャッシュバック: 光テレビの同時申込が条件のため算入しない"
+      ],
+      "verified": true,
+      "observedAt": "2026-11-20T14:26:27.609Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 6408,
+          "total": 153780,
+          "breakdown": {
+            "monthlyTotal": 150480,
+            "adminFee": 3300,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 6362,
+          "total": 229020,
+          "breakdown": {
+            "monthlyTotal": 225720,
+            "adminFee": 3300,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "biglobe-hikari",
+      "providerName": "ビッグローブ光",
+      "channelId": "official",
+      "sourceUrl": "https://join.biglobe.ne.jp/ftth/hikari/price/",
+      "alsoSourcedFrom": [
+        "https://join.biglobe.ne.jp/ftth/hikari/campaign/",
+        "https://support.biglobe.ne.jp/jimu/ryokin/course/bighikari_10g.html"
+      ],
+      "planKey": "10ギガ / マンション / 新規 / 屋内配線を新設する",
+      "plan": {
+        "speed": "10ギガ",
+        "building": "マンション",
+        "entry": "新規",
+        "work": "屋内配線を新設する"
+      },
+      "contractMonths": 24,
+      "contractNote": "2年プラン（定期利用期間 24か月・自動更新）。更新月等以外の解約は違約金4,620円（不課税）。開通月の扱いは満額で数える（全社共通の規則）",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 6270
+        }
+      ],
+      "adminFee": 1100,
+      "constructionFee": {
+        "list": 28600,
+        "installmentMonths": 24,
+        "monthlySchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": 1,
+            "amount": 1276
+          },
+          {
+            "fromMonth": 2,
+            "toMonth": 24,
+            "amount": 1188
+          },
+          {
+            "fromMonth": 25,
+            "toMonth": null,
+            "amount": 0
+          }
+        ],
+        "residualOnEarlyExit": true,
+        "note": "屋内配線の有無など設置先の状況で工事の区分が決まる",
+        "discountSchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": 1,
+            "amount": 1276
+          },
+          {
+            "fromMonth": 2,
+            "toMonth": 24,
+            "amount": 1188
+          },
+          {
+            "fromMonth": 25,
+            "toMonth": null,
+            "amount": 0
+          }
+        ]
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": false,
+      "verificationMethod": "料金ページの月額・申込手数料 ⇔ サポートサイトの料金表（1ギガ3年プラン／10ギガ）の一致、工事費の「初回＋以降×回数」＝一括、特典は対象期間を観測日と照合",
+      "setBenefits": [
+        "auスマートバリュー・UQ自宅セット割: スマホとのセット割。スマホ側の契約が前提のため実質月額には算入しない",
+        "解約金サポート特典: 他社の解約金を補う特典。人により額が違うため算入しない",
+        "光テレビのキャッシュバック: 光テレビの同時申込が条件のため算入しない"
+      ],
+      "verified": true,
+      "observedAt": "2026-11-20T14:26:27.609Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 6316,
+          "total": 151580,
+          "breakdown": {
+            "monthlyTotal": 150480,
+            "adminFee": 1100,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 6301,
+          "total": 226820,
+          "breakdown": {
+            "monthlyTotal": 225720,
+            "adminFee": 1100,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "biglobe-hikari",
+      "providerName": "ビッグローブ光",
+      "channelId": "official",
+      "sourceUrl": "https://join.biglobe.ne.jp/ftth/hikari/price/",
+      "alsoSourcedFrom": [
+        "https://join.biglobe.ne.jp/ftth/hikari/campaign/",
+        "https://support.biglobe.ne.jp/jimu/ryokin/course/bighikari_10g.html"
+      ],
+      "planKey": "10ギガ / マンション / 新規 / 屋内配線を新設しない",
+      "plan": {
+        "speed": "10ギガ",
+        "building": "マンション",
+        "entry": "新規",
+        "work": "屋内配線を新設しない"
+      },
+      "contractMonths": 24,
+      "contractNote": "2年プラン（定期利用期間 24か月・自動更新）。更新月等以外の解約は違約金4,620円（不課税）。開通月の扱いは満額で数える（全社共通の規則）",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 6270
+        }
+      ],
+      "adminFee": 1100,
+      "constructionFee": {
+        "list": 18260,
+        "installmentMonths": 24,
+        "monthlySchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": 1,
+            "amount": 803
+          },
+          {
+            "fromMonth": 2,
+            "toMonth": 24,
+            "amount": 759
+          },
+          {
+            "fromMonth": 25,
+            "toMonth": null,
+            "amount": 0
+          }
+        ],
+        "residualOnEarlyExit": true,
+        "note": "屋内配線の有無など設置先の状況で工事の区分が決まる",
+        "discountSchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": 1,
+            "amount": 803
+          },
+          {
+            "fromMonth": 2,
+            "toMonth": 24,
+            "amount": 759
+          },
+          {
+            "fromMonth": 25,
+            "toMonth": null,
+            "amount": 0
+          }
+        ]
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": false,
+      "verificationMethod": "料金ページの月額・申込手数料 ⇔ サポートサイトの料金表（1ギガ3年プラン／10ギガ）の一致、工事費の「初回＋以降×回数」＝一括、特典は対象期間を観測日と照合",
+      "setBenefits": [
+        "auスマートバリュー・UQ自宅セット割: スマホとのセット割。スマホ側の契約が前提のため実質月額には算入しない",
+        "解約金サポート特典: 他社の解約金を補う特典。人により額が違うため算入しない",
+        "光テレビのキャッシュバック: 光テレビの同時申込が条件のため算入しない"
+      ],
+      "verified": true,
+      "observedAt": "2026-11-20T14:26:27.609Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 6316,
+          "total": 151580,
+          "breakdown": {
+            "monthlyTotal": 150480,
+            "adminFee": 1100,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 6301,
+          "total": 226820,
+          "breakdown": {
+            "monthlyTotal": 225720,
+            "adminFee": 1100,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "biglobe-hikari",
+      "providerName": "ビッグローブ光",
+      "channelId": "official",
+      "sourceUrl": "https://join.biglobe.ne.jp/ftth/hikari/price/",
+      "alsoSourcedFrom": [
+        "https://join.biglobe.ne.jp/ftth/hikari/campaign/",
+        "https://support.biglobe.ne.jp/jimu/ryokin/course/bighikari_10g.html"
+      ],
+      "planKey": "10ギガ / マンション / 転用",
+      "plan": {
+        "speed": "10ギガ",
+        "building": "マンション",
+        "entry": "転用"
+      },
+      "contractMonths": 24,
+      "contractNote": "2年プラン（定期利用期間 24か月・自動更新）。更新月等以外の解約は違約金4,620円（不課税）。開通月の扱いは満額で数える（全社共通の規則）",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 6270
+        }
+      ],
+      "adminFee": 2200,
+      "constructionFee": {
+        "list": 0,
+        "borne": 0,
+        "residualOnEarlyExit": false,
+        "note": "1ギガからの乗り換えで要るタイプ変更工事費は特典で無料"
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": false,
+      "verificationMethod": "料金ページの月額・申込手数料 ⇔ サポートサイトの料金表（1ギガ3年プラン／10ギガ）の一致、工事費の「初回＋以降×回数」＝一括、特典は対象期間を観測日と照合",
+      "setBenefits": [
+        "auスマートバリュー・UQ自宅セット割: スマホとのセット割。スマホ側の契約が前提のため実質月額には算入しない",
+        "解約金サポート特典: 他社の解約金を補う特典。人により額が違うため算入しない",
+        "光テレビのキャッシュバック: 光テレビの同時申込が条件のため算入しない"
+      ],
+      "verified": true,
+      "observedAt": "2026-11-20T14:26:27.609Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 6362,
+          "total": 152680,
+          "breakdown": {
+            "monthlyTotal": 150480,
+            "adminFee": 2200,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 6331,
+          "total": 227920,
+          "breakdown": {
+            "monthlyTotal": 225720,
+            "adminFee": 2200,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "biglobe-hikari",
+      "providerName": "ビッグローブ光",
+      "channelId": "official",
+      "sourceUrl": "https://join.biglobe.ne.jp/ftth/hikari/price/",
+      "alsoSourcedFrom": [
+        "https://join.biglobe.ne.jp/ftth/hikari/campaign/",
+        "https://support.biglobe.ne.jp/jimu/ryokin/course/bighikari_10g.html"
+      ],
+      "planKey": "10ギガ / マンション / 事業者変更",
+      "plan": {
+        "speed": "10ギガ",
+        "building": "マンション",
+        "entry": "事業者変更"
+      },
+      "contractMonths": 24,
+      "contractNote": "2年プラン（定期利用期間 24か月・自動更新）。更新月等以外の解約は違約金4,620円（不課税）。開通月の扱いは満額で数える（全社共通の規則）",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 6270
+        }
+      ],
+      "adminFee": 3300,
+      "constructionFee": {
+        "list": 0,
+        "borne": 0,
+        "residualOnEarlyExit": false,
+        "note": "1ギガからの乗り換えで要るタイプ変更工事費は特典で無料"
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": false,
+      "verificationMethod": "料金ページの月額・申込手数料 ⇔ サポートサイトの料金表（1ギガ3年プラン／10ギガ）の一致、工事費の「初回＋以降×回数」＝一括、特典は対象期間を観測日と照合",
+      "setBenefits": [
+        "auスマートバリュー・UQ自宅セット割: スマホとのセット割。スマホ側の契約が前提のため実質月額には算入しない",
+        "解約金サポート特典: 他社の解約金を補う特典。人により額が違うため算入しない",
+        "光テレビのキャッシュバック: 光テレビの同時申込が条件のため算入しない"
+      ],
+      "verified": true,
+      "observedAt": "2026-11-20T14:26:27.609Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 6408,
+          "total": 153780,
+          "breakdown": {
+            "monthlyTotal": 150480,
+            "adminFee": 3300,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 6362,
+          "total": 229020,
+          "breakdown": {
+            "monthlyTotal": 225720,
+            "adminFee": 3300,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "biglobe-hikari",
+      "providerName": "ビッグローブ光",
+      "channelId": "official",
+      "sourceUrl": "https://join.biglobe.ne.jp/ftth/hikari/price/",
+      "alsoSourcedFrom": [
+        "https://join.biglobe.ne.jp/ftth/hikari/campaign/",
+        "https://support.biglobe.ne.jp/jimu/ryokin/course/bighikari_3years.html"
+      ],
+      "planKey": "1ギガ / 戸建て / 新規 / 屋内配線を新設する",
+      "plan": {
+        "speed": "1ギガ",
+        "building": "戸建て",
+        "entry": "新規",
+        "work": "屋内配線を新設する"
+      },
+      "contractMonths": 36,
+      "contractNote": "3年プラン（定期利用期間 36か月・自動更新）。更新月等以外の解約は違約金4,100円（不課税）。開通月の扱いは満額で数える（全社共通の規則）。NTT東日本のギガファミリー・スマートタイプ等に相当する回線では機器利用料550円/月が別途かかる（一部の乗り換えのみ・実質月額には未算入）",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 5478
+        }
+      ],
+      "adminFee": 3300,
+      "constructionFee": {
+        "list": 28600,
+        "installmentMonths": 36,
+        "monthlySchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": 1,
+            "amount": 880
+          },
+          {
+            "fromMonth": 2,
+            "toMonth": 36,
+            "amount": 792
+          },
+          {
+            "fromMonth": 37,
+            "toMonth": null,
+            "amount": 0
+          }
+        ],
+        "residualOnEarlyExit": true,
+        "note": "屋内配線の有無など設置先の状況で工事の区分が決まる",
+        "discountSchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": 1,
+            "amount": 880
+          },
+          {
+            "fromMonth": 2,
+            "toMonth": 36,
+            "amount": 792
+          },
+          {
+            "fromMonth": 37,
+            "toMonth": null,
+            "amount": 0
+          }
+        ]
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": false,
+      "verificationMethod": "料金ページの月額・申込手数料 ⇔ サポートサイトの料金表（1ギガ3年プラン／10ギガ）の一致、工事費の「初回＋以降×回数」＝一括、特典は対象期間を観測日と照合",
+      "setBenefits": [
+        "auスマートバリュー・UQ自宅セット割: スマホとのセット割。スマホ側の契約が前提のため実質月額には算入しない",
+        "解約金サポート特典: 他社の解約金を補う特典。人により額が違うため算入しない",
+        "光テレビのキャッシュバック: 光テレビの同時申込が条件のため算入しない"
+      ],
+      "verified": true,
+      "observedAt": "2026-11-20T14:26:27.609Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 5616,
+          "total": 134772,
+          "breakdown": {
+            "monthlyTotal": 131472,
+            "adminFee": 3300,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 5570,
+          "total": 200508,
+          "breakdown": {
+            "monthlyTotal": 197208,
+            "adminFee": 3300,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "biglobe-hikari",
+      "providerName": "ビッグローブ光",
+      "channelId": "official",
+      "sourceUrl": "https://join.biglobe.ne.jp/ftth/hikari/price/",
+      "alsoSourcedFrom": [
+        "https://join.biglobe.ne.jp/ftth/hikari/campaign/",
+        "https://support.biglobe.ne.jp/jimu/ryokin/course/bighikari_3years.html"
+      ],
+      "planKey": "1ギガ / 戸建て / 新規 / 屋内配線を新設しない",
+      "plan": {
+        "speed": "1ギガ",
+        "building": "戸建て",
+        "entry": "新規",
+        "work": "屋内配線を新設しない"
+      },
+      "contractMonths": 36,
+      "contractNote": "3年プラン（定期利用期間 36か月・自動更新）。更新月等以外の解約は違約金4,100円（不課税）。開通月の扱いは満額で数える（全社共通の規則）。NTT東日本のギガファミリー・スマートタイプ等に相当する回線では機器利用料550円/月が別途かかる（一部の乗り換えのみ・実質月額には未算入）",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 5478
+        }
+      ],
+      "adminFee": 3300,
+      "constructionFee": {
+        "list": 18260,
+        "installmentMonths": 36,
+        "monthlySchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": 1,
+            "amount": 550
+          },
+          {
+            "fromMonth": 2,
+            "toMonth": 36,
+            "amount": 506
+          },
+          {
+            "fromMonth": 37,
+            "toMonth": null,
+            "amount": 0
+          }
+        ],
+        "residualOnEarlyExit": true,
+        "note": "屋内配線の有無など設置先の状況で工事の区分が決まる",
+        "discountSchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": 1,
+            "amount": 550
+          },
+          {
+            "fromMonth": 2,
+            "toMonth": 36,
+            "amount": 506
+          },
+          {
+            "fromMonth": 37,
+            "toMonth": null,
+            "amount": 0
+          }
+        ]
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": false,
+      "verificationMethod": "料金ページの月額・申込手数料 ⇔ サポートサイトの料金表（1ギガ3年プラン／10ギガ）の一致、工事費の「初回＋以降×回数」＝一括、特典は対象期間を観測日と照合",
+      "setBenefits": [
+        "auスマートバリュー・UQ自宅セット割: スマホとのセット割。スマホ側の契約が前提のため実質月額には算入しない",
+        "解約金サポート特典: 他社の解約金を補う特典。人により額が違うため算入しない",
+        "光テレビのキャッシュバック: 光テレビの同時申込が条件のため算入しない"
+      ],
+      "verified": true,
+      "observedAt": "2026-11-20T14:26:27.609Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 5616,
+          "total": 134772,
+          "breakdown": {
+            "monthlyTotal": 131472,
+            "adminFee": 3300,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 5570,
+          "total": 200508,
+          "breakdown": {
+            "monthlyTotal": 197208,
+            "adminFee": 3300,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "biglobe-hikari",
+      "providerName": "ビッグローブ光",
+      "channelId": "official",
+      "sourceUrl": "https://join.biglobe.ne.jp/ftth/hikari/price/",
+      "alsoSourcedFrom": [
+        "https://join.biglobe.ne.jp/ftth/hikari/campaign/",
+        "https://support.biglobe.ne.jp/jimu/ryokin/course/bighikari_3years.html"
+      ],
+      "planKey": "1ギガ / 戸建て / 転用",
+      "plan": {
+        "speed": "1ギガ",
+        "building": "戸建て",
+        "entry": "転用"
+      },
+      "contractMonths": 36,
+      "contractNote": "3年プラン（定期利用期間 36か月・自動更新）。更新月等以外の解約は違約金4,100円（不課税）。開通月の扱いは満額で数える（全社共通の規則）。NTT東日本のギガファミリー・スマートタイプ等に相当する回線では機器利用料550円/月が別途かかる（一部の乗り換えのみ・実質月額には未算入）",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 5478
+        }
+      ],
+      "adminFee": 3300,
+      "constructionFee": {
+        "list": 0,
+        "borne": 0,
+        "residualOnEarlyExit": false
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": false,
+      "verificationMethod": "料金ページの月額・申込手数料 ⇔ サポートサイトの料金表（1ギガ3年プラン／10ギガ）の一致、工事費の「初回＋以降×回数」＝一括、特典は対象期間を観測日と照合",
+      "setBenefits": [
+        "auスマートバリュー・UQ自宅セット割: スマホとのセット割。スマホ側の契約が前提のため実質月額には算入しない",
+        "解約金サポート特典: 他社の解約金を補う特典。人により額が違うため算入しない",
+        "光テレビのキャッシュバック: 光テレビの同時申込が条件のため算入しない"
+      ],
+      "verified": true,
+      "observedAt": "2026-11-20T14:26:27.609Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 5616,
+          "total": 134772,
+          "breakdown": {
+            "monthlyTotal": 131472,
+            "adminFee": 3300,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 5570,
+          "total": 200508,
+          "breakdown": {
+            "monthlyTotal": 197208,
+            "adminFee": 3300,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "biglobe-hikari",
+      "providerName": "ビッグローブ光",
+      "channelId": "official",
+      "sourceUrl": "https://join.biglobe.ne.jp/ftth/hikari/price/",
+      "alsoSourcedFrom": [
+        "https://join.biglobe.ne.jp/ftth/hikari/campaign/",
+        "https://support.biglobe.ne.jp/jimu/ryokin/course/bighikari_3years.html"
+      ],
+      "planKey": "1ギガ / 戸建て / 事業者変更",
+      "plan": {
+        "speed": "1ギガ",
+        "building": "戸建て",
+        "entry": "事業者変更"
+      },
+      "contractMonths": 36,
+      "contractNote": "3年プラン（定期利用期間 36か月・自動更新）。更新月等以外の解約は違約金4,100円（不課税）。開通月の扱いは満額で数える（全社共通の規則）。NTT東日本のギガファミリー・スマートタイプ等に相当する回線では機器利用料550円/月が別途かかる（一部の乗り換えのみ・実質月額には未算入）",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 5478
+        }
+      ],
+      "adminFee": 3300,
+      "constructionFee": {
+        "list": 0,
+        "borne": 0,
+        "residualOnEarlyExit": false
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": false,
+      "verificationMethod": "料金ページの月額・申込手数料 ⇔ サポートサイトの料金表（1ギガ3年プラン／10ギガ）の一致、工事費の「初回＋以降×回数」＝一括、特典は対象期間を観測日と照合",
+      "setBenefits": [
+        "auスマートバリュー・UQ自宅セット割: スマホとのセット割。スマホ側の契約が前提のため実質月額には算入しない",
+        "解約金サポート特典: 他社の解約金を補う特典。人により額が違うため算入しない",
+        "光テレビのキャッシュバック: 光テレビの同時申込が条件のため算入しない"
+      ],
+      "verified": true,
+      "observedAt": "2026-11-20T14:26:27.609Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 5616,
+          "total": 134772,
+          "breakdown": {
+            "monthlyTotal": 131472,
+            "adminFee": 3300,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 5570,
+          "total": 200508,
+          "breakdown": {
+            "monthlyTotal": 197208,
+            "adminFee": 3300,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "biglobe-hikari",
+      "providerName": "ビッグローブ光",
+      "channelId": "official",
+      "sourceUrl": "https://join.biglobe.ne.jp/ftth/hikari/price/",
+      "alsoSourcedFrom": [
+        "https://join.biglobe.ne.jp/ftth/hikari/campaign/",
+        "https://support.biglobe.ne.jp/jimu/ryokin/course/bighikari_3years.html"
+      ],
+      "planKey": "1ギガ / マンション / 新規 / 屋内配線を新設する",
+      "plan": {
+        "speed": "1ギガ",
+        "building": "マンション",
+        "entry": "新規",
+        "work": "屋内配線を新設する"
+      },
+      "contractMonths": 36,
+      "contractNote": "3年プラン（定期利用期間 36か月・自動更新）。更新月等以外の解約は違約金3,000円（不課税）。開通月の扱いは満額で数える（全社共通の規則）。NTT東日本のギガファミリー・スマートタイプ等に相当する回線では機器利用料550円/月が別途かかる（一部の乗り換えのみ・実質月額には未算入）",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 4378
+        }
+      ],
+      "adminFee": 3300,
+      "constructionFee": {
+        "list": 28600,
+        "installmentMonths": 36,
+        "monthlySchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": 1,
+            "amount": 880
+          },
+          {
+            "fromMonth": 2,
+            "toMonth": 36,
+            "amount": 792
+          },
+          {
+            "fromMonth": 37,
+            "toMonth": null,
+            "amount": 0
+          }
+        ],
+        "residualOnEarlyExit": true,
+        "note": "屋内配線の有無など設置先の状況で工事の区分が決まる",
+        "discountSchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": 1,
+            "amount": 880
+          },
+          {
+            "fromMonth": 2,
+            "toMonth": 36,
+            "amount": 792
+          },
+          {
+            "fromMonth": 37,
+            "toMonth": null,
+            "amount": 0
+          }
+        ]
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": false,
+      "verificationMethod": "料金ページの月額・申込手数料 ⇔ サポートサイトの料金表（1ギガ3年プラン／10ギガ）の一致、工事費の「初回＋以降×回数」＝一括、特典は対象期間を観測日と照合",
+      "setBenefits": [
+        "auスマートバリュー・UQ自宅セット割: スマホとのセット割。スマホ側の契約が前提のため実質月額には算入しない",
+        "解約金サポート特典: 他社の解約金を補う特典。人により額が違うため算入しない",
+        "光テレビのキャッシュバック: 光テレビの同時申込が条件のため算入しない"
+      ],
+      "verified": true,
+      "observedAt": "2026-11-20T14:26:27.609Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 4516,
+          "total": 108372,
+          "breakdown": {
+            "monthlyTotal": 105072,
+            "adminFee": 3300,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 4470,
+          "total": 160908,
+          "breakdown": {
+            "monthlyTotal": 157608,
+            "adminFee": 3300,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "biglobe-hikari",
+      "providerName": "ビッグローブ光",
+      "channelId": "official",
+      "sourceUrl": "https://join.biglobe.ne.jp/ftth/hikari/price/",
+      "alsoSourcedFrom": [
+        "https://join.biglobe.ne.jp/ftth/hikari/campaign/",
+        "https://support.biglobe.ne.jp/jimu/ryokin/course/bighikari_3years.html"
+      ],
+      "planKey": "1ギガ / マンション / 新規 / 屋内配線を新設しない",
+      "plan": {
+        "speed": "1ギガ",
+        "building": "マンション",
+        "entry": "新規",
+        "work": "屋内配線を新設しない"
+      },
+      "contractMonths": 36,
+      "contractNote": "3年プラン（定期利用期間 36か月・自動更新）。更新月等以外の解約は違約金3,000円（不課税）。開通月の扱いは満額で数える（全社共通の規則）。NTT東日本のギガファミリー・スマートタイプ等に相当する回線では機器利用料550円/月が別途かかる（一部の乗り換えのみ・実質月額には未算入）",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 4378
+        }
+      ],
+      "adminFee": 3300,
+      "constructionFee": {
+        "list": 18260,
+        "installmentMonths": 36,
+        "monthlySchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": 1,
+            "amount": 550
+          },
+          {
+            "fromMonth": 2,
+            "toMonth": 36,
+            "amount": 506
+          },
+          {
+            "fromMonth": 37,
+            "toMonth": null,
+            "amount": 0
+          }
+        ],
+        "residualOnEarlyExit": true,
+        "note": "屋内配線の有無など設置先の状況で工事の区分が決まる",
+        "discountSchedule": [
+          {
+            "fromMonth": 1,
+            "toMonth": 1,
+            "amount": 550
+          },
+          {
+            "fromMonth": 2,
+            "toMonth": 36,
+            "amount": 506
+          },
+          {
+            "fromMonth": 37,
+            "toMonth": null,
+            "amount": 0
+          }
+        ]
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": false,
+      "verificationMethod": "料金ページの月額・申込手数料 ⇔ サポートサイトの料金表（1ギガ3年プラン／10ギガ）の一致、工事費の「初回＋以降×回数」＝一括、特典は対象期間を観測日と照合",
+      "setBenefits": [
+        "auスマートバリュー・UQ自宅セット割: スマホとのセット割。スマホ側の契約が前提のため実質月額には算入しない",
+        "解約金サポート特典: 他社の解約金を補う特典。人により額が違うため算入しない",
+        "光テレビのキャッシュバック: 光テレビの同時申込が条件のため算入しない"
+      ],
+      "verified": true,
+      "observedAt": "2026-11-20T14:26:27.609Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 4516,
+          "total": 108372,
+          "breakdown": {
+            "monthlyTotal": 105072,
+            "adminFee": 3300,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 4470,
+          "total": 160908,
+          "breakdown": {
+            "monthlyTotal": 157608,
+            "adminFee": 3300,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "biglobe-hikari",
+      "providerName": "ビッグローブ光",
+      "channelId": "official",
+      "sourceUrl": "https://join.biglobe.ne.jp/ftth/hikari/price/",
+      "alsoSourcedFrom": [
+        "https://join.biglobe.ne.jp/ftth/hikari/campaign/",
+        "https://support.biglobe.ne.jp/jimu/ryokin/course/bighikari_3years.html"
+      ],
+      "planKey": "1ギガ / マンション / 転用",
+      "plan": {
+        "speed": "1ギガ",
+        "building": "マンション",
+        "entry": "転用"
+      },
+      "contractMonths": 36,
+      "contractNote": "3年プラン（定期利用期間 36か月・自動更新）。更新月等以外の解約は違約金3,000円（不課税）。開通月の扱いは満額で数える（全社共通の規則）。NTT東日本のギガファミリー・スマートタイプ等に相当する回線では機器利用料550円/月が別途かかる（一部の乗り換えのみ・実質月額には未算入）",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 4378
+        }
+      ],
+      "adminFee": 3300,
+      "constructionFee": {
+        "list": 0,
+        "borne": 0,
+        "residualOnEarlyExit": false
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": false,
+      "verificationMethod": "料金ページの月額・申込手数料 ⇔ サポートサイトの料金表（1ギガ3年プラン／10ギガ）の一致、工事費の「初回＋以降×回数」＝一括、特典は対象期間を観測日と照合",
+      "setBenefits": [
+        "auスマートバリュー・UQ自宅セット割: スマホとのセット割。スマホ側の契約が前提のため実質月額には算入しない",
+        "解約金サポート特典: 他社の解約金を補う特典。人により額が違うため算入しない",
+        "光テレビのキャッシュバック: 光テレビの同時申込が条件のため算入しない"
+      ],
+      "verified": true,
+      "observedAt": "2026-11-20T14:26:27.609Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 4516,
+          "total": 108372,
+          "breakdown": {
+            "monthlyTotal": 105072,
+            "adminFee": 3300,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 4470,
+          "total": 160908,
+          "breakdown": {
+            "monthlyTotal": 157608,
+            "adminFee": 3300,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "biglobe-hikari",
+      "providerName": "ビッグローブ光",
+      "channelId": "official",
+      "sourceUrl": "https://join.biglobe.ne.jp/ftth/hikari/price/",
+      "alsoSourcedFrom": [
+        "https://join.biglobe.ne.jp/ftth/hikari/campaign/",
+        "https://support.biglobe.ne.jp/jimu/ryokin/course/bighikari_3years.html"
+      ],
+      "planKey": "1ギガ / マンション / 事業者変更",
+      "plan": {
+        "speed": "1ギガ",
+        "building": "マンション",
+        "entry": "事業者変更"
+      },
+      "contractMonths": 36,
+      "contractNote": "3年プラン（定期利用期間 36か月・自動更新）。更新月等以外の解約は違約金3,000円（不課税）。開通月の扱いは満額で数える（全社共通の規則）。NTT東日本のギガファミリー・スマートタイプ等に相当する回線では機器利用料550円/月が別途かかる（一部の乗り換えのみ・実質月額には未算入）",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 4378
+        }
+      ],
+      "adminFee": 3300,
+      "constructionFee": {
+        "list": 0,
+        "borne": 0,
+        "residualOnEarlyExit": false
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": false,
+      "verificationMethod": "料金ページの月額・申込手数料 ⇔ サポートサイトの料金表（1ギガ3年プラン／10ギガ）の一致、工事費の「初回＋以降×回数」＝一括、特典は対象期間を観測日と照合",
+      "setBenefits": [
+        "auスマートバリュー・UQ自宅セット割: スマホとのセット割。スマホ側の契約が前提のため実質月額には算入しない",
+        "解約金サポート特典: 他社の解約金を補う特典。人により額が違うため算入しない",
+        "光テレビのキャッシュバック: 光テレビの同時申込が条件のため算入しない"
+      ],
+      "verified": true,
+      "observedAt": "2026-11-20T14:26:27.609Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 4516,
+          "total": 108372,
+          "breakdown": {
+            "monthlyTotal": 105072,
+            "adminFee": 3300,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 4470,
+          "total": 160908,
+          "breakdown": {
+            "monthlyTotal": 157608,
+            "adminFee": 3300,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 {
-  "checkedAt": "2026-11-20T14:06:48.043Z",
+  "checkedAt": "2026-11-20T14:27:43.162Z",
   "summary": {
-    "total": 18,
-    "ok": 18,
+    "total": 22,
+    "ok": 22,
     "failed": 0,
     "escalated": [],
     "excludedProviders": [
@@ -34,7 +34,7 @@
       "httpStatus": 200,
       "hits": 201,
       "bytes": 145802,
-      "elapsedMs": 759,
+      "elapsedMs": 627,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -49,7 +49,7 @@
       "httpStatus": 200,
       "hits": 312,
       "bytes": 204121,
-      "elapsedMs": 936,
+      "elapsedMs": 743,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -64,11 +64,71 @@
       "httpStatus": 200,
       "hits": 109,
       "bytes": 14169,
-      "elapsedMs": 2475,
+      "elapsedMs": 2304,
       "feeds": [
         "https://www.nuro.jp/assets/inc/news-release/list-generated.json",
         "https://www.nuro.jp/assets/inc/news-release/list-editorial.html"
       ],
+      "consecutiveFailures": 0,
+      "staleSince": null
+    },
+    {
+      "providerId": "biglobe-hikari",
+      "providerName": "ビッグローブ光",
+      "url": "https://join.biglobe.ne.jp/ftth/hikari/price/",
+      "type": "pricing",
+      "status": "ok",
+      "detail": null,
+      "httpStatus": 200,
+      "hits": 65,
+      "bytes": 54352,
+      "elapsedMs": 46,
+      "robotsNote": "該当ルールなし",
+      "consecutiveFailures": 0,
+      "staleSince": null
+    },
+    {
+      "providerId": "biglobe-hikari",
+      "providerName": "ビッグローブ光",
+      "url": "https://join.biglobe.ne.jp/ftth/hikari/campaign/",
+      "type": "pricing",
+      "status": "ok",
+      "detail": null,
+      "httpStatus": 200,
+      "hits": 33,
+      "bytes": 82976,
+      "elapsedMs": 21,
+      "robotsNote": "該当ルールなし",
+      "consecutiveFailures": 0,
+      "staleSince": null
+    },
+    {
+      "providerId": "biglobe-hikari",
+      "providerName": "ビッグローブ光",
+      "url": "https://support.biglobe.ne.jp/jimu/ryokin/course/bighikari_3years.html",
+      "type": "pricing",
+      "status": "ok",
+      "detail": null,
+      "httpStatus": 200,
+      "hits": 40,
+      "bytes": 31767,
+      "elapsedMs": 552,
+      "robotsNote": "該当ルールなし",
+      "consecutiveFailures": 0,
+      "staleSince": null
+    },
+    {
+      "providerId": "biglobe-hikari",
+      "providerName": "ビッグローブ光",
+      "url": "https://support.biglobe.ne.jp/jimu/ryokin/course/bighikari_10g.html",
+      "type": "pricing",
+      "status": "ok",
+      "detail": null,
+      "httpStatus": 200,
+      "hits": 40,
+      "bytes": 32584,
+      "elapsedMs": 141,
+      "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
     },
@@ -82,7 +142,7 @@
       "httpStatus": 200,
       "hits": 24,
       "bytes": 23305,
-      "elapsedMs": 795,
+      "elapsedMs": 145,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -97,7 +157,7 @@
       "httpStatus": 200,
       "hits": 81,
       "bytes": 95874,
-      "elapsedMs": 12,
+      "elapsedMs": 206,
       "robotsNote": "Allow: /",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -112,7 +172,7 @@
       "httpStatus": 200,
       "hits": 42,
       "bytes": 31249,
-      "elapsedMs": 1138,
+      "elapsedMs": 1062,
       "robotsNote": "Allow: /",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -127,7 +187,7 @@
       "httpStatus": 200,
       "hits": 79,
       "bytes": 159405,
-      "elapsedMs": 244,
+      "elapsedMs": 384,
       "robotsNote": "robots.txt なし（制限なしとみなす）",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -142,7 +202,7 @@
       "httpStatus": 200,
       "hits": 22,
       "bytes": 172854,
-      "elapsedMs": 391,
+      "elapsedMs": 351,
       "robotsNote": "robots.txt なし（制限なしとみなす）",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -157,7 +217,7 @@
       "httpStatus": 200,
       "hits": 22,
       "bytes": 232825,
-      "elapsedMs": 451,
+      "elapsedMs": 437,
       "robotsNote": "robots.txt なし（制限なしとみなす）",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -172,7 +232,7 @@
       "httpStatus": 200,
       "hits": 33,
       "bytes": 212933,
-      "elapsedMs": 443,
+      "elapsedMs": 616,
       "robotsNote": "robots.txt なし（制限なしとみなす）",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -187,7 +247,7 @@
       "httpStatus": 200,
       "hits": 25,
       "bytes": 126066,
-      "elapsedMs": 282,
+      "elapsedMs": 374,
       "robotsNote": "robots.txt なし（制限なしとみなす）",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -202,7 +262,7 @@
       "httpStatus": 200,
       "hits": 4,
       "bytes": 82978,
-      "elapsedMs": 1345,
+      "elapsedMs": 1639,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -217,7 +277,7 @@
       "httpStatus": 200,
       "hits": 109,
       "bytes": 99303,
-      "elapsedMs": 48,
+      "elapsedMs": 162,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -232,7 +292,7 @@
       "httpStatus": 200,
       "hits": 19,
       "bytes": 314952,
-      "elapsedMs": 13,
+      "elapsedMs": 37,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -247,7 +307,7 @@
       "httpStatus": 200,
       "hits": 8,
       "bytes": 32231,
-      "elapsedMs": 666,
+      "elapsedMs": 577,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -262,7 +322,7 @@
       "httpStatus": 200,
       "hits": 10,
       "bytes": 36927,
-      "elapsedMs": 772,
+      "elapsedMs": 478,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -277,7 +337,7 @@
       "httpStatus": 200,
       "hits": 6,
       "bytes": 31051,
-      "elapsedMs": 161,
+      "elapsedMs": 275,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -292,7 +352,7 @@
       "httpStatus": 200,
       "hits": 63,
       "bytes": 112177,
-      "elapsedMs": 764,
+      "elapsedMs": 572,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
