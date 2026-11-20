@@ -29,6 +29,11 @@
       "name": "株式会社NTTドコモ",
       "source": "https://www.docomo.ne.jp/corporate/about/outline/",
       "confirmedAt": "2026-10-01"
+    },
+    "biglobe-hikari": {
+      "name": "ビッグローブ株式会社",
+      "source": "https://support.biglobe.ne.jp/tokusyo.html",
+      "confirmedAt": "2026-11-20"
     }
   }
 }

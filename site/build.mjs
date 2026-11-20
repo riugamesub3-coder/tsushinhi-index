@@ -426,7 +426,8 @@ function rowNotes(o) {
   // 工事の区分は、プラン名に含まれていないときだけ印にする（同じ語を2度出さない）
   if (o.plan?.work && !planName(o).includes(o.plan.work)) notes.push(o.plan.work);
   if (o.setBenefits?.length) notes.push('一部の特典は不算入');
-  if (o.constructionFee?.note) notes.push('工事費は公式の代表例');
+  // 印は「公式が代表例として示す額」のときだけ（ドコモ光）。ほかの工事費の説明はプランページにだけ出す
+  if (/代表例/.test(o.constructionFee?.note ?? '')) notes.push('工事費は公式の代表例');
   if (o.stale && !o.paused) notes.push(`${o.stale.days}日前から取得できていません`);
   return notes;
 }
@@ -1499,7 +1500,11 @@ ${raw(o.constructionFee ? html`
   <p>
     ${raw(typeof o.constructionFee.list === 'number'
       // ★定価が読めていないときに「定価 —。」とは書かない。
-      ? html`定価 ${yen(o.constructionFee.list)}${raw(o.constructionFee.installmentMonths ? html`／${o.constructionFee.installmentMonths}回の分割` : '')}。`
+      ? html`定価 ${yen(o.constructionFee.list)}${raw(o.constructionFee.installmentMonths ? html`／${o.constructionFee.installmentMonths}回の分割` : '')}。${raw(
+        // ★定価だけ書くと、それが総額に入っているように読める。値引きで実負担が下がるときは必ず併記する
+        typeof b?.constructionBorne === 'number' && b.constructionBorne < o.constructionFee.list
+          ? html`このうち${HORIZON}か月の計算に入れている実負担は<strong>${yen(b.constructionBorne)}</strong>です（公式の工事費の値引き特典による）。`
+          : '')}`
       : html`<strong>工事費の定価を出典ページから読み取れていません。</strong>実質月額には、出典に書かれている割引後の実負担額（${yen(b?.constructionBorne ?? 0)}）を入れています。`)}
     ${raw(o.constructionFee.residualOnEarlyExit ? '<strong>分割の途中で解約すると、残りの工事費が請求されます。</strong>この金額は3年使い続ける前提で、途中解約の費用は入っていません。' : '')}
   </p>

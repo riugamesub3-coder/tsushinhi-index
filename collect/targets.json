@@ -44,8 +44,24 @@
       "id": "biglobe-hikari",
       "name": "ビッグローブ光",
       "status": "verified",
-      "note": "お知らせ日付71件。料金ページURLは未特定",
+      "note": "2026-11-20 料金収集を開始。料金ページ・特典ページ（対象期間つき）・サポート料金表2枚（検算用）を collect/adapters/biglobe-hikari.mjs が読む",
       "pages": [
+        {
+          "url": "https://join.biglobe.ne.jp/ftth/hikari/price/",
+          "type": "pricing"
+        },
+        {
+          "url": "https://join.biglobe.ne.jp/ftth/hikari/campaign/",
+          "type": "pricing"
+        },
+        {
+          "url": "https://support.biglobe.ne.jp/jimu/ryokin/course/bighikari_3years.html",
+          "type": "pricing"
+        },
+        {
+          "url": "https://support.biglobe.ne.jp/jimu/ryokin/course/bighikari_10g.html",
+          "type": "pricing"
+        },
         {
           "url": "https://support.biglobe.ne.jp/news/",
           "type": "notice",

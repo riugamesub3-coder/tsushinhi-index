@@ -799,3 +799,86 @@ test('本文が空の 200 は成功にしない（CI だけ0Bが返った実例�
     globalThis.fetch = realFetch;
   }
 });
+
+// ── ビッグローブ光（2026-11-20 追加） ────────────────────────────
+
+import { extractAll as biglobeExtractAll } from './adapters/biglobe-hikari.mjs';
+
+const bgPrice = ({ house1g = '5,478' } = {}) => `<main>
+<p>一戸建ての月額料金 （ファミリー10ギガタイプ／ファミリー1ギガタイプ） 家族で使うなら 10 ギガ （2年） 月額 6,270 円 お手軽に使うなら 1 ギガ （3年） 月額 ${house1g} 円</p>
+<p>集合住宅の月額料金 （マンション10ギガタイプ／マンション1ギガタイプ） 家族で使うなら 10 ギガ （2年） 月額 6,270 円 お手軽に使うなら 1 ギガ （3年） 月額 4,378 円</p>
+<p>乗り換えの場合（フレッツ光、コラボ光） 工事費不要</p>
+<p>申込手数料/事業者変更受入手数料 回線の種類 10ギガ（2年） 1ギガ（3年） 回線新規 1,100円 3,300円 転用 2,200円 3,300円 事業者変更 3,300円 3,300円</p>
+<p>マンション10ギガタイプ ファミリー10ギガタイプ 工事費 一括 分割 屋内配線を新設する 28,600円 初回：1,276円 以降：1,188円×23回 屋内配線を新設しない 18,260円 初回：803円 以降：759円×23回 派遣工事なし 3,300円</p>
+<p>マンション1ギガタイプ 工事費 一括 分割 屋内配線を新設する *1 28,600円 初回：880円 以降：792円×35回 屋内配線を新設しない *2 18,260円 初回：550円 以降：506円×35回 派遣工事なし 3,300円</p>
+<p>ファミリー1ギガタイプ 工事費 一括 分割 屋内配線を新設する 28,600円 初回：880円 以降：792円×35回 屋内配線を新設しない 18,260円 初回：550円 以降：506円×35回 派遣工事なし 3,300円</p>
+</main>`;
+const bgBlock = (title, body) => `<section><h3>${title}</h3><p>特典概要</p><p>${body}</p></section>`;
+const bgCampaign = (extra = '') => `<main>
+${bgBlock('BIGLOBE光 10ギガタイプ（2年プラン）新規工事費実質無料特典', '■新規工事費実質無料特典 対象期間 2025年1月6日～ 当社は')}
+${bgBlock('BIGLOBE光 1ギガタイプ（3年プラン）新規工事費実質無料特典', '■新規工事費実質無料特典 対象期間 2025年1月6日～ 当社は')}
+${bgBlock('タイプ変更工事費無料特典', '■タイプ変更工事費無料特典 対象期間 2026年4月23日～ 当社は')}
+${bgBlock('BIGLOBE光 10ギガタイプ（2年プラン）キャッシュバック特典', '■55,000円キャッシュバック（口座送金） 課金開始月を1カ月目として12カ月目55,000円キャッシュバック 対象期間 2026年4月1日～2026年9月30日 当社は')}
+${bgBlock('10ギガ BIGLOBE光テレビ キャッシュバック特典', '■BIGLOBE光テレビ キャッシュバック特典 対象期間 2025年1月6日～ 当社は')}
+${extra}
+</main>`;
+const bgPages = (o = {}) => [
+  { url: 'https://join.biglobe.ne.jp/ftth/hikari/price/', html: bgPrice(o) },
+  { url: 'https://join.biglobe.ne.jp/ftth/hikari/campaign/', html: bgCampaign(o.extra) },
+  { url: 'https://support.biglobe.ne.jp/jimu/ryokin/course/bighikari_3years.html', html: '<p>初期費用 申込手数料/事業者変更受入手数料 3,300円</p><p>月額基本料金 ファミリータイプ 5,478円/月 マンションタイプ 4,378円/月</p>' },
+  { url: 'https://support.biglobe.ne.jp/jimu/ryokin/course/bighikari_10g.html', html: '<p>申込手数料（回線新規） 1,100円 申込手数料（回線転用） 2,200円 事業者変更受入手数料 3,300円</p><p>月額基本料金 ファミリー10ギガタイプ マンション10ギガタイプ 6,270円/月</p>' },
+];
+const bgFind = (r, key) => r.offers.find((o) => o.planKey === key);
+
+test('ビッグローブ光: 対象期間が終わったキャッシュバックは数えない（画面には表示されたまま残っていた実例）', () => {
+  const r = biglobeExtractAll(bgPages(), { now: new Date('2026-11-20T03:00:00Z') });
+  assert.deepEqual(r.warnings, []);
+  assert.equal(r.offers.length, 16);
+  const o = bgFind(r, '10ギガ / 戸建て / 新規 / 屋内配線を新設する');
+  assert.deepEqual(o.cashbacks, []);
+  assert.equal(o.verified, true);
+  // 新規工事費は分割相当を毎月値引き → 実負担0。月額6,270×36＋手数料1,100
+  assert.equal(computeEffectiveMonthly(o, 36).effectiveMonthly, Math.round((6270 * 36 + 1100) / 36));
+});
+
+test('ビッグローブ光: 対象期間内のキャッシュバックは数える（期間の最終日を含む）', () => {
+  const r = biglobeExtractAll(bgPages(), { now: new Date('2026-09-30T14:00:00Z') }); // 日本時間 9/30 23時
+  const o = bgFind(r, '10ギガ / 戸建て / 転用');
+  assert.deepEqual(o.cashbacks.map((c) => [c.amount, c.receiveAtMonth]), [[55000, 12]]);
+  // 光テレビの特典は条件付きなので数えない
+  assert.equal(bgFind(r, '1ギガ / 戸建て / 転用').cashbacks.length, 0);
+});
+
+test('ビッグローブ光: 期間内なのに分類できないキャッシュバック特典があれば検算失敗にする', () => {
+  const extra = bgBlock('乗り換えキャッシュバック特典', '■10,000円キャッシュバック 対象期間 2026年11月1日～ 当社は');
+  const r = biglobeExtractAll(bgPages({ extra }), { now: new Date('2026-11-20T03:00:00Z') });
+  assert.ok(r.offers.length > 0);
+  assert.ok(r.offers.every((o) => o.verified === false));
+});
+
+test('ビッグローブ光: 料金ページとサポート料金表の月額が食い違えば検算失敗にする', () => {
+  const r = biglobeExtractAll(bgPages({ house1g: '5,500' }), { now: new Date('2026-11-20T03:00:00Z') });
+  assert.equal(bgFind(r, '1ギガ / 戸建て / 新規 / 屋内配線を新設する').verified, false);
+  assert.equal(bgFind(r, '1ギガ / マンション / 新規 / 屋内配線を新設する').verified, true);
+});
+
+// critic（2026-11-20）が再現した「ページが少し変わると間違った数字が verified=true で出る」3件の回帰テスト
+const bgAt = (extra) => biglobeExtractAll(bgPages({ extra }), { now: new Date('2026-11-20T03:00:00Z') });
+
+test('ビッグローブ光: 終了日が別の書き方（～9月30日）でも、終わった特典を有効と読まない', () => {
+  const extra = bgBlock('BIGLOBE光 1ギガタイプ（3年プラン）キャッシュバック特典', '■35,000円キャッシュバック（口座送金） 課金開始月を1カ月目として12カ月目35,000円キャッシュバック 対象期間 2026年6月1日～9月30日 当社は');
+  const o = bgFind(bgAt(extra), '1ギガ / 戸建て / 転用');
+  assert.notEqual(o.verified && o.cashbacks?.length > 0, true); // 黙って35,000円を数えない
+  assert.equal(o.cashbacks, null);
+});
+
+test('ビッグローブ光: 対象者が申込区分を限るキャッシュバックは、全区分に配らず止める', () => {
+  const extra = bgBlock('BIGLOBE光 1ギガタイプ（3年プラン）キャッシュバック特典', '■35,000円キャッシュバック（口座送金） 課金開始月を1カ月目として12カ月目35,000円キャッシュバック 対象期間 2026年11月1日～ 当社は 対象者 ・対象期間中に回線新規でお申し込みいただいた方。');
+  const o = bgFind(bgAt(extra), '1ギガ / 戸建て / 転用');
+  assert.equal(o.cashbacks, null);
+});
+
+test('ビッグローブ光: 見出しにキャッシュバックが無い割引特典も、分類できなければ検算失敗にする', () => {
+  const extra = bgBlock('BIGLOBE光 1ギガタイプ（3年プラン）月額割引特典', '■月額料金から毎月1,000円割引 対象期間 2026年11月1日～ 当社は');
+  assert.ok(bgAt(extra).offers.every((o) => o.verified === false));
+});
