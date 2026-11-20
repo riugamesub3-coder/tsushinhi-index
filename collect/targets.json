@@ -243,6 +243,23 @@
       "status": "excluded",
       "note": "⛔ 対象外。robots.txt 自体が Cloudflare の bot チャレンジで保護されており、自動アクセスを望まない明確な意思表示と判断した。技術的に回避可能かどうかにかかわらず対象にしない",
       "pages": []
+    },
+    {
+      "id": "rakuten-mobile",
+      "name": "楽天モバイル",
+      "category": "mobile",
+      "status": "verified",
+      "note": "2026-11-21 追加（スマホ料金の最初の1社）。robots.txt は * に Allow: / のみ。サイトポリシーは楽天ひかりと同じ（条件付き可・ルール2厳守）。料金ページの「※通常価格：…」の1文に3段階＋U-NEXTが税抜・税込で載る。手数料ページで契約事務手数料と月額最低利用金額（3GBまでの額の検算）を読む。お知らせ一覧は未特定のため未登録（楽天ひかりが監視しているのは光回線専用の /hikari/information/）",
+      "pages": [
+        {
+          "url": "https://network.mobile.rakuten.co.jp/fee/saikyo-plan/",
+          "type": "pricing"
+        },
+        {
+          "url": "https://network.mobile.rakuten.co.jp/guide/commission/",
+          "type": "pricing"
+        }
+      ]
     }
   ]
 }

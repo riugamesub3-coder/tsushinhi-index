@@ -882,3 +882,73 @@ test('ビッグローブ光: 見出しにキャッシュバックが無い割引
   const extra = bgBlock('BIGLOBE光 1ギガタイプ（3年プラン）月額割引特典', '■月額料金から毎月1,000円割引 対象期間 2026年11月1日～ 当社は');
   assert.ok(bgAt(extra).offers.every((o) => o.verified === false));
 });
+
+// ── 楽天モバイル（スマホ料金・2026-11-21 追加） ─────────────────────────
+import { extractAll as rmExtractAll, readTiers as rmReadTiers } from './adapters/rakuten-mobile.mjs';
+
+const RM_PLAN_URL = 'https://network.mobile.rakuten.co.jp/fee/saikyo-plan/';
+const RM_FEE_URL = 'https://network.mobile.rakuten.co.jp/guide/commission/';
+const rmPlan = (sentence = '※通常価格：Rakuten最強プランはデータ3GBまで980円（税込1,078円）、3GB超過後20GBまで1,980円（税込2,178円）、20GB超過後は2,980円（税込3,278円）。Rakuten最強U-NEXTはデータ利用量にかかわらず、3,980円（税込4,378円）') =>
+  `<html><body><p>家族と一緒に使ったとき</p><p>110円引き</p><p>${sentence}</p><script>var x="税込9,999円";</script></body></html>`;
+const rmFee = ({ admin = '<td>契約事務手数料</td><td>0円（税込0円）</td>', min = '最大980円（税込1,078円）' } = {}) =>
+  `<table><tr>${admin}</tr><tr><td>解約事務手数料（回線利用開始から 1年以内）</td><td>Rakuten最強プラン：プラン料金の月額最低利用金額の1カ月分： ${min}※1</td></tr></table>`;
+const rmRun = (plan = rmPlan(), fee = rmFee()) => rmExtractAll([{ url: RM_PLAN_URL, html: plan }, { url: RM_FEE_URL, html: fee }]);
+
+test('楽天モバイル: 3段階＋U-NEXT を税込で4件に開き、データ量の段を数値で持つ', () => {
+  const { offers, warnings } = rmRun();
+  assert.deepEqual(warnings, []);
+  assert.deepEqual(offers.map((o) => [o.planKey, o.monthlySchedule[0].amount, o.plan.dataFromGb, o.plan.dataToGb, o.verified]), [
+    ['Rakuten最強プラン / 3GBまで', 1078, 0, 3, true],
+    ['Rakuten最強プラン / 3GB超〜20GB', 2178, 3, 20, true],
+    ['Rakuten最強プラン / 20GB超', 3278, 20, null, true],
+    ['Rakuten最強U-NEXT', 4378, 0, null, true],
+  ]);
+  assert.equal(offers[0].category, 'mobile');
+  assert.equal(offers[0].adminFee, 0);
+});
+
+test('楽天モバイル: 工事費は「0円・工事なし」を明示して渡すので、実質月額は月額と一致する', () => {
+  const o = rmRun().offers[0];
+  const r = computeEffectiveMonthly(o, 36);
+  assert.deepEqual(r.missing, []);
+  assert.equal(r.effectiveMonthly, 1078);
+});
+
+test('楽天モバイル: 家族割はセット特典として残し、実質月額に算入しない', () => {
+  const o = rmRun().offers[0];
+  assert.equal(o.setBenefits.length, 1);
+  assert.equal(computeEffectiveMonthly(o, 36).breakdown.otherDiscounts, 0);
+});
+
+test('楽天モバイル: 段が1つでも読めなければ1件も出さない（段をずらして出さない）', () => {
+  const broken = rmPlan('※通常価格：Rakuten最強プランはデータ3GBまで980円（税込1,078円）、20GB超過後は2,980円（税込3,278円）。Rakuten最強U-NEXTはデータ利用量にかかわらず、3,980円（税込4,378円）');
+  const { offers, warnings } = rmRun(broken);
+  assert.equal(offers.length, 0);
+  assert.equal(warnings.length, 1);
+  assert.equal(rmReadTiers('Rakuten最強プランはデータ3GBまで980円'), null);
+});
+
+test('楽天モバイル: 税抜×1.1 と税込が合わなければ検算失敗', () => {
+  const bad = rmPlan('※通常価格：Rakuten最強プランはデータ3GBまで980円（税込1,078円）、3GB超過後20GBまで1,980円（税込2,278円）、20GB超過後は2,980円（税込3,278円）。Rakuten最強U-NEXTはデータ利用量にかかわらず、3,980円（税込4,378円）');
+  const o = rmRun(bad).offers.find((x) => x.planKey === 'Rakuten最強プラン / 3GB超〜20GB');
+  assert.equal(o.verified, false);
+  assert.ok(rmRun(bad).offers.filter((x) => x.verified).length === 3);
+});
+
+test('楽天モバイル: 手数料ページの月額最低利用金額と3GBまでの額が食い違えば検算失敗', () => {
+  const o = rmRun(rmPlan(), rmFee({ min: '最大1,080円（税込1,188円）' })).offers[0];
+  assert.equal(o.verified, false);
+  assert.match(o.mismatch[0], /1188/);
+});
+
+test('楽天モバイル: 契約事務手数料が読めなければ adminFee=null（0円と読み替えない）で実質月額も null', () => {
+  const { offers } = rmRun(rmPlan(), rmFee({ admin: '<td>事務手数料</td><td>無料</td>' }));
+  assert.equal(offers[0].adminFee, null);
+  assert.equal(offers[0].verified, false);
+  assert.equal(computeEffectiveMonthly(offers[0], 36).effectiveMonthly, null);
+});
+
+test('楽天モバイル: 手数料ページが targets に無ければ何も出さない', () => {
+  const { offers } = rmExtractAll([{ url: RM_PLAN_URL, html: rmPlan() }]);
+  assert.equal(offers.length, 0);
+});

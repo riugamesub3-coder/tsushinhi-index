@@ -22,8 +22,17 @@ import { loadFailureState, saveFailureState, recordOutcome, shouldFail, reportFa
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
-const OUT_DIR = join(ROOT, 'data', 'effective');
-const EVENT_DIR = join(ROOT, 'data', 'effective-changes');
+// ★スマホ（category: "mobile"）は別ディレクトリに出す。
+//   site/build.mjs と site/verify.mjs は data/effective/ の全ファイルを「光回線」として順位に入れる。
+//   同じ場所に置くと、楽天モバイルの月額が光回線の安い順に混ざる（2026-11-21 に読んで確認）。
+//   光回線は従来どおり data/effective/ のまま（公開データのパスを変えない）。
+function dirsFor(category) {
+  if (!category || category === 'hikari') {
+    return { out: join(ROOT, 'data', 'effective'), events: join(ROOT, 'data', 'effective-changes') };
+  }
+  if (!/^[a-z]+$/.test(category)) throw new Error(`targets.json の category が不正: ${category}`);
+  return { out: join(ROOT, 'data', category, 'effective'), events: join(ROOT, 'data', category, 'effective-changes') };
+}
 
 const DELAY_MS = 1500;
 
@@ -63,7 +72,14 @@ async function main() {
       results.push({ providerId: adapter.providerId, status: 'no-target' });
       continue;
     }
-    results.push(await runAdapter(adapter, urls, dryRun));
+    // カテゴリは targets.json とアダプタの両方に書く。食い違ったら書き出し先が決まらないので止める
+    const category = target?.category ?? 'hikari';
+    if ((adapter.category ?? 'hikari') !== category) {
+      console.log(`❌ ${adapter.providerId} — category が targets.json（${category}）とアダプタ（${adapter.category ?? 'hikari'}）で違う`);
+      results.push({ providerId: adapter.providerId, status: 'category-mismatch' });
+      continue;
+    }
+    results.push(await runAdapter(adapter, urls, dryRun, category));
   }
 
   report(results);
@@ -110,7 +126,8 @@ async function loadAdapters(only) {
   return out;
 }
 
-async function runAdapter(adapter, urls, dryRun) {
+async function runAdapter(adapter, urls, dryRun, category = 'hikari') {
+  const { out: OUT_DIR, events: EVENT_DIR } = dirsFor(category);
   const offers = [];
   const notices = new Set();
   const warnings = [];
@@ -217,6 +234,7 @@ async function runAdapter(adapter, urls, dryRun) {
     providerId: adapter.providerId,
     providerName: adapter.providerName,
     channelId: adapter.channelId ?? 'official',
+    category,
     observedAt: now,
     formula: FORMULA_TEXT,
     primaryHorizonMonths: PRIMARY,
@@ -242,7 +260,7 @@ async function runAdapter(adapter, urls, dryRun) {
 
   if (!dryRun) {
     await writeJson(join(OUT_DIR, `${adapter.providerId}.json`), snapshot);
-    if (events.length) await appendEvents(adapter, snapshot, events);
+    if (events.length) await appendEvents(adapter, snapshot, events, EVENT_DIR);
   }
 
   const broken = priced.filter((o) => !o.verified).length;
@@ -396,7 +414,7 @@ async function writeJson(path, data) {
   await writeFile(path, JSON.stringify(data, null, 2) + '\n', 'utf8');
 }
 
-async function appendEvents(adapter, snapshot, events) {
+async function appendEvents(adapter, snapshot, events, EVENT_DIR) {
   const path = join(EVENT_DIR, `${adapter.providerId}.json`);
   const store = (await loadJson(path)) ?? {
     providerId: adapter.providerId,
