@@ -5,6 +5,37 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-11-20",
+      "title": "【ドコモFG】「dカード プリペイド」のサービスを2027年9月30日に終了",
+      "url": "https://www.docomo-fg.com/info/news_release/20261120_001.html",
+      "categories": [
+        "service-end"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-11-20T02:22:07.911Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-11-19",
+      "title": "「Amazon ブラックフライデー」に合わせて、dポイントと「d払い」でのお買物がよりおトクになる2つのキャンペーンを開催！（PDF形式：558KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261119_x1.pdf",
+      "categories": [
+        "campaign"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-11-20T02:22:07.911Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-11-19",
+      "title": "「ドコモ光／ahamo光 10ギガ 1年まるっと割」を2026年12月1日から開始（PDF形式：957KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261119_g1.pdf",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-11-20T02:22:07.911Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-11-17",
       "title": "【ドコモFG】国内のクレジットカード会社22社と日本クレジットカード協会でフィッシングに関する注意喚起を実施",
       "url": "https://www.docomo-fg.com/info/news_release/20261117_001.html",
@@ -947,6 +978,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-11-19T02:37:22.058Z",
-  "totalNotices": 98
+  "lastCollectedAt": "2026-11-20T02:22:07.911Z",
+  "totalNotices": 101
 }
