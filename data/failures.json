@@ -1,15 +1,15 @@
 {
-  "updatedAt": "2026-11-20T13:18:47.458Z",
+  "updatedAt": "2026-11-20T14:06:48.044Z",
   "sources": {
     "effective:nuro-hikari": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:18:02.413Z",
+      "lastOkAt": "2026-11-20T14:06:02.689Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "effective:rakuten-hikari": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:18:02.413Z",
+      "lastOkAt": "2026-11-20T14:06:02.689Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
@@ -23,61 +23,61 @@
     },
     "health:https://www.nuro.jp/hikari/house/price/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:18:47.456Z",
+      "lastOkAt": "2026-11-20T14:06:48.043Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://www.nuro.jp/hikari/mansion/price/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:18:47.456Z",
+      "lastOkAt": "2026-11-20T14:06:48.043Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://www.nuro.jp/news_release/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:18:47.456Z",
+      "lastOkAt": "2026-11-20T14:06:48.043Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://support.biglobe.ne.jp/news/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:18:47.456Z",
+      "lastOkAt": "2026-11-20T14:06:48.043Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://network.mobile.rakuten.co.jp/hikari/fee/pricelist/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:18:47.456Z",
+      "lastOkAt": "2026-11-20T14:06:48.043Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://network.mobile.rakuten.co.jp/hikari/information/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:18:47.456Z",
+      "lastOkAt": "2026-11-20T14:06:48.043Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://www.docomo.ne.jp/internet/hikari/charge/type_c/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:18:47.456Z",
+      "lastOkAt": "2026-11-20T14:06:48.043Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://www.docomo.ne.jp/internet/hikari/charge/10g_type_c/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:18:47.456Z",
+      "lastOkAt": "2026-11-20T14:06:48.043Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://www.docomo.ne.jp/info/news_release/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:18:47.456Z",
+      "lastOkAt": "2026-11-20T14:06:48.043Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://flets-w.com/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:18:47.456Z",
+      "lastOkAt": "2026-11-20T14:06:48.043Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
@@ -91,73 +91,73 @@
     },
     "health:https://www.softbank.jp/ybb/sbhikari/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:18:47.456Z",
+      "lastOkAt": "2026-11-20T14:06:48.043Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://www.au.com/internet/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:18:47.456Z",
+      "lastOkAt": "2026-11-20T14:06:48.043Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://eonet.jp/go/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:18:47.456Z",
+      "lastOkAt": "2026-11-20T14:06:48.043Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://flets.com/flets-hikari/next/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:18:47.456Z",
+      "lastOkAt": "2026-11-20T14:06:48.043Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://flets.com/flets-hikari/priceplan/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:18:47.456Z",
+      "lastOkAt": "2026-11-20T14:06:48.043Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://setsuzoku.nifty.com/niftyhikari/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:18:47.456Z",
+      "lastOkAt": "2026-11-20T14:06:48.043Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "prices:https://www.nuro.jp/hikari/house/price/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:17:46.482Z",
+      "lastOkAt": "2026-11-20T14:05:46.966Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "prices:https://www.nuro.jp/hikari/mansion/price/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:17:46.482Z",
+      "lastOkAt": "2026-11-20T14:05:46.966Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "prices:https://network.mobile.rakuten.co.jp/hikari/fee/pricelist/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:17:46.482Z",
+      "lastOkAt": "2026-11-20T14:05:46.966Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "prices:https://www.docomo.ne.jp/internet/hikari/charge/type_c/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:17:46.482Z",
+      "lastOkAt": "2026-11-20T14:05:46.966Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "prices:https://www.docomo.ne.jp/internet/hikari/charge/10g_type_c/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:17:46.482Z",
+      "lastOkAt": "2026-11-20T14:05:46.966Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "prices:https://flets-w.com/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:17:46.482Z",
+      "lastOkAt": "2026-11-20T14:05:46.966Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
@@ -171,37 +171,37 @@
     },
     "prices:https://www.softbank.jp/ybb/sbhikari/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:17:46.482Z",
+      "lastOkAt": "2026-11-20T14:05:46.966Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "prices:https://www.au.com/internet/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:17:46.482Z",
+      "lastOkAt": "2026-11-20T14:05:46.966Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "prices:https://eonet.jp/go/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:17:46.482Z",
+      "lastOkAt": "2026-11-20T14:05:46.966Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "prices:https://flets.com/flets-hikari/next/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:17:46.482Z",
+      "lastOkAt": "2026-11-20T14:05:46.966Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "prices:https://flets.com/flets-hikari/priceplan/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:17:46.482Z",
+      "lastOkAt": "2026-11-20T14:05:46.966Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "prices:https://setsuzoku.nifty.com/niftyhikari/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:17:46.482Z",
+      "lastOkAt": "2026-11-20T14:05:46.966Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
@@ -223,55 +223,55 @@
     },
     "effective:docomo-hikari": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:18:02.413Z",
+      "lastOkAt": "2026-11-20T14:06:02.689Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "prices:https://www.docomo.ne.jp/internet/hikari/charge/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:17:46.482Z",
+      "lastOkAt": "2026-11-20T14:05:46.966Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "prices:https://www.docomo.ne.jp/internet/hikari/1g_plan/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:17:46.482Z",
+      "lastOkAt": "2026-11-20T14:05:46.966Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://www.docomo.ne.jp/internet/hikari/charge/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:18:47.456Z",
+      "lastOkAt": "2026-11-20T14:06:48.043Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "health:https://www.docomo.ne.jp/internet/hikari/1g_plan/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:18:47.456Z",
+      "lastOkAt": "2026-11-20T14:06:48.043Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "notices:https://www.nuro.jp/news_release/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:17:08.431Z",
+      "lastOkAt": "2026-11-20T14:05:00.112Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "notices:https://support.biglobe.ne.jp/news/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:17:08.431Z",
+      "lastOkAt": "2026-11-20T14:05:00.112Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "notices:https://network.mobile.rakuten.co.jp/hikari/information/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:17:08.431Z",
+      "lastOkAt": "2026-11-20T14:05:00.112Z",
       "staleSince": null,
       "lastStatus": "ok"
     },
     "notices:https://www.docomo.ne.jp/info/news_release/": {
       "consecutive": 0,
-      "lastOkAt": "2026-11-20T13:17:08.431Z",
+      "lastOkAt": "2026-11-20T14:05:00.112Z",
       "staleSince": null,
       "lastStatus": "ok"
     }
