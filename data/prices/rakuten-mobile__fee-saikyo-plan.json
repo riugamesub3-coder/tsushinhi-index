@@ -1,0 +1,94 @@
+{
+  "key": "rakuten-mobile__fee-saikyo-plan",
+  "providerId": "rakuten-mobile",
+  "providerName": "楽天モバイル",
+  "url": "https://network.mobile.rakuten.co.jp/fee/saikyo-plan/",
+  "collectedAt": "2026-11-20T23:51:39.596Z",
+  "points": [
+    {
+      "label": "*5 国内通話5分かけ放題の5分超過後は30秒",
+      "value": 22,
+      "raw": "22円"
+    },
+    {
+      "label": "akuten最強プランはデータ3GBまで （税込",
+      "value": 1078,
+      "raw": "1,078円"
+    },
+    {
+      "label": "GB超過後20GBまで",
+      "value": 1980,
+      "raw": "1,980円"
+    },
+    {
+      "label": "GB超過後20GBまで （税込",
+      "value": 2178,
+      "raw": "2,178円"
+    },
+    {
+      "label": "GB超過後は",
+      "value": 2980,
+      "raw": "2,980円"
+    },
+    {
+      "label": "GB超過後は （税込",
+      "value": 3278,
+      "raw": "3,278円"
+    },
+    {
+      "label": "Rakuten Link アプリ未使用時30秒",
+      "value": 22,
+      "raw": "22円"
+    },
+    {
+      "label": "Rakuten Linkアプリ未使用時30秒",
+      "value": 22,
+      "raw": "22円"
+    },
+    {
+      "label": "が毎月最大880ポイント還元で実質 /月（税込",
+      "value": 1100,
+      "raw": "1,100円"
+    },
+    {
+      "label": "ご契約が必要 ※9 2カ月目以降は指定オプション",
+      "value": 1980,
+      "raw": "1,980円"
+    },
+    {
+      "label": "価格：Rakuten最強プランはデータ3GBまで",
+      "value": 980,
+      "raw": "980円"
+    },
+    {
+      "label": "分超過後は30秒",
+      "value": 22,
+      "raw": "22円"
+    },
+    {
+      "label": "定オプション が毎月最大880ポイント還元で実質",
+      "value": 1000,
+      "raw": "1,000円"
+    },
+    {
+      "label": "年11月19日より1回線につき",
+      "value": 3500,
+      "raw": "3,500円"
+    },
+    {
+      "label": "年11月19日より1回線につき （税込",
+      "value": 3850,
+      "raw": "3,850円"
+    },
+    {
+      "label": "歳～22歳 23歳～64歳 65歳以上 あなたは",
+      "value": 110,
+      "raw": "110円"
+    },
+    {
+      "label": "税込",
+      "value": 4378,
+      "raw": "4,378円"
+    }
+  ]
+}
