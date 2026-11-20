@@ -21,6 +21,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fetchWithRetry, checkRobots, sleep } from './lib/http.mjs';
+import { fetchNoticeItems } from './lib/notices.mjs';
 import { loadFailureState, saveFailureState, recordOutcome, shouldFail, reportFailures, escalated } from './lib/failures.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -117,6 +118,27 @@ async function checkOne(provider, page) {
   const url = typeof page === 'string' ? page : page.url;
   const type = typeof page === 'string' ? 'pricing' : (page.type ?? 'pricing');
   const base = { providerId: provider.id, providerName: provider.name, url, type };
+
+  // ★一覧をJSで描くページ（feeds あり）は、HTMLに日付が無いのが正常。
+  //   収集と同じ読み方（データ元のJSON）で中身を確かめる。キーは人が見るURLのまま。
+  if (type === 'notice' && page.feeds?.length) {
+    const t0 = Date.now();
+    const got = await fetchNoticeItems(page);
+    const hits = got.items?.length ?? null;
+    if (got.status === 'ok' && hits >= MIN_DATE_HITS) {
+      return { ...base, status: 'ok', detail: null, httpStatus: 200, hits, bytes: got.bytes, elapsedMs: Date.now() - t0, feeds: page.feeds };
+    }
+    return {
+      ...base,
+      status: got.status === 'ok' ? 'content-changed' : got.status,
+      detail: got.status === 'ok'
+        ? `データ元から日付つきの項目が${hits}件（期待${MIN_DATE_HITS}件以上）。構造変更の疑い`
+        : got.detail,
+      httpStatus: got.httpStatus ?? null,
+      hits,
+      feeds: page.feeds,
+    };
+  }
 
   // robots は毎回見る。方針が変わることがあるため。
   const robots = await checkRobots(url);

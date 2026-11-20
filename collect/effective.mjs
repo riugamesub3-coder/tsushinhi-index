@@ -51,6 +51,12 @@ async function main() {
   const results = [];
   for (const adapter of adapters) {
     const target = config.niches.find((n) => n.id === adapter.providerId);
+    // ★対象外にした事業者は取りに行かない（遮断の意思表示を尊重する）。
+    //   過去の観測ファイルは消さない。サイト側が「収集停止」として扱う
+    if (target?.status === 'excluded') {
+      console.log(`⏸  ${adapter.providerId} — 対象外（${target.excludedReason ?? target.note ?? ''}）`.slice(0, 120));
+      continue;
+    }
     const urls = (target?.pages ?? []).filter((p) => p.type === 'pricing').map((p) => p.url);
     if (!urls.length) {
       console.log(`⚠️  ${adapter.providerId} — targets.json に料金ページがない`);

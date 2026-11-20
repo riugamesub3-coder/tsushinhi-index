@@ -33,6 +33,7 @@ const TILDE = /[～〜~]/;
  * @returns {{ offers: object[], notices: string[], warnings: string[] }}
  */
 export function extract(html, url) {
+  html = expandNumberElements(html);
   const clean = stripNoise(html);
   const { tables } = parseTables(html);
   const warnings = [];
@@ -169,8 +170,32 @@ function asPublishedTable(t) {
   if (!t || t.rows.length !== 2) return null;
   const periods = t.rows[0].map(parsePeriod);
   if (periods.some((p) => p == null) || periods.length < 2) return null;
-  const amounts = t.rows[1].map(toYen);
+  const amounts = t.rows[1].map(publishedAmount);
   return { periods, amounts };
+}
+
+/**
+ * ★2026-11 頃から、お支払いイメージのセルが「通常料金 5,720円 割引後 3,980円 （最大）」の
+ *   2つの金額を持つ形になった。先頭の金額を採ると**割引前の通常料金**を公開値と誤認する。
+ *   「割引後」があればその後ろの金額を採る。無ければ従来どおり先頭の金額。
+ */
+export function publishedAmount(cell) {
+  const s = String(cell ?? '');
+  const i = s.search(/割引後/);
+  return i >= 0 ? toYen(s.slice(i)) : toYen(s);
+}
+
+/**
+ * ★NUROは 2026-11 頃から金額を `<c-number value="3980"></c-number>` というカスタム要素の
+ *   **属性**で持つようになった（中身は空で、ブラウザのJSが描く）。テキストだけを読むと
+ *   「割引後 円」と金額が消える。属性の値を本文に戻してから読む。
+ *   ★value が数字でない要素は触らない（推測で埋めない）。
+ */
+export function expandNumberElements(html) {
+  return String(html ?? '').replace(
+    /<c-number\b[^>]*?\bvalue=["'](-?\d+)["'][^>]*>\s*<\/c-number>/gi,
+    (_, v) => Number(v).toLocaleString('ja-JP')
+  );
 }
 
 /**
@@ -227,10 +252,21 @@ export function asDetailTable(t) {
     // ★2026-08-31 に増えた行。NUROが「月額基本料金とは別に、ホームゲートウェイ
     //   (Wi-Fiルーター)料金550円/月が必要です」と分離した。
     //   契約に必ず付くので月額に足す。足さないと36か月で19,800円ぶん安く出る。
-    gateway: rows.find((r) => /ホームゲートウェイ|Wi-?Fi\s*ルーター/i.test(r.join(' '))),
+    gateway: rows.find((r) => {
+      const s = r.join(' ');
+      return /ホームゲートウェイ|Wi-?Fi\s*ルーター/i.test(s) && !/割引/.test(s);
+    }),
+    // ★2026-11 頃に増えた行「ホームゲートウェイ料金割引 -550円/月」。2年割/U29応援割に
+    //   自動で付く（本文「特典の適用により…550円/月割引が適用となりご請求は0円」）。
+    //   拾わないと公開値より550円高く出る。月額割引とは別の行として足す。
+    gatewayDiscount: rows.find((r) => {
+      const s = r.join(' ');
+      return /ホームゲートウェイ|Wi-?Fi\s*ルーター/i.test(s) && /割引/.test(s);
+    }),
     monthlyDiscount: rows.find((r) => {
       const s = r.join(' ');
-      return /割/.test(s) && !/工事費/.test(s) && !/月額基本料金/.test(s);
+      return /割/.test(s) && !/工事費/.test(s) && !/月額基本料金/.test(s)
+        && !/ホームゲートウェイ|Wi-?Fi\s*ルーター/i.test(s);
     }),
     campaign: pick(/キャンペーン|キャッシュバック/),
   };
@@ -363,7 +399,8 @@ function buildOffer({ url, buildingType, initial, published, detail, id }) {
     const base = at(detail.base, i);
     const disc = at(detail.monthlyDiscount, i) ?? 0;
     const gw = detail.gateway ? at(detail.gateway, i) : 0;
-    const amount = (base == null || gw == null) ? null : base + gw + disc;
+    const gwDisc = at(detail.gatewayDiscount, i) ?? 0;
+    const amount = (base == null || gw == null) ? null : base + gw + disc + gwDisc;
     return { fromMonth: p.from, toMonth: p.to, amount };
   });
 

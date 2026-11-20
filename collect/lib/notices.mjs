@@ -16,6 +16,8 @@
 //
 //   ★取れなかったことを「0件」として静かに流さない。呼び出し側が失敗と判断できるようにする。
 
+import { fetchWithRetry, checkRobots, sleep } from './http.mjs';
+
 /** 日付表記のパターン。日本企業のお知らせで実際に使われる形 */
 const DATE_RE =
   /(20\d{2})\s*年\s*(\d{1,2})\s*月\s*(\d{1,2})\s*日|(20\d{2})[./-](\d{1,2})[./-](\d{1,2})/g;
@@ -66,6 +68,89 @@ export function extractNotices(html, pageUrl) {
     items.push({ date, title: anchor.title, url: anchor.url });
   }
 
+  return { items, datesFound };
+}
+
+/**
+ * 一覧ページ（または、その一覧をJSで描くためのデータ元）から項目を取る。
+ * page.feeds があればそちらを読む。**1本でも読めなければ失敗**にする（片方だけで黙って続けない）。
+ * 収集（notices.mjs）と死活確認（health-check.mjs）の両方がこれを使う。読み方を1か所にそろえるため。
+ *
+ * @param {{url:string, feeds?:string[]}} page
+ */
+export async function fetchNoticeItems(page, { delayMs = 1500 } = {}) {
+  const sources = page.feeds?.length ? page.feeds : [page.url];
+  const items = [];
+  const seen = new Set();
+  let datesFound = 0;
+  let bytes = 0;
+  for (const [i, src] of sources.entries()) {
+    if (i > 0) await sleep(delayMs);
+    const robots = await checkRobots(src);
+    if (robots.ok && robots.allowed === false) {
+      return { status: 'robots-disallow', detail: `${src}: ${robots.note}` };
+    }
+    const res = await fetchWithRetry(src, { retries: 2 });
+    if (!res.ok) {
+      return { status: res.status === 403 ? 'blocked' : 'unreachable', detail: `${src}: ${res.error}`, httpStatus: res.status };
+    }
+    bytes += res.text.length;
+    const r = page.feeds?.length ? extractFeedNotices(res.text, src) : extractNotices(res.text, src);
+    if (r.error) return { status: 'extract-failed', detail: `${src}: ${r.error}` };
+    datesFound += r.datesFound;
+    for (const it of r.items) {
+      if (seen.has(it.url)) continue;
+      seen.add(it.url);
+      items.push(it);
+    }
+  }
+  return { status: 'ok', items, datesFound, bytes };
+}
+
+/**
+ * 一覧をJSで描くページの「データ元」(JSON配列) から項目を取り出す。
+ *
+ * ★NURO光は 2026-10 下旬にお知らせ一覧をJS描画へ変え、HTMLには日付が1件も無くなった
+ *   （ページのJSが /assets/inc/news-release/list-*.json(.html) を fetch して描く）。
+ *   同じデータをブラウザと同じ経路で読む。要素は {date, title, href} を想定し、
+ *   形が違えば error を返して呼び出し側に失敗として扱わせる（0件で静かに通さない）。
+ *
+ * @param {string} text  JSONの本文
+ * @param {string} feedUrl 相対URLの解決に使う
+ * @returns {{items: Array<{date:string,title:string,url:string}>, datesFound:number, error?:string}}
+ */
+export function extractFeedNotices(text, feedUrl) {
+  let rows;
+  try {
+    rows = JSON.parse(text);
+  } catch (e) {
+    return { items: [], datesFound: 0, error: `JSONとして読めない: ${e.message}` };
+  }
+  if (!Array.isArray(rows)) return { items: [], datesFound: 0, error: 'JSONが配列でない' };
+
+  const base = new URL(feedUrl);
+  const seen = new Set();
+  const items = [];
+  let datesFound = 0;
+  for (const r of rows) {
+    if (!r || typeof r !== 'object' || r.href == null || r.date == null) continue;
+    DATE_RE.lastIndex = 0;
+    const m = DATE_RE.exec(String(r.date));
+    const date = m ? normalizeDate(m) : null;
+    if (!date) continue;
+    datesFound++;
+    const title = stripTags(String(r.title ?? '')).trim();
+    if (!title) continue;
+    let url;
+    try {
+      url = new URL(String(r.href), base).toString();
+    } catch {
+      continue;
+    }
+    if (seen.has(url)) continue;
+    seen.add(url);
+    items.push({ date, title: title.slice(0, 300), url });
+  }
   return { items, datesFound };
 }
 

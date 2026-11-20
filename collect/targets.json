@@ -31,7 +31,12 @@
         {
           "url": "https://www.nuro.jp/news_release/",
           "type": "notice",
-          "dateHits": 99
+          "dateHits": 99,
+          "feeds": [
+            "https://www.nuro.jp/assets/inc/news-release/list-generated.json",
+            "https://www.nuro.jp/assets/inc/news-release/list-editorial.html"
+          ],
+          "feedsNote": "2026-10下旬に一覧がJS描画になった。ページの /assets/js/lib/news-release/index.bundle.js がこの2本を fetch して描く（2026-11-20 実物で確認）"
         }
       ]
     },
@@ -119,7 +124,9 @@
     {
       "id": "so-net-hikari",
       "name": "So-net光（ソニーネットワークコミュニケーションズ）",
-      "status": "verified",
+      "status": "excluded",
+      "excludedAt": "2026-11-20",
+      "excludedReason": "2026-11-11 から GitHub Actions からの取得に、HTTP 200 で「ご利用頂けません（セキュリティ強化…通信環境の安全な接続が確認できない場合、ご指定のページが参照できない場合があります）」というアクセス制限ページが返る（10回連続・1386B）。手元の回線からは同じ Node で取得できるので、収集環境からのアクセスを意図して制限していると判断。作業部屋の運用ルール『遮断されたサイトは回避できるかに関わらず対象にしない』に従い、自動収集を止めた。過去の観測は履歴として残す",
       "note": "料金ページ実測: 年27.9回変更・料金265件。お知らせ一覧URLは未特定（個別記事は /info/{年}/ 配下）。★1ギガには S/M/L の3プランがあるが、トップページには M の料金しか無い（2026-08-25 実測: 4,500円/7,095円/3,400円 が0件）。S/L は /access/hikari/1g/ にのみ載る。1ギガM は両ページに載るのでページ間で突き合わせている",
       "pages": [
         {

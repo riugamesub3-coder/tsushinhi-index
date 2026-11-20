@@ -13,7 +13,7 @@ import { parseBenefitByEntry, gradesInService, readBasePriceList, readDiscountEx
 import { recordOutcome, shouldFail, escalated } from './lib/failures.mjs';
 import { reconstructSeries, planSlug, planSlugsFor } from '../site/lib/series.mjs';
 import { staleInfo } from '../site/lib/stale.mjs';
-import { asDetailTable, declaresGatewayFee, foldLabelRows, identifyByAriaLabel, extract as nuroExtract } from './adapters/nuro-hikari.mjs';
+import { asDetailTable, declaresGatewayFee, foldLabelRows, identifyByAriaLabel, expandNumberElements, publishedAmount, extract as nuroExtract } from './adapters/nuro-hikari.mjs';
 import { searchConsoleToken } from '../site/lib/owner.mjs';
 import { layout } from '../site/lib/html.mjs';
 import { fetchWithRetry } from './lib/http.mjs';
@@ -739,6 +739,47 @@ test('NURO光の新構造から、検算を通った観測が planKey つきで�
   assert.equal(r.offers[0].verified, true);
   assert.equal(r.offers[0].planKey, '戸建て / 2ギガ / 2年割');   // 旧データと同じ識別子（変えない）
   assert.equal(r.offers[0].adminFee, 6050);
+});
+
+// 2026-11 の NURO 構造: 金額が <c-number value> の属性にあり、セルは「通常料金 / 割引後」の2金額、
+// 内訳に「ホームゲートウェイ料金割引」行が増えた（CI #114〜#133 が赤だった原因）
+const NURO_2026_11 = `
+<p>月額基本料金とは別に、ホームゲートウェイ（Wi-Fiルーター）料金550円/月が必要です。</p>
+<table><tr><td>契約事務手数料</td><td>3,300円</td></tr></table>
+<table>
+<tr><th>1か月目</th><th>2～24か月目</th><th>25～36か月目</th><th>37か月目～</th></tr>
+<tr><td><s>通常料金 5,720円</s><span>割引後 <c-number class="u-ml-0" value="3980"></c-number>円</span>（最大） 別途、契約事務手数料 3,300円が発生 ※1</td>
+<td><s>通常料金 5,720円</s> 割引後 <c-number value="3980"></c-number>円</td><td>5,720 円</td><td>5,720 円</td></tr>
+</table>
+<table aria-label="2年割 NURO 光(H)の料金内訳">
+<tr><td>月額基本料金 ※2</td><td>月額基本料金 ※2</td><td>月額基本料金 ※2</td><td>月額基本料金 ※2</td></tr>
+<tr><td>5,170円</td><td>5,170円</td><td>5,170円</td><td>5,170円</td></tr>
+<tr><td>ホームゲートウェイ（Wi-Fiルーター） ※3</td><td>ホームゲートウェイ（Wi-Fiルーター） ※3</td><td>ホームゲートウェイ（Wi-Fiルーター） ※3</td><td>ホームゲートウェイ（Wi-Fiルーター） ※3</td></tr>
+<tr><td>550円</td><td>550円</td><td>550円</td><td>550円</td></tr>
+<tr><td>基本工事費 ※4</td><td>基本工事費 ※4</td><td>基本工事費 ※4</td><td>基本工事費 ※4</td></tr>
+<tr><td>1,555円</td><td>1,527円</td><td>1,527円</td><td>ー</td></tr>
+<tr><td>2年割</td><td>2年割</td><td>2年割</td><td>2年割</td></tr>
+<tr><td>-1,190円/月</td><td>-1,190円/月</td><td>ー</td><td>ー</td></tr>
+<tr><td>ホームゲートウェイ料金割引</td><td>ホームゲートウェイ料金割引</td><td>ホームゲートウェイ料金割引</td><td>ホームゲートウェイ料金割引</td></tr>
+<tr><td>-550円/月</td><td>-550円/月</td><td>ー</td><td>ー</td></tr>
+<tr><td>工事費相当割引</td><td>工事費相当割引</td><td>工事費相当割引</td><td>工事費相当割引</td></tr>
+<tr><td>-1,555円</td><td>-1,527円</td><td>-1,527円</td><td>ー</td></tr>
+</table>`;
+
+test('NURO 2026-11 構造: c-number の値を本文に戻し、「割引後」の金額を公開値として採る', () => {
+  assert.equal(expandNumberElements('割引後 <c-number class="a" value="3980"></c-number>円'), '割引後 3,980円');
+  assert.equal(expandNumberElements('<c-number value="x"></c-number>'), '<c-number value="x"></c-number>'); // 数字でなければ触らない
+  assert.equal(publishedAmount('通常料金 5,720円 割引後 3,980 円 （最大） 別途、契約事務手数料 3,300円が発生'), 3980);
+  assert.equal(publishedAmount('5,720 円'), 5720);
+  assert.equal(publishedAmount('通常料金 5,720円 割引後 円'), null); // 金額が消えていたら null（通常料金で埋めない）
+});
+
+test('NURO 2026-11 構造: ホームゲートウェイ料金割引を月額に入れ、公開値と一致する', () => {
+  const r = nuroExtract(NURO_2026_11, 'https://www.nuro.jp/hikari/house/price/');
+  assert.deepEqual(r.warnings, []);
+  assert.equal(r.offers.length, 1);
+  assert.equal(r.offers[0].verified, true);
+  assert.deepEqual(r.offers[0].monthlySchedule.map((p) => p.amount), [3980, 3980, 5720, 5720]);
 });
 
 test('本文が空の 200 は成功にしない（CI だけ0Bが返った実例）。再試行して中身が来れば採る', async () => {

@@ -17,8 +17,9 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { fetchWithRetry, checkRobots, sleep } from './lib/http.mjs';
-import { extractNotices, categorize, isRelevant } from './lib/notices.mjs';
+import { sleep } from './lib/http.mjs';
+import { fetchNoticeItems, categorize, isRelevant } from './lib/notices.mjs';
+import { loadFailureState, saveFailureState, recordOutcome, shouldFail, reportFailures } from './lib/failures.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -53,7 +54,7 @@ async function main() {
     const noticePages = provider.pages.filter((p) => p.type === 'notice');
     for (const page of noticePages) {
       await sleep(DELAY_MS);
-      const r = await collectOne(provider, page.url, dryRun);
+      const r = await collectOne(provider, page, dryRun);
       results.push(r);
     }
   }
@@ -70,29 +71,32 @@ async function main() {
     for (const f of failed) console.log(`  [${f.status}] ${f.providerId} — ${f.detail}`);
   }
 
-  // 半分以上落ちたら異常。静かに壊れた状態で回し続けない。
-  if (results.length && failed.length / results.length > 0.5) {
-    console.error(`\n異常: ${failed.length}/${results.length} が失敗。収集元の構造変更を疑うこと。`);
+  // ★以前は「半分以上落ちたら赤」だけだった。そのため NURO のお知らせが 2026-10-25 から
+  //   0件抽出のまま、この工程は約4週間「成功」で通り続けた（死活確認の側だけが赤かった）。
+  //   → 他の工程と同じく、1社でも2回続けて失敗したら赤くする。
+  if (dryRun) return;
+  const state = await loadFailureState();
+  const keys = results.map((r) => `notices:${r.url}`);
+  for (const r of results) {
+    recordOutcome(state, `notices:${r.url}`, r.status === 'ok', { status: r.status, detail: r.detail });
+  }
+  await saveFailureState(state);
+  const reasons = shouldFail(state, keys, failed.length);
+  if (reasons.length) {
+    reportFailures(reasons);
     process.exit(1);
   }
 }
-
-async function collectOne(provider, url, dryRun) {
+async function collectOne(provider, page, dryRun) {
+  const url = page.url;
   const base = { providerId: provider.id, providerName: provider.name, url };
 
-  const robots = await checkRobots(url);
-  if (robots.ok && robots.allowed === false) {
-    console.log(`❌ ${provider.id.padEnd(18)} robots で禁止: ${robots.note}`);
-    return { ...base, status: 'robots-disallow', detail: robots.note };
+  const got = await fetchNoticeItems(page);
+  if (got.status !== 'ok') {
+    console.log(`❌ ${provider.id.padEnd(18)} ${got.status}: ${got.detail}`);
+    return { ...base, status: got.status, detail: got.detail };
   }
-
-  const res = await fetchWithRetry(url, { retries: 2 });
-  if (!res.ok) {
-    console.log(`❌ ${provider.id.padEnd(18)} 取得失敗: ${res.error}`);
-    return { ...base, status: 'unreachable', detail: res.error };
-  }
-
-  const { items, datesFound } = extractNotices(res.text, url);
+  const { items, datesFound } = got;
 
   if (items.length < MIN_ITEMS) {
     console.log(
