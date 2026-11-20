@@ -43,7 +43,14 @@ export function jsonLd(obj) {
  *   実際に2026-09-05、配信は成功しているのに旧CSSが当たっていた（HTMLだけ新しい＝崩れた表示）。
  *   ファイル名ではなくクエリを変えるのは、配信中の一瞬でも参照先が消えないようにするため。
  */
-export function layout({ title, description, canonical, siteUrl, bodyClass = '', head = '', body, updatedAt, disclosure = '', cssVer = '' }) {
+export function layout({ title, description, canonical, siteUrl, bodyClass = '', head = '', body, updatedAt, disclosure = '', cssVer = '', jsVer = '', scripts = [], path = '' }) {
+  // いま居るページをナビで示す（aria-current）。トップ以外は前方一致
+  const here = '/' + String(path).replace(/index\.html$/, '');
+  const nav = NAV.map(([href, label]) => {
+    const on = href === '/' ? here === '/' : here.startsWith(href);
+    return `<a href="${href}"${on ? ' aria-current="page"' : ''}>${label}</a>`;
+  }).join('');
+  const js = scripts.map((s) => `<script src="${attr(s)}${jsVer ? '?v=' + attr(jsVer) : ''}" defer></script>`).join('\n');
   return `<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -55,51 +62,61 @@ export function layout({ title, description, canonical, siteUrl, bodyClass = '',
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/style.css${cssVer ? '?v=' + attr(cssVer) : ''}">
 <link rel="alternate" type="application/rss+xml" title="料金の変化" href="/feed.xml">
+<meta name="theme-color" content="#14305a">
 <meta property="og:title" content="${attr(title)}">
 <meta property="og:description" content="${attr(description)}">
 <meta property="og:url" content="${attr(canonical)}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="通信費インデックス">
+<meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary">
+${js}
 ${head}
 </head>
 <body class="${attr(bodyClass)}">
+<a class="skip" href="#main">本文へ移動</a>
 <header class="site-head">
   <div class="head-in">
     <a class="brand" href="/">${MARK}<span>
       <strong>通信費インデックス</strong>
       <small>光回線の料金を毎日記録</small>
     </span></a>
-    <nav class="site-nav" aria-label="主なページ">
-      <a href="/">料金比較</a>
-      <a href="/changes/">料金の変化</a>
-      <a href="/method/">計算方法</a>
-      <a href="/data/">データ</a>
-      <a href="/about/">運営者</a>
-    </nav>
+    <nav class="site-nav" aria-label="主なページ">${nav}</nav>
   </div>
 </header>
 ${disclosure}
-<main>
+<main id="main">
 ${body}
 </main>
 <footer class="site-foot">
   <div class="foot-in">
-    <p>通信費インデックス ／ 最終更新 <time datetime="${attr(updatedAt ?? '')}">${e(updatedAtLabel(updatedAt))}</time></p>
-    <p>
-      データは <a href="https://creativecommons.org/licenses/by/4.0/deed.ja" rel="license">CC BY 4.0</a>。
-      出典を表示すれば自由にお使いいただけます。
-      収集の仕組みは <a href="https://github.com/riugamesub3-coder/tsushinhi-index">GitHub で公開</a>しています。
-    </p>
-    <p class="disclaimer">
-      自動収集のため誤りが含まれる可能性があります。<strong>契約前には必ず各社の公式サイトで最新の条件をご確認ください。</strong>
-      掲載している値には出典URLと取得日時を併記しています。
-    </p>
-    <nav class="foot-nav">
+    <div class="foot-brand">
+      <p class="foot-name">${MARK}<span>通信費インデックス</span></p>
+      <p>光回線の料金を公式サイトから毎日集め、同じ計算式で「1か月あたり」に直して記録しています。</p>
+      <p class="foot-stamp">最終更新 <time datetime="${attr(updatedAt ?? '')}">${e(updatedAtLabel(updatedAt))}</time></p>
+    </div>
+    <nav class="foot-nav" aria-label="サイトの案内">
+      <p class="foot-h">見る</p>
+      <a href="/">実質月額の比較</a>
+      <a href="/changes/">料金の変化の記録</a>
+      <a href="/feed.xml">変化のRSS</a>
+    </nav>
+    <nav class="foot-nav" aria-label="このサイトについて">
+      <p class="foot-h">確かめる</p>
+      <a href="/method/">計算方法</a>
+      <a href="/data/">元データ（CC BY 4.0）</a>
+      <a href="https://github.com/riugamesub3-coder/tsushinhi-index">収集の仕組み（GitHub）</a>
+    </nav>
+    <nav class="foot-nav" aria-label="運営">
+      <p class="foot-h">運営</p>
       <a href="/about/">運営者情報</a>
-      <a href="/contact/">お問い合わせ</a>
+      <a href="/contact/">誤りの報告・お問い合わせ</a>
       <a href="/privacy/">プライバシーポリシー</a>
     </nav>
+    <p class="disclaimer">
+      自動収集のため誤りが含まれる可能性があります。<strong>契約前には必ず各社の公式サイトで最新の条件をご確認ください。</strong>
+      掲載している値には出典URLと取得日時を併記しています。データは <a href="https://creativecommons.org/licenses/by/4.0/deed.ja" rel="license">CC BY 4.0</a> で、出典を表示すれば自由にお使いいただけます。
+    </p>
   </div>
 </footer>
 </body>
@@ -107,14 +124,22 @@ ${body}
 `;
 }
 
+const NAV = [
+  ['/', '比較'],
+  ['/changes/', '料金の変化'],
+  ['/method/', '計算方法'],
+  ['/data/', 'データ'],
+  ['/about/', '運営者'],
+];
+
 // ロゴ。**階段**＝料金の動き方そのもの。サイト内のグラフと同じ形にそろえる。
 // 折れ線ではなく階段にしているのは、料金は改定日に飛ぶものだから（chart.mjs と同じ理由）。
 // ★画像ファイルにしない。インラインSVGなら追加のリクエストが1つも増えず、
 //   外部から何も読み込まない（/privacy/ に「外部へ送っていない」と書いている）。
 const MARK = `<svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true" focusable="false">
-<rect width="36" height="36" fill="#1c3f6e"/>
-<path d="M5 26 h7 v-6 h7 v-6 h7 v-5 h5" fill="none" stroke="#fff" stroke-width="2.6"
-  stroke-linecap="square" stroke-linejoin="miter"/></svg>`;
+<rect width="36" height="36" rx="9" fill="#14305a"/>
+<path d="M7 25 h6 v-5 h6 v-5 h6 v-4 h4" fill="none" stroke="#fff" stroke-width="2.6"
+  stroke-linecap="round" stroke-linejoin="round"/><circle cx="29" cy="11" r="2.4" fill="#5fd3a8"/></svg>`;
 
 function updatedAtLabel(iso) {
   if (!iso) return '—';

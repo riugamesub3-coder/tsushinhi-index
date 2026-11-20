@@ -157,11 +157,14 @@ async function mergeStore(provider, sourceUrl, tagged) {
   const known = new Set(store.notices.map((n) => n.url));
   let added = 0;
 
+  // ★タイトル（各社の文章）は**保存しない**。分類（categories）を付けるためにだけ使って捨てる。
+  //   このファイルは公開リポジトリに載る。原文の再掲は運用ルール2（事実値のみ保持）に反し、
+  //   NURO光・楽天ひかりのサイト規約は掲載情報の無断の複製・転用を禁じている
+  //   （docs/research/2026-11-20_サイト刷新の表示可否.md）。2026-11-20 に既存分からも除いた。
   for (const t of tagged) {
     if (known.has(t.url)) continue;
     store.notices.push({
       date: t.date,
-      title: t.title,
       url: t.url,
       categories: t.categories,
       relevant: t.relevant,
@@ -172,8 +175,8 @@ async function mergeStore(provider, sourceUrl, tagged) {
     added++;
   }
 
-  // 新しい順。同日ならタイトル順で安定させる（差分が無駄に出ないように）
-  store.notices.sort((a, b) => (b.date === a.date ? a.title.localeCompare(b.title) : b.date.localeCompare(a.date)));
+  // 新しい順。同日ならURL順で安定させる（差分が無駄に出ないように）
+  store.notices.sort((a, b) => (b.date === a.date ? a.url.localeCompare(b.url) : b.date.localeCompare(a.date)));
   store.lastCollectedAt = now;
   store.sourceUrl = sourceUrl;
   store.totalNotices = store.notices.length;

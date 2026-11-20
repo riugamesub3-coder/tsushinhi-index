@@ -29,6 +29,9 @@ const DIST = join(HERE, 'dist');
 export const SITE_URL = 'https://tsushinhi-index.com';
 const SITE_NAME = '通信費インデックス';
 
+// トップの条件切り替え。素のJSファイルをそのまま配信する（site/app.js の先頭に方針）
+const APP_JS = await readFile(join(HERE, 'app.js'), 'utf8');
+
 // 全社を横並びにできる唯一の軸。collect 側の PRIMARY と必ず一致させること
 const HORIZON = 36;
 
@@ -58,6 +61,7 @@ async function main() {
 
   // 広告表記は全ページのヘッダ直下（ファーストビュー）に置く。広告が無ければ空文字
   const disclosure = adDisclosure(data);
+  const pending = [];
 
   // ★所有権確認タグは全ページに入れる。Googleはトップにあれば足りるが、
   //   確認後に外すと所有権が失効する。1か所にしか無いと、ページ構成を
@@ -69,6 +73,13 @@ async function main() {
   if (!siteHead) console.warn('  ⚠ Search Console の所有権確認タグが未設定です（インデックス状況を確認できません）');
   await page('index.html', renderIndex(data), disclosure, siteHead);
   await page('changes/index.html', renderChanges(data), disclosure, siteHead);
+  const days = eventsByDay(data);
+  days.forEach(([day, list], i) => {
+    // days は新しい順。prev＝1つ古い日、next＝1つ新しい日
+    pending.push(page(`changes/${day}/index.html`, renderChangeDay(data, day, list, days[i + 1]?.[0], days[i - 1]?.[0]), disclosure, siteHead));
+  });
+  await Promise.all(pending);
+  console.log(`  変化の日別ページ ${days.length}件`);
   await page('method/index.html', renderMethod(data), disclosure, siteHead);
   await page('data/index.html', renderData(data), disclosure, siteHead);
   await page('about/index.html', renderAbout(data), disclosure, siteHead);
@@ -85,6 +96,7 @@ async function main() {
   console.log(`  事業者ページ ${providerIds(data).length}件 / プランページ ${data.publishable.length}件`);
 
   await out('style.css', STYLE);
+  await out('app.js', APP_JS);
   await out('favicon.svg', FAVICON);
   await out('llms.txt', renderLlmsTxt(data));
   await out('sitemap.xml', renderSitemap(data));
@@ -181,14 +193,35 @@ async function loadAll() {
         breakdown: o.effective?.[HORIZON]?.breakdown ?? null,
         stale: staleInfo(failures, o.sourceUrl, snap.providerId),
         slug,
+        id: `${snap.providerId}--${slug}`,
         path: `/p/${snap.providerId}/${slug}/`,
       });
     }
   }
 
+  // 収集を止めた事業者（遮断の意思表示を尊重して対象外にしたもの）。
+  // ★理由は collect/targets.json の1か所にだけ書く。サイトはそれを読んで出す（二重管理しない）
+  const targets = (await readJson(join(ROOT, 'collect', 'targets.json'))) ?? { niches: [] };
+  const excluded = new Map(
+    targets.niches
+      .filter((n) => n.status === 'excluded' && n.excludedAt)
+      .map((n) => [n.id, { since: n.excludedAt, publicNote: n.publicNote ?? null }])
+  );
+  for (const o of offers) {
+    o.excluded = excluded.get(o.providerId) ?? null;
+    // ★順位に入れてよいのは「いま記録が続いているもの」だけ。
+    //   2026-11-20 まで、18日前の NURO光・9日前の So-net光の値が、トップの「答え」の
+    //   上位3件に「更新停止中」の印なしで並んでいた（表の行には印があったが、答えの欄には無かった）。
+    //   古い値を今日の順位に混ぜるのは、それ自体が「事実と異なる表示」になる。
+    o.paused = Boolean(o.excluded) || Boolean(o.stale && o.stale.days >= STALE_DAYS);
+    o.speedClass = /10ギガ/.test(`${o.planLabel ?? ''} ${o.planKey ?? ''} ${o.plan?.speed ?? ''}`) ? '10g' : 'other';
+  }
+
   // 掲載できるのは「検算を通り、記載の食い違いが無く、実質月額が出ているもの」だけ
   const publishable = offers.filter((o) => o.publishable && o.effectiveMonthly != null);
   const needsReview = offers.filter((o) => !(o.publishable && o.effectiveMonthly != null));
+  const ranked = publishable.filter((o) => !o.paused);
+  const paused = publishable.filter((o) => o.paused);
 
   const events = [];
   for (const store of changes) {
@@ -205,7 +238,8 @@ async function loadAll() {
   const operators = ((await readJson(join(HERE, 'providers.json'))) ?? {}).operators ?? {};
 
   return {
-    effective, offers, publishable, needsReview, events, failures, health, updatedAt,
+    effective, offers, publishable, needsReview, ranked, paused, excluded, events, failures, health, updatedAt,
+    notices: await loadNotices(publishable),
     ads: await loadAds(),
     owner: await loadOwner(),
     operators,
@@ -213,6 +247,24 @@ async function loadAll() {
     serviceCount: new Set(publishable.map((o) => o.providerId)).size,
     operatorCount: new Set(publishable.map((o) => operators[o.providerId]?.name).filter(Boolean)).size,
   };
+}
+
+/**
+ * 各社公式のお知らせ（収集の主系統）。事業者ページの「公式発表の年表」に使う。
+ * ★料金・条件に関わる可能性があるもの（relevant）だけ。障害・メンテナンスは出さない。
+ * ★表示の仕方は docs/research/2026-11-20_サイト刷新の表示可否.md の判定に従う。
+ */
+async function loadNotices(publishable) {
+  const ids = new Set(publishable.map((o) => o.providerId));
+  const out = new Map();
+  for (const store of await readDir(join(ROOT, 'data', 'notices'))) {
+    if (!ids.has(store.providerId)) continue;
+    const list = (store.notices ?? [])
+      .filter((n) => n.relevant && n.date && n.url)
+      .sort((a, b) => b.date.localeCompare(a.date));
+    out.set(store.providerId, { list, sourceUrl: store.sourceUrl, lastCollectedAt: store.lastCollectedAt });
+  }
+  return out;
 }
 
 async function readDir(dir) {
@@ -289,144 +341,245 @@ function verify(data) {
 }
 
 // ── トップページ ─────────────────────────────────────────────────
+//
+// 2026-11-20 に作り直した。読者の動線から逆算している:
+//   1. 自分の条件を選ぶ（住まい・申込・速さ・年齢）
+//   2. その条件で安い会社が3つ、すぐ出る（会社ごとの最安。同じ会社の工事違いで上位を埋めない）
+//   3. 根拠の一覧（同じ条件の全プラン）→ プランページで内訳と推移
+//   4. 最近動いた料金（このサイトにしか無い情報）
+//
+// ★条件の切り替えはブラウザ側のJSで「選んで並べ替える」だけ。**値は作らない。**
+//   表示する金額は data/ の実質月額（36か月）をそのまま埋め込んでいる。
+//   JSが無くても既定の条件（戸建て・新規・速さ問わず・30歳以上）の答えと一覧は読める。
+// ★「使う期間（2年／3年）」の切り替えは作らない。data の24か月値は
+//   事業者ごとに工事費の数え方が揃っておらず（楽天は工事費を全額、NUROは24か月分だけ）、
+//   どちらも途中解約時の解約金・工事費残債を含まない。並べると「2年で解約したときの比較」と誤読される。
 
-// ── 読者がまず知りたいこと ─────────────────────────────────────
-//
-// 「結局どれがいちばん安いのか」を表の前に出す。表は根拠として下に残す。
-//
-// ★29歳以下限定の割引（U29応援割）を使った値は、**見出しの最安に入れない。**
-//   30歳以上は使えない値を「最安」と呼ぶと、ほとんどの読者に対して嘘になる。
-//   ただし隠さない。表には全件残し、安くなる場合は別行で明記する。
+// ★29歳以下限定の割引（U29応援割）を使った値は、既定では順位に入れない。
+//   30歳以上は使えない値を「安い」と出すと、ほとんどの読者に対して嘘になる。
+//   年齢で「29歳以下」を選んだときだけ入れる。
 const isAgeLimited = (o) => /U29/.test(o.planKey ?? '');
 
-function quickAnswer(data) {
-  const cols = [['戸建て', 'detached'], ['マンション', 'apartment']].map(([b, id]) => {
-    const rows = data.publishable
-      .filter((o) => o.entry === '新規')
-      .filter((o) => o.building === b || o.building === '共通')
-      .sort((x, y) => x.effectiveMonthly - y.effectiveMonthly);
-    const top = rows.filter((o) => !isAgeLimited(o)).slice(0, 3);
-    if (!top.length) return '';
-    const young = rows.find(isAgeLimited);
-    return html`
-  <section class="qa">
-    <h2 class="qa-h">${b}にお住まいの方</h2>
-    <ol class="qa-list">${raw(top.map((o, i) => html`
-      <li>
-        <span class="qa-rank">${i + 1}</span>
-        <span class="qa-body"><a class="qa-plan" href="${o.path}">${o.providerName}</a><small>${planName(o)}</small></span>
-        <span class="qa-price"><b>${yenMark(o.effectiveMonthly)}</b><small>／月</small></span>
-      </li>`).join(''))}
-    </ol>
-    ${raw(young && young.effectiveMonthly < top[0].effectiveMonthly ? html`
-    <p class="qa-young"><span class="tag">29歳以下限定</span>
-      ${young.providerName}の${planName(young)}は${yen(young.effectiveMonthly)}／月。<strong>29歳以下の人だけが使える割引</strong>を入れた金額なので、上の順位には入れていません。</p>` : '')}
-    <p class="qa-more"><a href="#rank-${id}">${b}の全プランを安い順に見る ↓</a></p>
-  </section>`;
-  });
-  return html`
-<div class="qa-grid">${raw(cols.join(''))}</div>
-<p class="note qa-note">
-  新規申込で、3年使ったときの<strong>1か月あたり</strong>の金額です（工事費・手数料・キャッシュバックを含む）。
-  速さの違うプランが混ざっているので、速さはプラン名で確かめてください。
-</p>`;
+const BUILDING_ID = { '戸建て': 'detached', 'マンション': 'apartment', '共通': 'both' };
+const entryId = (o) => (o.entry === '新規' ? 'new' : 'switch');
+
+/** 条件の選択肢。画面の文言はここにしか書かない（JSも同じものを読む） */
+const PICKER = [
+  // [値, ボタンの文言, 見出しに出す短い文言]
+  { name: 'b', legend: 'お住まい', options: [['detached', '戸建て', '戸建て'], ['apartment', 'マンション', 'マンション']] },
+  { name: 'e', legend: '申し込み', options: [['new', '新しく引く', '新しく引く'], ['switch', '乗り換え', '乗り換え（転用・事業者変更）']] },
+  { name: 's', legend: '速さ', options: [['any', '問わない', '速さ問わず'], ['other', '10ギガ以外', '10ギガ以外'], ['10g', '10ギガ', '10ギガ']] },
+  { name: 'y', legend: '年齢', options: [['0', '30歳以上', '30歳以上'], ['1', '29歳以下', '29歳以下']] },
+];
+const DEFAULT_COND = { b: 'detached', e: 'new', s: 'any', y: '0' };
+
+function matches(o, c) {
+  const b = BUILDING_ID[o.building];
+  if (!(b === 'both' || b === c.b)) return false;
+  if (entryId(o) !== c.e) return false;
+  if (c.s !== 'any' && o.speedClass !== c.s) return false;
+  if (c.y === '0' && isAgeLimited(o)) return false;
+  return true;
 }
 
+const byValue = (a, b) => a.effectiveMonthly - b.effectiveMonthly || a.providerName.localeCompare(b.providerName);
+
+/** 会社ごとにまとめる（並び順は保つ）。答えの欄は「会社ごとの最安」で3社まで */
+function groupByProvider(rows) {
+  const m = new Map();
+  for (const o of rows) {
+    if (!m.has(o.providerId)) m.set(o.providerId, []);
+    m.get(o.providerId).push(o);
+  }
+  return [...m.values()];
+}
+
+function condLabel(c) {
+  return PICKER.map((p) => p.options.find(([v]) => v === c[p.name])?.[2]).join('・');
+}
+
+/** 1社ぶんの答えカード。JSは <template> に入れた同じ部品を複製して並べ替える */
+function pickCard(o, rank, others = []) {
+  const notes = rowNotes(o);
+  return html`
+<li class="pick" data-id="${o.id}">
+  <span class="pick-rank" aria-label="${rank}位">${rank}</span>
+  <div class="pick-body">
+    <p class="pick-prov">${o.providerName}</p>
+    <a class="pick-plan" href="${o.path}">${planName(o)}</a>
+    ${raw(notes.length ? `<p class="chips">${notes.map((n) => `<span class="chip">${e(n)}</span>`).join('')}</p>` : '')}
+  </div>
+  <div class="pick-fig">
+    <p class="pick-price"><b>${yenMark(o.effectiveMonthly)}</b><span>／月</span></p>
+    <p class="pick-total">3年の総額 ${yen(o.effective?.[HORIZON]?.total)}</p>
+  </div>
+  <p class="pick-src">出典 <a href="${o.sourceUrl}" rel="nofollow noopener">${host(o.sourceUrl)}</a> <time datetime="${o.observedAt}">${jstShort(o.observedAt)}</time></p>
+  <p class="pick-range">${others.length ? `同じ会社のほかの条件 ${others.length}件（〜${yen(others[others.length - 1].effectiveMonthly)}）は下の一覧に` : ''}</p>
+  <a class="pick-go" href="${o.path}">内訳と推移を見る<span aria-hidden="true"> →</span></a>
+</li>`;
+}
+
+function rowNotes(o) {
+  const notes = [];
+  if (isAgeLimited(o)) notes.push('29歳以下限定');
+  if (o.speedClass === '10g') notes.push('10ギガ');
+  // 工事の区分は、プラン名に含まれていないときだけ印にする（同じ語を2度出さない）
+  if (o.plan?.work && !planName(o).includes(o.plan.work)) notes.push(o.plan.work);
+  if (o.setBenefits?.length) notes.push('一部の特典は不算入');
+  if (o.constructionFee?.note) notes.push('工事費は公式の代表例');
+  if (o.stale && !o.paused) notes.push(`${o.stale.days}日前から取得できていません`);
+  return notes;
+}
+
+function picker() {
+  return html`
+<form class="picker" id="picker" aria-label="条件を選ぶ">
+  ${raw(PICKER.map((p) => html`
+  <fieldset class="seg">
+    <legend>${p.legend}</legend>
+    <div class="seg-opts">${raw(p.options.map(([v, label, short]) => html`
+      <label><input type="radio" name="${p.name}" value="${v}" data-short="${short}"${raw(DEFAULT_COND[p.name] === v ? ' checked' : '')}><span>${label}</span></label>`).join(''))}
+    </div>
+  </fieldset>`).join(''))}
+  <noscript><p class="note">条件の切り替えにはJavaScriptが必要です。下は「${condLabel(DEFAULT_COND)}」の結果です。全プランは各サービスのページで見られます。</p></noscript>
+</form>`;
+}
+
+/**
+ * 比較の範囲。★「安い順」と言う以上、**何の中で**安いのかを見出しのすぐ下に必ず書く
+ * （比較広告ガイドライン 3(1)・4(1)。docs/research/2026-11-20_サイト刷新の表示可否.md）。
+ * ★最上級（「いちばん安い」「最安」）は使わない。記録が止まっているサービスがある限り、
+ *   比較の母集団が欠けているため（同判定 3）。site/verify.mjs が最上級の混入を赤くする。
+ */
+/** プランと同じ条件をトップの # に入れる（共通プランは戸建てで開く） */
+function condHash(o) {
+  const b = BUILDING_ID[o.building] === 'apartment' ? 'apartment' : 'detached';
+  return new URLSearchParams({ b, e: entryId(o), s: 'any', y: isAgeLimited(o) ? '1' : '0' }).toString();
+}
+
+function scopeLine(data, hits) {
+  const services = new Set(data.ranked.map((o) => o.providerId)).size;
+  const pausedNames = [...new Set(data.paused.map((o) => o.providerName))];
+  return html`<p class="scope">当サイトが毎日記録している${services}サービス・${data.ranked.length}プランのうち、この条件に合う<b id="count-a">${hits}</b>プランを比べています（${jstDateTime(data.updatedAt)}時点）。${raw(pausedNames.length ? html`記録が止まっている${pausedNames.join('・')}は含みません。` : '')}<a href="/method/">計算方法</a></p>`;
+}
+
+function answer(data) {
+  const rows = data.ranked.filter((o) => matches(o, DEFAULT_COND)).sort(byValue);
+  const groups = groupByProvider(rows).slice(0, 3);
+  // 29歳以下なら、もっと安い値があるか（既定では順位に入れていないので、存在だけ知らせる）
+  const young = data.ranked.filter((o) => matches(o, { ...DEFAULT_COND, y: '1' })).sort(byValue)[0];
+  const hint = young && isAgeLimited(young) && rows[0] && young.effectiveMonthly < rows[0].effectiveMonthly ? young : null;
+
+  return html`
+<section class="answer" aria-labelledby="answer-h">
+  <h2 id="answer-h"><span class="cond" id="cond-label">${condLabel(DEFAULT_COND)}</span>の実質月額 安い順</h2>
+  ${raw(scopeLine(data, rows.length))}
+  <ol class="podium" id="podium" aria-live="polite">${raw(groups.map((g, i) => pickCard(g[0], i + 1, g.slice(1))).join(''))}</ol>
+  <p class="empty" id="empty"${raw(groups.length ? ' hidden' : '')}>この条件に当てはまるプランは、いま記録しているサービスにはありません。</p>
+  <p class="young-hint" id="young-hint"${raw(hint ? '' : ' hidden')}>${raw(hint ? html`<span class="chip">29歳以下なら</span> ${hint.providerName}の${planName(hint)}が${yen(hint.effectiveMonthly)}／月（出典 <a href="${hint.sourceUrl}" rel="nofollow noopener">${host(hint.sourceUrl)}</a> ${jstShort(hint.observedAt)}）。年齢で「29歳以下」を選ぶと順位に入ります。` : '')}</p>
+  <p class="note">
+    金額は<strong>3年（${HORIZON}か月）使ったときの1か月あたり</strong>。毎月の料金に、工事費・事務手数料を足し、キャッシュバックを引いて${HORIZON}で割っています（<a href="/method/">計算方法</a>）。
+    ${raw(data.ads.same.size || data.ads.different.length ? '<strong>順位は金額だけで決めており、広告の有無は関係しません。</strong>' : '')}
+  </p>
+  <template id="tpl-cards">${raw(data.ranked.map((o) => pickCard(o, 0)).join(''))}</template>
+</section>`;
+}
 
 function renderIndex(data) {
-  const buildings = ['戸建て', 'マンション'];
-  const recent = data.events.slice(0, 8);
+  const recentDays = eventsByDay(data).slice(0, 4);
+  const since = observedSince(data);
 
   const body = html`
-<section class="hero hero-lite">
-  <h1>光回線、3年使うと<wbr>毎月いくら？</h1>
+<section class="hero">
+  <p class="eyebrow"><span class="live" aria-hidden="true"></span>毎日自動で記録 ／ 最終更新 ${jstDateTime(data.updatedAt)}</p>
+  <h1><span>光回線、</span><span>3年使うと</span><span>毎月いくら？</span></h1>
   <p class="lead">
-    各社の公式料金を毎日集め、安い順に並べました。
-    <span class="stamp">毎日自動で集計 ／ 最終更新 ${jstDateTime(data.updatedAt)}</span>
+    各社の公式サイトの料金を毎日集め、工事費・手数料・キャッシュバックまで入れて<strong>「1か月あたり」に直しました。</strong>
+    条件を選ぶと、安い順がすぐ出ます。
   </p>
+  ${raw(picker())}
 </section>
 
-${raw(quickAnswer(data))}
+${raw(answer(data))}
 
-${raw(staleBanner(data))}
-
-${raw(buildings.map((b, i) => rankingSection(data, b, i + 1)).join(''))}
+${raw(rankingSection(data))}
 
 ${raw(linkOnlyOffers(data))}
 
+${raw(pausedSection(data))}
+
+<section class="block">
+  <div class="block-head">
+    <h2>最近動いた料金</h2>
+    <a class="more" href="/changes/">変化の記録をすべて見る →</a>
+  </div>
+  <p class="note">毎日の値を突き合わせ、<strong>実質月額が変わった日だけ</strong>を記録しています。公式の告知が無い小さな変更も拾います。</p>
+  ${raw(recentDays.length ? `<ul class="digests">${recentDays.map(([day, list]) => dayDigest(data, day, list)).join('')}</ul>` : '<p>まだ変化を記録していません。収集は毎日走っています。</p>')}
+</section>
+
+<section class="block">
+  <h2>サービスごとに見る</h2>
+  <div class="pcards">${raw(providerIds(data).map((id) => providerCard(data, id)).join(''))}</div>
+  ${raw(operatorNote(data))}
+</section>
+
 <details class="fold">
-  <summary>言葉の説明（実質月額・新規と転用・派遣工事 など）</summary>
+  <summary>言葉の説明（実質月額・新規と乗り換え・派遣工事 など）</summary>
   ${raw(legend())}
 </details>
-
-<section>
-  <h2>事業者ごとに見る</h2>
-  <div class="pcards">${raw(providerIds(data).map((id) => {
-    const mine = data.publishable.filter((o) => o.providerId === id);
-    const evAll = data.events.filter((c) => c.providerId === id);
-    const lastAt = evAll.map((c) => c.detectedAt).sort().pop() ?? null;
-    const cheapest = mine.reduce((a, b) => (a.effectiveMonthly <= b.effectiveMonthly ? a : b));
-    return html`
-    <a class="pcard" href="/p/${id}/">
-      <span class="pname">${mine[0].providerName}${raw(mine.some((o) => o.stale) ? ' <span class="tag">更新停止中</span>' : '')}</span>
-      <span class="pmin"><b>${yenMark(cheapest.effectiveMonthly)}</b><small>全条件の最安</small></span>
-      <span class="pmeta">
-        <span>${mine.length}プラン ／ 記録した変化 ${evAll.length}件</span>
-        <span>${raw(lastAt ? html`最後に料金が動いた日 ${jstDate(lastAt)}` : 'まだ料金は動いていません')}</span>
-      </span>
-    </a>`;
-  }).join(''))}
-  </div>
-  <p class="note">
-    カードの金額は、新規・転用・マンションなど<strong>条件を絞らない全観測の最安</strong>です。
-    上の表（新規申込・${HORIZON}か月換算）の1位と一致しないことがあります。
-  </p>
-</section>
-
-<section>
-  <h2>最近の料金の変化</h2>
-  <p class="note">毎日の値を突き合わせて、料金が変わった瞬間だけを記録しています。</p>
-  ${raw(recent.length
-    ? `<ul class="changes">${recent.map(changeItem).join('')}</ul>
-       <p><a href="/changes/">変化の履歴をすべて見る</a></p>`
-    : '<p>まだ変化を検知していません。収集は毎日走っています。</p>')}
-</section>
-
-${raw(operatorNote(data))}
 
 ${raw(needsReviewSection(data))}
 
 <section class="record">
-  <h2>このサイトについて</h2>
-  <div class="hero-grid">
-    <div>
-      <p class="lead">
-        料金・工事費・割引・キャッシュバックを毎日自動で集め、<strong>全社を同じ計算式</strong>に通しています。
-        <a href="/method/">計算式</a>も<a href="/data/">元データ</a>も全部出しています。
-      </p>
-      <div class="rail">
-        <div class="rail-item"><b>${data.publishable.length}</b><span>掲載中のプラン</span></div>
-        <div class="rail-item"><b>${data.serviceCount}</b><span>サービス（運営${data.operatorCount}社）</span></div>
-        <div class="rail-item"><b>${data.events.length}</b><span>検知した料金の変化</span></div>
-        ${raw(railDays(data))}
-      </div>
-    </div>
-    ${raw(distributionPanel(data))}
+  <h2>この数字の作り方</h2>
+  <div class="record-grid">
+    <div class="stat"><b>${data.ranked.length}</b><span>順位に入れているプラン</span></div>
+    <div class="stat"><b>${new Set(data.ranked.map((o) => o.providerId)).size}</b><span>記録中のサービス</span></div>
+    <div class="stat"><b>${data.events.length}</b><span>記録した料金の変化</span></div>
+    <div class="stat"><b>${since ? daysSince(since) + 1 : '—'}<small class="cur">日</small></b><span>${since ? `${jstDate(since)}に記録開始（取得できなかった期間を含む）` : '記録開始前'}</span></div>
   </div>
+  <ul class="promises">
+    <li><strong>公式サイトの数字だけ</strong>を使います。口コミや推定は混ぜません</li>
+    <li>全社を<strong>同じ計算式</strong>に通します。式も規則も<a href="/method/">全部公開</a>しています</li>
+    <li>内訳から計算した月額が<strong>公式の表示と一致したものだけ</strong>を載せます</li>
+    <li>取れなかった日を前日の値で埋めません。<strong>止まったら止まったと書きます</strong></li>
+    <li>元データは<a href="/data/">CC BY 4.0</a>で誰でも使えます</li>
+  </ul>
 </section>
 `;
 
   return {
-    title: `光回線の実質月額インデックス｜${SITE_NAME}`,
-    description: `光回線${data.serviceCount}サービス（運営${data.operatorCount}社）の料金・工事費・割引・キャッシュバックを毎日自動収集し、同一の計算式で${HORIZON}か月の実質月額に換算して比較しています。計算式と出典を全公開。`,
+    title: `光回線の実質月額を毎日比較｜${SITE_NAME}`,
+    description: `光回線${new Set(data.ranked.map((o) => o.providerId)).size}サービスの料金・工事費・割引・キャッシュバックを公式サイトから毎日自動収集し、同じ計算式で${HORIZON}か月の実質月額に換算。住まい・申込・速さ・年齢で絞り込めます。計算式と出典を全公開。`,
     canonical: `${SITE_URL}/`,
     head: [
       jsonLd(datasetLd(data)).value,
       jsonLd(itemListLd(data)).value,
     ].join('\n'),
     body,
+    scripts: ['/app.js'],
     updatedAt: data.updatedAt,
   };
+}
+
+function providerCard(data, id) {
+  const mine = data.publishable.filter((o) => o.providerId === id);
+  const live = mine.filter((o) => !o.paused);
+  const evAll = data.events.filter((c) => c.providerId === id);
+  const lastAt = evAll.map((c) => c.detectedAt).sort().pop() ?? null;
+  const pool = live.length ? live : mine;
+  const cheapest = pool.reduce((a, b) => (a.effectiveMonthly <= b.effectiveMonthly ? a : b));
+  const paused = !live.length;
+  return html`
+    <div class="pcard${raw(paused ? ' is-paused' : '')}">
+      <a class="pname" href="/p/${id}/">${mine[0].providerName}${raw(paused ? ' <span class="chip warn">記録停止</span>' : '')}</a>
+      <span class="pmin"><small>${paused ? '最後に記録した実質月額' : '実質月額'}</small><b>${yenMark(cheapest.effectiveMonthly)}</b><small>／月〜</small></span>
+      <span class="pmeta">
+        <span>${pool.length}プラン ／ 記録した変化 ${evAll.length}件</span>
+        <span>${raw(lastAt ? html`最後に料金が動いた日 ${jstDate(lastAt)}` : 'まだ料金は動いていません')}</span>
+        <span class="psrc">出典 <a href="${cheapest.sourceUrl}" rel="nofollow noopener">${host(cheapest.sourceUrl)}</a> <time datetime="${cheapest.observedAt}">${jstShort(cheapest.observedAt)}</time></span>
+      </span>
+    </div>`;
 }
 
 /**
@@ -450,18 +603,9 @@ function observedSince(data) {
 }
 
 /**
- * その日の分布。**目盛り1本＝観測1件**で、掲載中の実質月額をそのまま並べる。
- *
- * ★平均も中央値も出さない。3サービスしか無い段階の代表値は誤解を招く。
- *   出すのは「一番安い値」と「幅」だけ。どちらも数えるだけで作れる事実。
- * ★横位置は最安〜最高を100%に伸ばした相対位置。絶対値ではないので、
- *   両端に必ず金額を書く。
- */
-/**
  * 表を読むための言葉の説明。
  *
  * ★「実質月額」も「事務手数料」も、知っている人にしか通じない。
- *   比較表の直前に置いて、読む前に言葉が揃うようにする。
  *   略語は使わない（「CB」と書いていて意味が通じなかった）。
  */
 function legend() {
@@ -469,21 +613,20 @@ function legend() {
     ['実質月額',
      `${HORIZON}か月（3年）使い続けたとき、ならすと毎月いくら払ったことになるかの金額です。`
      + '毎月の料金だけでなく、工事費もキャッシュバックも全部ふくめて計算しています。'],
-    ['月額の合計', `毎月はらう料金を、${HORIZON}か月ぶん全部たした金額です。`],
+    ['3年の総額', `${HORIZON}か月で払うお金の合計から、受け取れるキャッシュバックを引いた金額です。実質月額はこれを${HORIZON}で割ったものです。`],
     ['事務手数料', '申し込むときに1回だけかかるお金です。毎月はかかりません。'],
     ['工事費', '回線を家に引く工事の代金です。割引が出る会社もあるので、引いたあとの自己負担だけを数えています。'],
-    ['キャッシュバック', 'あとから受け取れるお金です。受け取れる分だけを総額から引いています。'],
+    ['キャッシュバック', 'あとから受け取れるお金です。3年以内に受け取れる分だけを総額から引いています。'],
     ['推移', 'その料金がこれまでどう動いたかの形です。赤は上がった、緑は下がったことを表します。'],
   ];
   // ★プラン名は各社の公式表記をそのまま出している（勝手に言い換えない）。
   //   そのぶん、意味はここで説明する。
   const words = [
     ['戸建て / マンション', '一戸建て向けか、集合住宅向けかの違いです。同じ会社でも料金が変わります。'],
-    ['1ギガ / 10ギガ', '通信速度の上限です。数字が大きいほど速く、そのぶん高くなるのがふつうです。'],
-    ['新規 / 転用', '新規は、はじめて回線を引く申し込みです。転用は、いま使っている回線をそのまま使って会社だけ変えることです。'
-      + 'この表に並べているのは新規だけです。'],
-    ['派遣工事', '工事の人が家に来る工事のことです。来ない場合（派遣工事なし）より費用がかかります。'],
-    ['2年割 / U29応援割', '会社がつけている割引の名前です。その割引を使った状態で計算しています。'],
+    ['1ギガ / 2ギガ / 10ギガ', '通信速度の上限です。数字が大きいほど速く、そのぶん高くなるのがふつうです。'],
+    ['新しく引く / 乗り換え', '「新しく引く」は、はじめて回線を引く申し込み（新規）です。「乗り換え」は、いまのフレッツ光や光コラボの回線をそのまま使って会社だけ変えること（転用・事業者変更）です。工事費や特典の条件が違うので、分けて並べています。'],
+    ['派遣工事', '工事の人が家に来る工事のことです。来ない場合（派遣工事なし）より費用がかかります。どちらになるかは家の設備で決まります。'],
+    ['2年割 / U29応援割', '会社がつけている割引の名前です。その割引を使った状態で計算しています。U29応援割は29歳以下だけが使えます。'],
     ['一部の特典は不算入', 'スマホとのセット割引や、期間・用途が限られたポイントの特典は計算に入れていません。'
       + 'セット割引は契約している携帯会社で額が変わり、ポイントは現金と同じには使えないため、同じ条件で比べられなくなるからです。'],
   ];
@@ -496,47 +639,6 @@ function legend() {
   <h3 class="legend-h">プラン名に出てくる言葉</h3>
   ${raw(grid(words))}
 </section>`;
-}
-
-function railDays(data) {
-  const since = observedSince(data);
-  if (!since) {
-    return html`<div class="rail-item"><b>毎日</b><span><span class="live"></span>自動収集</span></div>`;
-  }
-  return html`
-        <div class="rail-item"><b>${daysSince(since) + 1}<small class="cur">日目</small></b>
-          <span><span class="live"></span>${jstDate(since)}から記録</span></div>`;
-}
-
-function distributionPanel(data) {
-  const vals = data.publishable.map((o) => o.effectiveMonthly).filter((v) => typeof v === 'number');
-  if (vals.length < 2) return '';
-
-  const lo = Math.min(...vals), hi = Math.max(...vals);
-  if (!(hi > lo)) return '';
-  const best = data.publishable.reduce((a, b) => (a.effectiveMonthly <= b.effectiveMonthly ? a : b));
-
-  const ticks = vals.map((v) => {
-    const pct = ((v - lo) / (hi - lo)) * 100;
-    const edge = v === lo ? ' lo' : v === hi ? ' hi' : '';
-    return `<span class="dist-tick${edge}" style="left:${pct.toFixed(2)}%"></span>`;
-  }).join('');
-
-  return html`
-<div class="dist">
-  <p class="kicker">本日の最安（${HORIZON}か月換算）</p>
-  <p class="dist-lead"><b>${yenMark(best.effectiveMonthly)}</b><span>／ 月</span></p>
-  <p class="dist-plan">
-    <a href="${best.path}">${best.providerName} ${planName(best)}</a><br>
-    ${jstDateTime(best.observedAt)} 時点
-  </p>
-  <div class="dist-bar">${raw(ticks)}</div>
-  <p class="dist-axis"><span>${yen(lo)}</span><span>${yen(hi)}</span></p>
-  <p class="dist-note">
-    縦線1本が観測1件（掲載中${vals.length}件）。最安から最高までを幅いっぱいに伸ばした相対位置です。
-    平均や中央値は出していません — ${data.serviceCount}サービスの代表値として意味を持たないためです。
-  </p>
-</div>`;
 }
 
 /**
@@ -555,43 +657,38 @@ function rowSpark(data, o) {
   return svg ?? '<span class="spark-none">変化なし</span>';
 }
 
-function rankingSection(data, building, no = 1) {
-  // 「共通」は戸建て・マンションのどちらにも当てはまるので両方に出す
-  const rows = data.publishable
-    .filter((o) => o.entry === '新規')
-    .filter((o) => o.building === building || o.building === '共通')
-    .sort((a, b) => a.effectiveMonthly - b.effectiveMonthly);
-
+/**
+ * 根拠の一覧。**順位に入れている全プランを1つの表に出し**、既定の条件に合わない行は hidden にする。
+ * JSが条件に合わせて hidden を付け替え、順位の数字を振り直す（値は変えない）。
+ * ★hidden の行も HTML には残る。AIや検索エンジンが全条件の値を読めるようにするため。
+ */
+function rankingSection(data) {
+  const rows = [...data.ranked].sort(byValue);
   if (!rows.length) return '';
 
   // 申込列を出すのは「飛び先の条件＝出典の条件」のリンクがあるときだけ。
   // 条件が違うリンクは行に混ぜない（数字と食い違うため）。別ブロックに出す。
   const ads = data.ads.same.size > 0;
-
-  const head = html`<thead>
-      <tr><th class="rank">順位</th><th>実質月額</th><th>事業者</th><th>プラン</th><th>推移</th><th>内訳</th><th>出典・取得日時</th>${raw(ads ? '<th>申込</th>' : '')}</tr>
-    </thead>`;
-  const table = (list, from) => html`<div class="card"><div class="table-wrap">
-  <table class="ranking">
-    ${raw(head)}
-    <tbody>
-      ${raw(list.map((o, i) => rankRow(o, data, from + i + 1)).join(''))}
-    </tbody>
-  </table>
-  </div></div>`;
-  // 上位だけ先に見せ、残りは開いたら読めるようにする（行は1件も削らない）
-  const SHOW = 8;
-  const first = rows.slice(0, SHOW), rest = rows.slice(SHOW);
+  let rank = 0;
+  const body = rows.map((o) => {
+    const on = matches(o, DEFAULT_COND);
+    return rankRow(o, data, on ? ++rank : 0, !on);
+  }).join('');
 
   return html`
-<section id="rank-${building === '戸建て' ? 'detached' : 'apartment'}">
-  <h2>${building}：安い順の一覧</h2>
-  <p class="note">新規申込・${HORIZON}か月換算の実質月額です。</p>
-  ${raw(table(first, 0))}
-  ${raw(rest.length ? html`<details class="more-rows">
-    <summary>残り${rest.length}プランも見る</summary>
-    ${raw(table(rest, SHOW))}
-  </details>` : '')}
+<section class="block" id="list">
+  <div class="block-head">
+    <h2>この条件の全プラン <span class="count"><span id="count">${rank}</span>件</span></h2>
+  </div>
+  <p class="note">安い順。速さの違うプランも並べているので、速さはプラン名と印で確かめてください。行を押すと内訳と推移が見られます。</p>
+  <div class="card"><div class="table-wrap">
+  <table class="ranking" id="ranking">
+    <thead>
+      <tr><th class="rank">順位</th><th>実質月額</th><th>サービス</th><th>プラン</th><th>3年の総額</th><th>推移</th><th>出典・取得日時</th>${raw(ads ? '<th>申込</th>' : '')}</tr>
+    </thead>
+    <tbody>${raw(body)}</tbody>
+  </table>
+  </div></div>
   <details class="fold fold-note">
     <summary>この順位の決め方</summary>
     <p class="note">
@@ -600,41 +697,60 @@ function rankingSection(data, building, no = 1) {
     </p>
     <p class="note">
       <strong>順位は実質月額の安い順で、それ以外の基準は入れていません。</strong>
-      速度（1ギガ／2ギガ／10ギガ）が異なるプランも同じ表に並べているので、速度は各行で確かめてください。
-      条件に合う観測は<strong>1件も除外していません</strong>（検算に通らなかったものはページ下部に理由つきで出しています）。
+      選んだ条件に合う観測は<strong>1件も除外していません</strong>。
+      ただし<strong>記録が止まっているサービスの値は、今日の値として比べられないので順位に入れず</strong>、下に分けて出しています。
+      検算に通らなかったものはページ下部に理由つきで出しています。
     </p>
   </details>
 </section>
 `;
 }
 
-function rankRow(o, data, rank) {
+function rankRow(o, data, rank, hidden) {
   const ad = data.ads.same.get(o.providerId);
-  const b = o.breakdown;
-  const notes = [];
-  if (isAgeLimited(o)) notes.push('29歳以下限定');
-  if (o.setBenefits?.length) notes.push('一部の特典は不算入');
-  if (o.constructionFee?.note) notes.push('工事費は公式の代表例');
-  if (o.plan?.work) notes.push(o.plan.work);
-  if (o.stale) notes.push(`更新停止中（${o.stale.days}日）`);
-
+  const notes = rowNotes(o);
+  const attrs = html`data-id="${o.id}" data-pid="${o.providerId}" data-b="${BUILDING_ID[o.building]}" data-e="${entryId(o)}" data-s="${o.speedClass}" data-y="${isAgeLimited(o) ? '1' : '0'}" data-v="${o.effectiveMonthly}" data-plan="${planName(o)}" data-provider="${o.providerName}"`;
   return html`
-<tr class="${raw([rank <= 3 ? 'top' : '', o.stale ? 'stale' : ''].filter(Boolean).join(' '))}">
-  <td class="rank">${rank}</td>
+<tr class="row${raw(rank && rank <= 3 ? ' top' : '')}" ${raw(attrs)}${raw(hidden ? ' hidden' : '')}>
+  <td class="rank">${rank || ''}</td>
   <td class="num strong">${yenMark(o.effectiveMonthly)}</td>
-  <td>${o.providerName}</td>
-  <td><a class="plan-name" href="${o.path}">${planName(o)}</a>${raw(notes.length ? `<br><span class="tag">${notes.map(e).join(' / ')}</span>` : '')}</td>
-  <td>${raw(rowSpark(data, o))}</td>
-  <td class="breakdown">
-    ${raw(b ? `<i>月額の合計</i>${e(yen(b.monthlyTotal))}<br><i>事務手数料</i>${e(yen(b.adminFee))}<br><i>工事費</i>${e(yen(b.constructionBorne))}<br><i>キャッシュバック</i>−${e(yen(b.cashbackCounted))}` : '—')}
-  </td>
+  <td class="prov">${o.providerName}</td>
+  <td class="plan"><a class="plan-name" href="${o.path}">${planName(o)}</a>${raw(notes.length ? `<span class="chips">${notes.map((n) => `<span class="chip">${e(n)}</span>`).join('')}</span>` : '')}</td>
+  <td class="num total">${yen(o.effective?.[HORIZON]?.total)}</td>
+  <td class="trend">${raw(rowSpark(data, o))}</td>
   <td class="src">
-    <a href="${o.sourceUrl}" rel="nofollow noopener">${host(o.sourceUrl)}</a><br>
+    <a href="${o.sourceUrl}" rel="nofollow noopener">${host(o.sourceUrl)}</a>
     <time datetime="${o.observedAt}">${jstDateTime(o.observedAt)}</time>
   </td>
   ${raw(data.ads.same.size > 0 ? adCell(ad) : '')}
 </tr>
 `;
+}
+
+/**
+ * 記録が止まっているサービス。**順位には入れないが、隠しもしない。**
+ * 止まった理由（遮断による対象外 / 取得の失敗）と、最後に記録できた日を書く。
+ */
+function pausedSection(data) {
+  if (!data.paused.length) return '';
+  const groups = groupByProvider([...data.paused].sort(byValue));
+  return html`
+<section class="paused" id="paused">
+  <h2>記録が止まっているサービス</h2>
+  <p class="note">今日の値として比べられないので、<strong>上の順位には入れていません。</strong>最後に記録できた値はサービスのページで見られます。</p>
+  <ul>${raw(groups.map((g) => {
+    const o = g[0];
+    const last = g.map((x) => x.observedAt).sort().pop();
+    const why = o.excluded
+      ? (o.excluded.publicNote ?? `${o.excluded.since}から自動での記録を止めています。`)
+      : `${jstDate(o.stale.since)}から公式ページを取得できていません（${o.stale.days}日）。直りしだい再開します。`;
+    return html`<li>
+      <p class="paused-name"><a href="/p/${o.providerId}/">${o.providerName}</a><span class="chip warn">${o.excluded ? '記録停止' : '更新停止中'}</span></p>
+      <p>${why}</p>
+      <p class="note">最後に記録できた日時: <time datetime="${last}">${jstDateTime(last)}</time> ／ ${g.length}プラン</p>
+    </li>`;
+  }).join(''))}</ul>
+</section>`;
 }
 
 /**
@@ -648,26 +764,27 @@ function rankRow(o, data, rank) {
  *   かといって黙っていると、読者はより良い条件を知らずに終わる。
  *   **別物として、別条件であることを明記して出す。** 金額は書かない
  *   （自動で追えないものを数字で断定しない）。
+ *
+ * @param only 事業者IDを渡すと、その事業者の広告だけ出す（事業者・プランページ用）
  */
-function linkOnlyOffers(data) {
-  const list = data.ads.different;
+function linkOnlyOffers(data, only = null) {
+  const list = data.ads.different.filter((a) => !only || a.providerId === only);
   if (!list.length) return '';
 
   return html`
 <section class="link-only">
-  <h2>申込先によって条件が変わる特典（広告）</h2>
+  <p class="link-only-kicker"><span class="tag">広告</span> 申込先によって条件が変わる特典</p>
   <p>
-    上の比較表は<strong>誰でも見られる公式の料金ページ</strong>を毎日計測した値です。
-    下記は<strong>申込経路によって条件が変わるもの</strong>で、
-    <strong>上の実質月額には含まれていません。</strong>
+    ${only ? 'このページ' : '上の比較'}の金額は<strong>誰でも見られる公式の料金ページ</strong>から計算した値です。
+    下記は<strong>申込経路によって条件が変わるもの</strong>で、<strong>実質月額には含まれていません。</strong>
     金額や条件は変わるので、<strong>必ず申込先のページで確認してください。</strong>
   </p>
   <ul>
     ${raw(list.map((a) => html`<li>
-      <strong>${providerNameOf(data, a.providerId) ?? a.providerId}</strong><br>
-      ${a.differenceNote}<br>
-      ${raw(adUnit(a))}
-      <span class="tag">条件を確認した日: ${a.confirmedAt}</span>
+      <p class="link-only-name">${providerNameOf(data, a.providerId) ?? a.providerId}</p>
+      <p>${a.differenceNote}</p>
+      <p class="link-only-ad">${raw(adUnit(a))}</p>
+      <p class="note">条件を確認した日: ${a.confirmedAt}</p>
     </li>`).join(''))}
   </ul>
   <p class="note">
@@ -735,58 +852,181 @@ function needsReviewSection(data) {
 `;
 }
 
-function staleBanner(data) {
-  const stale = data.publishable.filter((o) => o.stale && o.stale.days >= STALE_DAYS);
-  if (!stale.length) return '';
-  const names = [...new Set(stale.map((o) => o.providerName))];
-  return html`
-<aside class="banner warn">
-  <strong>更新停止中：${names.join('、')}</strong>
-  収集元のページを${STALE_DAYS}日以上取得できていません。表示している値は取得できた最後の時点のものです。
-  各社の公式サイトで最新の条件をご確認ください。
-</aside>
-`;
+// ── 変化のページ ─────────────────────────────────────────────────
+//
+// ★日付ごとに固定URLのページを作る（/changes/2026-11-20/）。
+//   「今日○○が値下げした」はニュースであり、ニュースは**指し示せる単位**が無いと言及されない。
+//   一覧ページ1枚だけだと、引用する側はリンク先を特定できない（手法設計: 言及される理由を毎日作る）。
+// ★「記録した日」と「実際に変わった日」を混同しない。
+//   収集は1日1回なので、変わったのは「前回の記録〜今回の記録」の間のどこか。
+//   収集が止まっていた期間をまたぐと、この幅は何日にもなる（2026-11-20 の NURO光は 11/1〜11/20）。
+//   幅が1日を超えるときは、必ず幅で書く。
+
+/** JST の日付キー（YYYY-MM-DD） */
+function jstDay(iso) {
+  const p = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Tokyo', year: 'numeric', month: '2-digit', day: '2-digit' })
+    .formatToParts(new Date(iso));
+  const g = (t) => p.find((x) => x.type === t).value;
+  return `${g('year')}-${g('month')}-${g('day')}`;
 }
 
-// ── 変化のページ ─────────────────────────────────────────────────
+function eventsByDay(data) {
+  const m = new Map();
+  for (const c of data.events) {
+    const k = jstDay(c.detectedAt);
+    if (!m.has(k)) m.set(k, []);
+    m.get(k).push(c);
+  }
+  return [...m.entries()].sort((a, b) => b[0].localeCompare(a[0])); // 新しい日から
+}
+
+/**
+ * いつ変わったか。変化前の値を記録した時刻と、変化後の値を記録した時刻を両方書く。
+ * 間が1日半を超えて空いていたら、その間は記録できていなかったことも書く。
+ */
+function whenChanged(c) {
+  const prev = c.previousObservedAt;
+  if (!prev) return `変化後の値の記録 ${jstShort(c.detectedAt)}`;
+  const gap = new Date(c.detectedAt) - new Date(prev) > 36 * 3600e3;
+  return `記録: 変化前 ${jstShort(prev)} → 変化後 ${jstShort(c.detectedAt)}${gap ? '（この間は記録が途切れており、変わったのはこの間のどこか）' : ''}`;
+}
+
+/** 「2026/11/20 17:45」（JST）。カードの中で時点を短く書くため */
+function jstShort(iso) {
+  const p = new Intl.DateTimeFormat('ja-JP', { timeZone: 'Asia/Tokyo', year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false })
+    .formatToParts(new Date(iso));
+  const g = (t) => p.find((x) => x.type === t)?.value ?? '';
+  return `${g('year')}/${g('month')}/${g('day')} ${g('hour')}:${g('minute')}`;
+}
+
+/** トップに置く「その日の変化」の要約。主な3件と、残りの件数、日付ページへの道 */
+function dayDigest(data, day, list) {
+  const s = daySummary(list);
+  const top = [...s.moved].sort((a, b) => Math.abs(b.effectiveMonthlyDelta) - Math.abs(a.effectiveMonthlyDelta)).slice(0, 3);
+  const rest = list.length - top.length;
+  return html`
+<li class="digest">
+  <p class="dg-head"><a href="/changes/${day}/">${jstDate(list[0].detectedAt)}</a><span>${s.providers.join('・')}</span></p>
+  <p class="dg-sum">${list.length}件の変化${raw(s.moved.length ? `<span class="pill down">値下げ ${s.down}</span><span class="pill up">値上げ ${s.up}</span>` : '')}</p>
+  <ul>${raw(top.map((c) => {
+    const dir = c.effectiveMonthlyDelta < 0 ? 'down' : 'up';
+    return html`<li><span class="dg-name">${c.providerName} ${planName(c)}</span><span class="dg-v">${yen(c.before)} → <b>${yen(c.after)}</b> <em class="pill ${dir}">${raw(dir === 'down' ? '▼' : '▲')} ${yenSigned(c.effectiveMonthlyDelta)}</em></span></li>`;
+  }).join(''))}</ul>
+  ${raw(rest > 0 ? html`<p class="dg-rest">ほか${rest}件</p>` : '')}
+  <a class="more" href="/changes/${day}/">この日の変化をすべて見る →</a>
+</li>`;
+}
+
+const offerOf = (data, c) => data.publishable.find((o) => o.providerId === c.providerId && o.planKey === c.planKey);
+
+function changeCard(c, data, { dayLink = true } = {}) {
+  const o = offerOf(data, c);
+  const plan = o ? html`<a href="${o.path}">${planName(o)}</a>` : html`${planName(c)}`;
+  const day = jstDay(c.detectedAt);
+  const links = [
+    dayLink ? `<a href="/changes/${day}/">この日の変化</a>` : '',
+    c.sourceUrl ? `<a href="${e(c.sourceUrl)}" rel="nofollow noopener">出典</a>` : '',
+  ].filter(Boolean).join('');
+
+  if (c.type !== 'effective-monthly-changed') {
+    return html`
+<li class="ev">
+  <p class="ev-head"><time datetime="${c.detectedAt}">${jstDate(c.detectedAt)}</time><span class="ev-prov">${c.providerName}</span></p>
+  <p class="ev-plan">${raw(plan)}</p>
+  <p class="ev-delta">${c.type === 'plan-added' ? 'プランが追加されました' : 'プランが見当たらなくなりました'}</p>
+  <p class="ev-links">${raw(links)}</p>
+</li>`;
+  }
+  const dir = c.effectiveMonthlyDelta < 0 ? 'down' : 'up';
+  const cause = (c.cause ?? []).map((x) => `${x.label} ${yen(x.before)}→${yen(x.after)}`).join(' ／ ');
+  return html`
+<li class="ev ${dir}">
+  <p class="ev-head"><time datetime="${c.detectedAt}">${jstDate(c.detectedAt)}</time><span class="ev-prov">${c.providerName}</span></p>
+  <p class="ev-plan">${raw(plan)}</p>
+  <p class="ev-delta">実質月額 ${yen(c.before)} → <b>${yen(c.after)}</b>
+    <em class="pill ${dir}">${raw(c.effectiveMonthlyDelta < 0 ? '▼' : '▲')} ${yenSigned(c.effectiveMonthlyDelta)}</em></p>
+  ${raw(cause ? `<p class="ev-cause">${e(cause)}</p>` : '')}
+  <p class="ev-when">${whenChanged(c)}</p>
+  <p class="ev-links">${raw(links)}</p>
+</li>`;
+}
+
+function daySummary(list) {
+  const moved = list.filter((c) => c.type === 'effective-monthly-changed');
+  const down = moved.filter((c) => c.effectiveMonthlyDelta < 0).length;
+  const up = moved.length - down;
+  const providers = [...new Set(list.map((c) => c.providerName))];
+  return { moved, down, up, providers };
+}
 
 function renderChanges(data) {
+  const days = eventsByDay(data);
   const body = html`
-<h1>料金の変化</h1>
-<p class="lead">
-  実質月額が動いたものだけを載せています。<strong>「キャッシュバックが5,000円増えた」ではなく「実質月額が139円下がった」</strong>に
-  翻訳しないと、読者にとっての意味が分からないためです。
-</p>
-${raw(data.events.length
-  ? `<ul class="changes">${data.events.map(changeItem).join('')}</ul>`
-  : '<p>まだ変化を検知していません。</p>')}
+<section class="page-head">
+  <h1>料金の変化の記録</h1>
+  <p class="lead">
+    各社の料金を毎日記録し、<strong>3年でならした1か月あたりの金額（実質月額）が動いた日</strong>だけを残しています。
+    「キャッシュバックが5,000円増えた」ではなく「実質月額が139円下がった」と、読む人にとっての意味に直して書きます。
+  </p>
+  <p class="note">日付は<strong>このサイトが変化を記録した日</strong>です。収集は1日1回なので、実際に変わったのはその前の記録との間です。記録が途切れていた期間をまたぐ変化は、その幅を書いています。</p>
+</section>
+${raw(days.length ? days.map(([day, list]) => {
+  const s = daySummary(list);
+  return html`
+<section class="day">
+  <h2><a href="/changes/${day}/">${jstDate(list[0].detectedAt)}</a>
+    <small>${s.providers.join('・')} ／ ${list.length}件${raw(s.moved.length ? `（値下げ${s.down}・値上げ${s.up}）` : '')}</small></h2>
+  <ul class="feed">${raw(list.map((c) => changeCard(c, data, { dayLink: false })).join(''))}</ul>
+</section>`;
+}).join('') : '<p>まだ変化を記録していません。</p>')}
 `;
   return {
-    title: `料金の変化｜${SITE_NAME}`,
-    description: '光回線各社の実質月額が動いた履歴です。いつ・何が・いくら変わったかを、実質月額への影響として記録しています。',
+    title: `料金の変化の記録｜${SITE_NAME}`,
+    description: '光回線各社の実質月額が動いた記録。いつ・どのプランが・いくら変わったかを、原因の内訳と出典つきで日付ごとに残しています。',
     canonical: `${SITE_URL}/changes/`,
     body,
     updatedAt: data.updatedAt,
   };
 }
 
-function changeItem(c) {
-  if (c.type !== 'effective-monthly-changed') {
-    return html`<li><time datetime="${c.detectedAt}">${jstDate(c.detectedAt)}</time>
-      <strong>${c.providerName}</strong> ${planName(c)} — ${c.type === 'plan-added' ? 'プランが追加されました' : 'プランが見当たらなくなりました'}</li>`;
-  }
-  const dir = c.effectiveMonthlyDelta < 0 ? 'down' : 'up';
-  const cause = (c.cause ?? []).map((x) => `${x.label} ${yen(x.before)}→${yen(x.after)}`).join(' / ');
-  return html`
-<li class="${dir}">
-  <time datetime="${c.detectedAt}">${jstDate(c.detectedAt)}</time>
-  <strong>${c.providerName}</strong> ${planName(c)}
-  <span class="delta">実質月額 ${yen(c.before)} → ${yen(c.after)}
-    <em class="pill">${raw(c.effectiveMonthlyDelta < 0 ? '▼' : '▲')} ${yenSigned(c.effectiveMonthlyDelta)}</em></span>
-  ${raw(cause ? `<span class="cause">${e(cause)}</span>` : '')}
-  ${raw(c.sourceUrl ? `<a class="src" href="${e(c.sourceUrl)}" rel="nofollow noopener">出典</a>` : '')}
-</li>
+function renderChangeDay(data, day, list, prev, next) {
+  const s = daySummary(list);
+  const date = jstDate(list[0].detectedAt);
+  const crumb = breadcrumb([
+    { name: '実質月額', path: '/' },
+    { name: '料金の変化', path: '/changes/' },
+    { name: date },
+  ]);
+  const headline = s.moved.length
+    ? `${s.providers.join('・')}の実質月額が${s.moved.length}件変化（値下げ${s.down}件・値上げ${s.up}件）`
+    : `${s.providers.join('・')}のプランに${list.length}件の変化`;
+  const body = html`
+${raw(crumb.visible)}
+<section class="page-head">
+  <p class="eyebrow">料金の変化 ／ ${date}</p>
+  <h1>${headline}</h1>
+  <p class="lead">${date}に、このサイトが記録した光回線の料金の変化です。金額は${HORIZON}か月（3年）使ったときの1か月あたり（実質月額）で、各社公式の料金ページの値から<a href="/method/">当サイトの計算式</a>で計算したものです。</p>
+  <aside class="stale-note"><strong>これは${date}に記録した変化で、現在の料金ではありません。</strong>いまの値は各カードのプラン名から開けるページ、または<a href="/">比較のページ</a>でご確認ください。</aside>
+</section>
+<ul class="feed">${raw(list.map((c) => changeCard(c, data, { dayLink: false })).join(''))}</ul>
+<p class="note">
+  日付は<strong>このサイトが変化を記録した日</strong>です。収集は1日1回なので、実際に変わったのは前回の記録との間です。
+  計算の仕方は<a href="/method/">計算方法</a>に全部書いています。各カードの「出典」が、変化を確かめた公式ページです。
+</p>
+<nav class="pager" aria-label="前後の日">
+  ${raw(next ? `<a rel="next" href="/changes/${next}/">← ${e(next)}</a>` : '<span></span>')}
+  <a href="/changes/">記録の一覧</a>
+  ${raw(prev ? `<a rel="prev" href="/changes/${prev}/">${e(prev)} →</a>` : '<span></span>')}
+</nav>
 `;
+  return {
+    title: `${date}の光回線の料金の変化：${headline}｜${SITE_NAME}`,
+    description: `${date}に記録した光回線の料金の変化。${s.moved.slice(0, 3).map((c) => `${c.providerName} ${planName(c)} ${yen(c.before)}→${yen(c.after)}`).join('、')}${s.moved.length > 3 ? ' ほか' : ''}。実質月額（${HORIZON}か月換算）と原因の内訳、出典つき。`,
+    canonical: `${SITE_URL}/changes/${day}/`,
+    head: crumb.ld,
+    body,
+    updatedAt: data.updatedAt,
+  };
 }
 
 // ── 計算方法のページ（透明性そのものが価値）───────────────────────
@@ -853,7 +1093,8 @@ function renderMethod(data) {
 <ul>
   <li>取得に失敗したとき、<strong>前回の値を書き戻すことはしません</strong></li>
   <li>設定されたページを1つでも取得できなかった事業者は、<strong>差分を取らず、記録も更新しません</strong>（「取得できなかった」を「無くなった」と誤解釈しないため）</li>
-  <li>${STALE_DAYS}日以上更新できていない場合は、このサイトに<strong>「更新停止中」と明示します</strong></li>
+  <li>${STALE_DAYS}日以上更新できていない場合は、このサイトに<strong>「更新停止中」と明示します</strong>。<strong>今日の値として比べられないので、順位にも入れません</strong>（別枠に、止まった日と理由を書いて残します）</li>
+  <li>公式サイトが自動での取得を受け付けなくなった場合は、<strong>技術的に取得を続けられるかどうかに関わらず記録を止めます</strong>。運営者の意思を尊重するためです。止めた日と理由は、そのサービスのページに書きます</li>
 </ul>
 
 <h2>よくある質問</h2>
@@ -893,7 +1134,7 @@ function renderData(data) {
   <li><a href="https://github.com/riugamesub3-coder/tsushinhi-index">GitHub リポジトリ</a> — 収集スクリプトとデータの全部</li>
   <li><code>data/effective/</code> — 実質月額の現在値（事業者ごとのJSON）</li>
   <li><code>data/effective-changes/</code> — 実質月額が動いたイベントの履歴</li>
-  <li><code>data/notices/</code> — 各社公式のお知らせ（料金改定の正式な適用日）</li>
+  <li><code>data/notices/</code> — 各社のお知らせの日付・URLと、当サイトが付けた分類（各社の文章そのものは保存していません）</li>
   <li><a href="/feed.xml">RSS フィード</a> — 変化の通知</li>
 </ul>
 
@@ -908,7 +1149,7 @@ function renderData(data) {
   <thead><tr><th>事業者</th><th>観測数</th><th>最終取得</th><th>出典</th></tr></thead>
   <tbody>${raw(data.effective.map((s) => html`
     <tr>
-      <td>${s.providerName}</td>
+      <td>${s.providerName}${raw(data.excluded.has(s.providerId) ? ` <span class="chip warn">${e(data.excluded.get(s.providerId).since)}から記録停止</span>` : '')}</td>
       <td class="num">${s.offers.length}</td>
       <td><time datetime="${s.observedAt}">${jstDateTime(s.observedAt)}</time></td>
       <td class="src">${raw(s.sourceUrls.map((u) => `<a href="${e(u)}" rel="nofollow noopener">${e(host(u))}</a>`).join('<br>'))}</td>
@@ -968,81 +1209,205 @@ function breadcrumb(trail) {
   return { visible, ld };
 }
 
+/**
+ * 各社のお知らせの出し方。docs/research/2026-11-20_サイト刷新の表示可否.md の判定 1(b) に従う。
+ * ★タイトル（各社の文章）は出さない（判定 1(a) 不可）。日付・当サイトの分類語・リンクだけ。
+ * ★分類は見出しの語から機械的に付けたもので、当サイトの分類だと明示し、基準を公開する。
+ * ★「障害・メンテナンス」の語を含むものは出さない（分類の誤りが混じりやすい）。
+ * ★別ドメイン（docomo-fg.com 等）のお知らせは出さない（規約を確認していない）。
+ * ★見出しに「公式の」を単独で使わない（年表そのものが公式だと読めるため）。
+ */
+const NOTICE_MODE = 'category';
+
+const NOTICE_CATEGORY = {
+  'price-change': '料金改定',
+  'plan-change': 'プラン・条件',
+  'service-end': '終了・廃止',
+  'service-start': '提供開始',
+  'campaign': '特典・キャンペーン',
+};
+const NOTICE_RULE = '見出しに「料金改定・値上げ・値下げ」→料金改定、「プラン・約款・提供条件」→プラン・条件、「終了・廃止」→終了・廃止、「提供開始・リニューアル」→提供開始、「キャンペーン・特典・割引・キャッシュバック」→特典・キャンペーン';
+
+function noticeTimeline(data, providerId) {
+  if (NOTICE_MODE === 'off') return '';
+  const n = data.notices.get(providerId);
+  if (!n?.list.length) return '';
+  const listHost = host(n.sourceUrl);
+  const list = n.list
+    .filter((x) => !(x.categories ?? []).includes('noise'))
+    .filter((x) => host(x.url) === listHost)
+    .filter((x) => (x.categories ?? []).some((c) => NOTICE_CATEGORY[c]))
+    .slice(0, 10);
+  if (!list.length) return '';
+  const items = list.map((x) => {
+    const cats = x.categories.filter((c) => NOTICE_CATEGORY[c]).map((c) => NOTICE_CATEGORY[c]);
+    return `<li><time datetime="${e(x.date)}">${e(x.date.replace(/-/g, '/'))}</time><span><a href="${e(x.url)}" rel="nofollow noopener">${e(host(x.url))} のお知らせ</a><span class="chips">${cats.map((c) => `<span class="chip">${e(c)}</span>`).join('')}</span></span></li>`;
+  }).join('');
+  return html`
+<section class="block">
+  <h2>各社のお知らせのうち、料金・条件に関係しそうなもの</h2>
+  <p class="note">${data.publishable.find((o) => o.providerId === providerId)?.providerName}のお知らせ一覧を毎日読み、<strong>見出しに含まれる語から当サイトが機械的に分類</strong>したものです。内容は各リンク先でご確認ください。日付は各社がお知らせに載せている日付です。</p>
+  <ul class="notices">${raw(items)}</ul>
+  <p class="note">分類の基準: ${NOTICE_RULE}。障害・メンテナンスの語を含むものは載せていません。<br>
+  出典: <a href="${n.sourceUrl}" rel="nofollow noopener">${n.sourceUrl}</a> ／ 最終確認 ${jstDateTime(n.lastCollectedAt)}</p>
+</section>`;
+}
+
+/** 記録が止まっていることの説明。事業者ページとプランページで同じ文面を使う */
+function pausedNote(o, scope) {
+  if (o.excluded) {
+    return html`<aside class="stale-note"><strong>記録停止中</strong>${o.excluded.publicNote ?? ''}</aside>`;
+  }
+  if (o.stale) {
+    return html`<aside class="stale-note"><strong>${o.stale.days}日前から更新できていません。</strong>
+      ${jstDate(o.stale.since)}以降、収集または算出に失敗し続けています。${scope === 'plan'
+        ? html`表示しているのは${jstDate(o.observedAt)}時点の値で、現在の条件とは違う可能性があります。`
+        : '下の値は現在の条件とは違う可能性があります。'}
+      ${o.paused ? '今日の値として比べられないので、トップの順位には入れていません。' : ''}</aside>`;
+  }
+  return '';
+}
+
 function renderProvider(data, providerId) {
-  const mine = data.publishable.filter((o) => o.providerId === providerId)
-    .sort((a, b) => a.effectiveMonthly - b.effectiveMonthly);
+  const mine = data.publishable.filter((o) => o.providerId === providerId).sort(byValue);
   const first = mine[0];
+  const allPaused = mine.every((o) => o.paused);
   const op = data.operators[providerId];
   const evs = data.events.filter((c) => c.providerId === providerId);
   // 月額と工事費を別ページから読む事業者（ドコモ光）は、工事費側のページも出典に出す
   const sources = [...new Set(mine.flatMap((o) => [o.sourceUrl, ...(o.alsoSourcedFrom ?? [])]))];
-
-  const staleHere = mine.filter((o) => o.stale);
   const crumb = breadcrumb([
     { name: '実質月額', path: '/' },
     { name: first.providerName },
   ]);
-  const body = html`
-${raw(crumb.visible)}
-<h1>${first.providerName}の実質月額</h1>
-${raw(staleHere.length ? html`
-<p class="stale-note">
-  <strong>この事業者は${staleHere[0].stale.days}日前から更新できていません</strong>（${mine.length}件中${staleHere.length}件）。
-  ${jstDate(staleHere[0].stale.since)}以降、収集または算出に失敗し続けています。
-  <strong>下の値は現在の条件とは違う可能性があります。</strong>
-</p>` : '')}
-<p class="lead">
-  ${first.providerName}の料金ページを毎日1回自動で読み、
-  <strong>${HORIZON}か月使ったときの実質月額</strong>に直しています。現在<strong>${mine.length}件</strong>を掲載中です。
-  ${raw(op?.name ? html`運営会社は<strong>${op.name}</strong>。` : '')}
-</p>
-
-<h2>掲載中のプラン</h2>
+  const groups = [['戸建て', 'detached'], ['マンション', 'apartment']].map(([label, b]) => {
+    const rows = mine.filter((o) => BUILDING_ID[o.building] === b || o.building === '共通');
+    return rows.length ? html`
+<h3 class="group-h">${label}</h3>
 <div class="card"><div class="table-wrap">
-<table>
-  <thead><tr><th>実質月額</th><th>プラン</th><th>内訳</th><th>取得</th></tr></thead>
-  <tbody>${raw(mine.map((o) => html`
+<table class="plans">
+  <thead><tr><th>実質月額</th><th>プラン</th><th>3年の総額</th><th>出典・取得日時</th></tr></thead>
+  <tbody>${raw(rows.map((o) => {
+    const notes = [entryId(o) === 'new' ? '新しく引く' : '乗り換え', ...rowNotes(o)];
+    return html`
     <tr>
       <td class="num strong">${yenMark(o.effectiveMonthly)}</td>
-      <td><a href="${o.path}">${planName(o)}</a></td>
-      <td class="breakdown">${raw(o.breakdown
-        ? `月額計 ${e(yen(o.breakdown.monthlyTotal))}<br>工事費実負担 ${e(yen(o.breakdown.constructionBorne))}<br>CB −${e(yen(o.breakdown.cashbackCounted))}`
-        : '—')}</td>
-      <td class="src"><time datetime="${o.observedAt}">${jstDateTime(o.observedAt)}</time></td>
-    </tr>`).join(''))}
+      <td><a class="plan-name" href="${o.path}">${planName(o)}</a><span class="chips">${raw(notes.map((n) => `<span class="chip">${e(n)}</span>`).join(''))}</span></td>
+      <td class="num total">${yen(o.effective?.[HORIZON]?.total)}</td>
+      <td class="src"><a href="${o.sourceUrl}" rel="nofollow noopener">${host(o.sourceUrl)}${new URL(o.sourceUrl).pathname}</a><time datetime="${o.observedAt}">${jstDateTime(o.observedAt)}</time></td>
+    </tr>`;
+  }).join(''))}
   </tbody>
 </table>
-</div></div>
+</div></div>` : '';
+  }).join('');
 
-<h2>この事業者で検知した変化</h2>
-${raw(evs.length ? html`
-<ul class="events">${raw(evs.slice(0, 30).map((c) => html`
-  <li>
-    <time datetime="${c.detectedAt}">${jstDate(c.detectedAt)}</time>
-    <strong>${planName(c)}</strong>
-    ${raw(c.type === 'effective-monthly-changed'
-      ? html`実質月額 ${yen(c.before)} → <strong>${yen(c.after)}</strong>（${yenSigned(c.effectiveMonthlyDelta)}）`
-      : html`${c.type}`)}
-    ${raw((c.cause ?? []).map((x) => `<br><span class="tag">${e(x.label)}: ${e(yen(x.before))} → ${e(yen(x.after))}</span>`).join(''))}
-  </li>`).join(''))}
-</ul>` : html`
-<p class="note">この事業者では、観測を始めてから実質月額の変化を検知していません。</p>`)}
+  const body = html`
+${raw(crumb.visible)}
+<section class="page-head">
+  <p class="eyebrow">サービス別の記録</p>
+  <h1>${first.providerName}の実質月額</h1>
+  ${raw(pausedNote(first, 'provider'))}
+  <p class="lead">
+    ${raw(allPaused
+      ? html`${first.providerName}の公式の料金ページを毎日自動で読み、<strong>${HORIZON}か月（3年）使ったときの1か月あたり</strong>に直して記録していました。下は最後に記録できた${mine.length}プランです。`
+      : html`${first.providerName}の公式の料金ページを毎日1回自動で読み、<strong>${HORIZON}か月（3年）使ったときの1か月あたり</strong>に直しています。いま${mine.length}プランを掲載しています。`)}
+    ${raw(op?.name ? html`運営会社は${op.name}です。` : '')}
+  </p>
+</section>
 
-<h2>出典</h2>
-<ul>${raw(sources.map((u) => `<li><a href="${e(u)}" rel="nofollow noopener">${e(u)}</a></li>`).join(''))}</ul>
-<p class="note">
-  掲載しているのは<strong>各社が公開している事実の値だけ</strong>です。
-  <a href="/method/">計算方法</a>は全社共通で、事業者ごとに変えていません。
-</p>
+
+<section class="block">
+  <h2>${allPaused ? '最後に記録したプラン' : '掲載中のプラン'}</h2>
+  ${raw(groups)}
+</section>
+
+<section class="block">
+  <h2>このサービスで記録した料金の変化</h2>
+  ${raw(evs.length
+    ? `<ul class="feed">${evs.slice(0, 30).map((c) => changeCard(c, data)).join('')}</ul>`
+    : html`<p class="note">記録を始めてから、実質月額の変化はまだありません。</p>`)}
+</section>
+
+${raw(linkOnlyOffers(data, providerId))}
+
+${raw(noticeTimeline(data, providerId))}
+
+<section class="block">
+  <h2>出典</h2>
+  <ul class="sources">${raw(sources.map((u) => `<li><a href="${e(u)}" rel="nofollow noopener">${e(u)}</a></li>`).join(''))}</ul>
+  <p class="note">
+    掲載しているのは<strong>各社が公開している事実の値だけ</strong>です。
+    <a href="/method/">計算方法</a>は全社共通で、サービスごとに変えていません。
+  </p>
+</section>
 `;
   return {
-    title: `${first.providerName}の実質月額（${HORIZON}か月換算）｜${SITE_NAME}`,
-    description: `${first.providerName}の料金を毎日自動収集し、${HORIZON}か月の実質月額に換算した${mine.length}件。工事費・割引・キャッシュバックを含めた内訳と、料金が動いた履歴つき。`,
+    title: `${first.providerName}の実質月額（${HORIZON}か月換算）と料金の変化｜${SITE_NAME}`,
+    description: allPaused
+      ? `${first.providerName}の料金を公式サイトから自動収集し、${HORIZON}か月の実質月額に換算した記録（${first.excluded?.since ?? jstDate(first.stale?.since)}から記録停止）。最後に記録できた${mine.length}プランの内訳と、料金が動いた記録。`
+      : `${first.providerName}の料金を公式サイトから毎日自動収集し、${HORIZON}か月の実質月額に換算した${mine.length}プラン。工事費・割引・キャッシュバックを含めた内訳と、料金が動いた記録つき。`,
     canonical: `${SITE_URL}/p/${providerId}/`,
     head: crumb.ld,
     body,
     updatedAt: data.updatedAt,
   };
+}
+
+/**
+ * 3年の総額の内訳を、横に積んだ棒で見せる。
+ * ★棒の長さは表示用の比率だけ。数字はすべて data の breakdown をそのまま書く。
+ * ★引く側（キャッシュバック・その他割引）は別の行に、引くことが分かる形で出す。
+ */
+function breakdownBars(o) {
+  const b = o.breakdown;
+  if (!b) return '<p class="note">内訳を出せません。</p>';
+  const plus = [
+    ['月額料金の合計', b.monthlyTotal, 'c1'],
+    ['工事費（割引後の自己負担）', b.constructionBorne, 'c2'],
+    ['事務手数料', b.adminFee, 'c3'],
+    ['必須オプション', b.optionTotal, 'c4'],
+  ].filter(([, v]) => v > 0);
+  const minus = [
+    ['キャッシュバック', b.cashbackCounted, 'm1'],
+    ['その他の割引', b.otherDiscounts, 'm2'],
+  ].filter(([, v]) => v > 0);
+  const gross = plus.reduce((s, [, v]) => s + v, 0);
+  const pct = (v) => (gross > 0 ? Math.max(0.8, (v / gross) * 100).toFixed(2) : 0);
+  const seg = ([label, v, c]) => `<span class="seg-${c}" style="width:${pct(v)}%" title="${e(label)} ${e(yen(v))}"></span>`;
+  const item = ([label, v, c], sign = '') => `<li><i class="key seg-${c}"></i><span>${e(label)}</span><b>${sign}${e(yen(v))}</b></li>`;
+  return html`
+<div class="bars">
+  <div class="bar" role="img" aria-label="${plus.map(([l, v]) => `${l} ${yen(v)}`).join('、')}">${raw(plus.map(seg).join(''))}</div>
+  ${raw(minus.length ? `<div class="bar bar-minus" role="img" aria-label="${e(minus.map(([l, v]) => `${l} −${yen(v)}`).join('、'))}">${minus.map(seg).join('')}</div>` : '')}
+  <ul class="keys">${raw(plus.map((x) => item(x)).join('') + minus.map((x) => item(x, '−')).join(''))}</ul>
+  <p class="bar-total"><span>${HORIZON}か月の総額</span><b>${yen(o.effective[HORIZON].total)}</b><span>÷ ${HORIZON}か月 ＝</span><b class="hl">${yen(o.effectiveMonthly)}／月</b></p>
+</div>`;
+}
+
+/**
+ * 毎月の料金（工事費の分割を除く）を、契約からの月数の帯で見せる。
+ * ★帯の区切りは data の monthlySchedule の区切りそのもの。${HORIZON}か月で打ち切る。
+ */
+function monthlyBand(o) {
+  const sched = (o.monthlySchedule ?? []).filter((s) => s.fromMonth <= HORIZON);
+  if (!sched.length) return '';
+  const parts = sched.map((s) => {
+    const to = Math.min(s.toMonth ?? HORIZON, HORIZON);
+    return { from: s.fromMonth, to, amount: s.amount, months: to - s.fromMonth + 1 };
+  });
+  const max = Math.max(...parts.map((p) => p.amount), 1);
+  // 比較の期間の外（37か月目以降）の料金。帯には描かず、注記で書く
+  const after = (o.monthlySchedule ?? []).find((x) => (x.toMonth == null || x.toMonth > HORIZON) && (x.fromMonth > HORIZON || x.toMonth == null));
+  return html`
+<div class="band" role="list">${raw(parts.map((p) => `
+  <div class="band-seg" role="listitem" style="flex:${p.months} 1 0">
+    <span class="band-bar" style="height:${Math.max(12, (p.amount / max) * 100).toFixed(1)}%"></span>
+    <span class="band-amt">${e(yen(p.amount))}</span>
+    <span class="band-when">${p.from === p.to ? `${p.from}か月目` : `${p.from}〜${p.to}か月目`}</span>
+  </div>`).join(''))}
+</div>
+${raw(after ? html`<p class="note">${HORIZON + 1}か月目以降は${yen(after.amount)}／月です（公式の表示による。この比較の${HORIZON}か月には入りません）。</p>` : '')}`;
 }
 
 function renderPlan(data, o) {
@@ -1057,114 +1422,97 @@ function renderPlan(data, o) {
 
   const svg = series.ok ? stepChart(series.points, { label: '実質月額' }) : null;
   const b = o.breakdown;
-  const e24 = o.effective?.[24]?.effectiveMonthly ?? null;
-  const rank = data.publishable
-    .filter((x) => x.building === o.building)
-    .sort((a, c) => a.effectiveMonthly - c.effectiveMonthly);
-  const place = rank.findIndex((x) => x === o) + 1;
+  // ★「◯件中1番目に安い」は書かない（実質「いちばん安い」で、比較の範囲の説明も要る）。
+  //   同じ条件の安い順はトップで条件を選べば見られるので、そこへ案内する（critic 指摘 2026-11-20）
+  const condText = `${o.building === '共通' ? '戸建て・マンション共通' : o.building}・${entryId(o) === 'new' ? '新しく引く' : '乗り換え'}`;
 
   const crumb = breadcrumb([
     { name: '実質月額', path: '/' },
     { name: o.providerName, path: `/p/${o.providerId}/` },
     { name: planName(o) },
   ]);
+  const notes = rowNotes(o);
   const body = html`
 ${raw(crumb.visible)}
-<h1>${o.providerName} ${planName(o)}</h1>
-${raw(o.stale ? html`
-<p class="stale-note">
-  <strong>この値は${o.stale.days}日前から更新できていません。</strong>
-  ${jstDate(o.stale.since)}以降、収集または算出に失敗し続けています。
-  <strong>表示しているのは${jstDate(o.observedAt)}時点の値で、現在の条件とは違う可能性があります。</strong>
-  古い値を消さずに残しているのは、いつから止まっているかを隠さないためです。
-</p>` : '')}
-<p class="lead">
-  ${HORIZON}か月使ったときの実質月額は <strong class="big">${yenMark(o.effectiveMonthly)}</strong>。
-  ${raw(place > 0 ? html`同じ条件（${o.building}）の${rank.length}件中<strong>${place}番目</strong>に安い値です。` : '')}
-  <br><small>${jstDateTime(o.observedAt)} 時点 ／ 出典 ${raw([o.sourceUrl, ...(o.alsoSourcedFrom ?? [])]
-    .map((u) => `<a href="${e(u)}" rel="nofollow noopener">${e(host(u))}${e(new URL(u).pathname)}</a>`).join('、'))}</small>
-  ${raw(o.constructionFee?.note ? html`<br><small>工事費: ${o.constructionFee.note}</small>` : '')}
-</p>
+<section class="page-head plan-head">
+  <p class="eyebrow">${o.providerName}</p>
+  <h1>${planName(o)}</h1>
+  ${raw(notes.length ? `<p class="chips">${notes.map((n) => `<span class="chip">${e(n)}</span>`).join('')}</p>` : '')}
+  ${raw(pausedNote(o, 'plan'))}
+  <div class="headline">
+    <p class="headline-fig"><span>3年使ったときの1か月あたり</span><b>${yenMark(o.effectiveMonthly)}</b></p>
+    <p class="headline-rank">${raw(o.paused
+      ? '記録が止まっているため、比較には入れていません'
+      : html`<a href="/#${condHash(o)}">同じ条件（${condText}${isAgeLimited(o) ? '・29歳以下' : ''}）の安い順を見る →</a>`)}</p>
+  </div>
+  <p class="stamp">${jstDateTime(o.observedAt)} 時点 ／ 出典 ${raw([o.sourceUrl, ...(o.alsoSourcedFrom ?? [])]
+    .map((u) => `<a href="${e(u)}" rel="nofollow noopener">${e(host(u))}${e(new URL(u).pathname)}</a>`).join('、'))}</p>
+</section>
 
-<h2>実質月額の推移</h2>
-${raw(svg ? html`
-<div class="chart-card">${raw(svg)}</div>
-<p class="note">
-  料金は改定された日に飛ぶので、階段で描いています。<strong>点と点の間を直線で結んでいません</strong>
-  （実際には存在しなかった中間の値をグラフ上に作らないためです）。
-</p>` : series.ok && series.flat ? html`
-<p class="note">
-  <strong>観測を始めてから、この値は変わっていません。</strong>変化を検知した時点でここにグラフが出ます。
-  いつから観測しているかは記録していないため、過去に線を伸ばすことはしていません。
-</p>` : html`
-<p class="note">推移を復元できませんでした（${series.why}）。値そのものは下の内訳のとおりです。</p>`)}
+<section class="block">
+  <h2>この金額の内訳（${HORIZON}か月）</h2>
+  ${raw(breakdownBars(o))}
+  ${raw(o.constructionFee?.note ? html`<p class="note">工事費: ${o.constructionFee.note}</p>` : '')}
+</section>
 
-<h2>この金額の内訳（${HORIZON}か月）</h2>
-${raw(b ? html`
-<div class="card"><div class="table-wrap">
-<table>
-  <tbody>
-    <tr><th>月額料金の合計</th><td class="num">${yen(b.monthlyTotal)}</td></tr>
-    <tr><th>事務手数料</th><td class="num">${yen(b.adminFee)}</td></tr>
-    <tr><th>工事費（割引を引いた自己負担）</th><td class="num">${yen(b.constructionBorne)}</td></tr>
-    <tr><th>必須オプション</th><td class="num">${yen(b.optionTotal)}</td></tr>
-    <tr><th>キャッシュバック</th><td class="num">−${yen(b.cashbackCounted)}</td></tr>
-    <tr><th>その他の割引</th><td class="num">−${yen(b.otherDiscounts)}</td></tr>
-    <tr class="total"><th>${HORIZON}か月の総額</th><td class="num strong">${yen(o.effective[HORIZON].total)}</td></tr>
-    <tr class="total"><th>1か月あたり</th><td class="num strong">${yen(o.effectiveMonthly)}</td></tr>
-  </tbody>
-</table>
-</div></div>` : '<p class="note">内訳を出せません。</p>')}
-${raw(e24 != null ? html`
-<p class="note">
-  <strong>24か月で解約する場合は ${yen(e24)}</strong>／月です。工事費の分割が終わる前に解約すると残債が乗るため、
-  期間によって順位は入れ替わります。
-</p>` : '')}
+<section class="block">
+  <h2>毎月の料金の移り変わり</h2>
+  <p class="note">契約してから何か月目にいくらかかるか（工事費の分割払いは含みません）。</p>
+  ${raw(monthlyBand(o))}
+</section>
 
-<h2>月額料金の推移（契約からの月数）</h2>
-<div class="card"><div class="table-wrap">
-<table>
-  <thead><tr><th>期間</th><th>月額</th></tr></thead>
-  <tbody>${raw((o.publishedMonthly ?? []).map((s) => html`
-    <tr><td>${s.fromMonth}〜${s.toMonth ?? ''}か月目</td><td class="num">${yen(s.amount)}</td></tr>`).join(''))}
-  </tbody>
-</table>
-</div></div>
+
+<section class="block">
+  <h2>実質月額の推移</h2>
+  ${raw(svg ? html`
+  <div class="chart-card">${raw(svg)}</div>
+  <p class="note">
+    料金は改定された日に飛ぶので、階段で描いています。<strong>点と点の間を直線で結んでいません</strong>
+    （実際には存在しなかった中間の値をグラフ上に作らないためです）。
+  </p>` : series.ok && series.flat ? html`
+  <p class="note">
+    <strong>記録を始めてから、この値は変わっていません。</strong>変化を記録した時点でここにグラフが出ます。
+    いつから記録しているかより前に、線を伸ばすことはしていません。
+  </p>` : html`
+  <p class="note">推移を復元できませんでした（${series.why}）。値そのものは上の内訳のとおりです。</p>`)}
+  ${raw(series.events.length ? html`
+  <ul class="feed">${raw(series.events.slice().reverse().map((c) => changeCard({ ...c, providerName: o.providerName, providerId: o.providerId }, data)).join(''))}</ul>` : '')}
+</section>
 
 ${raw((o.cashbacks ?? []).length ? html`
-<h2>キャッシュバック</h2>
-<ul>${raw(o.cashbacks.map((c) => `<li>${e(yen(c.amount))}（${e(c.receiveAtMonth)}か月目に受け取り）${c.note ? `<br><span class="tag">${e(c.note)}</span>` : ''}</li>`).join(''))}</ul>
-<p class="note">受け取りが${HORIZON}か月より先になるキャッシュバックは計算に入れていません。</p>` : '')}
+<section class="block">
+  <h2>キャッシュバック</h2>
+  <ul>${raw(o.cashbacks.map((c) => `<li>${e(yen(c.amount))}（${e(c.receiveAtMonth)}か月目に受け取り）</li>`).join(''))}</ul>
+  <p class="note">受け取りが${HORIZON}か月より先になるキャッシュバックは計算に入れていません。受け取りには申請などの手続きが要ることがあります。条件は公式ページでご確認ください。</p>
+</section>` : '')}
+
+${raw(o.setBenefits?.length ? html`
+<section class="block">
+  <h2>計算に入れていない特典</h2>
+  <ul>${raw(o.setBenefits.map((s) => `<li>${e(s)}</li>`).join(''))}</ul>
+  <p class="note">人によって額が違うもの・ポイントで受け取るもの・他の契約が前提のものは、同じ条件で比べられないので実質月額に入れていません。</p>
+</section>` : '')}
 
 ${raw(o.constructionFee ? html`
-<h2>工事費</h2>
-<p>
-  ${raw(typeof o.constructionFee.list === 'number'
-    // ★定価が読めていないときに「定価 —。」とは書かない。
-    //   分からないことを、分かったような書式で出さない。
-    ? html`定価 ${yen(o.constructionFee.list)}${raw(o.constructionFee.installmentMonths ? html`／${o.constructionFee.installmentMonths}回の分割` : '')}。`
-    : html`<strong>工事費の定価を出典ページから読み取れていません。</strong>実質月額には、出典に書かれている割引後の実負担額（${yen(b?.constructionBorne ?? 0)}）を入れています。`)}
-  ${raw(o.constructionFee.residualOnEarlyExit ? '<strong>途中解約すると残債が請求されます。</strong>' : '')}
-</p>` : '')}
+<section class="block">
+  <h2>工事費</h2>
+  <p>
+    ${raw(typeof o.constructionFee.list === 'number'
+      // ★定価が読めていないときに「定価 —。」とは書かない。
+      ? html`定価 ${yen(o.constructionFee.list)}${raw(o.constructionFee.installmentMonths ? html`／${o.constructionFee.installmentMonths}回の分割` : '')}。`
+      : html`<strong>工事費の定価を出典ページから読み取れていません。</strong>実質月額には、出典に書かれている割引後の実負担額（${yen(b?.constructionBorne ?? 0)}）を入れています。`)}
+    ${raw(o.constructionFee.residualOnEarlyExit ? '<strong>分割の途中で解約すると、残りの工事費が請求されます。</strong>この金額は3年使い続ける前提で、途中解約の費用は入っていません。' : '')}
+  </p>
+</section>` : '')}
 
-${raw(series.events.length ? html`
-<h2>この値が動いた日</h2>
-<ul class="events">${raw(series.events.slice().reverse().map((c) => html`
-  <li>
-    <time datetime="${c.detectedAt}">${jstDate(c.detectedAt)}</time>
-    ${yen(c.before)} → <strong>${yen(c.after)}</strong>（${yenSigned(c.effectiveMonthlyDelta)}）
-    ${raw((c.cause ?? []).map((x) => `<br><span class="tag">${e(x.label)}: ${e(yen(x.before))} → ${e(yen(x.after))}</span>`).join(''))}
-  </li>`).join(''))}
-</ul>` : '')}
-
-<p class="note">
+<p class="note page-foot">
   この値は<a href="/method/">全社共通の計算式</a>で出しています。
-  <a href="/p/${o.providerId}/">${o.providerName}の他のプラン</a>／<a href="/">全社の一覧</a>
+  <a href="/p/${o.providerId}/">${o.providerName}のほかのプラン</a> ／ <a href="/">条件を選んで比べる</a>
 </p>
 `;
   return {
     title: `${o.providerName} ${planName(o)}の実質月額 ${yen(o.effectiveMonthly)}｜${SITE_NAME}`,
-    description: `${o.providerName} ${planName(o)}を${HORIZON}か月使ったときの実質月額は${yen(o.effectiveMonthly)}（${jstDate(o.observedAt)}時点）。月額・事務手数料・工事費・キャッシュバックの内訳と、料金が動いた履歴。`,
+    description: `${o.providerName} ${planName(o)}を${HORIZON}か月使ったときの実質月額は${yen(o.effectiveMonthly)}（${jstDate(o.observedAt)}時点）。月額・事務手数料・工事費・キャッシュバックの内訳と、料金が動いた記録。`,
     canonical: `${SITE_URL}${o.path}`,
     head: crumb.ld,
     body,
@@ -1466,7 +1814,8 @@ function datasetLd(data) {
 //   代償として商品スニペット／カルーセルの対象からは外れる。ただし画像もレビューも
 //   評価も持たず売主でもない以上、もともと表示され得ないものなので実質の損失はない。
 function itemListLd(data) {
-  const rows = data.publishable
+  // ★記録が止まっている値は順位に入れない（トップの表と同じ規則）
+  const rows = data.ranked
     .filter((o) => o.entry === '新規')
     .sort((a, b) => a.effectiveMonthly - b.effectiveMonthly)
     .slice(0, 20);
@@ -1590,7 +1939,7 @@ function faqLd() {
 
 function renderLlmsTxt(data) {
   const providers = data.effective.map((s) => `${s.providerName}（${s.offers.length}観測）`).join('、');
-  const top = data.publishable
+  const top = data.ranked
     .filter((o) => o.entry === '新規')
     .sort((a, b) => a.effectiveMonthly - b.effectiveMonthly)
     .slice(0, 10)
@@ -1605,7 +1954,8 @@ function renderLlmsTxt(data) {
 
 最終取得: ${isoDate(data.updatedAt)}
 収録事業者: ${providers}
-掲載可の観測: ${data.publishable.length}件 ／ 掲載保留: ${data.needsReview.length}件
+掲載可の観測: ${data.publishable.length}件（うち順位に入れているもの ${data.ranked.length}件） ／ 掲載保留: ${data.needsReview.length}件
+${data.paused.length ? `記録が止まっているサービス（順位に入れていない）: ${[...new Set(data.paused.map((o) => `${o.providerName}（${o.excluded ? `${o.excluded.since}から自動収集を停止。公式サイトが自動アクセスを受け付けなくなったため` : `${isoDate(o.stale.since)}から取得失敗`}）`))].join('、')}\n` : ''}
 
 ## 実質月額とは
 
@@ -1630,6 +1980,7 @@ ${top}
 
 - ${SITE_URL}/ : 実質月額の一覧（戸建て／マンション別）
 - ${SITE_URL}/changes/ : 料金が動いた履歴（実質月額への影響つき）
+- ${SITE_URL}/changes/<YYYY-MM-DD>/ : その日に記録した変化（日付ごとの固定URL。引用はこちらへ）
 - ${SITE_URL}/method/ : 計算方法の全公開（統一規則・検算方法・故障時の挙動）
 - ${SITE_URL}/data/ : データの入手方法とライセンス
 - ${SITE_URL}/p/<事業者ID>/ : 事業者ごとの全プランと、料金が動いた履歴
@@ -1651,6 +2002,7 @@ function renderSitemap(data) {
     '/', '/changes/', '/method/', '/data/', '/about/', '/privacy/', '/contact/',
     ...providerIds(data).map((id) => `/p/${id}/`),
     ...data.publishable.map((o) => o.path),
+    ...eventsByDay(data).map(([day]) => `/changes/${day}/`),
   ];
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -1669,7 +2021,7 @@ function renderFeed(data) {
       : `${c.providerName} ${planName(c)} ${c.type}`;
     return `  <item>
     <title>${xml(title)}</title>
-    <link>${SITE_URL}/changes/</link>
+    <link>${SITE_URL}/changes/${jstDay(c.detectedAt)}/</link>
     <guid isPermaLink="false">${xml(`${c.providerId}:${c.planKey}:${c.detectedAt}`)}</guid>
     <pubDate>${new Date(c.detectedAt).toUTCString()}</pubDate>
     <description>${xml(`出典: ${c.sourceUrl ?? SITE_URL}`)}</description>
@@ -1695,7 +2047,7 @@ const xml = (s) => String(s).replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt
 // ── 出力 ─────────────────────────────────────────────────────────
 
 async function page(path, spec, disclosure = '', siteHead = '') {
-  await out(path, layout({ ...spec, head: (spec.head ?? '') + siteHead, siteUrl: SITE_URL, disclosure, cssVer }));
+  await out(path, layout({ ...spec, head: (spec.head ?? '') + siteHead, siteUrl: SITE_URL, disclosure, cssVer, jsVer, path }));
 }
 
 async function out(path, content) {
@@ -1706,404 +2058,534 @@ async function out(path, content) {
 
 // 折れ線＝時系列。このサイトが持っているものをそのまま記号にする
 const FAVICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-<rect width="32" height="32" fill="#1c3f6e"/>
-<path d="M4 24 h6.5 v-5.5 h6.5 v-5.5 h6.5 v-4.5 h4.5" fill="none" stroke="#fff"
-  stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter"/>
+<rect width="32" height="32" rx="8" fill="#14305a"/>
+<path d="M6 22.5 h5.5 v-4.5 h5.5 v-4.5 h5.5 v-3.5 h3.5" fill="none" stroke="#fff"
+  stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="26" cy="10" r="2.2" fill="#5fd3a8"/>
 </svg>
 `;
 
-const STYLE = `/* ── 色と文字 ─────────────────────────────────────────────────
-   ★参照しているのは比較サイトではなく、経済紙・調査機関の紙面。
-     このサイトが売っているのは「毎日測り続けている事実」であって、
-     おすすめ順の主観ではない。見た目もそちら側に寄せる。
+const STYLE = `/* ── 通信費インデックス 2026-11 改訂 ──────────────────────────────
+   ★方針: 「おすすめ順の比較サイト」ではなく「毎日測り続けている計器」に見せる。
+     ・ファーストビューは紺の帯に条件を置き、選んだ瞬間に答えが変わる（計器盤）
+     ・色は意味を持たせる3色だけ: 値下げ＝緑 / 値上げ＝赤 / 記録停止＝黄。装飾に色を使わない
+     ・数字は等幅（tabular-nums）で大きく。「円」は一段小さく落とす
    ★外部フォント・外部CSSは1つも読み込まない。/privacy/ に
-     「閲覧の情報を外部の事業者へ送っていない」と書いている以上、破れない。
-     そのぶん、明朝と角ゴシックの対比・罫線・余白だけで作る。 */
+     「閲覧の情報を外部の事業者へ送っていない」と書いている以上、破れない。 */
 :root{
-  --paper:#faf8f4;          /* 地。純白にしない（白すぎる画面は素っ気ない） */
+  --paper:#f4f6f9;
   --card:#fff;
-  --ink:#15191e;            /* 本文。真っ黒にしない */
-  --ink-2:#4d5560;
-  --ink-3:#8a929c;
-  --rule:#e0dcd3;           /* 罫線。紙に寄せて少し温かい灰 */
-  --rule-2:#cdc7bb;
-  --indigo:#1c3f6e;         /* 構造色。リンクと図表 */
-  --indigo-deep:#122a4a;
-  --indigo-soft:#eaeff6;
-  --up:#b23a2b;             /* 値上げ＝朱 */
-  --down:#0c6a4f;           /* 値下げ＝緑青 */
-  --warn-bg:#fdf6e3; --warn-line:#d8b563; --warn-ink:#7a5a12;
-  --sans:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Yu Gothic",
+  --ink:#0e1726;
+  --ink-2:#465264;
+  --ink-3:#5f6b7c;
+  --rule:#e3e7ee;
+  --rule-2:#cfd6e1;
+  --brand:#14305a;
+  --brand-2:#1d447f;
+  --indigo:#1f55b8;
+  --indigo-deep:#0f2747;
+  --indigo-soft:#edf3ff;
+  --mint:#15a37a;
+  --up:#c2410c;
+  --up-soft:#fff1ea;
+  --down:#067a55;
+  --down-soft:#e8f7f0;
+  --warn-bg:#fff8e6; --warn-line:#f0c35c; --warn-ink:#7a4d00;
+  --r:16px; --r-s:10px;
+  --sh:0 1px 2px rgba(15,23,42,.05),0 4px 14px rgba(15,23,42,.06);
+  --sh-lg:0 2px 4px rgba(15,23,42,.06),0 14px 34px rgba(15,23,42,.12);
+  --sans:system-ui,-apple-system,"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic UI","Yu Gothic",
     "Noto Sans JP","Meiryo",sans-serif;
   --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
   --wrap:1120px;
 }
 @media(prefers-color-scheme:dark){:root{
-  --paper:#12151a; --card:#181c22;
-  --ink:#e9e6e0; --ink-2:#a8b0ba; --ink-3:#79818c;
-  --rule:#2b3139; --rule-2:#3b434d;
-  --indigo:#8fb6e6; --indigo-deep:#0d1620; --indigo-soft:#1b2634;
-  --up:#e8836c; --down:#5cc79c;
-  --warn-bg:#2a2416; --warn-line:#6b5a2a; --warn-ink:#e0c98a;
+  --paper:#0c1118; --card:#141b25;
+  --ink:#e8ecf2; --ink-2:#b0bac8; --ink-3:#8d99aa;
+  --rule:#232d3b; --rule-2:#324055;
+  --brand:#0a1a31; --brand-2:#132b4f;
+  --indigo:#86b4ff; --indigo-deep:#08111f; --indigo-soft:#15233a;
+  --mint:#4fd1a1;
+  --up:#ff9a70; --up-soft:#2b1a12; --down:#55d3a3; --down-soft:#10261d;
+  --warn-bg:#2a2210; --warn-line:#7a6020; --warn-ink:#f1d48b;
+  --sh:0 1px 2px rgba(0,0,0,.4); --sh-lg:0 8px 30px rgba(0,0,0,.45);
 }}
 
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:5rem}
 body{margin:0;background:var(--paper);color:var(--ink);
-  font-family:var(--sans);font-size:16px;line-height:1.85;
-  font-feature-settings:"palt";text-rendering:optimizeLegibility}
+  font-family:var(--sans);font-size:16px;line-height:1.8;
+  font-feature-settings:"palt";text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased}
 main{max-width:var(--wrap);margin:0 auto;padding:0 1.5rem 5rem}
-a{color:var(--indigo);text-underline-offset:.18em;text-decoration-thickness:1px}
-a:focus-visible,.pcard:focus-visible{outline:2px solid var(--indigo);outline-offset:2px}
-/* 「円」は数字より一段小さく、色も落とす。桁の並びが主役になる */
-.cur{font-size:.62em;font-weight:600;color:var(--ink-2);letter-spacing:0;margin-left:.1em}
+a{color:var(--indigo);text-underline-offset:.2em;text-decoration-thickness:1px}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:3px solid var(--mint);outline-offset:2px;border-radius:4px}
 img,svg{max-width:100%}
 ::selection{background:var(--indigo-soft)}
+[hidden]{display:none!important}
+.cur{font-size:.6em;font-weight:700;color:inherit;opacity:.72;letter-spacing:0;margin-left:.08em}
+.skip{position:absolute;left:-999px;top:0;background:var(--card);padding:.6rem 1rem;z-index:99}
+.skip:focus{left:.5rem;top:.5rem}
 
-/* ── ヘッダー ──────────────────────────────────────────────
-   読者が最初に知りたいのは答え。ヘッダーは「どこのサイトか」と「他のページへの道」だけにする。 */
-.site-head{background:var(--paper);border-bottom:1px solid var(--rule);
-  position:sticky;top:0;z-index:30}
-.head-in{max-width:var(--wrap);margin:0 auto;padding:.6rem 1.5rem;
-  display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--ink)}
-.brand svg{display:block;flex:none}
-.brand strong{display:block;font-weight:800;font-size:1.15rem;letter-spacing:.01em;line-height:1.25}
-.brand small{display:block;font-size:.7rem;color:var(--ink-2);font-weight:400;margin-top:.05rem}
-.site-nav{margin-left:auto;display:flex;gap:.2rem}
-.site-nav a{color:var(--ink-2);text-decoration:none;font-size:.88rem;font-weight:600;
-  padding:.6rem .8rem;white-space:nowrap;border-radius:6px}
-.site-nav a:hover{color:var(--indigo);background:var(--indigo-soft)}
+/* ── ヘッダー ────────────────────────────────────────────── */
+.site-head{background:rgba(255,255,255,.86);backdrop-filter:saturate(1.6) blur(10px);
+  -webkit-backdrop-filter:saturate(1.6) blur(10px);
+  border-bottom:1px solid var(--rule);position:sticky;top:0;z-index:30}
+@media(prefers-color-scheme:dark){.site-head{background:rgba(12,17,24,.86)}}
+.head-in{max-width:var(--wrap);margin:0 auto;padding:.55rem 1.5rem;
+  display:flex;align-items:center;gap:1.5rem}
+.brand{display:flex;align-items:center;gap:.65rem;text-decoration:none;color:var(--ink)}
+.brand svg{display:block;flex:none;width:34px;height:34px}
+.brand strong{display:block;font-weight:800;font-size:1.08rem;letter-spacing:.01em;line-height:1.2}
+.brand small{display:block;font-size:.68rem;color:var(--ink-3);margin-top:.1rem;letter-spacing:.04em}
+.site-nav{margin-left:auto;display:flex;gap:.15rem}
+.site-nav a{color:var(--ink-2);text-decoration:none;font-size:.88rem;font-weight:650;
+  padding:.5rem .8rem;white-space:nowrap;border-radius:999px}
+.site-nav a:hover{color:var(--ink);background:var(--indigo-soft)}
+.site-nav a[aria-current=page]{color:var(--brand);background:var(--indigo-soft)}
+@media(prefers-color-scheme:dark){.site-nav a[aria-current=page]{color:var(--ink)}}
+.ad-disclosure{background:var(--card);border-bottom:1px solid var(--rule);margin:0;
+  padding:.45rem max(1.5rem,calc((100% - var(--wrap)) / 2 + 1.5rem));
+  font-size:.74rem;line-height:1.6;color:var(--ink-2)}
 
-/* ── 見出し ────────────────────────────────────────────────
-   見出しは明朝、本文と数字は角ゴシック。この対比だけで「紙面」になる。 */
-h1{font-weight:800;font-size:clamp(1.5rem,1.15rem + 1.35vw,2.1rem);line-height:1.42;
-  letter-spacing:-.02em;margin:1.6rem 0 .8rem}
-/* 冒頭の見出しだけは大きく取る。ここが紙面の第一印象になる */
-.hero h1{font-size:clamp(1.8rem,1.15rem + 2.3vw,2.7rem);line-height:1.3;letter-spacing:-.035em}
-h2{font-weight:800;font-size:clamp(1.2rem,1.05rem + .7vw,1.5rem);line-height:1.45;
-  letter-spacing:-.02em;margin:2.6rem 0 .9rem}
-/* 節番号を置いた直後だけは、見出しを詰める */
-.kicker + section > h2:first-child,.kicker + h2{margin-top:.2rem}
-h3{font-weight:700;font-size:1.08rem;letter-spacing:-.01em;margin:2rem 0 .5rem}
-
-/* 節の通し番号。紙面の「見出し前の小見出し」 */
-.kicker{font-size:.72rem;letter-spacing:.2em;color:var(--ink-3);font-weight:700;
-  margin:3.4rem 0 .6rem;display:flex;align-items:baseline;gap:.75rem}
-.kicker::after{content:"";flex:1;height:1px;background:var(--rule);
-  transform:translateY(-.28em)}
-.kicker b{color:var(--indigo);font-weight:800;font-size:.95rem;letter-spacing:.04em;
-  font-variant-numeric:tabular-nums;border-bottom:2px solid var(--indigo);
-  padding-bottom:.18rem}
-
-.lead{font-size:1.06rem;line-height:1.95;max-width:44em;color:var(--ink-2)}
+/* ── 見出し・文 ──────────────────────────────────────────── */
+h1{font-weight:800;font-size:clamp(1.55rem,1.15rem + 1.5vw,2.25rem);line-height:1.35;
+  letter-spacing:-.02em;margin:1.4rem 0 .7rem;text-wrap:balance}
+h2{font-weight:800;font-size:clamp(1.2rem,1.05rem + .6vw,1.45rem);line-height:1.45;
+  letter-spacing:-.015em;margin:0 0 .7rem;text-wrap:balance}
+h3{font-weight:750;font-size:1.05rem;margin:1.6rem 0 .5rem}
+.lead{font-size:1.02rem;line-height:1.9;max-width:46em;color:var(--ink-2)}
 .lead strong{color:var(--ink)}
-.note,.meta{color:var(--ink-2);font-size:.85rem;line-height:1.8;max-width:52em}
+.note,.meta{color:var(--ink-2);font-size:.84rem;line-height:1.8;max-width:56em}
 .note strong{color:var(--ink)}
+.eyebrow{font-size:.76rem;font-weight:700;letter-spacing:.08em;color:var(--ink-3);margin:1.6rem 0 0;
+  display:flex;align-items:center;gap:.45rem}
+.stamp{font-size:.78rem;color:var(--ink-3);margin:.4rem 0 0}
+.live{display:inline-block;width:.5rem;height:.5rem;border-radius:50%;background:var(--mint);
+  box-shadow:0 0 0 0 rgba(21,163,122,.5)}
+@media(prefers-reduced-motion:no-preference){.live{animation:pulse 2.4s ease-out infinite}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(21,163,122,.55)}70%{box-shadow:0 0 0 8px rgba(21,163,122,0)}100%{box-shadow:0 0 0 0 rgba(21,163,122,0)}}
 
-/* ── 冒頭 ──────────────────────────────────────────────────
-   統計を4つ並べるだけの箱をやめ、**その日の分布そのもの**を出す。
-   これはテンプレートには無い図で、かつ持っているデータからしか描けない。 */
-.hero{border-bottom:1px solid var(--rule-2);padding-bottom:2.2rem;margin-bottom:.5rem}
-.hero-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);
-  gap:2.6rem;align-items:start}
-.hero h1{margin-top:1.8rem}
+.block{margin-top:3.2rem}
+.block-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.block-head h2{margin-bottom:.3rem}
+.more{font-size:.86rem;font-weight:700;text-decoration:none;white-space:nowrap}
+.more:hover{text-decoration:underline}
+.count{font-size:.8rem;font-weight:700;color:var(--ink-3);margin-left:.3rem;letter-spacing:0}
+.count span{color:var(--ink);font-variant-numeric:tabular-nums}
 
-.rail{display:flex;flex-wrap:wrap;gap:0;margin-top:1.6rem;
-  border-top:1px solid var(--rule)}
-.rail-item{padding:.85rem 1.5rem .2rem 0;margin-right:1.5rem;
-  border-right:1px solid var(--rule);flex:0 0 auto}
-.rail-item:last-child{border-right:0;margin-right:0}
-.rail-item b{display:block;font-size:1.6rem;font-weight:700;line-height:1.15;
-  letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.rail-item span{display:block;font-size:.72rem;color:var(--ink-2);letter-spacing:.06em}
-.live{display:inline-block;width:.45rem;height:.45rem;border-radius:50%;
-  background:var(--down);margin-right:.35rem;vertical-align:middle}
+/* ── 冒頭（紺の帯）───────────────────────────────────────
+   main の幅の外まで帯を伸ばす（box-shadow で左右に塗り広げ、clip-path で上下を切る） */
+.hero{position:relative;background:var(--brand);color:#fff;
+  box-shadow:0 0 0 100vmax var(--brand);clip-path:inset(0 -100vmax);
+  padding:1.6rem 0 2.2rem;margin-bottom:1.6rem;
+  background-image:radial-gradient(1200px 400px at 85% -20%,rgba(95,211,168,.18),transparent 60%)}
+.hero .eyebrow{color:#b9c9e2;margin-top:.2rem}
+.hero h1{color:#fff;font-size:clamp(1.75rem,1.1rem + 2.6vw,2.9rem);line-height:1.22;letter-spacing:-.035em;margin:.6rem 0 .7rem}
+.hero .lead{color:#d5def0;font-size:.98rem;margin:0 0 1.4rem}
+.hero .lead strong{color:#fff}
 
-/* その日の分布。目盛りは1本＝1観測 */
-.dist{background:var(--card);border:1px solid var(--rule);padding:1.3rem 1.4rem 1.1rem}
-.dist .kicker{margin:0 0 1rem}
-.dist-lead{display:flex;align-items:baseline;gap:.5rem;margin-bottom:.1rem}
-.dist-lead b{font-size:2.5rem;font-weight:700;letter-spacing:-.03em;line-height:1;
+/* 条件の選択。ラジオボタンを「ひと押しで切り替わる札」に見せる */
+.picker{background:var(--card);color:var(--ink);border-radius:var(--r);box-shadow:var(--sh-lg);
+  padding:1rem 1.15rem;display:grid;grid-template-columns:repeat(4,auto);gap:.6rem 1.6rem;
+  justify-content:start}
+.seg{border:0;margin:0;padding:0;min-width:0}
+.seg legend{font-size:.72rem;font-weight:800;letter-spacing:.08em;color:var(--ink-3);padding:0;margin-bottom:.35rem}
+.seg-opts{display:flex;gap:.3rem;flex-wrap:wrap}
+.seg label{position:relative;cursor:pointer}
+.seg input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.seg label span{display:block;padding:.42rem .85rem;border-radius:999px;font-size:.88rem;font-weight:700;
+  border:1px solid var(--rule-2);color:var(--ink-2);background:var(--card);white-space:nowrap;
+  line-height:1.5}
+.seg label:hover span{border-color:var(--indigo);color:var(--ink)}
+.seg input:checked + span{background:var(--brand);border-color:var(--brand);color:#fff}
+@media(prefers-color-scheme:dark){.seg input:checked + span{background:var(--indigo);border-color:var(--indigo);color:#08111f}}
+.seg input:focus-visible + span{outline:3px solid var(--mint);outline-offset:2px}
+.picker noscript{grid-column:1/-1}
+/* 見出しは文節で折り返す（「3年使/うと」のような切れ方をさせない） */
+.hero h1 span{display:inline-block}
+
+/* カード・行は全体を押せるようにする（プラン名のリンクを面に広げる）。
+   出典・広告のリンクはその上に重ねて、別々に押せるようにする */
+.pick,.ranking tbody tr{position:relative}
+.pick-plan::after,.ranking .plan-name::after{content:"";position:absolute;inset:0}
+.ranking td.src a,.ranking td.cta,.pick-go{position:relative;z-index:1}
+.ranking tbody tr{cursor:pointer}
+
+/* トップの「その日の変化」要約 */
+.digests{list-style:none;padding:0;margin:1rem 0 0;display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:.8rem}
+.digest{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--sh);
+  padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.35rem}
+.digest p{margin:0}
+.dg-head{display:flex;gap:.6rem;align-items:baseline;flex-wrap:wrap}
+.dg-head a{font-weight:800;font-size:1rem;color:var(--ink);text-decoration:none}
+.dg-head a:hover{color:var(--indigo);text-decoration:underline}
+.dg-head span{font-size:.78rem;color:var(--ink-3);font-weight:700}
+.dg-sum{font-size:.82rem;color:var(--ink-2);display:flex;gap:.3rem;align-items:center;flex-wrap:wrap}
+.dg-sum .pill{margin-left:.1rem}
+.digest ul{list-style:none;margin:.2rem 0 0;padding:0}
+.digest li li{display:flex;flex-direction:column;padding:.45rem 0;border-top:1px solid var(--rule)}
+.dg-name{font-size:.76rem;color:var(--ink-2);line-height:1.5}
+.dg-v{font-size:.88rem;font-variant-numeric:tabular-nums}
+.dg-rest{font-size:.76rem;color:var(--ink-3)}
+.digest .more{margin-top:auto;padding-top:.4rem;font-size:.82rem}
+
+/* ── 答え（会社ごとの最安3つ）────────────────────────────── */
+.answer h2{font-size:clamp(1.15rem,1rem + .7vw,1.5rem)}
+.cond{display:inline-block;color:var(--brand);background:var(--indigo-soft);border-radius:8px;
+  padding:0 .45rem;margin-right:.3rem}
+@media(prefers-color-scheme:dark){.cond{color:var(--ink)}}
+.podium{list-style:none;margin:1rem 0 .8rem;padding:0;display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;counter-reset:none}
+.pick{position:relative;background:var(--card);border:1px solid var(--rule);border-radius:var(--r);
+  box-shadow:var(--sh);padding:1.15rem 1.2rem 1rem;display:flex;flex-direction:column;gap:.15rem}
+.pick:first-child{border-color:var(--mint);box-shadow:0 0 0 1px var(--mint),var(--sh)}
+.pick:first-child::before{content:"安い順 1位";position:absolute;top:-.7rem;left:1rem;
+  background:var(--mint);color:#fff;font-size:.68rem;font-weight:800;letter-spacing:.06em;
+  padding:.1rem .6rem;border-radius:999px}
+@media(prefers-color-scheme:dark){.pick:first-child::before{color:#06281c}}
+.pick-rank{position:absolute;top:1rem;right:1.1rem;font-size:.8rem;font-weight:800;color:var(--ink-3);
   font-variant-numeric:tabular-nums}
-.dist-lead span{font-size:.75rem;color:var(--ink-2);letter-spacing:.06em}
-.dist-plan{font-size:.8rem;color:var(--ink-2);margin:.35rem 0 1.3rem;line-height:1.6}
-.dist-plan a{color:var(--ink-2)}
-.dist-bar{position:relative;height:44px;border-left:1px solid var(--rule-2);
-  border-right:1px solid var(--rule-2)}
-.dist-bar::before{content:"";position:absolute;left:0;right:0;top:50%;
-  height:1px;background:var(--rule-2)}
-.dist-tick{position:absolute;top:9px;width:1px;height:26px;background:var(--indigo);
-  opacity:.5}
-.dist-tick.lo,.dist-tick.hi{opacity:1;height:38px;top:3px;width:2px}
-.dist-axis{display:flex;justify-content:space-between;font-size:.72rem;
-  color:var(--ink-2);margin-top:.35rem;font-variant-numeric:tabular-nums}
-.dist-note{font-size:.72rem;color:var(--ink-3);margin:.9rem 0 0;line-height:1.6}
+.pick-rank::after{content:"位"}
+.pick:first-child .pick-rank{display:none}
+.pick-prov{margin:0;font-weight:800;font-size:1.15rem;letter-spacing:-.01em}
+.pick-plan{font-size:.82rem;color:var(--ink-2);text-decoration:none;line-height:1.55}
+.pick-plan:hover{text-decoration:underline;color:var(--indigo)}
+.pick .chips{margin:.3rem 0 0}
+.pick-fig{margin-top:auto;padding-top:.7rem}
+.pick-price{margin:0;display:flex;align-items:baseline;gap:.3rem}
+.pick-price b{font-size:2.3rem;font-weight:800;letter-spacing:-.035em;line-height:1.1;
+  font-variant-numeric:tabular-nums}
+.pick:first-child .pick-price b{color:var(--down)}
+.pick-price span{font-size:.82rem;color:var(--ink-3);font-weight:700}
+.pick-total{margin:.1rem 0 0;font-size:.78rem;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.pick-src{margin:.35rem 0 0;font-size:.7rem;color:var(--ink-3);overflow-wrap:anywhere}
+.pick-src a{position:relative;z-index:1;color:var(--ink-2)}
+.pcard{position:relative}
+.pcard .pname{color:var(--ink);text-decoration:none}
+.pcard .pname::after{content:"";position:absolute;inset:0}
+.psrc a{position:relative;z-index:1;color:var(--ink-2)}
+.pick-range{margin:.5rem 0 0;font-size:.74rem;color:var(--ink-3);line-height:1.6}
+.pick-range:empty{display:none}
+.pick-go{margin-top:.7rem;font-size:.84rem;font-weight:700;text-decoration:none;
+  border-top:1px solid var(--rule);padding-top:.65rem}
+.pick-go:hover{text-decoration:underline}
+.empty{background:var(--card);border:1px dashed var(--rule-2);border-radius:var(--r);padding:1.2rem;
+  color:var(--ink-2)}
+.scope{font-size:.8rem;color:var(--ink-3);margin:-.2rem 0 0;line-height:1.7}
+.scope b{color:var(--ink);font-variant-numeric:tabular-nums}
+.scope a{margin-left:.3rem}
+.young-hint{font-size:.84rem;color:var(--ink-2);margin:.2rem 0 .6rem}
 
-/* 表を読むための言葉。ここを読めば表が読める、という位置に置く */
-.legend{margin-top:2.6rem}
-.legend-h{font-size:.76rem;letter-spacing:.14em;color:var(--ink-3);font-weight:700;
-  margin:2rem 0 .6rem}
-.legend-h:first-of-type{margin-top:.4rem}
-.legend dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
-  gap:0;margin:0;border-top:1px solid var(--rule-2);border-left:1px solid var(--rule)}
-.legend div{padding:1rem 1.2rem 1.1rem;border-right:1px solid var(--rule);
-  border-bottom:1px solid var(--rule);background:var(--card)}
-.legend dt{font-weight:800;font-size:.92rem;letter-spacing:-.01em;color:var(--indigo);
-  margin-bottom:.25rem}
-.legend dd{margin:0;font-size:.82rem;line-height:1.85;color:var(--ink-2)}
+/* 小さな印 */
+.chips{display:flex;flex-wrap:wrap;gap:.25rem;margin-top:.35rem}
+.chip,.tag{display:inline-block;font-size:.68rem;font-weight:700;color:var(--ink-2);
+  background:var(--paper);border:1px solid var(--rule);border-radius:999px;
+  padding:.05rem .5rem;line-height:1.6;letter-spacing:.02em;white-space:nowrap}
+.chip.warn{background:var(--warn-bg);border-color:var(--warn-line);color:var(--warn-ink)}
 
-/* ── 表 ────────────────────────────────────────────────────
-   影も角丸も使わない。**罫線だけ**で組むほうが情報が濃く見える。 */
-.card{background:var(--card);border:1px solid var(--rule)}
+/* ── 表 ─────────────────────────────────────────────────── */
+.card{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
 .table-wrap{overflow-x:auto}
-table{border-collapse:collapse;width:100%;font-size:.9rem;min-width:880px}
-thead th{background:var(--card);
-  font-size:.68rem;font-weight:700;letter-spacing:.12em;color:var(--ink-3);
-  text-align:left;white-space:nowrap;padding:.85rem .8rem .5rem;
-  border-bottom:1px solid var(--rule-2)}
-td{padding:1.05rem .8rem;border-bottom:1px solid var(--rule);vertical-align:top}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+thead th{background:var(--card);font-size:.7rem;font-weight:800;letter-spacing:.08em;color:var(--ink-3);
+  text-align:left;white-space:nowrap;padding:.8rem .8rem .55rem;border-bottom:1px solid var(--rule-2)}
+td{padding:.9rem .8rem;border-bottom:1px solid var(--rule);vertical-align:top}
 tbody tr:last-child td{border-bottom:0}
-tbody tr:hover{background:var(--indigo-soft)}
-th[scope=row],tbody th{text-align:left;font-weight:600;padding:1.05rem .8rem;
-  border-bottom:1px solid var(--rule)}
+tbody th{text-align:left;font-weight:650;padding:.9rem .8rem;border-bottom:1px solid var(--rule)}
 .num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
-/* 実質月額。この数字がこのサイトの主役なので、他と桁違いに強くする */
-.strong{font-weight:700;font-size:1.35rem;letter-spacing:-.03em;line-height:1.3}
-th.rank{width:3.2rem}
-td.rank{width:3.2rem;text-align:left;font-size:1rem;color:var(--ink-3);font-weight:700;
-  padding-top:1.25rem;font-variant-numeric:tabular-nums}
-tr.top td.rank{color:var(--indigo)}
-tr.top{box-shadow:inset 3px 0 0 var(--indigo)}
-.plan-name{font-weight:600;font-size:.95rem;line-height:1.55;text-decoration:none;
-  display:inline-block}
-.plan-name:hover{text-decoration:underline}
-/* 比較表の列幅。プラン名だけが伸び、数字の列は動かないようにする */
-.ranking{table-layout:fixed}
-.ranking th:nth-child(2){width:7.2rem}
-.ranking th:nth-child(3){width:6.4rem}
-.ranking th:nth-child(5){width:6.9rem}
-.ranking th:nth-child(6){width:12.4rem}
-.ranking th:nth-child(7){width:9.6rem}
-.ranking th:nth-child(8){width:6rem}
-.ranking tbody td:nth-child(3){white-space:nowrap}
-/* ★左4列＝値そのもの、右3列＝その裏づけ。境目に細い縦罫を1本だけ入れる */
-.ranking th:nth-child(5),.ranking tbody td:nth-child(5){
-  border-left:1px solid var(--rule);padding-left:1.15rem}
-.breakdown{font-size:.76rem;color:var(--ink-2);white-space:nowrap;line-height:1.75;
-  font-variant-numeric:tabular-nums}
-.breakdown i{font-style:normal;color:var(--ink-3);display:inline-block;min-width:7.2em}
-.src{font-size:.73rem;color:var(--ink-3);line-height:1.7}
+.strong{font-weight:800;font-size:1.3rem;letter-spacing:-.03em;line-height:1.3}
+.total{color:var(--ink-2);font-size:.86rem}
+.plan-name{font-weight:650;font-size:.93rem;line-height:1.55;text-decoration:none;color:var(--ink)}
+.plan-name:hover{color:var(--indigo);text-decoration:underline}
+.src{font-size:.72rem;color:var(--ink-3);line-height:1.6}
 .src a{color:var(--ink-2)}
-.tag{display:inline-block;font-size:.68rem;color:var(--ink-2);border:1px solid var(--rule-2);
-  padding:.02rem .42rem;letter-spacing:.03em;line-height:1.7;margin-top:.3rem}
-tr.stale{background:var(--warn-bg)}
-tr.stale .tag{border-color:var(--warn-line);color:var(--warn-ink)}
+.src time{display:block}
 tr.total th,tr.total td{border-top:1px solid var(--rule-2);background:var(--paper)}
 
+.ranking{min-width:900px}
+.ranking tbody tr{transition:background .12s ease}
+.ranking tbody tr:hover{background:var(--indigo-soft)}
+.ranking td.rank,.ranking th.rank{width:3.4rem;text-align:center}
+.ranking td.rank{font-weight:800;color:var(--ink-3);font-variant-numeric:tabular-nums;padding-top:1.05rem}
+.ranking tr.top td.rank{color:var(--brand)}
+@media(prefers-color-scheme:dark){.ranking tr.top td.rank{color:var(--indigo)}}
+.ranking tr.top{box-shadow:inset 3px 0 0 var(--mint)}
+.ranking td.prov{white-space:nowrap;font-weight:700}
+.ranking td.trend{width:7.5rem}
+.ranking td.src{width:10rem}
+.cta{white-space:nowrap}
+.plans .num.strong{width:8.5rem}
+.group-h{font-size:.85rem;letter-spacing:.06em;color:var(--ink-3);margin:1.4rem 0 .5rem}
 
-/* ── 最初に見る「いちばん安い3つ」 ───────────────────────────
-   表の前に結論を置く。表は根拠として下に残す。 */
-.hero-lite{border-bottom:0;padding-bottom:0;margin-bottom:0}
-.hero-lite h1{margin:1.2rem 0 .4rem;font-size:clamp(1.45rem,1.1rem + 1.8vw,2.2rem);text-wrap:balance}
-.hero-lite .lead{font-size:.95rem;line-height:1.75;margin:0}
-.stamp{display:block;font-size:.78rem;color:var(--ink-3);margin-top:.15rem}
-.qa-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:1rem;margin-top:1rem}
-.qa{background:var(--card);border:1px solid var(--rule);padding:1.2rem 1.3rem 1.1rem}
-.qa-h{font-size:1.02rem;margin:0 0 .6rem;letter-spacing:.02em}
-.qa-list{list-style:none;margin:0;padding:0}
-.qa-list li{display:grid;grid-template-columns:1.9rem minmax(0,1fr) auto;column-gap:.7rem;
-  align-items:center;padding:.8rem 0;border-top:1px solid var(--rule)}
-.qa-rank{font-weight:800;color:var(--ink-3);font-variant-numeric:tabular-nums}
-.qa-list li:first-child .qa-rank{color:var(--indigo)}
-.qa-body{min-width:0}
-.qa-plan{display:block;font-weight:700;font-size:1rem;text-decoration:none}
-.qa-plan:hover{text-decoration:underline}
-.qa-body small{display:block;color:var(--ink-2);font-size:.76rem;line-height:1.55;margin-top:.1rem}
-.qa-price{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
-.qa-price b{font-size:1.55rem;font-weight:800;letter-spacing:-.03em}
-.qa-price small{color:var(--ink-3);font-size:.74rem;margin-left:.15rem}
-.qa-list li:first-child .qa-price b{color:var(--indigo)}
-.qa-young{font-size:.8rem;line-height:1.75;color:var(--ink-2);margin:.4rem 0 0;
-  padding-top:.7rem;border-top:1px dashed var(--rule-2)}
-.qa-young strong{color:var(--ink)}
-.qa-more{margin:.7rem 0 0;font-size:.82rem}
-.qa-note{margin-top:.8rem}
-.more-rows{margin-top:.8rem}
-.more-rows>summary{cursor:pointer;padding:.85rem 1rem;font-weight:700;font-size:.9rem;
-  border:1px solid var(--rule);background:var(--card);color:var(--indigo);list-style:none;text-align:center}
-.more-rows>summary::-webkit-details-marker{display:none}
-.more-rows[open]>summary{margin-bottom:.8rem}
-.fold.fold-note{margin-top:.8rem}
-.fold-note>summary{font-size:.84rem;font-weight:600;padding:.7rem 1rem;color:var(--ink-2)}
-.fold-note .note{padding:0 1rem}
-
-/* 言葉の説明は、知りたい人だけが開く */
-.fold{margin-top:2.4rem;border:1px solid var(--rule);background:var(--card)}
-.fold>summary{cursor:pointer;padding:.95rem 1.2rem;font-weight:700;font-size:.9rem;
-  color:var(--indigo);list-style:none}
+/* ── 折りたたみ ─────────────────────────────────────────── */
+.fold{margin-top:2.6rem;border:1px solid var(--rule);border-radius:var(--r);background:var(--card)}
+.fold>summary{cursor:pointer;padding:.95rem 1.2rem;font-weight:750;font-size:.9rem;color:var(--ink);list-style:none;
+  display:flex;align-items:center;gap:.6rem}
 .fold>summary::-webkit-details-marker{display:none}
-.fold>summary::before{content:"＋ ";font-weight:800}
-.fold[open]>summary::before{content:"－ "}
-.fold .legend{margin-top:0;padding:0 1.2rem 1.2rem}
-.record .lead{font-size:.95rem}
+.fold>summary::before{content:"";width:.55rem;height:.55rem;border-right:2px solid var(--ink-3);
+  border-bottom:2px solid var(--ink-3);transform:rotate(-45deg);transition:transform .15s ease;flex:none}
+.fold[open]>summary::before{transform:rotate(45deg)}
+.fold-note{margin-top:.8rem;border-radius:var(--r-s)}
+.fold-note>summary{font-size:.84rem;color:var(--ink-2);padding:.7rem 1rem}
+.fold-note .note{padding:0 1rem}
+.fold .legend{padding:0 1.2rem 1.2rem}
+.legend-h{font-size:.76rem;letter-spacing:.1em;color:var(--ink-3);font-weight:800;margin:1.4rem 0 .6rem}
+.legend dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:.6rem;margin:0}
+.legend div{padding:.9rem 1rem;border:1px solid var(--rule);border-radius:var(--r-s);background:var(--paper)}
+.legend dt{font-weight:800;font-size:.9rem;color:var(--ink);margin-bottom:.2rem}
+.legend dd{margin:0;font-size:.82rem;line-height:1.8;color:var(--ink-2)}
 
-/* ── 事業者 ────────────────────────────────────────────────*/
-.pcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:0;border-top:1px solid var(--rule-2);border-left:1px solid var(--rule)}
-.pcard{display:block;padding:1.4rem 1.5rem 1.5rem;text-decoration:none;color:var(--ink);
-  border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);
-  background:var(--card)}
-.pcard:hover{background:var(--indigo-soft)}
-.pname{display:block;font-size:1.12rem;font-weight:800;
-  letter-spacing:-.01em;margin-bottom:.9rem}
-.pmin{display:flex;align-items:baseline;gap:.5rem}
-.pmin b{font-size:1.85rem;font-weight:700;letter-spacing:-.03em;line-height:1;
-  font-variant-numeric:tabular-nums;color:var(--indigo)}
-.pmin small{font-size:.7rem;color:var(--ink-2);letter-spacing:.04em}
-.pmeta{display:block;font-size:.75rem;color:var(--ink-2);margin-top:.75rem;
-  padding-top:.7rem;border-top:1px solid var(--rule);letter-spacing:.03em}
+/* ── 料金の変化（カードの流れ）────────────────────────────── */
+.feed{list-style:none;padding:0;margin:1rem 0 0;display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:.8rem}
+.ev{background:var(--card);border:1px solid var(--rule);border-radius:var(--r-s);
+  padding:.9rem 1rem .8rem 1.15rem;position:relative;box-shadow:var(--sh)}
+.ev::before{content:"";position:absolute;left:0;top:.8rem;bottom:.8rem;width:3px;border-radius:0 3px 3px 0;background:var(--rule-2)}
+.ev.down::before{background:var(--down)}
+.ev.up::before{background:var(--up)}
+.ev p{margin:0}
+.ev-head{display:flex;gap:.6rem;align-items:baseline;font-size:.75rem;color:var(--ink-3)}
+.ev-prov{font-weight:800;color:var(--ink);font-size:.86rem}
+.ev-plan{font-size:.82rem;line-height:1.55;margin-top:.15rem!important}
+.ev-plan a{color:var(--ink-2);text-decoration:none}
+.ev-plan a:hover{color:var(--indigo);text-decoration:underline}
+.ev-delta{font-weight:700;font-size:.95rem;margin-top:.45rem!important;font-variant-numeric:tabular-nums}
+.ev-delta b{font-size:1.1rem}
+.pill{display:inline-block;font-size:.74rem;font-weight:800;padding:.02rem .5rem;margin-left:.35rem;
+  border-radius:999px;font-style:normal;vertical-align:.1em;font-variant-numeric:tabular-nums}
+.pill.down{background:var(--down-soft);color:var(--down)}
+.pill.up{background:var(--up-soft);color:var(--up)}
+.ev-cause{font-size:.74rem;color:var(--ink-2);margin-top:.3rem!important;line-height:1.6;font-variant-numeric:tabular-nums}
+.ev-when{font-size:.7rem;color:var(--ink-3);margin-top:.25rem!important}
+.ev-links{display:flex;gap:1rem;font-size:.74rem;margin-top:.45rem!important}
+.day{margin-top:2.4rem}
+.day h2 a{color:var(--ink);text-decoration:none}
+.day h2 a:hover{color:var(--indigo);text-decoration:underline}
+.day h2 small{display:block;font-size:.78rem;font-weight:600;color:var(--ink-3);letter-spacing:0;margin-top:.15rem}
+.pager{display:flex;justify-content:space-between;gap:1rem;margin-top:2.4rem;font-size:.88rem;font-weight:700}
+
+/* ── サービスのカード ───────────────────────────────────── */
+.pcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:.8rem;margin-top:1rem}
+.pcard{display:flex;flex-direction:column;gap:.3rem;padding:1.15rem 1.2rem;text-decoration:none;color:var(--ink);
+  background:var(--card);border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--sh);
+  transition:transform .12s ease,box-shadow .12s ease}
+.pcard:hover{transform:translateY(-2px);box-shadow:var(--sh-lg)}
+.pcard.is-paused{background:var(--paper);box-shadow:none}
+.pname{font-size:1.08rem;font-weight:800;display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
+.pmin{display:flex;align-items:baseline;gap:.35rem;flex-wrap:wrap}
+.pmin b{font-size:1.75rem;font-weight:800;letter-spacing:-.03em;line-height:1.15;font-variant-numeric:tabular-nums}
+.pmin small{font-size:.72rem;color:var(--ink-3);font-weight:700}
+.pmin small:first-child{flex-basis:100%}
+.pcard.is-paused .pmin b{color:var(--ink-3)}
+.pmeta{font-size:.74rem;color:var(--ink-3);margin-top:.4rem;padding-top:.6rem;border-top:1px solid var(--rule)}
 .pmeta span{display:block}
-.pmeta span + span{color:var(--ink-3);margin-top:.15rem}
 
-/* ── 変化 ──────────────────────────────────────────────────
-   年表として組む。左の縦罫が「毎日続いている」ことの表現になる。 */
-.changes,.events{list-style:none;padding:0 0 0 1.5rem;margin:1rem 0 0;
-  border-left:1px solid var(--rule-2)}
-.changes li,.events li{position:relative;padding:1.1rem 0;
-  border-bottom:1px solid var(--rule)}
-.changes li:last-child,.events li:last-child{border-bottom:0}
-.changes li::before,.events li::before{content:"";position:absolute;
-  left:-1.5rem;top:1.75rem;width:7px;height:7px;border-radius:50%;
-  background:var(--paper);border:1.5px solid var(--rule-2);
-  transform:translateX(-4px)}
-.changes li.up::before{border-color:var(--up);background:var(--up)}
-.changes li.down::before{border-color:var(--down);background:var(--down)}
-.changes time,.events time{color:var(--ink-3);font-size:.74rem;letter-spacing:.06em;
-  margin-right:.7rem;font-variant-numeric:tabular-nums}
-.changes .delta{display:block;font-weight:700;font-size:1.02rem;margin-top:.15rem;
-  font-variant-numeric:tabular-nums;letter-spacing:-.01em}
-.changes li.up .delta{color:var(--up)}
-.changes li.down .delta{color:var(--down)}
-.changes .cause{display:block;font-size:.78rem;color:var(--ink-2);margin-top:.2rem;
-  font-variant-numeric:tabular-nums}
-.pill{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.02em;
-  padding:.05rem .5rem;margin-left:.5rem;vertical-align:.08em;
-  border:1px solid currentColor;font-variant-numeric:tabular-nums}
+/* ── 記録が止まっているもの・注意 ─────────────────────────── */
+.paused{margin-top:3rem;background:var(--warn-bg);border:1px solid var(--warn-line);border-radius:var(--r);padding:1.2rem 1.3rem}
+.paused h2{font-size:1.1rem;color:var(--warn-ink)}
+.paused ul{list-style:none;margin:.6rem 0 0;padding:0}
+.paused li{padding:.8rem 0;border-top:1px solid var(--warn-line)}
+.paused li p{margin:.15rem 0;font-size:.88rem}
+.paused-name{display:flex;gap:.5rem;align-items:center;font-weight:800}
+.stale-note,.banner.warn{display:block;background:var(--warn-bg);border:1px solid var(--warn-line);
+  border-left-width:4px;border-radius:var(--r-s);color:var(--warn-ink);padding:.9rem 1.1rem;margin:1rem 0;
+  font-size:.88rem;line-height:1.8}
+.stale-note strong{display:block;color:var(--warn-ink)}
 
-/* ── 部品 ──────────────────────────────────────────────────*/
-.crumbs{font-size:.76rem;color:var(--ink-3);margin:1.6rem 0 .2rem;letter-spacing:.04em}
+/* ── 広告の独立ブロック（別条件）────────────────────────────
+   ★表の行と見分けがつくように、形も位置も分ける。「広告」の札を先頭に置く */
+.link-only{background:var(--card);border:1px solid var(--rule-2);border-radius:var(--r);
+  padding:1.1rem 1.3rem;margin:2.4rem 0;box-shadow:var(--sh)}
+.link-only-kicker{display:flex;align-items:center;gap:.5rem;font-weight:800;font-size:.95rem;margin:0 0 .4rem}
+.link-only p{font-size:.86rem;margin:.4rem 0}
+.link-only ul{list-style:none;padding:0;margin:.6rem 0}
+.link-only li{padding:.9rem 1rem;border:1px solid var(--rule);border-radius:var(--r-s);background:var(--paper)}
+.link-only-name{font-weight:800;font-size:.98rem}
+.link-only-ad{font-size:.98rem;font-weight:700}
+.ad-unit{display:inline-block}
+
+/* ── この数字の作り方 ───────────────────────────────────── */
+.record{margin-top:3.6rem;background:var(--card);border:1px solid var(--rule);border-radius:var(--r);
+  padding:1.6rem 1.6rem 1.2rem;box-shadow:var(--sh)}
+.record-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.8rem;margin:1rem 0 1.2rem}
+.stat{border-left:3px solid var(--mint);padding:.1rem 0 .1rem .8rem}
+.stat b{display:block;font-size:1.7rem;font-weight:800;letter-spacing:-.02em;line-height:1.2;font-variant-numeric:tabular-nums}
+.stat span{display:block;font-size:.74rem;color:var(--ink-3)}
+.promises{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:.4rem 1.6rem}
+.promises li{position:relative;padding-left:1.5rem;font-size:.86rem;color:var(--ink-2);line-height:1.75}
+.promises li::before{content:"";position:absolute;left:.1rem;top:.45em;width:.8rem;height:.45rem;
+  border-left:2px solid var(--mint);border-bottom:2px solid var(--mint);transform:rotate(-45deg)}
+.promises strong{color:var(--ink)}
+
+/* ── 下層ページ ─────────────────────────────────────────── */
+.page-head{padding-bottom:.4rem}
+.crumbs{font-size:.76rem;color:var(--ink-3);margin:1.4rem 0 0}
 .crumbs a{color:var(--ink-2);text-decoration:none}
 .crumbs a:hover{color:var(--indigo);text-decoration:underline}
-.crumbs .sep{margin:0 .45rem;color:var(--rule-2)}
-.big{font-size:2.1rem;font-weight:700;letter-spacing:-.03em;
-  font-variant-numeric:tabular-nums;color:var(--ink)}
-.banner{padding:1rem 1.2rem;margin:1.6rem 0;font-size:.88rem}
-.banner.warn,.stale-note{background:var(--warn-bg);border:1px solid var(--warn-line);
-  border-left-width:3px;color:var(--warn-ink);padding:1rem 1.2rem;margin:1.4rem 0;
-  font-size:.88rem;line-height:1.8}
-.stale-note strong{color:var(--warn-ink)}
-.ad-disclosure{background:var(--indigo-soft);border-bottom:1px solid var(--rule);margin:0;
-  padding:.4rem max(1.5rem,calc((100% - var(--wrap)) / 2 + 1.5rem));
-  font-size:.74rem;line-height:1.6;color:var(--ink-2);letter-spacing:.03em}
-.cta{white-space:nowrap}
-.link-only{background:var(--card);border:1px solid var(--rule);
-  border-top:3px solid var(--indigo);padding:1.3rem 1.5rem;margin:2.2rem 0}
-.link-only ul{list-style:none;padding:0;margin:0}
-.link-only li{padding:1rem 0;border-bottom:1px solid var(--rule);font-size:.9rem}
-.link-only li:last-child{border-bottom:none}
-.link-only .btn{margin-top:.6rem}
-.ad-unit{display:inline-block}
-.btn{display:inline-block;padding:.5rem 1.15rem;background:var(--indigo);color:#fff;
-  text-decoration:none;font-size:.82rem;font-weight:700;letter-spacing:.04em}
-.btn:hover{background:var(--indigo-deep)}
-.faq dt{font-weight:800;font-size:1.02rem;margin-top:1.8rem;letter-spacing:-.01em}
-.faq dd{margin:.4rem 0 0;color:var(--ink-2)}
-.review{background:var(--card);border:1px solid var(--rule);padding:1.4rem 1.6rem;
-  margin-top:3.5rem}
-.review h2{margin-top:0}
+.crumbs .sep{margin:0 .4rem;color:var(--rule-2)}
+.plan-head h1{margin-top:.3rem}
+.headline{display:flex;flex-wrap:wrap;align-items:flex-end;gap:.6rem 2rem;margin:1rem 0 .3rem;
+  background:var(--card);border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--sh);padding:1.1rem 1.3rem}
+.headline-fig{margin:0}
+.headline-fig span{display:block;font-size:.78rem;color:var(--ink-3);font-weight:700}
+.headline-fig b{font-size:clamp(2.4rem,1.8rem + 2vw,3.2rem);font-weight:800;letter-spacing:-.04em;line-height:1.05;
+  font-variant-numeric:tabular-nums}
+.headline-rank{margin:0 0 .35rem;font-size:.88rem;color:var(--ink-2)}
+.headline-rank b{color:var(--ink)}
+.big{font-size:2.1rem;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums;color:var(--ink)}
+
+/* 内訳の棒 */
+.bars{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--sh);padding:1.2rem 1.3rem}
+.bar{display:flex;height:22px;border-radius:6px;overflow:hidden;background:var(--paper);gap:2px}
+.bar span{display:block;height:100%}
+.bar-minus{margin-top:.4rem;height:14px;background:transparent}
+.seg-c1{background:#1f55b8}.seg-c2{background:#6f93d6}.seg-c3{background:#a9bfe6}.seg-c4{background:#c9b27a}
+.seg-m1{background:#15a37a}.seg-m2{background:#7fd0b4}
+@media(prefers-color-scheme:dark){.seg-c1{background:#6ea2ff}.seg-c2{background:#4f78c2}.seg-c3{background:#33507f}}
+.keys{list-style:none;margin:1rem 0 0;padding:0;display:grid;gap:.35rem}
+.keys li{display:grid;grid-template-columns:.8rem 1fr auto;gap:.6rem;align-items:center;font-size:.88rem}
+.keys .key{display:block;width:.8rem;height:.8rem;border-radius:3px}
+.keys b{font-variant-numeric:tabular-nums;font-weight:700}
+.bar-total{display:flex;flex-wrap:wrap;align-items:baseline;gap:.3rem .6rem;margin:1rem 0 0;padding-top:.8rem;
+  border-top:1px solid var(--rule);font-size:.88rem;color:var(--ink-2)}
+.bar-total b{color:var(--ink);font-variant-numeric:tabular-nums}
+.bar-total .hl{font-size:1.15rem}
+
+/* 毎月の料金の帯 */
+.band{display:flex;align-items:flex-end;gap:3px;height:150px;background:var(--card);border:1px solid var(--rule);
+  border-radius:var(--r);box-shadow:var(--sh);padding:1rem 1rem .6rem}
+.band-seg{position:relative;display:flex;flex-direction:column;justify-content:flex-end;height:100%;min-width:3.6rem}
+.band-bar{display:block;background:linear-gradient(180deg,var(--indigo),#5e86d0);border-radius:5px 5px 2px 2px;opacity:.85}
+.band-amt{font-size:.8rem;font-weight:800;font-variant-numeric:tabular-nums;margin-top:.3rem;white-space:nowrap}
+.band-when{font-size:.68rem;color:var(--ink-3);white-space:nowrap}
+
+/* 公式のお知らせ・出典 */
+.notices{list-style:none;padding:0;margin:.8rem 0}
+.notices li{display:grid;grid-template-columns:6.5rem 1fr;gap:.2rem .8rem;padding:.55rem 0;border-bottom:1px solid var(--rule);font-size:.86rem}
+.notices time{color:var(--ink-3);font-variant-numeric:tabular-nums}
+.notices .chips{grid-column:2}
+.sources{font-size:.82rem;word-break:break-all}
+.page-foot{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--rule)}
+
+/* 文書系 */
+.faq dt{font-weight:800;font-size:1rem;margin-top:1.6rem}
+.faq dd{margin:.3rem 0 0;color:var(--ink-2)}
+.review{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:1.3rem 1.5rem;margin-top:3rem}
 .review-list{font-size:.85rem}
-.formula{background:var(--card);border:1px solid var(--rule);padding:1.1rem 1.2rem;
-  overflow-x:auto;font-size:.83rem;white-space:pre-wrap;font-family:var(--mono);
-  line-height:1.9}
-blockquote{margin:1.2rem 0;padding:.9rem 1.3rem;background:var(--card);
-  border-left:2px solid var(--indigo);font-size:.9rem;color:var(--ink-2)}
-code{background:var(--indigo-soft);padding:.08rem .35rem;font-size:.87em;
-  font-family:var(--mono)}
+.formula{background:var(--card);border:1px solid var(--rule);border-radius:var(--r-s);padding:1rem 1.2rem;
+  overflow-x:auto;font-size:.83rem;white-space:pre-wrap;font-family:var(--mono);line-height:1.9}
+blockquote{margin:1.2rem 0;padding:.9rem 1.3rem;background:var(--card);border-left:3px solid var(--indigo);
+  border-radius:0 var(--r-s) var(--r-s) 0;font-size:.9rem;color:var(--ink-2)}
+code{background:var(--indigo-soft);padding:.08rem .35rem;border-radius:4px;font-size:.87em;font-family:var(--mono)}
+.btn{display:inline-block;padding:.55rem 1.2rem;background:var(--brand);color:#fff;border-radius:999px;
+  text-decoration:none;font-size:.86rem;font-weight:700}
+.btn:hover{background:var(--brand-2)}
+main>h1:first-child,main>.crumbs+h1{margin-top:1.6rem}
 
-/* ── 奥付 ──────────────────────────────────────────────────
-   最後まで紙面らしく閉じる。ここが白いままだと下端が締まらない。 */
-.site-foot{background:var(--indigo-deep);color:#b9c6d6;margin-top:0;
-  border-top:3px solid var(--indigo)}
-.foot-in{max-width:var(--wrap);margin:0 auto;padding:2.8rem 1.5rem 3.5rem;
-  font-size:.82rem;line-height:1.9}
-.site-foot a{color:#dbe6f2}
-.foot-in>p:first-child{font-weight:800;font-size:.95rem;letter-spacing:.02em;
-  color:#fff;margin:0 0 1.2rem;padding-bottom:1.2rem;
-  border-bottom:1px solid rgba(255,255,255,.16)}
-.disclaimer{border:1px solid rgba(255,255,255,.18);padding:1rem 1.2rem;
-  background:rgba(255,255,255,.04)}
+/* ── 奥付 ──────────────────────────────────────────────── */
+.site-foot{background:var(--indigo-deep);color:#b8c6da;margin-top:2rem}
+.foot-in{max-width:var(--wrap);margin:0 auto;padding:2.6rem 1.5rem 3rem;
+  display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:1.6rem 2rem;font-size:.84rem;line-height:1.85}
+.foot-in p{margin:0}
+.foot-brand p+p{margin-top:.5rem}
+.foot-name{display:flex;align-items:center;gap:.55rem;color:#fff;font-weight:800;font-size:1rem}
+.foot-name svg{width:28px;height:28px}
+.foot-stamp{color:#8ea2bf;font-size:.78rem}
+.foot-nav{display:flex;flex-direction:column;gap:.2rem}
+.foot-h{color:#fff;font-weight:800;font-size:.76rem;letter-spacing:.1em;margin-bottom:.2rem!important}
+.site-foot a{color:#dbe6f5;text-decoration:none}
+.site-foot a:hover{text-decoration:underline}
+.disclaimer{grid-column:1/-1;border-top:1px solid rgba(255,255,255,.14);padding-top:1.2rem;font-size:.78rem;color:#9fb0c9}
 .disclaimer strong{color:#fff}
-.foot-nav{display:flex;gap:1.8rem;flex-wrap:wrap;margin-top:1.6rem;padding-top:1.3rem;
-  border-top:1px solid rgba(255,255,255,.16)}
-.foot-nav a{font-weight:600;letter-spacing:.05em;text-decoration:none}
-.foot-nav a:hover{text-decoration:underline}
 
-/* ── 画面が狭いとき ────────────────────────────────────────*/
-@media(max-width:860px){
-  .hero-grid{grid-template-columns:1fr;gap:2rem}
+/* ── 画面が狭いとき ─────────────────────────────────────── */
+@media(max-width:900px){
+  .picker{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .podium{grid-template-columns:1fr}
+  .pick{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:1rem;align-items:start}
+  .pick-body{grid-column:1}
+  .pick-fig{grid-column:2;grid-row:1/span 2;padding-top:1.3rem;text-align:right}
+  .pick-price{justify-content:flex-end}
+  .pick-range,.pick-go,.pick-src{grid-column:1/-1}
+  .pick-rank{position:static;font-size:.75rem;order:-1}
+  .record-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .foot-in{grid-template-columns:1fr 1fr}
+  .foot-brand{grid-column:1/-1}
 }
 @media(max-width:640px){
   body{font-size:15px}
-  main{padding:0 1.1rem 4rem}
-  .site-head{position:static}
-  .head-in{padding:.5rem 1.1rem 0;gap:0}
-  .brand strong{font-size:1.1rem}
+  main{padding:0 1rem 4rem}
+  .head-in{padding:.5rem 1rem;gap:.6rem;flex-wrap:wrap}
   .brand small{display:none}
-  /* 折り返さず横スクロール。2段になるとヘッダーが伸びて答えが下に押される */
-  .site-nav{margin:0 -1.1rem;padding:0 .6rem;width:calc(100% + 2.2rem);overflow-x:auto;
-    scrollbar-width:none;-ms-overflow-style:none}
+  .site-nav{margin:0 -1rem;padding:0 .5rem .1rem;width:calc(100% + 2rem);overflow-x:auto;scrollbar-width:none}
   .site-nav::-webkit-scrollbar{display:none}
-  .site-nav a{font-size:.86rem;padding:.65rem .7rem}
-  .rail{display:grid;grid-template-columns:1fr 1fr;border-left:0}
-  .rail-item{padding:.75rem 0 .55rem;margin:0;border-right:0;
-    border-bottom:1px solid var(--rule)}
-  .rail-item:nth-child(odd){border-right:1px solid var(--rule);padding-right:1rem}
-  .rail-item:nth-child(even){padding-left:1rem}
-  .rail-item b{font-size:1.35rem}
-  .dist{padding:1.1rem 1.1rem 1rem}
-  .dist-lead b{font-size:2.1rem}
-  .kicker{margin-top:2.6rem}
-  /* 比較表は横スクロールさせず、1プラン＝1枚のカードに組み替える。
-     左右に動かさないと金額が見えない表は、スマホでは読まれない */
+  .site-nav a{font-size:.84rem;padding:.4rem .7rem}
+  .site-head{position:static}
+  .ad-disclosure{padding:.5rem 1rem}
+  .hero{padding:1rem 0 1.5rem}
+  .hero .lead{font-size:.9rem;margin-bottom:1rem}
+  .picker{grid-template-columns:1fr;padding:.8rem .85rem;gap:.55rem}
+  .seg{display:grid;grid-template-columns:4.2rem minmax(0,1fr);align-items:center}
+  .seg legend{float:left;margin:0;padding-top:.15rem}
+  .seg-opts{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-right:-.85rem;padding-right:.85rem}
+  .seg-opts::-webkit-scrollbar{display:none}
+  .seg label span{padding:.36rem .75rem;font-size:.84rem}
+  .pick{padding:.85rem .95rem .8rem}
+  .pick:first-child{margin-top:.5rem}
+  .pick:first-child .pick-rank{display:none}
+  .pick-prov{font-size:1.05rem}
+  .pick-fig{padding-top:1rem}
+  .pick-price b{font-size:1.75rem}
+  .pick-range{margin-top:.3rem}
+  .pick-go{display:none}
+  .podium{gap:.7rem}
+  .pcards{grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem}
+  .pcard{padding:.85rem .9rem}
+  .pname{font-size:.95rem}
+  .pmin b{font-size:1.4rem}
+  .pmeta{font-size:.7rem}
+  .block{margin-top:2.6rem}
+
+  /* 比較表は横スクロールさせず、1プラン＝1枚に組み替える */
   .table-wrap{overflow:visible}
-  table{min-width:0}
-  .ranking{table-layout:auto}
-  .ranking thead{display:none}
-  .ranking,.ranking tbody{display:block}
-  .ranking tbody tr{display:grid;grid-template-columns:1.8rem minmax(0,1fr) auto;
-    column-gap:.7rem;row-gap:.1rem;padding:.95rem .8rem;border-bottom:1px solid var(--rule)}
+  .ranking,.plans{min-width:0}
+  .ranking thead,.plans thead{display:none}
+  .ranking,.ranking tbody,.plans,.plans tbody{display:block}
+  .ranking tbody tr{display:grid;grid-template-columns:1.7rem minmax(0,1fr) auto;column-gap:.6rem;
+    padding:.85rem .9rem;border-bottom:1px solid var(--rule)}
+  .ranking tbody tr:last-child{border-bottom:0}
   .ranking tbody td{display:block;padding:0;border:0}
-  .ranking tbody td.rank{grid-column:1;grid-row:1/span 3;padding-top:.15rem}
-  .ranking tbody td:nth-child(3){grid-column:2;grid-row:1;font-size:.76rem;color:var(--ink-2)}
-  .ranking tbody td.num{grid-column:3;grid-row:1/span 2;align-self:center}
-  .ranking tbody td:nth-child(4){grid-column:2;grid-row:2}
-  .ranking tbody td:nth-child(5),.ranking tbody td.breakdown{display:none}
-  .ranking tbody td.src{grid-column:2/4;grid-row:3;margin-top:.3rem;font-size:.7rem;line-height:1.5}
-  .ranking tbody td.src br{display:none}
-  .ranking tbody td.src time{margin-left:.6rem}
-  .ranking tbody td:nth-child(8){grid-column:2/4}
-  .qa{padding:1rem 1rem .9rem}
-  .qa-price b{font-size:1.4rem}
-  .ad-disclosure{padding:.55rem 1.1rem}
+  .ranking td.rank{grid-column:1;grid-row:1/span 2;padding-top:.1rem;text-align:left;width:auto}
+  .ranking td.prov{grid-column:2;grid-row:1;font-size:.84rem}
+  .ranking td.num.strong{grid-column:3;grid-row:1/span 2;align-self:center;font-size:1.25rem}
+  .ranking td.plan{grid-column:2;grid-row:2}
+  .ranking td.total,.ranking td.trend{display:none}
+  .ranking td.src{grid-column:2/4;grid-row:3;margin-top:.35rem;width:auto}
+  .ranking td.src time{display:inline;margin-left:.5rem}
+  .ranking td.cta{grid-column:2/4;margin-top:.4rem}
+  .plans tbody tr{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:.6rem;padding:.8rem .9rem;border-bottom:1px solid var(--rule)}
+  .plans tbody td{display:block;padding:0;border:0;width:auto}
+  .plans td.num.strong{grid-column:2;grid-row:1/span 2;font-size:1.15rem;align-self:center;width:auto}
+  .plans td:nth-child(2){grid-column:1;grid-row:1}
+  .plans td.total{grid-column:1;grid-row:2;text-align:left;font-size:.76rem}
+  .plans td.src{display:none}
+  .record{padding:1.2rem 1.1rem}
+  .headline{padding:1rem}
+  .band{height:130px;padding:.8rem .6rem .5rem;overflow-x:auto}
+  .notices li{grid-template-columns:1fr}
+  .notices .chips{grid-column:1}
+  .foot-in{grid-template-columns:1fr;padding:2rem 1rem 2.4rem}
 }
-@media(prefers-reduced-motion:no-preference){
-  tbody tr,.pcard{transition:background .13s ease}
-  .site-nav a{transition:color .13s ease,border-color .13s ease}
-}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 @media print{
-  .site-head{display:none}
+  .site-head,.picker,.site-foot,.link-only{display:none}
+  .hero{background:none;color:#000;box-shadow:none;clip-path:none}
+  .hero h1,.hero .lead{color:#000}
   body{background:#fff}
+  .ranking tr[hidden]{display:none}
 }
 ${CHART_CSS}
 `;
@@ -2111,6 +2593,7 @@ ${CHART_CSS}
 // CSS本文のハッシュ。中身が変わったときだけ変わる＝変わらない限りキャッシュは効いたまま。
 // ★STYLE の定義より後に置くこと（const は巻き上げても初期化前は参照できない）。
 export const cssVer = createHash('sha1').update(STYLE).digest('hex').slice(0, 8);
+export const jsVer = createHash('sha1').update(APP_JS).digest('hex').slice(0, 8);
 
 main().catch((err) => {
   console.error('失敗:', err);

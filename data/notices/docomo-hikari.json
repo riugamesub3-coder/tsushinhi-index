@@ -6,7 +6,6 @@
   "notices": [
     {
       "date": "2026-11-20",
-      "title": "【ドコモFG】「dカード プリペイド」のサービスを2027年9月30日に終了",
       "url": "https://www.docomo-fg.com/info/news_release/20261120_001.html",
       "categories": [
         "service-end"
@@ -17,7 +16,14 @@
     },
     {
       "date": "2026-11-19",
-      "title": "「Amazon ブラックフライデー」に合わせて、dポイントと「d払い」でのお買物がよりおトクになる2つのキャンペーンを開催！（PDF形式：558KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261119_g1.pdf",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-11-20T02:22:07.911Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-11-19",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261119_x1.pdf",
       "categories": [
         "campaign"
@@ -27,17 +33,7 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     },
     {
-      "date": "2026-11-19",
-      "title": "「ドコモ光／ahamo光 10ギガ 1年まるっと割」を2026年12月1日から開始（PDF形式：957KB）",
-      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261119_g1.pdf",
-      "categories": [],
-      "relevant": false,
-      "firstSeenAt": "2026-11-20T02:22:07.911Z",
-      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
-    },
-    {
       "date": "2026-11-17",
-      "title": "【ドコモFG】国内のクレジットカード会社22社と日本クレジットカード協会でフィッシングに関する注意喚起を実施",
       "url": "https://www.docomo-fg.com/info/news_release/20261117_001.html",
       "categories": [],
       "relevant": false,
@@ -46,16 +42,6 @@
     },
     {
       "date": "2026-11-17",
-      "title": "ドコモ、「AQUOS sense11 SH-53G」を11月26日に発売",
-      "url": "https://www.docomo.ne.jp/info/news_release/2026/11/17_02.html",
-      "categories": [],
-      "relevant": false,
-      "firstSeenAt": "2026-11-17T03:57:24.135Z",
-      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
-    },
-    {
-      "date": "2026-11-17",
-      "title": "役員の人事について",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/11/17_01.html",
       "categories": [],
       "relevant": false,
@@ -63,8 +49,15 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     },
     {
+      "date": "2026-11-17",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/11/17_02.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-11-17T03:57:24.135Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-11-16",
-      "title": "【ドコモFG】dカード会員向け期間限定特典として「パティーナ大阪『World’s Best Hotel』受賞記念ダブルキャンペーン」を開催！（PDF形式：739KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/docomofg/20261116101000.pdf",
       "categories": [
         "campaign"
@@ -75,7 +68,6 @@
     },
     {
       "date": "2026-11-16",
-      "title": "12月から、自治体と連携した「dポイント」「d払い」キャンペーンを開始 -枚方市・鹿沼市ほか全国4自治体でキャンペーンを開催-（PDF形式：446KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261116_g1.pdf",
       "categories": [
         "campaign"
@@ -86,7 +78,6 @@
     },
     {
       "date": "2026-11-16",
-      "title": "花王商品購入でdポイントが最大10%還元される「第1弾 花王トクトクフェス」を開催！ -対象店舗の会員ポイントも最大20%還元-（PDF形式：466KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261116_x1.pdf",
       "categories": [
         "campaign"
@@ -97,7 +88,6 @@
     },
     {
       "date": "2026-11-09",
-      "title": "静岡県総合防災アプリ「静岡県防災」が衛星通信に対応 -静岡県、ファーストメディア、ドコモが連携し、災害時にも防災情報を取得可能に-",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/11/09_00.html",
       "categories": [],
       "relevant": false,
@@ -106,7 +96,6 @@
     },
     {
       "date": "2026-11-06",
-      "title": "ドコモ、快適な操作性を追求したドコモ純正「スタンダードタッチペン」を発売（PDF形式：508KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261106_g1.pdf",
       "categories": [],
       "relevant": false,
@@ -115,16 +104,6 @@
     },
     {
       "date": "2026-11-05",
-      "title": "17年分のモバイルICTや生成AI利用動向などをまとめた「モバイル社会白書2026-2027」を公開 -モバイル社会研究所の最新調査で女子のスマートフォン所有開始年齢が10歳未満に-",
-      "url": "https://www.docomo.ne.jp/info/news_release/2026/11/05_00.html",
-      "categories": [],
-      "relevant": false,
-      "firstSeenAt": "2026-11-06T01:35:46.989Z",
-      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
-    },
-    {
-      "date": "2026-11-05",
-      "title": "モバイル空間統計の応用技術2件が地方発明表彰「発明奨励賞」を受賞（PDF形式：558KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261105_c1.pdf",
       "categories": [],
       "relevant": false,
@@ -132,8 +111,15 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     },
     {
+      "date": "2026-11-05",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/11/05_00.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-11-06T01:35:46.989Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-11-04",
-      "title": "2026年度第2四半期決算について",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/11/04_00.html",
       "categories": [],
       "relevant": false,
@@ -142,7 +128,6 @@
     },
     {
       "date": "2026-11-04",
-      "title": "国内初、SON技術を活用し、混雑状況に応じた通信量の自動調整を実証 -合計280MHzの帯域幅を活用し、大規模イベントの混雑時間帯にも安定した通信を確認-",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/11/04_01.html",
       "categories": [],
       "relevant": false,
@@ -151,7 +136,6 @@
     },
     {
       "date": "2026-11-02",
-      "title": "ドコモ、Android XR搭載の次世代XRグラス「XREAL AURA」を発売",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/11/02_00.html",
       "categories": [],
       "relevant": false,
@@ -160,7 +144,6 @@
     },
     {
       "date": "2026-10-30",
-      "title": "「dバリューパス」に新たな特典を追加 -「 Uber 」や「 Uber Eats 」、「LUUP」でご利用になれる特典が追加！さらに、「デイリーチャンス」の拡充、サービス画面のリニューアルも実施-",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/10/30_00.html",
       "categories": [
         "campaign",
@@ -172,7 +155,6 @@
     },
     {
       "date": "2026-10-29",
-      "title": "【ドコモFG】11月開始の「d払い」エリアキャンペーン -全国4地域の対象店舗で抽選によりdポイントを進呈-（PDF形式：532KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/docomofg/20261029151000.pdf",
       "categories": [
         "campaign"
@@ -183,25 +165,6 @@
     },
     {
       "date": "2026-10-27",
-      "title": "AIとロボットが人と安全・快適に共存する世界へ、Physical AI連携基盤を開発",
-      "url": "https://www.docomo.ne.jp/info/news_release/2026/10/27_02.html",
-      "categories": [],
-      "relevant": false,
-      "firstSeenAt": "2026-10-28T00:33:04.379Z",
-      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
-    },
-    {
-      "date": "2026-10-27",
-      "title": "TVer、ドコモ、データ・ワンで、配信視聴データ、dポイントクラブ会員基盤データ、購買データの連携による「TVer」の事業成長に向けた共創を開始 -広告視聴から来店・購買までの横断的な分析と、利用者体験の向上をめざす-",
-      "url": "https://www.docomo.ne.jp/info/news_release/2026/10/26_00.html",
-      "categories": [],
-      "relevant": false,
-      "firstSeenAt": "2026-10-27T00:31:08.789Z",
-      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
-    },
-    {
-      "date": "2026-10-27",
-      "title": "アカチャンホンポにdポイントを導入！ -「アカチャンホンポdポイント開始記念！総額1,000万ポイント山分けキャンペーン」も開催！-（PDF形式：503KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261027_x1.pdf",
       "categories": [
         "campaign"
@@ -212,25 +175,22 @@
     },
     {
       "date": "2026-10-27",
-      "title": "スマートフォンの利用状況から睡眠の質を推定可能な「睡眠の質推定AI」の提供を開始 -専用機器を使用せず、手軽に睡眠の質を把握できる新機能を「HealthTech基盤」に搭載-",
-      "url": "https://www.docomo.ne.jp/info/news_release/2026/10/27_03.html",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/10/26_00.html",
       "categories": [],
       "relevant": false,
-      "firstSeenAt": "2026-10-28T00:33:04.379Z",
+      "firstSeenAt": "2026-10-27T00:31:08.789Z",
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     },
     {
       "date": "2026-10-27",
-      "title": "ドコモ、まったく新しいiPad miniを発売",
-      "url": "https://www.docomo.ne.jp/info/news_release/2026/10/27_04.html",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/10/27_00.html",
       "categories": [],
       "relevant": false,
-      "firstSeenAt": "2026-10-28T00:33:04.379Z",
+      "firstSeenAt": "2026-10-27T00:31:08.789Z",
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     },
     {
       "date": "2026-10-27",
-      "title": "ドコモ、未就学児の生活習慣づくりを支援するAI対話技術を開発 -月齢に応じた言葉での声かけ・対話で、子どもの行動変容と保護者の育児負担軽減をめざす-",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/10/27_01.html",
       "categories": [],
       "relevant": false,
@@ -239,16 +199,30 @@
     },
     {
       "date": "2026-10-27",
-      "title": "令和8年熊本地震の被災地域で社員ボランティア活動を開始",
-      "url": "https://www.docomo.ne.jp/info/news_release/2026/10/27_00.html",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/10/27_02.html",
       "categories": [],
       "relevant": false,
-      "firstSeenAt": "2026-10-27T00:31:08.789Z",
+      "firstSeenAt": "2026-10-28T00:33:04.379Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-10-27",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/10/27_03.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-10-28T00:33:04.379Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-10-27",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/10/27_04.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-10-28T00:33:04.379Z",
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     },
     {
       "date": "2026-10-26",
-      "title": "AIが人の状況を察し、安心・安全を守りながら適切な対応に自律改善する「高EQな音声対話技術」を確立 -EQの高い音声対話を実現するための評価指針と共通設計図を記載したホワイトペーパーを公開-",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/10/26_01.html",
       "categories": [],
       "relevant": false,
@@ -257,7 +231,6 @@
     },
     {
       "date": "2026-10-23",
-      "title": "「docomo Starlink Direct」ニュージーランド・オーストラリアでも国際ローミング接続を開始 -対応国が5か国に拡大-（PDF形式：482KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261023_d1.pdf",
       "categories": [],
       "relevant": false,
@@ -266,16 +239,6 @@
     },
     {
       "date": "2026-10-23",
-      "title": "AIで一人一人の嗜好に合わせたライブ映像を自動構成する「パーソナライズ映像自動構成技術」を開発",
-      "url": "https://www.docomo.ne.jp/info/news_release/2026/10/23_01.html",
-      "categories": [],
-      "relevant": false,
-      "firstSeenAt": "2026-10-23T23:52:28.010Z",
-      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
-    },
-    {
-      "date": "2026-10-23",
-      "title": "ドコモ、初めてでも使いやすいスマートウォッチ03を11月25日に発売",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/10/23_00.html",
       "categories": [],
       "relevant": false,
@@ -283,8 +246,15 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     },
     {
+      "date": "2026-10-23",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/10/23_01.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-10-23T23:52:28.010Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-10-20",
-      "title": "世界初、無線基地局におけるワークロードシフトとエネルギーマネジメントの協調制御の実現に向けた実証を開始 -再生可能エネルギー活用の最大化、電力系統安定化、および災害時の通信サービス継続に貢献-（PDF形式：624KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261020_c1.pdf",
       "categories": [],
       "relevant": false,
@@ -293,7 +263,6 @@
     },
     {
       "date": "2026-10-20",
-      "title": "報道発表資料の誤表記のお詫びと訂正（PDF形式：309KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261020_x2.pdf",
       "categories": [],
       "relevant": false,
@@ -302,16 +271,6 @@
     },
     {
       "date": "2026-10-16",
-      "title": "「DAZN」を通じた「NBA docomo」の加入・視聴を開始",
-      "url": "https://www.docomo.ne.jp/info/news_release/2026/10/16_00.html",
-      "categories": [],
-      "relevant": false,
-      "firstSeenAt": "2026-10-16T23:38:56.879Z",
-      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
-    },
-    {
-      "date": "2026-10-16",
-      "title": "11月より、自治体と連携した「dポイント」「d払い」キャンペーンを開始 -岩手県野田村でキャンペーンを開催-（PDF形式：419KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261016_g1.pdf",
       "categories": [
         "campaign"
@@ -322,7 +281,6 @@
     },
     {
       "date": "2026-10-16",
-      "title": "東京都『希少資源緊急回収プロジェクト（携帯電話回収事業）』の実施事業者に採択 -都内のドコモショップで「データ移行サポート」を220円で提供し、使用済み携帯電話の回収を促進-（PDF形式：643KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261016_u1.pdf",
       "categories": [],
       "relevant": false,
@@ -330,8 +288,15 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     },
     {
+      "date": "2026-10-16",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/10/16_00.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-10-16T23:38:56.879Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-10-15",
-      "title": "dポイントの提供開始11周年を記念して、「【dポイント11周年】dポイント1億円分山分けキャンペーン」を開催！（PDF形式：514KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261015_x2.pdf",
       "categories": [
         "campaign",
@@ -343,7 +308,6 @@
     },
     {
       "date": "2026-10-14",
-      "title": "【ドコモFG】ドコモとの資本業務提携発表から3年、ビジネスシナジーの現状と進捗について",
       "url": "https://www.docomo-fg.com/info/news_release/20261014_001.html",
       "categories": [],
       "relevant": false,
@@ -352,7 +316,6 @@
     },
     {
       "date": "2026-10-14",
-      "title": "NTTドコモ、Abside NetworksとHAPSに関する基本合意書を締結 -AIを活用したHAPS向け通信技術の共同検討を開始-",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/10/14_00.html",
       "categories": [],
       "relevant": false,
@@ -361,7 +324,6 @@
     },
     {
       "date": "2026-10-13",
-      "title": "「ポイント交換でdポイント最大15％増量キャンペーン」を、11月から開催（PDF形式：504KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261013_x1.pdf",
       "categories": [
         "campaign"
@@ -372,16 +334,6 @@
     },
     {
       "date": "2026-10-08",
-      "title": "クリーン燃料証書制度実証事業への参画について -次世代燃料の普及拡大に向けた制度導入および制度設計上の課題の検証-（PDF形式：451KB）",
-      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261008_u1.pdf",
-      "categories": [],
-      "relevant": false,
-      "firstSeenAt": "2026-10-08T01:02:57.029Z",
-      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
-    },
-    {
-      "date": "2026-10-08",
-      "title": "一人一人の回復状況に応じてリハビリテーションを最適化する実証実験を開始 -「FEEL TECH」と「パワーアシストミラーセラピーシステム」を連携-（PDF形式：675KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261008_c1.pdf",
       "categories": [],
       "relevant": false,
@@ -389,8 +341,23 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     },
     {
+      "date": "2026-10-08",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261008_u1.pdf",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-10-08T01:02:57.029Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-10-06",
-      "title": "「三井ショッピングパーク ＆mall」「三井アウトレットパーク オンライン」に「d払い」を導入！ -「【三井ショッピングパーク ＆mall・三井アウトレットパーク オンライン】d払い利用でもれなく+5%還元キャンペーン」を開催！-（PDF形式：482KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261006_c1.pdf",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-10-07T00:46:00.931Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-10-06",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261006_x1.pdf",
       "categories": [
         "campaign"
@@ -400,17 +367,7 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     },
     {
-      "date": "2026-10-06",
-      "title": "北海道上ノ国町でクマ対策用電気柵の安定運用を支援する実証実験を開始 -遠隔電圧監視とリレー制御による部分切り離しにより、電気柵の運用を効率化-（PDF形式：655KB）",
-      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261006_c1.pdf",
-      "categories": [],
-      "relevant": false,
-      "firstSeenAt": "2026-10-07T00:46:00.931Z",
-      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
-    },
-    {
       "date": "2026-10-05",
-      "title": "「熊本復興支援オリジナル券面」の提供を開始 -くまモンデザインのオリジナル券面を利用し、日常のお買い物を熊本県の応援に-（PDF形式：866KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261005_f1.pdf",
       "categories": [],
       "relevant": false,
@@ -419,7 +376,6 @@
     },
     {
       "date": "2026-10-02",
-      "title": "東京靴流通センター、SHOE PLAZAなどを運営するチヨダに、dポイントを導入！ -「【チヨダ】dポイント導入記念！もれなく30倍キャンペーン」を開催！-（PDF形式：401KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261002_x1.pdf",
       "categories": [
         "campaign"
@@ -430,7 +386,6 @@
     },
     {
       "date": "2026-10-01",
-      "title": "【ドコモFG】ドコモFGとマネックス証券、「こどもNISA」の事前申込受付を開始",
       "url": "https://www.docomo-fg.com/info/news_release/20261001_001.html",
       "categories": [],
       "relevant": false,
@@ -439,7 +394,6 @@
     },
     {
       "date": "2026-10-01",
-      "title": "ドコモ、「Xperia 10 VIII SO-52G」を発売",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/10/01_00.html",
       "categories": [],
       "relevant": false,
@@ -448,7 +402,6 @@
     },
     {
       "date": "2026-10-01",
-      "title": "令和8年台風第18号に伴う支援措置",
       "url": "https://www.docomo.ne.jp/info/news_release/detail/20260930_02_m.html",
       "categories": [],
       "relevant": false,
@@ -457,7 +410,6 @@
     },
     {
       "date": "2026-09-30",
-      "title": "【ドコモFG】「ドコモの地震お見舞金保険」の新規契約および更新契約の受付を終了",
       "url": "https://www.docomo-fg.com/info/news_release/20260930_001.html",
       "categories": [
         "service-end"
@@ -468,7 +420,6 @@
     },
     {
       "date": "2026-09-30",
-      "title": "【ドコモFG】10月開始の「d払い」エリアキャンペーン -全国8地域の対象店舗で抽選によりdポイントを進呈-（PDF形式：603KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/docomofg/20260930151000.pdf",
       "categories": [
         "campaign"
@@ -479,7 +430,14 @@
     },
     {
       "date": "2026-09-29",
-      "title": "ドコモ、電通、CARTA ZERO、インテージで、「docomo data square」をマーケットツインとしてアップデートし提供 -1億超の同一IDを起点に、生活者理解から広告配信・効果検証までを横断したデータ活用を実現-（PDF形式：500KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260929_e1.pdf",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-09-29T01:01:40.695Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-09-29",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260929_x1.pdf",
       "categories": [],
       "relevant": false,
@@ -488,7 +446,6 @@
     },
     {
       "date": "2026-09-29",
-      "title": "ミリ波の普及を加速する「ドコモミリ波イニシアチブ」を始動",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/09/29_00.html",
       "categories": [],
       "relevant": false,
@@ -496,9 +453,8 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     },
     {
-      "date": "2026-09-29",
-      "title": "太陽光発電所と系統用蓄電所を組み合わせたHourly Matchingの実証実験を開始 -国内初、EnergyTag認定発行機関のプラットフォームを用いて、系統用蓄電池による時間単位のカーボンフリー電力供給率向上効果を検証-（PDF形式：602KB）",
-      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260929_e1.pdf",
+      "date": "2026-09-28",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260928_c1.pdf",
       "categories": [],
       "relevant": false,
       "firstSeenAt": "2026-09-29T01:01:40.695Z",
@@ -506,7 +462,6 @@
     },
     {
       "date": "2026-09-28",
-      "title": "「d払い・dカードで行こう！ユニバーサル・スタジオ・ジャパン 25周年 一部エリア貸切イベントご招待キャンペーン」を開催！（PDF形式：531KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260928_x1.pdf",
       "categories": [
         "campaign"
@@ -516,17 +471,7 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     },
     {
-      "date": "2026-09-28",
-      "title": "分析・予測対象の過去データが不足する環境でも高精度な予測を実現するAI技術を確立 -推薦システム分野の国際会議「ACM RecSys 2026」に採録-（PDF形式：462KB）",
-      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260928_c1.pdf",
-      "categories": [],
-      "relevant": false,
-      "firstSeenAt": "2026-09-29T01:01:40.695Z",
-      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
-    },
-    {
       "date": "2026-09-25",
-      "title": "「ahamo」をリニューアル、「ドコモ mini2」「ドコモ MAX 60歳以上割」の提供を開始、および一部料金プランの月額料金を改定",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/09/25_00.html",
       "categories": [
         "plan-change",
@@ -538,7 +483,6 @@
     },
     {
       "date": "2026-09-24",
-      "title": "Amazonの「プライム感謝祭」に合わせて、dポイントと「d払い」でのお買物がよりおトクになる2つのキャンペーンを開催！（PDF形式：562KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260924_x2.pdf",
       "categories": [
         "campaign"
@@ -549,7 +493,6 @@
     },
     {
       "date": "2026-09-24",
-      "title": "WOWOWとNTTドコモ、「Lemino」を共同事業化し、コンテンツを大幅拡充 -新生Lemino、10月1日（木曜）START-",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/09/24_00.html",
       "categories": [],
       "relevant": false,
@@ -558,7 +501,6 @@
     },
     {
       "date": "2026-09-22",
-      "title": "令和8年台風第25号に伴う支援措置",
       "url": "https://www.docomo.ne.jp/info/news_release/detail/20260922_00_m.html",
       "categories": [],
       "relevant": false,
@@ -567,7 +509,6 @@
     },
     {
       "date": "2026-09-18",
-      "title": "「『スティール・ボール・ラン ジョジョの奇妙な冒険』×NTTドコモ 2nd ＆ 3rd STAGE 開幕記念キャンペーン」を開催！ -限定特典・ノベルティの進呈、及びオリジナルグッズの販売を実施-（PDF形式：3,135KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260918_g1.pdf",
       "categories": [
         "campaign"
@@ -578,7 +519,6 @@
     },
     {
       "date": "2026-09-17",
-      "title": "10月開始の「dポイント」「d払い」自治体キャンペーン（PDF形式：441KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260917_g1.pdf",
       "categories": [
         "campaign"
@@ -589,7 +529,6 @@
     },
     {
       "date": "2026-09-17",
-      "title": "NTTグループの男性育休取得推進の取り組みについて -「IKUKYU.PJT」への賛同と「育休を考える日」に寄せて-（PDF形式：1,788KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260917_u1.pdf",
       "categories": [],
       "relevant": false,
@@ -598,7 +537,6 @@
     },
     {
       "date": "2026-09-17",
-      "title": "役員の人事について",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/09/17_00.html",
       "categories": [],
       "relevant": false,
@@ -607,7 +545,6 @@
     },
     {
       "date": "2026-09-16",
-      "title": "ドコモ、「iPhone 18 Pro/18 Pro Max」対応アクセサリーを発売 -MagSafe対応の「エアバンパーケース」やドコモ限定TORRAS社製ケースなどをラインナップ-（PDF形式：1,913KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260916_g1.pdf",
       "categories": [],
       "relevant": false,
@@ -616,7 +553,6 @@
     },
     {
       "date": "2026-09-16",
-      "title": "通信事業者間での5Gミリ波の利用エリア拡大に向けた共同検討を開始",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/09/16_00.html",
       "categories": [],
       "relevant": false,
@@ -625,7 +561,6 @@
     },
     {
       "date": "2026-09-11",
-      "title": "世界初、ノキア製最新型基地局装置のマルチベンダー構成による商用運用を開始",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/09/11_00.html",
       "categories": [],
       "relevant": false,
@@ -634,7 +569,6 @@
     },
     {
       "date": "2026-09-10",
-      "title": "ドコモ、「iPhone Duo」「iPhone 18 Pro」「iPhone 18 Pro Max」「Apple Watch Series 12」「Apple Watch Ultra 4」「AirPods 5」を発売",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/09/10_00.html",
       "categories": [],
       "relevant": false,
@@ -643,7 +577,6 @@
     },
     {
       "date": "2026-09-09",
-      "title": "脱炭素技術の提供に向け、フィリピンでPLDTとグリーン基地局の実証実験を実施 -ドコモが国内で確立した天気予報連動型リチウムイオン電池制御技術を海外へ初展開-（PDF形式：733KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260909_c1.pdf",
       "categories": [],
       "relevant": false,
@@ -652,7 +585,6 @@
     },
     {
       "date": "2026-09-07",
-      "title": "「ドコモのあんしん賃貸保証 まとめておトクキャンペーン」を開催 -対象サービスのご契約などでdポイント（期間・用途限定）最大15,600ポイントを進呈-（PDF形式：916KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260907_u1.pdf",
       "categories": [
         "campaign"
@@ -663,7 +595,6 @@
     },
     {
       "date": "2026-09-05",
-      "title": "令和8年台風第24号及び前線による大雨に伴う支援措置",
       "url": "https://www.docomo.ne.jp/info/news_release/detail/20260905_00_m.html",
       "categories": [],
       "relevant": false,
@@ -672,7 +603,14 @@
     },
     {
       "date": "2026-09-03",
-      "title": "「KONAMI ID」と「dアカウント」を連携でdポイントプレゼント！「総勢5万名にあたる！総額2,000万ポイントプレゼントキャンペーン」を開催（PDF形式：593KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260903_f1.pdf",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-09-03T21:28:06.694Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-09-03",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260903_x2.pdf",
       "categories": [
         "campaign"
@@ -683,16 +621,6 @@
     },
     {
       "date": "2026-09-03",
-      "title": "「NBA docomo」の新アンバサダーに、プロバスケットボールプレーヤー・河村勇輝選手が就任！ -NBA 2026-27シーズンパスを本日から販売開始-（PDF形式：696KB）",
-      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260903_f1.pdf",
-      "categories": [],
-      "relevant": false,
-      "firstSeenAt": "2026-09-03T21:28:06.694Z",
-      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
-    },
-    {
-      "date": "2026-09-03",
-      "title": "三井不動産、NTTドコモ、三井不動産ネットワークイノベーション資本業務提携契約を締結 -不動産と通信の融合により、都市の新たな価値向上につなげる街づくりを推進-",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/09/03_00.html",
       "categories": [],
       "relevant": false,
@@ -701,43 +629,6 @@
     },
     {
       "date": "2026-09-01",
-      "title": "「docomo Starlink Direct」国際ローミング接続を開始 -米国・フィリピン・カナダで利用可能に-",
-      "url": "https://www.docomo.ne.jp/info/news_release/2026/09/01_01.html",
-      "categories": [],
-      "relevant": false,
-      "firstSeenAt": "2026-09-01T21:28:18.790Z",
-      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
-    },
-    {
-      "date": "2026-09-01",
-      "title": "「d払い（モバイルオーダー）」で「デジタルeギフト」の提供を開始 -「Google Playギフトコード」を「d払い」アプリ内で購入可能に-（PDF形式：541KB）",
-      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260901_x1.pdf",
-      "categories": [],
-      "relevant": false,
-      "firstSeenAt": "2026-09-01T21:28:18.790Z",
-      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
-    },
-    {
-      "date": "2026-09-01",
-      "title": "「ドコモ MAX」「ドコモ ポイ活 MAX」をご契約のお客さま限定！東京ディズニーシー(R)の完全貸切イベントに、合計10,000名さまを抽選でご招待！（PDF形式：507KB）",
-      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260901_f1.pdf",
-      "categories": [],
-      "relevant": false,
-      "firstSeenAt": "2026-09-01T21:28:18.790Z",
-      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
-    },
-    {
-      "date": "2026-09-01",
-      "title": "【NTTドコモグループ新規事業創出プログラム「docomo STARTUP」からスタートアップが誕生】AIを活用しリベート予算の最適化をめざす「RebateX」をスピンアウト -サプライチェーンにおける複雑なリベート業務をDXし、取引の最適化を実現-",
-      "url": "https://www.docomo.ne.jp/info/news_release/2026/09/01_00.html",
-      "categories": [],
-      "relevant": false,
-      "firstSeenAt": "2026-09-01T21:28:18.790Z",
-      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
-    },
-    {
-      "date": "2026-09-01",
-      "title": "【ドコモFG】「d払い残高へのチャージ＆d払い残高でのお買物で最大10,000ポイントが当たる！キャンペーン」を開催！（PDF形式：554KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/docomofg/20260901101000.pdf",
       "categories": [
         "campaign"
@@ -747,8 +638,39 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     },
     {
+      "date": "2026-09-01",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260901_f1.pdf",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-09-01T21:28:18.790Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-09-01",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260901_x1.pdf",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-09-01T21:28:18.790Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-09-01",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/09/01_00.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-09-01T21:28:18.790Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-09-01",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/09/01_01.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-09-01T21:28:18.790Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-08-31",
-      "title": "自律共創人材を育成する「docomo academy」、社外企業へ参加対象を拡大 -企業・業界を越えた学びと共創の場へ発展、第7期を2026年10月から開講-（PDF形式：566KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260831_a.pdf",
       "categories": [],
       "relevant": false,
@@ -757,7 +679,6 @@
     },
     {
       "date": "2026-08-28",
-      "title": "【ドコモFG】ドコモSMTBネット銀行とマネックス証券、連携機能の提供を開始",
       "url": "https://www.docomo-fg.com/info/news_release/20260828_001.html",
       "categories": [],
       "relevant": false,
@@ -766,7 +687,6 @@
     },
     {
       "date": "2026-08-28",
-      "title": "NTTドコモ・NTTデータ・Synspective、「災害時における衛星画像活用に関する協定」を締結",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/08/28_00.html",
       "categories": [],
       "relevant": false,
@@ -775,7 +695,6 @@
     },
     {
       "date": "2026-08-28",
-      "title": "令和8年8月27日からの大雨に伴う支援措置",
       "url": "https://www.docomo.ne.jp/info/news_release/detail/20260827_00_m.html",
       "categories": [],
       "relevant": false,
@@ -784,7 +703,6 @@
     },
     {
       "date": "2026-08-27",
-      "title": "【ドコモFG】9月開始の「d払い」エリアキャンペーン -全国7地域の対象店舗で抽選によりdポイントを進呈-（PDF形式：594KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/docomofg/20260827151000.pdf",
       "categories": [
         "campaign"
@@ -795,7 +713,6 @@
     },
     {
       "date": "2026-08-26",
-      "title": "「ドコモスポーツくじ」で「DUNK」の取扱い開始 -バスケットボールを対象とした予想いらずのスポーツくじ-（PDF形式：469KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260826_g1.pdf",
       "categories": [],
       "relevant": false,
@@ -804,7 +721,6 @@
     },
     {
       "date": "2026-08-25",
-      "title": "ドコモ、DAZN、CARTA ZEROで、1億超のdポイントクラブ会員基盤データを活用した高精度なターゲティング配信を実現するソリューションの提供を開始 -dポイントクラブ会員基盤データを活用し、ターゲティングから効果計測までを一気通貫で支援-（PDF形式：543KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260825_x1.pdf",
       "categories": [],
       "relevant": false,
@@ -813,7 +729,6 @@
     },
     {
       "date": "2026-08-24",
-      "title": "ドコモと三菱地所、大手町・丸の内・有楽町エリアでの次世代スマートシティの構築連携に合意 -ミリ波をはじめとする通信インフラ確保を加速-",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/08/24_00.html",
       "categories": [],
       "relevant": false,
@@ -822,7 +737,14 @@
     },
     {
       "date": "2026-08-21",
-      "title": "「あんしんセキュリティ」の対象4プラン、累計契約数が200万件を突破！ -社会課題化する特殊詐欺への対策強化プランが好評、100万件突破からおよそ8か月で達成-（PDF形式：927KB）",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/docomofg/20260821081000.pdf",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:31.945Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-08-21",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260821_g1.pdf",
       "categories": [
         "plan-change"
@@ -833,7 +755,6 @@
     },
     {
       "date": "2026-08-21",
-      "title": "「ドコモの銀行」誕生記念！住宅ローンの新規借入と対象のドコモサービスのご契約で最大10万ポイントプレゼントキャンペーンを実施（PDF形式：668KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260821_s1.pdf",
       "categories": [
         "campaign"
@@ -844,16 +765,6 @@
     },
     {
       "date": "2026-08-21",
-      "title": "【ドコモFG】ドコモショップで「ドコモの銀行」のご案内や口座開設等のサポートを開始（PDF形式：516KB）",
-      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/docomofg/20260821081000.pdf",
-      "categories": [],
-      "relevant": false,
-      "firstSeenAt": "2026-08-23T09:31:31.945Z",
-      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
-    },
-    {
-      "date": "2026-08-21",
-      "title": "令和8年7月17日から18日にかけての大雨に伴う支援措置",
       "url": "https://www.docomo.ne.jp/info/news_release/detail/20260821_03_m.html",
       "categories": [],
       "relevant": false,
@@ -862,7 +773,6 @@
     },
     {
       "date": "2026-08-20",
-      "title": "Starlinkと「docomo Starlink Direct」の機能拡充に向け「Starlink Mobile V2」の契約に合意 -2028年度中に音声通話および高速インターネットを実現する次世代サービスを提供予定-",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/08/14_00.html",
       "categories": [],
       "relevant": false,
@@ -871,7 +781,6 @@
     },
     {
       "date": "2026-08-20",
-      "title": "電子コミック配信サービス「MANGA MIRAI」のサービス提供を終了し、「MangaPlaza」へ購入済み作品を移行",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/08/20_00.html",
       "categories": [
         "service-end"
@@ -882,18 +791,6 @@
     },
     {
       "date": "2026-08-18",
-      "title": "9月開始の「dポイント」「d払い」自治体キャンペーン（PDF形式：418KB）",
-      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260818_g1.pdf",
-      "categories": [
-        "campaign"
-      ],
-      "relevant": true,
-      "firstSeenAt": "2026-08-23T09:31:31.945Z",
-      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
-    },
-    {
-      "date": "2026-08-18",
-      "title": "令和8年熊本地震の被災地支援として、dカーシェアのご利用料金を減免 -熊本県内のカーシェア利用について、1回あたり最大10,000円を割引-（PDF形式：723KB）",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260818_e1.pdf",
       "categories": [
         "campaign"
@@ -903,8 +800,17 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     },
     {
+      "date": "2026-08-18",
+      "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_260818_g1.pdf",
+      "categories": [
+        "campaign"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-08-23T09:31:31.945Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-08-14",
-      "title": "令和8年8月13日からの大雨に伴う支援措置",
       "url": "https://www.docomo.ne.jp/info/news_release/detail/20260814_00_m.html",
       "categories": [],
       "relevant": false,
@@ -913,7 +819,6 @@
     },
     {
       "date": "2026-08-13",
-      "title": "15歳以下のスマホデビューを応援する料金プラン「ドコモ スマホデビュープラン U15」と、そのご家族までおトクになる割引「ドコモ 親子割」の提供を開始",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/08/06_00.html",
       "categories": [
         "campaign",
@@ -925,7 +830,6 @@
     },
     {
       "date": "2026-08-13",
-      "title": "ドコモ、「Google Pixel 11」「Google Pixel 11 Pro」「Google Pixel 11 Pro XL」「Google Pixel 11 Pro Fold」「Google Pixel Watch 5」を8月20日に発売",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/08/13_00.html",
       "categories": [],
       "relevant": false,
@@ -934,16 +838,6 @@
     },
     {
       "date": "2026-08-06",
-      "title": "2026年度第1四半期決算について",
-      "url": "https://www.docomo.ne.jp/info/news_release/2026/08/06_01.html",
-      "categories": [],
-      "relevant": false,
-      "firstSeenAt": "2026-08-23T09:31:31.945Z",
-      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
-    },
-    {
-      "date": "2026-08-06",
-      "title": "令和8年7月熊本地震災害に対する支援（義援金の拠出）について",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/08/05_00.html",
       "categories": [],
       "relevant": false,
@@ -951,8 +845,15 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     },
     {
+      "date": "2026-08-06",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/08/06_01.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-23T09:31:31.945Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-08-05",
-      "title": "「dアニメストア for LINEマンガ」を開始 -「LINEマンガ」内にて、原作マンガの購読からアニメの視聴までをシームレスに提供-",
       "url": "https://www.docomo.ne.jp/info/news_release/2026/08/05_01.html",
       "categories": [],
       "relevant": false,
@@ -961,20 +862,18 @@
     },
     {
       "date": "2026-08-05",
-      "title": "2026年度（2026年4月～）",
-      "url": "https://www.docomo.ne.jp/info/news_release/year.html?year=2026",
-      "categories": [],
-      "relevant": false,
-      "firstSeenAt": "2026-08-24T08:47:26.419Z",
-      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
-    },
-    {
-      "date": "2026-08-05",
-      "title": "令和8年熊本地震に伴い、「Starlink Business」やスマートフォンなどを無償で提供",
       "url": "https://www.docomo.ne.jp/info/news_release/detail/20260731_02_m.html",
       "categories": [],
       "relevant": false,
       "firstSeenAt": "2026-08-23T09:31:31.945Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
+      "date": "2026-08-05",
+      "url": "https://www.docomo.ne.jp/info/news_release/year.html?year=2026",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-08-24T08:47:26.419Z",
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
