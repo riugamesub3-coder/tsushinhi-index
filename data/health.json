@@ -1,27 +1,16 @@
 {
-  "checkedAt": "2026-11-20T02:23:48.852Z",
+  "checkedAt": "2026-11-20T08:45:57.739Z",
   "summary": {
-    "total": 20,
-    "ok": 17,
-    "failed": 3,
-    "escalated": [
-      {
-        "key": "health:https://www.nuro.jp/news_release/",
-        "consecutive": 26,
-        "staleSince": "2026-10-25T23:20:41.116Z"
-      },
-      {
-        "key": "health:https://www.so-net.ne.jp/access/hikari/",
-        "consecutive": 10,
-        "staleSince": "2026-11-11T01:18:36.005Z"
-      },
-      {
-        "key": "health:https://www.so-net.ne.jp/access/hikari/1g/",
-        "consecutive": 10,
-        "staleSince": "2026-11-11T01:18:36.005Z"
-      }
-    ],
+    "total": 18,
+    "ok": 18,
+    "failed": 0,
+    "escalated": [],
     "excludedProviders": [
+      {
+        "id": "so-net-hikari",
+        "name": "So-net光（ソニーネットワークコミュニケーションズ）",
+        "reason": "料金ページ実測: 年27.9回変更・料金265件。お知らせ一覧URLは未特定（個別記事は /info/{年}/ 配下）。★1ギガには S/M/L の3プランがあるが、トップページには M の料金しか無い（2026-08-25 実測: 4,500円/7,095円/3,400円 が0件）。S/L は /access/hikari/1g/ にのみ載る。1ギガM は両ページに載るのでページ間で突き合わせている"
+      },
       {
         "id": "commufa-hikari",
         "name": "コミュファ光（中部電力系）",
@@ -45,7 +34,7 @@
       "httpStatus": 200,
       "hits": 201,
       "bytes": 145802,
-      "elapsedMs": 791,
+      "elapsedMs": 468,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -60,7 +49,7 @@
       "httpStatus": 200,
       "hits": 312,
       "bytes": 204121,
-      "elapsedMs": 788,
+      "elapsedMs": 571,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -70,13 +59,18 @@
       "providerName": "NURO光",
       "url": "https://www.nuro.jp/news_release/",
       "type": "notice",
-      "status": "content-changed",
-      "detail": "日付が0件（期待3件以上）。構造変更の疑い [取得内容: 23276B / title=お知らせ | NURO / 先頭=お知らせ | NURO 戸建て 料金・プラン マンション 料金・プラン マイページ お申し込み 料金スペック オプション ご利用までの流れ お知らせ お知らせ よくあるご質問 お申し込み前の方 お申し込み済みの方 申込まで安心 LINE公式アカウント 開通まで安心 レンタルWi-Fi もっとおトクに お友達紹介クーポン]",
+      "status": "ok",
+      "detail": null,
       "httpStatus": 200,
-      "hits": 0,
-      "robotsNote": "該当ルールなし",
-      "consecutiveFailures": 26,
-      "staleSince": "2026-10-25T23:20:41.116Z"
+      "hits": 109,
+      "bytes": 14169,
+      "elapsedMs": 2112,
+      "feeds": [
+        "https://www.nuro.jp/assets/inc/news-release/list-generated.json",
+        "https://www.nuro.jp/assets/inc/news-release/list-editorial.html"
+      ],
+      "consecutiveFailures": 0,
+      "staleSince": null
     },
     {
       "providerId": "biglobe-hikari",
@@ -88,7 +82,7 @@
       "httpStatus": 200,
       "hits": 24,
       "bytes": 23305,
-      "elapsedMs": 504,
+      "elapsedMs": 543,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -103,7 +97,7 @@
       "httpStatus": 200,
       "hits": 81,
       "bytes": 95874,
-      "elapsedMs": 739,
+      "elapsedMs": 24,
       "robotsNote": "Allow: /",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -118,7 +112,7 @@
       "httpStatus": 200,
       "hits": 42,
       "bytes": 31249,
-      "elapsedMs": 714,
+      "elapsedMs": 660,
       "robotsNote": "Allow: /",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -133,7 +127,7 @@
       "httpStatus": 200,
       "hits": 79,
       "bytes": 175316,
-      "elapsedMs": 371,
+      "elapsedMs": 416,
       "robotsNote": "robots.txt なし（制限なしとみなす）",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -148,7 +142,7 @@
       "httpStatus": 200,
       "hits": 22,
       "bytes": 188765,
-      "elapsedMs": 285,
+      "elapsedMs": 407,
       "robotsNote": "robots.txt なし（制限なしとみなす）",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -163,7 +157,7 @@
       "httpStatus": 200,
       "hits": 22,
       "bytes": 248736,
-      "elapsedMs": 314,
+      "elapsedMs": 450,
       "robotsNote": "robots.txt なし（制限なしとみなす）",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -178,7 +172,7 @@
       "httpStatus": 200,
       "hits": 33,
       "bytes": 228844,
-      "elapsedMs": 358,
+      "elapsedMs": 480,
       "robotsNote": "robots.txt なし（制限なしとみなす）",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -193,7 +187,7 @@
       "httpStatus": 200,
       "hits": 25,
       "bytes": 141977,
-      "elapsedMs": 391,
+      "elapsedMs": 509,
       "robotsNote": "robots.txt なし（制限なしとみなす）",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -207,37 +201,11 @@
       "detail": null,
       "httpStatus": 200,
       "hits": 4,
-      "bytes": 82960,
-      "elapsedMs": 801,
+      "bytes": 82978,
+      "elapsedMs": 711,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
-    },
-    {
-      "providerId": "so-net-hikari",
-      "providerName": "So-net光（ソニーネットワークコミュニケーションズ）",
-      "url": "https://www.so-net.ne.jp/access/hikari/",
-      "type": "pricing",
-      "status": "content-changed",
-      "detail": "料金が0件（期待1件以上）。構造変更の疑い [取得内容: 1386B / title=ご利用頂けません | So-net / 先頭=ご利用頂けません | So-net So-netトップ So-netをご利用頂きましてありがとうございます。 現在、セキュリティ強化およびお客様の情報保護を目的として、通信環境の安全な接続が確認できない場合、ご指定のページが参照できない場合があります。 お客様にはご不便をおかけいたしますが、何卒ご理解とご協力を賜ります]",
-      "httpStatus": 200,
-      "hits": 0,
-      "robotsNote": "該当ルールなし",
-      "consecutiveFailures": 10,
-      "staleSince": "2026-11-11T01:18:36.005Z"
-    },
-    {
-      "providerId": "so-net-hikari",
-      "providerName": "So-net光（ソニーネットワークコミュニケーションズ）",
-      "url": "https://www.so-net.ne.jp/access/hikari/1g/",
-      "type": "pricing",
-      "status": "content-changed",
-      "detail": "料金が0件（期待1件以上）。構造変更の疑い [取得内容: 1386B / title=ご利用頂けません | So-net / 先頭=ご利用頂けません | So-net So-netトップ So-netをご利用頂きましてありがとうございます。 現在、セキュリティ強化およびお客様の情報保護を目的として、通信環境の安全な接続が確認できない場合、ご指定のページが参照できない場合があります。 お客様にはご不便をおかけいたしますが、何卒ご理解とご協力を賜ります]",
-      "httpStatus": 200,
-      "hits": 0,
-      "robotsNote": "該当ルールなし",
-      "consecutiveFailures": 10,
-      "staleSince": "2026-11-11T01:18:36.005Z"
     },
     {
       "providerId": "softbank-hikari",
@@ -249,7 +217,7 @@
       "httpStatus": 200,
       "hits": 109,
       "bytes": 99303,
-      "elapsedMs": 78,
+      "elapsedMs": 31,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -264,7 +232,7 @@
       "httpStatus": 200,
       "hits": 19,
       "bytes": 331766,
-      "elapsedMs": 59,
+      "elapsedMs": 17,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -279,7 +247,7 @@
       "httpStatus": 200,
       "hits": 8,
       "bytes": 32231,
-      "elapsedMs": 429,
+      "elapsedMs": 454,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -293,8 +261,8 @@
       "detail": null,
       "httpStatus": 200,
       "hits": 10,
-      "bytes": 36345,
-      "elapsedMs": 411,
+      "bytes": 36927,
+      "elapsedMs": 494,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -308,8 +276,8 @@
       "detail": null,
       "httpStatus": 200,
       "hits": 6,
-      "bytes": 30469,
-      "elapsedMs": 313,
+      "bytes": 31051,
+      "elapsedMs": 125,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null
@@ -323,8 +291,8 @@
       "detail": null,
       "httpStatus": 200,
       "hits": 63,
-      "bytes": 112177,
-      "elapsedMs": 538,
+      "bytes": 112193,
+      "elapsedMs": 325,
       "robotsNote": "該当ルールなし",
       "consecutiveFailures": 0,
       "staleSince": null

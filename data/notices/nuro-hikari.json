@@ -5,6 +5,56 @@
   "firstCollectedAt": "2026-08-23T09:31:26.876Z",
   "notices": [
     {
+      "date": "2026-11-05",
+      "title": "【重要】『とくとくネットスーパー powered by デリキチ』ご利用開始に関するお知らせ",
+      "url": "https://www.nuro.jp/news_release/20261105/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-11-20T08:44:20.748Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2026-11-02",
+      "title": "【重要】「NUROさくっとサポート」等 サービス提供一時停止に伴うご利用料金減免のお知らせ（続報）",
+      "url": "https://www.nuro.jp/news_release/20261102/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-11-20T08:44:20.748Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2026-10-27",
+      "title": "【重要】「NUROさくっとサポート」および「NUROリモートサポート」のサービス提供一時停止に関するお詫び",
+      "url": "https://www.nuro.jp/news_release/20261027/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-11-20T08:44:20.748Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2026-10-27",
+      "title": "【重要】『NURO 光』マイページのメンテナンスに関するお知らせ(終了)",
+      "url": "https://www.nuro.jp/news_release/20261027-2/",
+      "categories": [
+        "service-end",
+        "noise"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-11-20T08:44:20.748Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
+      "date": "2026-10-26",
+      "title": "「くらしのお守りワイド」「So-netくらしのお守り」特典および規約内容変更のお知らせ",
+      "url": "https://www.nuro.jp/news_release/20261026/",
+      "categories": [
+        "campaign"
+      ],
+      "relevant": true,
+      "firstSeenAt": "2026-11-20T08:44:20.748Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
       "date": "2026-10-07",
       "title": "【重要】「ひかりＴＶ for NURO」接続不具合に関するお知らせとご対応のお願い",
       "url": "https://www.nuro.jp/news_release/20261007/",
@@ -1009,6 +1059,6 @@
       "sourceUrl": "https://www.nuro.jp/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-10-24T23:19:43.623Z",
-  "totalNotices": 104
+  "lastCollectedAt": "2026-11-20T08:44:20.748Z",
+  "totalNotices": 109
 }

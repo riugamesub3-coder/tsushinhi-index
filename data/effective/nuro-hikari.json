@@ -2,7 +2,7 @@
   "providerId": "nuro-hikari",
   "providerName": "NURO光",
   "channelId": "official",
-  "observedAt": "2026-11-01T00:11:30.154Z",
+  "observedAt": "2026-11-20T08:45:10.157Z",
   "formula": "実質月額 = ( 月額の合計 + 工事費の実負担額 + 事務手数料 + 必須オプション費用×加入必要月数 - キャッシュバック額 - その他割引の総額 ) ÷ 契約月数",
   "primaryHorizonMonths": 36,
   "sourceUrls": [
@@ -36,12 +36,12 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 2,
           "toMonth": 24,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 25,
@@ -55,7 +55,7 @@
         }
       ],
       "monthlyNote": "ホームゲートウェイ（Wi-Fiルーター）料金を含む（NUROが必須としているため）",
-      "adminFee": 6050,
+      "adminFee": 3300,
       "constructionFee": {
         "list": 55000,
         "installmentMonths": 36,
@@ -107,9 +107,9 @@
       },
       "cashbacks": [
         {
-          "amount": 5000,
+          "amount": 10000,
           "receiveAtMonth": 18,
-          "note": "キャンペーン キャッシュバック 5,000円（18か月目）"
+          "note": "キャンペーン キャッシュバック 10,000円（18か月目）"
         }
       ],
       "requiredOptions": [],
@@ -118,12 +118,12 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 2,
           "toMonth": 24,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 25,
@@ -137,31 +137,31 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-11-01T00:11:30.154Z",
+      "observedAt": "2026-11-20T08:45:10.157Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 4574,
-          "total": 109770,
+          "effectiveMonthly": 3701,
+          "total": 88820,
           "breakdown": {
-            "monthlyTotal": 108720,
-            "adminFee": 6050,
+            "monthlyTotal": 95520,
+            "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 10000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 4956,
-          "total": 178410,
+          "effectiveMonthly": 4374,
+          "total": 157460,
           "breakdown": {
-            "monthlyTotal": 177360,
-            "adminFee": 6050,
+            "monthlyTotal": 164160,
+            "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 10000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
@@ -195,12 +195,12 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 2,
           "toMonth": 24,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 25,
@@ -214,7 +214,7 @@
         }
       ],
       "monthlyNote": "ホームゲートウェイ（Wi-Fiルーター）料金を含む（NUROが必須としているため）",
-      "adminFee": 6050,
+      "adminFee": 3300,
       "constructionFee": {
         "list": 55000,
         "installmentMonths": 36,
@@ -266,9 +266,9 @@
       },
       "cashbacks": [
         {
-          "amount": 5000,
+          "amount": 20000,
           "receiveAtMonth": 18,
-          "note": "キャンペーン キャッシュバック 5,000円（18か月目）"
+          "note": "キャンペーン キャッシュバック 20,000円（18か月目）"
         }
       ],
       "requiredOptions": [],
@@ -277,12 +277,12 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 2,
           "toMonth": 24,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 25,
@@ -296,31 +296,31 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-11-01T00:11:30.154Z",
+      "observedAt": "2026-11-20T08:45:10.157Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 4574,
-          "total": 109770,
+          "effectiveMonthly": 3284,
+          "total": 78820,
           "breakdown": {
-            "monthlyTotal": 108720,
-            "adminFee": 6050,
+            "monthlyTotal": 95520,
+            "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 20000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 5249,
-          "total": 188970,
+          "effectiveMonthly": 4389,
+          "total": 158020,
           "breakdown": {
-            "monthlyTotal": 187920,
-            "adminFee": 6050,
+            "monthlyTotal": 174720,
+            "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 20000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
@@ -354,17 +354,17 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 2,
           "toMonth": 24,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 25,
           "toMonth": 36,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 37,
@@ -373,7 +373,7 @@
         }
       ],
       "monthlyNote": "ホームゲートウェイ（Wi-Fiルーター）料金を含む（NUROが必須としているため）",
-      "adminFee": 6050,
+      "adminFee": 3300,
       "constructionFee": {
         "list": 55000,
         "installmentMonths": 36,
@@ -425,9 +425,9 @@
       },
       "cashbacks": [
         {
-          "amount": 5000,
+          "amount": 10000,
           "receiveAtMonth": 18,
-          "note": "キャンペーン キャッシュバック 5,000円（18か月目）"
+          "note": "キャンペーン キャッシュバック 10,000円（18か月目）"
         }
       ],
       "requiredOptions": [],
@@ -436,17 +436,17 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 2,
           "toMonth": 24,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 25,
           "toMonth": 36,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 37,
@@ -455,31 +455,31 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-11-01T00:11:30.154Z",
+      "observedAt": "2026-11-20T08:45:10.157Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 4574,
-          "total": 109770,
+          "effectiveMonthly": 3701,
+          "total": 88820,
           "breakdown": {
-            "monthlyTotal": 108720,
-            "adminFee": 6050,
+            "monthlyTotal": 95520,
+            "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 10000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 4559,
-          "total": 164130,
+          "effectiveMonthly": 3794,
+          "total": 136580,
           "breakdown": {
-            "monthlyTotal": 163080,
-            "adminFee": 6050,
+            "monthlyTotal": 143280,
+            "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 10000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
@@ -513,17 +513,17 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 2,
           "toMonth": 24,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 25,
           "toMonth": 36,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 37,
@@ -532,7 +532,7 @@
         }
       ],
       "monthlyNote": "ホームゲートウェイ（Wi-Fiルーター）料金を含む（NUROが必須としているため）",
-      "adminFee": 6050,
+      "adminFee": 3300,
       "constructionFee": {
         "list": 55000,
         "installmentMonths": 36,
@@ -584,9 +584,9 @@
       },
       "cashbacks": [
         {
-          "amount": 5000,
+          "amount": 20000,
           "receiveAtMonth": 18,
-          "note": "キャンペーン キャッシュバック 5,000円（18か月目）"
+          "note": "キャンペーン キャッシュバック 20,000円（18か月目）"
         }
       ],
       "requiredOptions": [],
@@ -595,17 +595,17 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 2,
           "toMonth": 24,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 25,
           "toMonth": 36,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 37,
@@ -614,31 +614,31 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-11-01T00:11:30.154Z",
+      "observedAt": "2026-11-20T08:45:10.157Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 4574,
-          "total": 109770,
+          "effectiveMonthly": 3284,
+          "total": 78820,
           "breakdown": {
-            "monthlyTotal": 108720,
-            "adminFee": 6050,
+            "monthlyTotal": 95520,
+            "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 20000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 4559,
-          "total": 164130,
+          "effectiveMonthly": 3516,
+          "total": 126580,
           "breakdown": {
-            "monthlyTotal": 163080,
-            "adminFee": 6050,
+            "monthlyTotal": 143280,
+            "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 20000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
@@ -671,12 +671,12 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 2,
           "toMonth": 24,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 25,
@@ -690,7 +690,7 @@
         }
       ],
       "monthlyNote": "ホームゲートウェイ（Wi-Fiルーター）料金を含む（NUROが必須としているため）",
-      "adminFee": 6050,
+      "adminFee": 3300,
       "constructionFee": {
         "list": 55000,
         "installmentMonths": 36,
@@ -742,9 +742,9 @@
       },
       "cashbacks": [
         {
-          "amount": 5000,
+          "amount": 10000,
           "receiveAtMonth": 18,
-          "note": "キャンペーン キャッシュバック 5,000円（18か月目）"
+          "note": "キャンペーン キャッシュバック 10,000円（18か月目）"
         }
       ],
       "requiredOptions": [],
@@ -753,12 +753,12 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 2,
           "toMonth": 24,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 25,
@@ -772,31 +772,31 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-11-01T00:11:30.154Z",
+      "observedAt": "2026-11-20T08:45:10.157Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 4574,
-          "total": 109770,
+          "effectiveMonthly": 3701,
+          "total": 88820,
           "breakdown": {
-            "monthlyTotal": 108720,
-            "adminFee": 6050,
+            "monthlyTotal": 95520,
+            "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 10000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 4956,
-          "total": 178410,
+          "effectiveMonthly": 4374,
+          "total": 157460,
           "breakdown": {
-            "monthlyTotal": 177360,
-            "adminFee": 6050,
+            "monthlyTotal": 164160,
+            "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 10000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
@@ -829,12 +829,12 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 2,
           "toMonth": 24,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 25,
@@ -848,7 +848,7 @@
         }
       ],
       "monthlyNote": "ホームゲートウェイ（Wi-Fiルーター）料金を含む（NUROが必須としているため）",
-      "adminFee": 6050,
+      "adminFee": 3300,
       "constructionFee": {
         "list": 55000,
         "installmentMonths": 36,
@@ -900,9 +900,9 @@
       },
       "cashbacks": [
         {
-          "amount": 5000,
+          "amount": 20000,
           "receiveAtMonth": 18,
-          "note": "キャンペーン キャッシュバック 5,000円（18か月目）"
+          "note": "キャンペーン キャッシュバック 20,000円（18か月目）"
         }
       ],
       "requiredOptions": [],
@@ -911,12 +911,12 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 2,
           "toMonth": 24,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 25,
@@ -930,31 +930,31 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-11-01T00:11:30.154Z",
+      "observedAt": "2026-11-20T08:45:10.157Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 4574,
-          "total": 109770,
+          "effectiveMonthly": 3284,
+          "total": 78820,
           "breakdown": {
-            "monthlyTotal": 108720,
-            "adminFee": 6050,
+            "monthlyTotal": 95520,
+            "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 20000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 5249,
-          "total": 188970,
+          "effectiveMonthly": 4389,
+          "total": 158020,
           "breakdown": {
-            "monthlyTotal": 187920,
-            "adminFee": 6050,
+            "monthlyTotal": 174720,
+            "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 20000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
@@ -987,17 +987,17 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 2,
           "toMonth": 24,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 25,
           "toMonth": 36,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 37,
@@ -1006,7 +1006,7 @@
         }
       ],
       "monthlyNote": "ホームゲートウェイ（Wi-Fiルーター）料金を含む（NUROが必須としているため）",
-      "adminFee": 6050,
+      "adminFee": 3300,
       "constructionFee": {
         "list": 55000,
         "installmentMonths": 36,
@@ -1058,9 +1058,9 @@
       },
       "cashbacks": [
         {
-          "amount": 5000,
+          "amount": 10000,
           "receiveAtMonth": 18,
-          "note": "キャンペーン キャッシュバック 5,000円（18か月目）"
+          "note": "キャンペーン キャッシュバック 10,000円（18か月目）"
         }
       ],
       "requiredOptions": [],
@@ -1069,17 +1069,17 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 2,
           "toMonth": 24,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 25,
           "toMonth": 36,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 37,
@@ -1088,31 +1088,31 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-11-01T00:11:30.154Z",
+      "observedAt": "2026-11-20T08:45:10.157Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 4574,
-          "total": 109770,
+          "effectiveMonthly": 3701,
+          "total": 88820,
           "breakdown": {
-            "monthlyTotal": 108720,
-            "adminFee": 6050,
+            "monthlyTotal": 95520,
+            "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 10000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 4559,
-          "total": 164130,
+          "effectiveMonthly": 3794,
+          "total": 136580,
           "breakdown": {
-            "monthlyTotal": 163080,
-            "adminFee": 6050,
+            "monthlyTotal": 143280,
+            "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 10000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
@@ -1145,17 +1145,17 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 2,
           "toMonth": 24,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 25,
           "toMonth": 36,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 37,
@@ -1164,7 +1164,7 @@
         }
       ],
       "monthlyNote": "ホームゲートウェイ（Wi-Fiルーター）料金を含む（NUROが必須としているため）",
-      "adminFee": 6050,
+      "adminFee": 3300,
       "constructionFee": {
         "list": 55000,
         "installmentMonths": 36,
@@ -1216,9 +1216,9 @@
       },
       "cashbacks": [
         {
-          "amount": 5000,
+          "amount": 20000,
           "receiveAtMonth": 18,
-          "note": "キャンペーン キャッシュバック 5,000円（18か月目）"
+          "note": "キャンペーン キャッシュバック 20,000円（18か月目）"
         }
       ],
       "requiredOptions": [],
@@ -1227,17 +1227,17 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 2,
           "toMonth": 24,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 25,
           "toMonth": 36,
-          "amount": 4530
+          "amount": 3980
         },
         {
           "fromMonth": 37,
@@ -1246,31 +1246,31 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-11-01T00:11:30.154Z",
+      "observedAt": "2026-11-20T08:45:10.157Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 4574,
-          "total": 109770,
+          "effectiveMonthly": 3284,
+          "total": 78820,
           "breakdown": {
-            "monthlyTotal": 108720,
-            "adminFee": 6050,
+            "monthlyTotal": 95520,
+            "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 20000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 4559,
-          "total": 164130,
+          "effectiveMonthly": 3516,
+          "total": 126580,
           "breakdown": {
-            "monthlyTotal": 163080,
-            "adminFee": 6050,
+            "monthlyTotal": 143280,
+            "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 20000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
@@ -1303,12 +1303,12 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 3530
+          "amount": 2980
         },
         {
           "fromMonth": 2,
           "toMonth": 24,
-          "amount": 3530
+          "amount": 2980
         },
         {
           "fromMonth": 25,
@@ -1322,7 +1322,7 @@
         }
       ],
       "monthlyNote": "ホームゲートウェイ（Wi-Fiルーター）料金を含む（NUROが必須としているため）",
-      "adminFee": 6050,
+      "adminFee": 3300,
       "constructionFee": {
         "list": 55000,
         "installmentMonths": 36,
@@ -1374,9 +1374,9 @@
       },
       "cashbacks": [
         {
-          "amount": 5000,
+          "amount": 10000,
           "receiveAtMonth": 18,
-          "note": "キャンペーン キャッシュバック 5,000円（18か月目）"
+          "note": "キャンペーン キャッシュバック 10,000円（18か月目）"
         }
       ],
       "requiredOptions": [],
@@ -1385,12 +1385,12 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 3530
+          "amount": 2980
         },
         {
           "fromMonth": 2,
           "toMonth": 24,
-          "amount": 3530
+          "amount": 2980
         },
         {
           "fromMonth": 25,
@@ -1404,31 +1404,31 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-11-01T00:11:30.154Z",
+      "observedAt": "2026-11-20T08:45:10.157Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 3574,
-          "total": 85770,
+          "effectiveMonthly": 2701,
+          "total": 64820,
           "breakdown": {
-            "monthlyTotal": 84720,
-            "adminFee": 6050,
+            "monthlyTotal": 71520,
+            "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 10000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 3959,
-          "total": 142530,
+          "effectiveMonthly": 3377,
+          "total": 121580,
           "breakdown": {
-            "monthlyTotal": 141480,
-            "adminFee": 6050,
+            "monthlyTotal": 128280,
+            "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 10000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
@@ -1461,12 +1461,12 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 3530
+          "amount": 2980
         },
         {
           "fromMonth": 2,
           "toMonth": 24,
-          "amount": 3530
+          "amount": 2980
         },
         {
           "fromMonth": 25,
@@ -1480,7 +1480,7 @@
         }
       ],
       "monthlyNote": "ホームゲートウェイ（Wi-Fiルーター）料金を含む（NUROが必須としているため）",
-      "adminFee": 6050,
+      "adminFee": 3300,
       "constructionFee": {
         "list": 55000,
         "installmentMonths": 36,
@@ -1532,9 +1532,9 @@
       },
       "cashbacks": [
         {
-          "amount": 5000,
+          "amount": 20000,
           "receiveAtMonth": 18,
-          "note": "キャンペーン キャッシュバック 5,000円（18か月目）"
+          "note": "キャンペーン キャッシュバック 20,000円（18か月目）"
         }
       ],
       "requiredOptions": [],
@@ -1543,12 +1543,12 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 3530
+          "amount": 2980
         },
         {
           "fromMonth": 2,
           "toMonth": 24,
-          "amount": 3530
+          "amount": 2980
         },
         {
           "fromMonth": 25,
@@ -1562,31 +1562,31 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-11-01T00:11:30.154Z",
+      "observedAt": "2026-11-20T08:45:10.157Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 3574,
-          "total": 85770,
+          "effectiveMonthly": 2284,
+          "total": 54820,
           "breakdown": {
-            "monthlyTotal": 84720,
-            "adminFee": 6050,
+            "monthlyTotal": 71520,
+            "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 20000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 4473,
-          "total": 161010,
+          "effectiveMonthly": 3613,
+          "total": 130060,
           "breakdown": {
-            "monthlyTotal": 159960,
-            "adminFee": 6050,
+            "monthlyTotal": 146760,
+            "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 20000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
@@ -1619,17 +1619,17 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 3530
+          "amount": 2980
         },
         {
           "fromMonth": 2,
           "toMonth": 24,
-          "amount": 3530
+          "amount": 2980
         },
         {
           "fromMonth": 25,
           "toMonth": 36,
-          "amount": 3530
+          "amount": 2980
         },
         {
           "fromMonth": 37,
@@ -1638,7 +1638,7 @@
         }
       ],
       "monthlyNote": "ホームゲートウェイ（Wi-Fiルーター）料金を含む（NUROが必須としているため）",
-      "adminFee": 6050,
+      "adminFee": 3300,
       "constructionFee": {
         "list": 55000,
         "installmentMonths": 36,
@@ -1690,9 +1690,9 @@
       },
       "cashbacks": [
         {
-          "amount": 5000,
+          "amount": 10000,
           "receiveAtMonth": 18,
-          "note": "キャンペーン キャッシュバック 5,000円（18か月目）"
+          "note": "キャンペーン キャッシュバック 10,000円（18か月目）"
         }
       ],
       "requiredOptions": [],
@@ -1701,17 +1701,17 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 3530
+          "amount": 2980
         },
         {
           "fromMonth": 2,
           "toMonth": 24,
-          "amount": 3530
+          "amount": 2980
         },
         {
           "fromMonth": 25,
           "toMonth": 36,
-          "amount": 3530
+          "amount": 2980
         },
         {
           "fromMonth": 37,
@@ -1720,31 +1720,31 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-11-01T00:11:30.154Z",
+      "observedAt": "2026-11-20T08:45:10.157Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 3574,
-          "total": 85770,
+          "effectiveMonthly": 2701,
+          "total": 64820,
           "breakdown": {
-            "monthlyTotal": 84720,
-            "adminFee": 6050,
+            "monthlyTotal": 71520,
+            "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 10000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 3559,
-          "total": 128130,
+          "effectiveMonthly": 2794,
+          "total": 100580,
           "breakdown": {
-            "monthlyTotal": 127080,
-            "adminFee": 6050,
+            "monthlyTotal": 107280,
+            "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 10000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
@@ -1777,17 +1777,17 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 3530
+          "amount": 2980
         },
         {
           "fromMonth": 2,
           "toMonth": 24,
-          "amount": 3530
+          "amount": 2980
         },
         {
           "fromMonth": 25,
           "toMonth": 36,
-          "amount": 3530
+          "amount": 2980
         },
         {
           "fromMonth": 37,
@@ -1796,7 +1796,7 @@
         }
       ],
       "monthlyNote": "ホームゲートウェイ（Wi-Fiルーター）料金を含む（NUROが必須としているため）",
-      "adminFee": 6050,
+      "adminFee": 3300,
       "constructionFee": {
         "list": 55000,
         "installmentMonths": 36,
@@ -1848,9 +1848,9 @@
       },
       "cashbacks": [
         {
-          "amount": 5000,
+          "amount": 20000,
           "receiveAtMonth": 18,
-          "note": "キャンペーン キャッシュバック 5,000円（18か月目）"
+          "note": "キャンペーン キャッシュバック 20,000円（18か月目）"
         }
       ],
       "requiredOptions": [],
@@ -1859,17 +1859,17 @@
         {
           "fromMonth": 1,
           "toMonth": 1,
-          "amount": 3530
+          "amount": 2980
         },
         {
           "fromMonth": 2,
           "toMonth": 24,
-          "amount": 3530
+          "amount": 2980
         },
         {
           "fromMonth": 25,
           "toMonth": 36,
-          "amount": 3530
+          "amount": 2980
         },
         {
           "fromMonth": 37,
@@ -1878,31 +1878,31 @@
         }
       ],
       "verified": true,
-      "observedAt": "2026-11-01T00:11:30.154Z",
+      "observedAt": "2026-11-20T08:45:10.157Z",
       "effective": {
         "24": {
-          "effectiveMonthly": 3574,
-          "total": 85770,
+          "effectiveMonthly": 2284,
+          "total": 54820,
           "breakdown": {
-            "monthlyTotal": 84720,
-            "adminFee": 6050,
+            "monthlyTotal": 71520,
+            "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 20000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },
           "missing": []
         },
         "36": {
-          "effectiveMonthly": 3559,
-          "total": 128130,
+          "effectiveMonthly": 2516,
+          "total": 90580,
           "breakdown": {
-            "monthlyTotal": 127080,
-            "adminFee": 6050,
+            "monthlyTotal": 107280,
+            "adminFee": 3300,
             "constructionBorne": 0,
             "optionTotal": 0,
-            "cashbackCounted": 5000,
+            "cashbackCounted": 20000,
             "otherDiscounts": 0,
             "excludedCashback": []
           },

@@ -3,6 +3,443 @@
   "providerName": "NURO光",
   "events": [
     {
+      "detectedAt": "2026-11-20T08:45:10.157Z",
+      "changes": [
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "戸建て / 2ギガ / 2年割",
+          "planLabel": "戸建て / NURO 光(H) / 2年割",
+          "horizonMonths": 36,
+          "before": 4956,
+          "after": 4374,
+          "effectiveMonthlyDelta": -582,
+          "direction": "down",
+          "cause": [
+            {
+              "field": "monthlyTotal",
+              "label": "月額の合計",
+              "before": 177360,
+              "after": 164160,
+              "delta": -13200
+            },
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 6050,
+              "after": 3300,
+              "delta": -2750
+            },
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 5000,
+              "after": 10000,
+              "delta": 5000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.nuro.jp/hikari/house/price/",
+          "previousObservedAt": "2026-11-01T00:11:30.154Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "戸建て / 10ギガ / 2年割",
+          "planLabel": "戸建て / NURO 光 10ギガ(H) / 2年割",
+          "horizonMonths": 36,
+          "before": 5249,
+          "after": 4389,
+          "effectiveMonthlyDelta": -860,
+          "direction": "down",
+          "cause": [
+            {
+              "field": "monthlyTotal",
+              "label": "月額の合計",
+              "before": 187920,
+              "after": 174720,
+              "delta": -13200
+            },
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 6050,
+              "after": 3300,
+              "delta": -2750
+            },
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 5000,
+              "after": 20000,
+              "delta": 15000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.nuro.jp/hikari/house/price/",
+          "previousObservedAt": "2026-11-01T00:11:30.154Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "戸建て / 2ギガ / U29応援割",
+          "planLabel": "戸建て / NURO 光(H) / U29応援割",
+          "horizonMonths": 36,
+          "before": 4559,
+          "after": 3794,
+          "effectiveMonthlyDelta": -765,
+          "direction": "down",
+          "cause": [
+            {
+              "field": "monthlyTotal",
+              "label": "月額の合計",
+              "before": 163080,
+              "after": 143280,
+              "delta": -19800
+            },
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 6050,
+              "after": 3300,
+              "delta": -2750
+            },
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 5000,
+              "after": 10000,
+              "delta": 5000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.nuro.jp/hikari/house/price/",
+          "previousObservedAt": "2026-11-01T00:11:30.154Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "戸建て / 10ギガ / U29応援割",
+          "planLabel": "戸建て / NURO 光 10ギガ(H) / U29応援割",
+          "horizonMonths": 36,
+          "before": 4559,
+          "after": 3516,
+          "effectiveMonthlyDelta": -1043,
+          "direction": "down",
+          "cause": [
+            {
+              "field": "monthlyTotal",
+              "label": "月額の合計",
+              "before": 163080,
+              "after": 143280,
+              "delta": -19800
+            },
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 6050,
+              "after": 3300,
+              "delta": -2750
+            },
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 5000,
+              "after": 20000,
+              "delta": 15000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.nuro.jp/hikari/house/price/",
+          "previousObservedAt": "2026-11-01T00:11:30.154Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "マンション / NURO 光(H) / 2年割",
+          "planLabel": "マンション / NURO 光(H) / 2年割",
+          "horizonMonths": 36,
+          "before": 4956,
+          "after": 4374,
+          "effectiveMonthlyDelta": -582,
+          "direction": "down",
+          "cause": [
+            {
+              "field": "monthlyTotal",
+              "label": "月額の合計",
+              "before": 177360,
+              "after": 164160,
+              "delta": -13200
+            },
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 6050,
+              "after": 3300,
+              "delta": -2750
+            },
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 5000,
+              "after": 10000,
+              "delta": 5000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.nuro.jp/hikari/mansion/price/",
+          "previousObservedAt": "2026-11-01T00:11:30.154Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "マンション / NURO 光 10ギガ(H) / 2年割",
+          "planLabel": "マンション / NURO 光 10ギガ(H) / 2年割",
+          "horizonMonths": 36,
+          "before": 5249,
+          "after": 4389,
+          "effectiveMonthlyDelta": -860,
+          "direction": "down",
+          "cause": [
+            {
+              "field": "monthlyTotal",
+              "label": "月額の合計",
+              "before": 187920,
+              "after": 174720,
+              "delta": -13200
+            },
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 6050,
+              "after": 3300,
+              "delta": -2750
+            },
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 5000,
+              "after": 20000,
+              "delta": 15000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.nuro.jp/hikari/mansion/price/",
+          "previousObservedAt": "2026-11-01T00:11:30.154Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "マンション / NURO 光(H) / U29応援割",
+          "planLabel": "マンション / NURO 光(H) / U29応援割",
+          "horizonMonths": 36,
+          "before": 4559,
+          "after": 3794,
+          "effectiveMonthlyDelta": -765,
+          "direction": "down",
+          "cause": [
+            {
+              "field": "monthlyTotal",
+              "label": "月額の合計",
+              "before": 163080,
+              "after": 143280,
+              "delta": -19800
+            },
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 6050,
+              "after": 3300,
+              "delta": -2750
+            },
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 5000,
+              "after": 10000,
+              "delta": 5000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.nuro.jp/hikari/mansion/price/",
+          "previousObservedAt": "2026-11-01T00:11:30.154Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "マンション / NURO 光 10ギガ(H) / U29応援割",
+          "planLabel": "マンション / NURO 光 10ギガ(H) / U29応援割",
+          "horizonMonths": 36,
+          "before": 4559,
+          "after": 3516,
+          "effectiveMonthlyDelta": -1043,
+          "direction": "down",
+          "cause": [
+            {
+              "field": "monthlyTotal",
+              "label": "月額の合計",
+              "before": 163080,
+              "after": 143280,
+              "delta": -19800
+            },
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 6050,
+              "after": 3300,
+              "delta": -2750
+            },
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 5000,
+              "after": 20000,
+              "delta": 15000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.nuro.jp/hikari/mansion/price/",
+          "previousObservedAt": "2026-11-01T00:11:30.154Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "マンション / NURO 光(M) / 2年割",
+          "planLabel": "マンション / NURO 光(M) / 2年割",
+          "horizonMonths": 36,
+          "before": 3959,
+          "after": 3377,
+          "effectiveMonthlyDelta": -582,
+          "direction": "down",
+          "cause": [
+            {
+              "field": "monthlyTotal",
+              "label": "月額の合計",
+              "before": 141480,
+              "after": 128280,
+              "delta": -13200
+            },
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 6050,
+              "after": 3300,
+              "delta": -2750
+            },
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 5000,
+              "after": 10000,
+              "delta": 5000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.nuro.jp/hikari/mansion/price/",
+          "previousObservedAt": "2026-11-01T00:11:30.154Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "マンション / NURO 光 10ギガ(M) / 2年割",
+          "planLabel": "マンション / NURO 光 10ギガ(M) / 2年割",
+          "horizonMonths": 36,
+          "before": 4473,
+          "after": 3613,
+          "effectiveMonthlyDelta": -860,
+          "direction": "down",
+          "cause": [
+            {
+              "field": "monthlyTotal",
+              "label": "月額の合計",
+              "before": 159960,
+              "after": 146760,
+              "delta": -13200
+            },
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 6050,
+              "after": 3300,
+              "delta": -2750
+            },
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 5000,
+              "after": 20000,
+              "delta": 15000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.nuro.jp/hikari/mansion/price/",
+          "previousObservedAt": "2026-11-01T00:11:30.154Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "マンション / NURO 光(M) / U29応援割",
+          "planLabel": "マンション / NURO 光(M) / U29応援割",
+          "horizonMonths": 36,
+          "before": 3559,
+          "after": 2794,
+          "effectiveMonthlyDelta": -765,
+          "direction": "down",
+          "cause": [
+            {
+              "field": "monthlyTotal",
+              "label": "月額の合計",
+              "before": 127080,
+              "after": 107280,
+              "delta": -19800
+            },
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 6050,
+              "after": 3300,
+              "delta": -2750
+            },
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 5000,
+              "after": 10000,
+              "delta": 5000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.nuro.jp/hikari/mansion/price/",
+          "previousObservedAt": "2026-11-01T00:11:30.154Z"
+        },
+        {
+          "type": "effective-monthly-changed",
+          "planKey": "マンション / NURO 光 10ギガ(M) / U29応援割",
+          "planLabel": "マンション / NURO 光 10ギガ(M) / U29応援割",
+          "horizonMonths": 36,
+          "before": 3559,
+          "after": 2516,
+          "effectiveMonthlyDelta": -1043,
+          "direction": "down",
+          "cause": [
+            {
+              "field": "monthlyTotal",
+              "label": "月額の合計",
+              "before": 127080,
+              "after": 107280,
+              "delta": -19800
+            },
+            {
+              "field": "adminFee",
+              "label": "事務手数料",
+              "before": 6050,
+              "after": 3300,
+              "delta": -2750
+            },
+            {
+              "field": "cashbackCounted",
+              "label": "キャッシュバック",
+              "before": 5000,
+              "after": 20000,
+              "delta": 15000
+            }
+          ],
+          "needsReview": false,
+          "sourceUrl": "https://www.nuro.jp/hikari/mansion/price/",
+          "previousObservedAt": "2026-11-01T00:11:30.154Z"
+        }
+      ]
+    },
+    {
       "detectedAt": "2026-10-25T23:19:42.848Z",
       "changes": [
         {
@@ -1766,6 +2203,6 @@
       ]
     }
   ],
-  "lastEventAt": "2026-10-25T23:19:42.848Z",
-  "totalEvents": 7
+  "lastEventAt": "2026-11-20T08:45:10.157Z",
+  "totalEvents": 8
 }
