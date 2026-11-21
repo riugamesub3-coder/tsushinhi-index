@@ -102,7 +102,7 @@ if (!shown.length) problems.push('トップページから表示値を1件も読
   const SUPER = /最安|いちばん安い|一番安い|最も安い|No\.?\s?1|ナンバーワン|業界最/;
   const visible = (h) => h.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<style[\s\S]*?<\/style>/g, '')
     .replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
-  for (const rel of ['index.html', 'changes/index.html']) {
+  for (const rel of ['index.html', 'changes/index.html', 'mobile/index.html']) {
     const text = visible(rel === 'index.html' ? html : await fetchText(rel));
     const m = SUPER.exec(text);
     if (m) problems.push(`${rel} に最上級表現「${m[0]}」がある: …${text.slice(Math.max(0, m.index - 30), m.index + 30)}…`);
@@ -126,6 +126,66 @@ for (const s of shown) {
   }
   if (!t.publishable) {
     problems.push(`掲載してはいけない観測が画面に出ている: ${s.provider} / ${s.planKey}`);
+  }
+}
+
+// ── スマホ料金ページ（/mobile/）: data/mobile/ と一致するか ──────────
+// ★光回線とは別の data（data/mobile/effective/）が正解。光回線の値が混ざっていないかも見る。
+{
+  const mTruth = new Map(); // "providerId\0planKey" -> { yen, publishable }
+  let dir = [];
+  try { dir = (await readdir(join(ROOT, 'data', 'mobile', 'effective'))).filter((f) => f.endsWith('.json')); } catch { dir = []; }
+  for (const f of dir) {
+    const snap = JSON.parse(await readFile(join(ROOT, 'data', 'mobile', 'effective', f), 'utf8'));
+    for (const o of snap.offers) {
+      mTruth.set(`${snap.providerId}\u0000${o.planKey}`, {
+        yen: o.effective?.[HORIZON]?.effectiveMonthly ?? null,
+        publishable: o.publishable === true && o.effective?.[HORIZON]?.effectiveMonthly != null,
+        feeSourceUrl: o.feeSourceUrl && o.feeSourceUrl !== o.sourceUrl ? o.feeSourceUrl : null,
+        voice: o.plan?.voice ?? null,
+      });
+    }
+  }
+  const unesc = (s) => s.replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+  const num = (s) => Number(s.replace(/<[^>]+>/g, '').replace(/[^\d]/g, ''));
+  try {
+    const mh = await fetchText('mobile/index.html');
+    const items = [];
+    // 全プランの表
+    for (const r of mh.matchAll(/<tr class="m-row" data-pid="([^"]+)" data-key="([^"]+)">([\s\S]*?)<\/tr>/g)) {
+      const v = /<td class="num m-v">([\s\S]*?)<\/td>/.exec(r[3]);
+      items.push({ where: '全プラン', pid: r[1], key: unesc(r[2]), yen: v ? num(v[1]) : NaN, src: /<td class="src">[\s\S]*?<time datetime="/.test(r[3]), body: r[3] });
+    }
+    // ★全プランの表1枚に、音声つきとデータのみを混ぜない（条件の違うものを1つの並びにしない）
+    for (const t of mh.split('<table class="mtable mall">').slice(1)) {
+      const kinds = new Set([...t.split('</table>')[0].matchAll(/<tr class="m-row" data-pid="([^"]+)" data-key="([^"]+)">/g)]
+        .map((r) => mTruth.get(`${r[1]}\u0000${unesc(r[2])}`)?.voice));
+      if (kinds.size > 1) problems.push('スマホ料金ページの全プラン表1枚に、音声つきとデータのみが混ざっている');
+    }
+    // 使う量ごとの表のマス
+    for (const c of mh.matchAll(/<td class="m-cell" data-pid="([^"]+)" data-key="([^"]+)" data-v="(\d+)">([\s\S]*?)<\/td>/g)) {
+      const shownYen = /<b class="m-eff">([\s\S]*?)<\/b>/.exec(c[4]);
+      items.push({ where: '量ごと', pid: c[1], key: unesc(c[2]), yen: shownYen ? num(shownYen[1]) : NaN, attr: Number(c[3]), src: /class="src"[\s\S]*?<time datetime="/.test(c[4]), body: c[4] });
+    }
+    if (dir.length && !items.length) problems.push('スマホ料金ページから表示値を1件も読み取れなかった（HTMLの構造が変わった疑い）');
+    let bad = 0;
+    for (const s of items) {
+      const t = mTruth.get(`${s.pid}\u0000${s.key}`);
+      if (!t) { problems.push(`スマホ料金ページ（${s.where}）にあるが data/mobile/ に無い: ${s.pid} / ${s.key}`); bad++; continue; }
+      if (t.yen !== s.yen || (s.attr != null && s.attr !== s.yen)) { problems.push(`スマホ料金ページ（${s.where}）の値が不一致: ${s.pid} / ${s.key} — 画面 ${s.yen} ≠ data ${t.yen}`); bad++; }
+      if (!t.publishable) { problems.push(`掲載してはいけないスマホの観測が出ている: ${s.pid} / ${s.key}`); bad++; }
+      if (!s.src) { problems.push(`スマホ料金ページ（${s.where}）に出典か取得日時が無い: ${s.pid} / ${s.key}`); bad++; }
+      // 初期費用を別ページから読んでいる観測は、そのページも出典に要る（実質月額は初期費用を含む）
+      if (t.feeSourceUrl && !s.body.includes(`href="${t.feeSourceUrl}"`)) { problems.push(`スマホ料金ページ（${s.where}）に初期費用の出典が無い: ${s.pid} / ${s.key}`); bad++; }
+    }
+    // 光回線の行が混ざっていないか（data/effective/ の事業者名で見る）
+    for (const k of truth.keys()) {
+      const provider = k.split('\u0000')[0];
+      if (mh.includes(`<td class="m-prov">${provider}</td>`)) { problems.push(`スマホ料金ページに光回線の ${provider} が入っている`); break; }
+    }
+    if (!bad) notes.push(`スマホ料金ページ ${items.length}か所の値は data/mobile/ と一致・全部に出典と取得日時`);
+  } catch (err) {
+    if (dir.length) problems.push(`スマホ料金ページを検証できない: ${err.message}`);
   }
 }
 

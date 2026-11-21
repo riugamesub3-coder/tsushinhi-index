@@ -21,6 +21,7 @@ import { planSlugsFor, reconstructSeries } from './lib/series.mjs';
 import { stepChart, sparkline, CHART_CSS } from './lib/chart.mjs';
 import { staleInfo } from './lib/stale.mjs';
 import { searchConsoleToken } from './lib/owner.mjs';
+import { loadMobile, renderMobile, mobileLlms } from './mobile.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -95,10 +96,15 @@ async function main() {
   }
   console.log(`  事業者ページ ${providerIds(data).length}件 / プランページ ${data.publishable.length}件`);
 
+  // スマホ料金（data/mobile/）。光回線の data とは混ぜない（collect/effective.mjs の dirsFor を参照）
+  const mobile = await loadMobile(ROOT, data.failures, STALE_DAYS);
+  await page('mobile/index.html', renderMobile(mobile, { siteName: SITE_NAME, siteUrl: SITE_URL, breadcrumb }), disclosure, siteHead);
+  console.log(`  スマホ料金ページ: ${new Set(mobile.live.map((o) => o.providerId)).size}社 / ${mobile.live.length}プラン（記録停止 ${mobile.paused.length}・掲載保留 ${mobile.offers.length - mobile.publishable.length}）`);
+
   await out('style.css', STYLE);
   await out('app.js', APP_JS);
   await out('favicon.svg', FAVICON);
-  await out('llms.txt', renderLlmsTxt(data));
+  await out('llms.txt', renderLlmsTxt(data) + mobileLlms(mobile));
   await out('sitemap.xml', renderSitemap(data));
   await out('feed.xml', renderFeed(data));
   await out('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`);
@@ -2004,7 +2010,7 @@ ${top}
 
 function renderSitemap(data) {
   const urls = [
-    '/', '/changes/', '/method/', '/data/', '/about/', '/privacy/', '/contact/',
+    '/', '/mobile/', '/changes/', '/method/', '/data/', '/about/', '/privacy/', '/contact/',
     ...providerIds(data).map((id) => `/p/${id}/`),
     ...data.publishable.map((o) => o.path),
     ...eventsByDay(data).map(([day]) => `/changes/${day}/`),
@@ -2308,6 +2314,16 @@ tbody th{text-align:left;font-weight:650;padding:.9rem .8rem;border-bottom:1px s
 .src{font-size:.72rem;color:var(--ink-3);line-height:1.6}
 .src a{color:var(--ink-2)}
 .src time{display:block}
+/* スマホ料金（/mobile/） */
+.mtable{min-width:560px}
+.mtable.mall{min-width:860px}
+.mtable th[scope=row]{white-space:nowrap;font-weight:800;color:var(--ink);background:var(--card)}
+.m-cap{caption-side:top;text-align:left;font-size:.78rem;color:var(--ink-3);padding:.6rem .8rem 0}
+.m-cell .m-eff{font-size:1.15rem;font-variant-numeric:tabular-nums;color:var(--ink)}
+.m-cell .m-per{font-size:.75rem;color:var(--ink-3);margin-left:.1rem}
+.m-cell .m-plan{display:block;font-size:.8rem;color:var(--ink-2);margin-top:.2rem}
+.m-cell .src{display:block;margin-top:.3rem}
+.m-none{font-size:.78rem;color:var(--ink-3)}
 tr.total th,tr.total td{border-top:1px solid var(--rule-2);background:var(--paper)}
 
 .ranking{min-width:900px}
