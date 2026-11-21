@@ -260,6 +260,23 @@
           "type": "pricing"
         }
       ]
+    },
+    {
+      "id": "mineo",
+      "name": "mineo",
+      "category": "mobile",
+      "status": "verified",
+      "note": "2026-11-21 追加（スマホ料金の2社目・固定容量型）。robots.txt は * に Disallow なし。サイトのご利用にあたって（/site/terms/）は無断の複製・転載・二次利用を禁止、自動アクセス・営利目的の禁止語なし → 条件付き可（ルール2厳守）。/price/ の表（マイピタ デュアル・シングル各5コース、初期費用）を読み、/price/mypita/ のコース紹介で突き合わせる。マイそく（速度型）は容量の軸に乗らないため未収集。A8 に広告なし",
+      "pages": [
+        {
+          "url": "https://mineo.jp/price/",
+          "type": "pricing"
+        },
+        {
+          "url": "https://mineo.jp/price/mypita/",
+          "type": "pricing"
+        }
+      ]
     }
   ]
 }

@@ -78,7 +78,7 @@ export function extractAll(pages) {
       feeSourceUrl: fee.url,
       planKey: t.planKey,
       planLabel: t.planLabel,
-      plan: { plan: t.plan, dataFromGb: t.dataFromGb, dataToGb: t.dataToGb },
+      plan: { plan: t.plan, voice: true, dataFromGb: t.dataFromGb, dataToGb: t.dataToGb },
       contractMonths: null,
       contractNote: earlyExit,
       monthlySchedule: [{ fromMonth: 1, toMonth: null, amount: t.taxIncluded }],

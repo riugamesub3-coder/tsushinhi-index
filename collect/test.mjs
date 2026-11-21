@@ -952,3 +952,77 @@ test('楽天モバイル: 手数料ページが targets に無ければ何も出
   const { offers } = rmExtractAll([{ url: RM_PLAN_URL, html: rmPlan() }]);
   assert.equal(offers.length, 0);
 });
+
+// ── mineo（スマホ料金・固定容量・2026-11-21 追加） ─────────────────────────
+import { extractAll as mnExtractAll } from './adapters/mineo.mjs';
+
+const MN_PRICE = 'https://mineo.jp/price/';
+const MN_PITA = 'https://mineo.jp/price/mypita/';
+const mnCourse = (rows) => `<table><tr><th>コース ※1</th><th>月額基本料金</th><th>無料の パケット放題サービス ※2</th></tr>${rows.map(([g, y]) => `<tr><td>${g}GB</td><td>${y}円</td><td>-</td></tr>`).join('')}</table>`;
+const MN_DUAL = [[3, '1,298'], [7, '1,518']];
+const MN_SINGLE = [[3, '880'], [7, '1,265']];
+const mnFees = ({ admin = '3,850 円', sim = '440 円', esim = '無料' } = {}) =>
+  `<h3>初期費用</h3><table><tr><th></th><th>A Aプラン</th><th>D Dプラン</th></tr>` +
+  (admin == null ? '' : `<tr><td>契約事務手数料</td><td>${admin}</td><td>${admin}</td></tr>`) +
+  `<tr><td>（SIMカードをご利用する場合） SIMカード 発行料</td><td>${sim}</td><td>${sim}</td></tr>` +
+  `<tr><td>（eSIMをご利用する場合） eSIMプロファイル発行料</td><td>${esim}</td><td>${esim}</td></tr></table>` +
+  `<table><tr><th></th><th>A Aプラン</th></tr><tr><td>解約手数料</td><td>無料</td></tr></table>`;
+const mnPrice = ({ dual = MN_DUAL, single = MN_SINGLE, swap = false, fees = mnFees() } = {}) => {
+  const d = `<h4>デュアルタイプ（音声通話＋データ通信）</h4>${mnCourse(dual)}`;
+  const s = `<h4>シングルタイプ（データ通信のみ）</h4>${mnCourse(single)}`;
+  return `<html><body>${swap ? s + d : d + s}${fees}</body></html>`;
+};
+const mnPita = (rows = [[3, '1,298', '880'], [7, '1,518', '1,265']]) =>
+  rows.map(([g, d, s]) => `<div>${g}GB</div><p>音声通話＋データ通信 （デュアルタイプ）</p><p>${d} 円/月</p><p>データ通信のみ （シングルタイプ）</p><p>${s} 円/月</p>`).join('');
+const mnRun = (price = mnPrice(), pita = mnPita()) => mnExtractAll([{ url: MN_PRICE, html: price }, { url: MN_PITA, html: pita }]);
+const mnFind = (out, key) => out.offers.find((o) => o.planKey === key);
+
+test('mineo: 種別×コース×SIMの形で観測を作り、初期費用は事務手数料＋発行料（eSIMの「無料」は0円）', () => {
+  const out = mnRun();
+  assert.deepEqual(out.warnings, []);
+  assert.equal(out.offers.length, 8);
+  const card = mnFind(out, 'マイピタ / デュアル / 3GB / SIMカード');
+  const esim = mnFind(out, 'マイピタ / デュアル / 3GB / eSIM');
+  assert.deepEqual([card.monthlySchedule[0].amount, card.adminFee, card.verified], [1298, 4290, true]);
+  assert.deepEqual([esim.adminFee, esim.plan.voice, esim.plan.dataToGb], [3850, true, 3]);
+  assert.equal(computeEffectiveMonthly(esim, 36).effectiveMonthly, Math.round((1298 * 36 + 3850) / 36));
+  assert.equal(mnFind(out, 'マイピタ / シングル / 3GB / eSIM').plan.voice, false);
+});
+
+test('mineo: デュアル／シングルは表の順番ではなく直前の見出しで決める', () => {
+  const out = mnRun(mnPrice({ swap: true }));
+  assert.equal(mnFind(out, 'マイピタ / デュアル / 7GB / eSIM').monthlySchedule[0].amount, 1518);
+  assert.equal(mnFind(out, 'マイピタ / シングル / 7GB / eSIM').monthlySchedule[0].amount, 1265);
+});
+
+test('mineo: /price/mypita/ と月額が食い違えば、そのコースだけ検算失敗', () => {
+  const out = mnRun(mnPrice(), mnPita([[3, '1,298', '880'], [7, '1,628', '1,265']]));
+  assert.equal(mnFind(out, 'マイピタ / デュアル / 7GB / eSIM').verified, false);
+  assert.equal(mnFind(out, 'マイピタ / デュアル / 3GB / eSIM').verified, true);
+});
+
+test('mineo: /price/mypita/ にコースが見当たらなければ検算失敗（黙って通さない）', () => {
+  const out = mnRun(mnPrice(), mnPita([[3, '1,298', '880']]));
+  assert.equal(mnFind(out, 'マイピタ / シングル / 7GB / SIMカード').verified, false);
+});
+
+test('mineo: 月額表が1枚しか見つからなければ1件も出さない', () => {
+  const price = `<html><body><h4>デュアルタイプ</h4>${mnCourse(MN_DUAL)}${mnFees()}</body></html>`;
+  const out = mnRun(price);
+  assert.equal(out.offers.length, 0);
+  assert.equal(out.warnings.length, 1);
+});
+
+test('mineo: 契約事務手数料が読めなければ adminFee=null で実質月額も null', () => {
+  const out = mnRun(mnPrice({ fees: mnFees({ admin: null }) }));
+  const o = mnFind(out, 'マイピタ / デュアル / 3GB / eSIM');
+  assert.equal(o.adminFee, null);
+  assert.equal(o.verified, false);
+  assert.equal(computeEffectiveMonthly(o, 36).effectiveMonthly, null);
+});
+
+test('mineo: eSIM発行料が「未提供」など金額でなければ、eSIMの行だけ止める', () => {
+  const out = mnRun(mnPrice({ fees: mnFees({ esim: 'eSIM未提供' }) }));
+  assert.equal(mnFind(out, 'マイピタ / デュアル / 3GB / eSIM').adminFee, null);
+  assert.equal(mnFind(out, 'マイピタ / デュアル / 3GB / SIMカード').adminFee, 4290);
+});
