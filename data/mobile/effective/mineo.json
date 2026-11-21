@@ -1,0 +1,1556 @@
+{
+  "providerId": "mineo",
+  "providerName": "mineo",
+  "channelId": "official",
+  "category": "mobile",
+  "observedAt": "2026-11-21T00:07:27.237Z",
+  "formula": "実質月額 = ( 月額の合計 + 工事費の実負担額 + 事務手数料 + 必須オプション費用×加入必要月数 - キャッシュバック額 - その他割引の総額 ) ÷ 契約月数",
+  "primaryHorizonMonths": 36,
+  "sourceUrls": [
+    "https://mineo.jp/price/",
+    "https://mineo.jp/price/mypita/"
+  ],
+  "pageNotices": [],
+  "offers": [
+    {
+      "providerId": "mineo",
+      "providerName": "mineo",
+      "channelId": "official",
+      "category": "mobile",
+      "sourceUrl": "https://mineo.jp/price/",
+      "crossCheckUrl": "https://mineo.jp/price/mypita/",
+      "planKey": "マイピタ / デュアル / 3GB / SIMカード",
+      "planLabel": "マイピタ 3GB（音声通話＋データ通信・SIMカード）",
+      "plan": {
+        "plan": "マイピタ",
+        "voice": true,
+        "simForm": "SIMカード",
+        "dataFromGb": 0,
+        "dataToGb": 3
+      },
+      "contractMonths": null,
+      "contractNote": "解約手数料は無料と料金ページの表に記載",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 1298
+        }
+      ],
+      "adminFee": 4290,
+      "adminFeeBreakdown": {
+        "contract": 3850,
+        "simIssue": 440
+      },
+      "constructionFee": {
+        "list": 0,
+        "installmentMonths": null,
+        "borne": 0,
+        "residualOnEarlyExit": false,
+        "note": "工事なし（SIM）"
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": null,
+      "campaignNote": "家族割引・複数回線割引・親思い割引・おかえり割引・キャンペーンは条件付きのため実質月額に算入しない",
+      "setBenefits": [],
+      "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
+      "verified": true,
+      "observedAt": "2026-11-21T00:07:27.237Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 1477,
+          "total": 35442,
+          "breakdown": {
+            "monthlyTotal": 31152,
+            "adminFee": 4290,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 1417,
+          "total": 51018,
+          "breakdown": {
+            "monthlyTotal": 46728,
+            "adminFee": 4290,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "mineo",
+      "providerName": "mineo",
+      "channelId": "official",
+      "category": "mobile",
+      "sourceUrl": "https://mineo.jp/price/",
+      "crossCheckUrl": "https://mineo.jp/price/mypita/",
+      "planKey": "マイピタ / デュアル / 3GB / eSIM",
+      "planLabel": "マイピタ 3GB（音声通話＋データ通信・eSIM）",
+      "plan": {
+        "plan": "マイピタ",
+        "voice": true,
+        "simForm": "eSIM",
+        "dataFromGb": 0,
+        "dataToGb": 3
+      },
+      "contractMonths": null,
+      "contractNote": "解約手数料は無料と料金ページの表に記載",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 1298
+        }
+      ],
+      "adminFee": 3850,
+      "adminFeeBreakdown": {
+        "contract": 3850,
+        "simIssue": 0
+      },
+      "constructionFee": {
+        "list": 0,
+        "installmentMonths": null,
+        "borne": 0,
+        "residualOnEarlyExit": false,
+        "note": "工事なし（SIM）"
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": null,
+      "campaignNote": "家族割引・複数回線割引・親思い割引・おかえり割引・キャンペーンは条件付きのため実質月額に算入しない",
+      "setBenefits": [],
+      "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
+      "verified": true,
+      "observedAt": "2026-11-21T00:07:27.237Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 1458,
+          "total": 35002,
+          "breakdown": {
+            "monthlyTotal": 31152,
+            "adminFee": 3850,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 1405,
+          "total": 50578,
+          "breakdown": {
+            "monthlyTotal": 46728,
+            "adminFee": 3850,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "mineo",
+      "providerName": "mineo",
+      "channelId": "official",
+      "category": "mobile",
+      "sourceUrl": "https://mineo.jp/price/",
+      "crossCheckUrl": "https://mineo.jp/price/mypita/",
+      "planKey": "マイピタ / デュアル / 7GB / SIMカード",
+      "planLabel": "マイピタ 7GB（音声通話＋データ通信・SIMカード）",
+      "plan": {
+        "plan": "マイピタ",
+        "voice": true,
+        "simForm": "SIMカード",
+        "dataFromGb": 0,
+        "dataToGb": 7
+      },
+      "contractMonths": null,
+      "contractNote": "解約手数料は無料と料金ページの表に記載",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 1518
+        }
+      ],
+      "adminFee": 4290,
+      "adminFeeBreakdown": {
+        "contract": 3850,
+        "simIssue": 440
+      },
+      "constructionFee": {
+        "list": 0,
+        "installmentMonths": null,
+        "borne": 0,
+        "residualOnEarlyExit": false,
+        "note": "工事なし（SIM）"
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": null,
+      "campaignNote": "家族割引・複数回線割引・親思い割引・おかえり割引・キャンペーンは条件付きのため実質月額に算入しない",
+      "setBenefits": [],
+      "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
+      "verified": true,
+      "observedAt": "2026-11-21T00:07:27.237Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 1697,
+          "total": 40722,
+          "breakdown": {
+            "monthlyTotal": 36432,
+            "adminFee": 4290,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 1637,
+          "total": 58938,
+          "breakdown": {
+            "monthlyTotal": 54648,
+            "adminFee": 4290,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "mineo",
+      "providerName": "mineo",
+      "channelId": "official",
+      "category": "mobile",
+      "sourceUrl": "https://mineo.jp/price/",
+      "crossCheckUrl": "https://mineo.jp/price/mypita/",
+      "planKey": "マイピタ / デュアル / 7GB / eSIM",
+      "planLabel": "マイピタ 7GB（音声通話＋データ通信・eSIM）",
+      "plan": {
+        "plan": "マイピタ",
+        "voice": true,
+        "simForm": "eSIM",
+        "dataFromGb": 0,
+        "dataToGb": 7
+      },
+      "contractMonths": null,
+      "contractNote": "解約手数料は無料と料金ページの表に記載",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 1518
+        }
+      ],
+      "adminFee": 3850,
+      "adminFeeBreakdown": {
+        "contract": 3850,
+        "simIssue": 0
+      },
+      "constructionFee": {
+        "list": 0,
+        "installmentMonths": null,
+        "borne": 0,
+        "residualOnEarlyExit": false,
+        "note": "工事なし（SIM）"
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": null,
+      "campaignNote": "家族割引・複数回線割引・親思い割引・おかえり割引・キャンペーンは条件付きのため実質月額に算入しない",
+      "setBenefits": [],
+      "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
+      "verified": true,
+      "observedAt": "2026-11-21T00:07:27.237Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 1678,
+          "total": 40282,
+          "breakdown": {
+            "monthlyTotal": 36432,
+            "adminFee": 3850,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 1625,
+          "total": 58498,
+          "breakdown": {
+            "monthlyTotal": 54648,
+            "adminFee": 3850,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "mineo",
+      "providerName": "mineo",
+      "channelId": "official",
+      "category": "mobile",
+      "sourceUrl": "https://mineo.jp/price/",
+      "crossCheckUrl": "https://mineo.jp/price/mypita/",
+      "planKey": "マイピタ / デュアル / 15GB / SIMカード",
+      "planLabel": "マイピタ 15GB（音声通話＋データ通信・SIMカード）",
+      "plan": {
+        "plan": "マイピタ",
+        "voice": true,
+        "simForm": "SIMカード",
+        "dataFromGb": 0,
+        "dataToGb": 15
+      },
+      "contractMonths": null,
+      "contractNote": "解約手数料は無料と料金ページの表に記載",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 1958
+        }
+      ],
+      "adminFee": 4290,
+      "adminFeeBreakdown": {
+        "contract": 3850,
+        "simIssue": 440
+      },
+      "constructionFee": {
+        "list": 0,
+        "installmentMonths": null,
+        "borne": 0,
+        "residualOnEarlyExit": false,
+        "note": "工事なし（SIM）"
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": null,
+      "campaignNote": "家族割引・複数回線割引・親思い割引・おかえり割引・キャンペーンは条件付きのため実質月額に算入しない",
+      "setBenefits": [],
+      "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
+      "verified": true,
+      "observedAt": "2026-11-21T00:07:27.237Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 2137,
+          "total": 51282,
+          "breakdown": {
+            "monthlyTotal": 46992,
+            "adminFee": 4290,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 2077,
+          "total": 74778,
+          "breakdown": {
+            "monthlyTotal": 70488,
+            "adminFee": 4290,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "mineo",
+      "providerName": "mineo",
+      "channelId": "official",
+      "category": "mobile",
+      "sourceUrl": "https://mineo.jp/price/",
+      "crossCheckUrl": "https://mineo.jp/price/mypita/",
+      "planKey": "マイピタ / デュアル / 15GB / eSIM",
+      "planLabel": "マイピタ 15GB（音声通話＋データ通信・eSIM）",
+      "plan": {
+        "plan": "マイピタ",
+        "voice": true,
+        "simForm": "eSIM",
+        "dataFromGb": 0,
+        "dataToGb": 15
+      },
+      "contractMonths": null,
+      "contractNote": "解約手数料は無料と料金ページの表に記載",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 1958
+        }
+      ],
+      "adminFee": 3850,
+      "adminFeeBreakdown": {
+        "contract": 3850,
+        "simIssue": 0
+      },
+      "constructionFee": {
+        "list": 0,
+        "installmentMonths": null,
+        "borne": 0,
+        "residualOnEarlyExit": false,
+        "note": "工事なし（SIM）"
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": null,
+      "campaignNote": "家族割引・複数回線割引・親思い割引・おかえり割引・キャンペーンは条件付きのため実質月額に算入しない",
+      "setBenefits": [],
+      "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
+      "verified": true,
+      "observedAt": "2026-11-21T00:07:27.237Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 2118,
+          "total": 50842,
+          "breakdown": {
+            "monthlyTotal": 46992,
+            "adminFee": 3850,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 2065,
+          "total": 74338,
+          "breakdown": {
+            "monthlyTotal": 70488,
+            "adminFee": 3850,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "mineo",
+      "providerName": "mineo",
+      "channelId": "official",
+      "category": "mobile",
+      "sourceUrl": "https://mineo.jp/price/",
+      "crossCheckUrl": "https://mineo.jp/price/mypita/",
+      "planKey": "マイピタ / デュアル / 30GB / SIMカード",
+      "planLabel": "マイピタ 30GB（音声通話＋データ通信・SIMカード）",
+      "plan": {
+        "plan": "マイピタ",
+        "voice": true,
+        "simForm": "SIMカード",
+        "dataFromGb": 0,
+        "dataToGb": 30
+      },
+      "contractMonths": null,
+      "contractNote": "解約手数料は無料と料金ページの表に記載",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 2178
+        }
+      ],
+      "adminFee": 4290,
+      "adminFeeBreakdown": {
+        "contract": 3850,
+        "simIssue": 440
+      },
+      "constructionFee": {
+        "list": 0,
+        "installmentMonths": null,
+        "borne": 0,
+        "residualOnEarlyExit": false,
+        "note": "工事なし（SIM）"
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": null,
+      "campaignNote": "家族割引・複数回線割引・親思い割引・おかえり割引・キャンペーンは条件付きのため実質月額に算入しない",
+      "setBenefits": [],
+      "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
+      "verified": true,
+      "observedAt": "2026-11-21T00:07:27.237Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 2357,
+          "total": 56562,
+          "breakdown": {
+            "monthlyTotal": 52272,
+            "adminFee": 4290,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 2297,
+          "total": 82698,
+          "breakdown": {
+            "monthlyTotal": 78408,
+            "adminFee": 4290,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "mineo",
+      "providerName": "mineo",
+      "channelId": "official",
+      "category": "mobile",
+      "sourceUrl": "https://mineo.jp/price/",
+      "crossCheckUrl": "https://mineo.jp/price/mypita/",
+      "planKey": "マイピタ / デュアル / 30GB / eSIM",
+      "planLabel": "マイピタ 30GB（音声通話＋データ通信・eSIM）",
+      "plan": {
+        "plan": "マイピタ",
+        "voice": true,
+        "simForm": "eSIM",
+        "dataFromGb": 0,
+        "dataToGb": 30
+      },
+      "contractMonths": null,
+      "contractNote": "解約手数料は無料と料金ページの表に記載",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 2178
+        }
+      ],
+      "adminFee": 3850,
+      "adminFeeBreakdown": {
+        "contract": 3850,
+        "simIssue": 0
+      },
+      "constructionFee": {
+        "list": 0,
+        "installmentMonths": null,
+        "borne": 0,
+        "residualOnEarlyExit": false,
+        "note": "工事なし（SIM）"
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": null,
+      "campaignNote": "家族割引・複数回線割引・親思い割引・おかえり割引・キャンペーンは条件付きのため実質月額に算入しない",
+      "setBenefits": [],
+      "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
+      "verified": true,
+      "observedAt": "2026-11-21T00:07:27.237Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 2338,
+          "total": 56122,
+          "breakdown": {
+            "monthlyTotal": 52272,
+            "adminFee": 3850,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 2285,
+          "total": 82258,
+          "breakdown": {
+            "monthlyTotal": 78408,
+            "adminFee": 3850,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "mineo",
+      "providerName": "mineo",
+      "channelId": "official",
+      "category": "mobile",
+      "sourceUrl": "https://mineo.jp/price/",
+      "crossCheckUrl": "https://mineo.jp/price/mypita/",
+      "planKey": "マイピタ / デュアル / 50GB / SIMカード",
+      "planLabel": "マイピタ 50GB（音声通話＋データ通信・SIMカード）",
+      "plan": {
+        "plan": "マイピタ",
+        "voice": true,
+        "simForm": "SIMカード",
+        "dataFromGb": 0,
+        "dataToGb": 50
+      },
+      "contractMonths": null,
+      "contractNote": "解約手数料は無料と料金ページの表に記載",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 2948
+        }
+      ],
+      "adminFee": 4290,
+      "adminFeeBreakdown": {
+        "contract": 3850,
+        "simIssue": 440
+      },
+      "constructionFee": {
+        "list": 0,
+        "installmentMonths": null,
+        "borne": 0,
+        "residualOnEarlyExit": false,
+        "note": "工事なし（SIM）"
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": null,
+      "campaignNote": "家族割引・複数回線割引・親思い割引・おかえり割引・キャンペーンは条件付きのため実質月額に算入しない",
+      "setBenefits": [],
+      "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
+      "verified": true,
+      "observedAt": "2026-11-21T00:07:27.237Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 3127,
+          "total": 75042,
+          "breakdown": {
+            "monthlyTotal": 70752,
+            "adminFee": 4290,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 3067,
+          "total": 110418,
+          "breakdown": {
+            "monthlyTotal": 106128,
+            "adminFee": 4290,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "mineo",
+      "providerName": "mineo",
+      "channelId": "official",
+      "category": "mobile",
+      "sourceUrl": "https://mineo.jp/price/",
+      "crossCheckUrl": "https://mineo.jp/price/mypita/",
+      "planKey": "マイピタ / デュアル / 50GB / eSIM",
+      "planLabel": "マイピタ 50GB（音声通話＋データ通信・eSIM）",
+      "plan": {
+        "plan": "マイピタ",
+        "voice": true,
+        "simForm": "eSIM",
+        "dataFromGb": 0,
+        "dataToGb": 50
+      },
+      "contractMonths": null,
+      "contractNote": "解約手数料は無料と料金ページの表に記載",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 2948
+        }
+      ],
+      "adminFee": 3850,
+      "adminFeeBreakdown": {
+        "contract": 3850,
+        "simIssue": 0
+      },
+      "constructionFee": {
+        "list": 0,
+        "installmentMonths": null,
+        "borne": 0,
+        "residualOnEarlyExit": false,
+        "note": "工事なし（SIM）"
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": null,
+      "campaignNote": "家族割引・複数回線割引・親思い割引・おかえり割引・キャンペーンは条件付きのため実質月額に算入しない",
+      "setBenefits": [],
+      "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
+      "verified": true,
+      "observedAt": "2026-11-21T00:07:27.237Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 3108,
+          "total": 74602,
+          "breakdown": {
+            "monthlyTotal": 70752,
+            "adminFee": 3850,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 3055,
+          "total": 109978,
+          "breakdown": {
+            "monthlyTotal": 106128,
+            "adminFee": 3850,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "mineo",
+      "providerName": "mineo",
+      "channelId": "official",
+      "category": "mobile",
+      "sourceUrl": "https://mineo.jp/price/",
+      "crossCheckUrl": "https://mineo.jp/price/mypita/",
+      "planKey": "マイピタ / シングル / 3GB / SIMカード",
+      "planLabel": "マイピタ 3GB（データ通信のみ・SIMカード）",
+      "plan": {
+        "plan": "マイピタ",
+        "voice": false,
+        "simForm": "SIMカード",
+        "dataFromGb": 0,
+        "dataToGb": 3
+      },
+      "contractMonths": null,
+      "contractNote": "解約手数料は無料と料金ページの表に記載",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 880
+        }
+      ],
+      "adminFee": 4290,
+      "adminFeeBreakdown": {
+        "contract": 3850,
+        "simIssue": 440
+      },
+      "constructionFee": {
+        "list": 0,
+        "installmentMonths": null,
+        "borne": 0,
+        "residualOnEarlyExit": false,
+        "note": "工事なし（SIM）"
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": null,
+      "campaignNote": "家族割引・複数回線割引・親思い割引・おかえり割引・キャンペーンは条件付きのため実質月額に算入しない",
+      "setBenefits": [],
+      "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
+      "verified": true,
+      "observedAt": "2026-11-21T00:07:27.237Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 1059,
+          "total": 25410,
+          "breakdown": {
+            "monthlyTotal": 21120,
+            "adminFee": 4290,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 999,
+          "total": 35970,
+          "breakdown": {
+            "monthlyTotal": 31680,
+            "adminFee": 4290,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "mineo",
+      "providerName": "mineo",
+      "channelId": "official",
+      "category": "mobile",
+      "sourceUrl": "https://mineo.jp/price/",
+      "crossCheckUrl": "https://mineo.jp/price/mypita/",
+      "planKey": "マイピタ / シングル / 3GB / eSIM",
+      "planLabel": "マイピタ 3GB（データ通信のみ・eSIM）",
+      "plan": {
+        "plan": "マイピタ",
+        "voice": false,
+        "simForm": "eSIM",
+        "dataFromGb": 0,
+        "dataToGb": 3
+      },
+      "contractMonths": null,
+      "contractNote": "解約手数料は無料と料金ページの表に記載",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 880
+        }
+      ],
+      "adminFee": 3850,
+      "adminFeeBreakdown": {
+        "contract": 3850,
+        "simIssue": 0
+      },
+      "constructionFee": {
+        "list": 0,
+        "installmentMonths": null,
+        "borne": 0,
+        "residualOnEarlyExit": false,
+        "note": "工事なし（SIM）"
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": null,
+      "campaignNote": "家族割引・複数回線割引・親思い割引・おかえり割引・キャンペーンは条件付きのため実質月額に算入しない",
+      "setBenefits": [],
+      "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
+      "verified": true,
+      "observedAt": "2026-11-21T00:07:27.237Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 1040,
+          "total": 24970,
+          "breakdown": {
+            "monthlyTotal": 21120,
+            "adminFee": 3850,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 987,
+          "total": 35530,
+          "breakdown": {
+            "monthlyTotal": 31680,
+            "adminFee": 3850,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "mineo",
+      "providerName": "mineo",
+      "channelId": "official",
+      "category": "mobile",
+      "sourceUrl": "https://mineo.jp/price/",
+      "crossCheckUrl": "https://mineo.jp/price/mypita/",
+      "planKey": "マイピタ / シングル / 7GB / SIMカード",
+      "planLabel": "マイピタ 7GB（データ通信のみ・SIMカード）",
+      "plan": {
+        "plan": "マイピタ",
+        "voice": false,
+        "simForm": "SIMカード",
+        "dataFromGb": 0,
+        "dataToGb": 7
+      },
+      "contractMonths": null,
+      "contractNote": "解約手数料は無料と料金ページの表に記載",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 1265
+        }
+      ],
+      "adminFee": 4290,
+      "adminFeeBreakdown": {
+        "contract": 3850,
+        "simIssue": 440
+      },
+      "constructionFee": {
+        "list": 0,
+        "installmentMonths": null,
+        "borne": 0,
+        "residualOnEarlyExit": false,
+        "note": "工事なし（SIM）"
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": null,
+      "campaignNote": "家族割引・複数回線割引・親思い割引・おかえり割引・キャンペーンは条件付きのため実質月額に算入しない",
+      "setBenefits": [],
+      "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
+      "verified": true,
+      "observedAt": "2026-11-21T00:07:27.237Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 1444,
+          "total": 34650,
+          "breakdown": {
+            "monthlyTotal": 30360,
+            "adminFee": 4290,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 1384,
+          "total": 49830,
+          "breakdown": {
+            "monthlyTotal": 45540,
+            "adminFee": 4290,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "mineo",
+      "providerName": "mineo",
+      "channelId": "official",
+      "category": "mobile",
+      "sourceUrl": "https://mineo.jp/price/",
+      "crossCheckUrl": "https://mineo.jp/price/mypita/",
+      "planKey": "マイピタ / シングル / 7GB / eSIM",
+      "planLabel": "マイピタ 7GB（データ通信のみ・eSIM）",
+      "plan": {
+        "plan": "マイピタ",
+        "voice": false,
+        "simForm": "eSIM",
+        "dataFromGb": 0,
+        "dataToGb": 7
+      },
+      "contractMonths": null,
+      "contractNote": "解約手数料は無料と料金ページの表に記載",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 1265
+        }
+      ],
+      "adminFee": 3850,
+      "adminFeeBreakdown": {
+        "contract": 3850,
+        "simIssue": 0
+      },
+      "constructionFee": {
+        "list": 0,
+        "installmentMonths": null,
+        "borne": 0,
+        "residualOnEarlyExit": false,
+        "note": "工事なし（SIM）"
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": null,
+      "campaignNote": "家族割引・複数回線割引・親思い割引・おかえり割引・キャンペーンは条件付きのため実質月額に算入しない",
+      "setBenefits": [],
+      "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
+      "verified": true,
+      "observedAt": "2026-11-21T00:07:27.237Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 1425,
+          "total": 34210,
+          "breakdown": {
+            "monthlyTotal": 30360,
+            "adminFee": 3850,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 1372,
+          "total": 49390,
+          "breakdown": {
+            "monthlyTotal": 45540,
+            "adminFee": 3850,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "mineo",
+      "providerName": "mineo",
+      "channelId": "official",
+      "category": "mobile",
+      "sourceUrl": "https://mineo.jp/price/",
+      "crossCheckUrl": "https://mineo.jp/price/mypita/",
+      "planKey": "マイピタ / シングル / 15GB / SIMカード",
+      "planLabel": "マイピタ 15GB（データ通信のみ・SIMカード）",
+      "plan": {
+        "plan": "マイピタ",
+        "voice": false,
+        "simForm": "SIMカード",
+        "dataFromGb": 0,
+        "dataToGb": 15
+      },
+      "contractMonths": null,
+      "contractNote": "解約手数料は無料と料金ページの表に記載",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 1705
+        }
+      ],
+      "adminFee": 4290,
+      "adminFeeBreakdown": {
+        "contract": 3850,
+        "simIssue": 440
+      },
+      "constructionFee": {
+        "list": 0,
+        "installmentMonths": null,
+        "borne": 0,
+        "residualOnEarlyExit": false,
+        "note": "工事なし（SIM）"
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": null,
+      "campaignNote": "家族割引・複数回線割引・親思い割引・おかえり割引・キャンペーンは条件付きのため実質月額に算入しない",
+      "setBenefits": [],
+      "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
+      "verified": true,
+      "observedAt": "2026-11-21T00:07:27.237Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 1884,
+          "total": 45210,
+          "breakdown": {
+            "monthlyTotal": 40920,
+            "adminFee": 4290,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 1824,
+          "total": 65670,
+          "breakdown": {
+            "monthlyTotal": 61380,
+            "adminFee": 4290,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "mineo",
+      "providerName": "mineo",
+      "channelId": "official",
+      "category": "mobile",
+      "sourceUrl": "https://mineo.jp/price/",
+      "crossCheckUrl": "https://mineo.jp/price/mypita/",
+      "planKey": "マイピタ / シングル / 15GB / eSIM",
+      "planLabel": "マイピタ 15GB（データ通信のみ・eSIM）",
+      "plan": {
+        "plan": "マイピタ",
+        "voice": false,
+        "simForm": "eSIM",
+        "dataFromGb": 0,
+        "dataToGb": 15
+      },
+      "contractMonths": null,
+      "contractNote": "解約手数料は無料と料金ページの表に記載",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 1705
+        }
+      ],
+      "adminFee": 3850,
+      "adminFeeBreakdown": {
+        "contract": 3850,
+        "simIssue": 0
+      },
+      "constructionFee": {
+        "list": 0,
+        "installmentMonths": null,
+        "borne": 0,
+        "residualOnEarlyExit": false,
+        "note": "工事なし（SIM）"
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": null,
+      "campaignNote": "家族割引・複数回線割引・親思い割引・おかえり割引・キャンペーンは条件付きのため実質月額に算入しない",
+      "setBenefits": [],
+      "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
+      "verified": true,
+      "observedAt": "2026-11-21T00:07:27.237Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 1865,
+          "total": 44770,
+          "breakdown": {
+            "monthlyTotal": 40920,
+            "adminFee": 3850,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 1812,
+          "total": 65230,
+          "breakdown": {
+            "monthlyTotal": 61380,
+            "adminFee": 3850,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "mineo",
+      "providerName": "mineo",
+      "channelId": "official",
+      "category": "mobile",
+      "sourceUrl": "https://mineo.jp/price/",
+      "crossCheckUrl": "https://mineo.jp/price/mypita/",
+      "planKey": "マイピタ / シングル / 30GB / SIMカード",
+      "planLabel": "マイピタ 30GB（データ通信のみ・SIMカード）",
+      "plan": {
+        "plan": "マイピタ",
+        "voice": false,
+        "simForm": "SIMカード",
+        "dataFromGb": 0,
+        "dataToGb": 30
+      },
+      "contractMonths": null,
+      "contractNote": "解約手数料は無料と料金ページの表に記載",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 1925
+        }
+      ],
+      "adminFee": 4290,
+      "adminFeeBreakdown": {
+        "contract": 3850,
+        "simIssue": 440
+      },
+      "constructionFee": {
+        "list": 0,
+        "installmentMonths": null,
+        "borne": 0,
+        "residualOnEarlyExit": false,
+        "note": "工事なし（SIM）"
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": null,
+      "campaignNote": "家族割引・複数回線割引・親思い割引・おかえり割引・キャンペーンは条件付きのため実質月額に算入しない",
+      "setBenefits": [],
+      "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
+      "verified": true,
+      "observedAt": "2026-11-21T00:07:27.237Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 2104,
+          "total": 50490,
+          "breakdown": {
+            "monthlyTotal": 46200,
+            "adminFee": 4290,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 2044,
+          "total": 73590,
+          "breakdown": {
+            "monthlyTotal": 69300,
+            "adminFee": 4290,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "mineo",
+      "providerName": "mineo",
+      "channelId": "official",
+      "category": "mobile",
+      "sourceUrl": "https://mineo.jp/price/",
+      "crossCheckUrl": "https://mineo.jp/price/mypita/",
+      "planKey": "マイピタ / シングル / 30GB / eSIM",
+      "planLabel": "マイピタ 30GB（データ通信のみ・eSIM）",
+      "plan": {
+        "plan": "マイピタ",
+        "voice": false,
+        "simForm": "eSIM",
+        "dataFromGb": 0,
+        "dataToGb": 30
+      },
+      "contractMonths": null,
+      "contractNote": "解約手数料は無料と料金ページの表に記載",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 1925
+        }
+      ],
+      "adminFee": 3850,
+      "adminFeeBreakdown": {
+        "contract": 3850,
+        "simIssue": 0
+      },
+      "constructionFee": {
+        "list": 0,
+        "installmentMonths": null,
+        "borne": 0,
+        "residualOnEarlyExit": false,
+        "note": "工事なし（SIM）"
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": null,
+      "campaignNote": "家族割引・複数回線割引・親思い割引・おかえり割引・キャンペーンは条件付きのため実質月額に算入しない",
+      "setBenefits": [],
+      "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
+      "verified": true,
+      "observedAt": "2026-11-21T00:07:27.237Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 2085,
+          "total": 50050,
+          "breakdown": {
+            "monthlyTotal": 46200,
+            "adminFee": 3850,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 2032,
+          "total": 73150,
+          "breakdown": {
+            "monthlyTotal": 69300,
+            "adminFee": 3850,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "mineo",
+      "providerName": "mineo",
+      "channelId": "official",
+      "category": "mobile",
+      "sourceUrl": "https://mineo.jp/price/",
+      "crossCheckUrl": "https://mineo.jp/price/mypita/",
+      "planKey": "マイピタ / シングル / 50GB / SIMカード",
+      "planLabel": "マイピタ 50GB（データ通信のみ・SIMカード）",
+      "plan": {
+        "plan": "マイピタ",
+        "voice": false,
+        "simForm": "SIMカード",
+        "dataFromGb": 0,
+        "dataToGb": 50
+      },
+      "contractMonths": null,
+      "contractNote": "解約手数料は無料と料金ページの表に記載",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 2695
+        }
+      ],
+      "adminFee": 4290,
+      "adminFeeBreakdown": {
+        "contract": 3850,
+        "simIssue": 440
+      },
+      "constructionFee": {
+        "list": 0,
+        "installmentMonths": null,
+        "borne": 0,
+        "residualOnEarlyExit": false,
+        "note": "工事なし（SIM）"
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": null,
+      "campaignNote": "家族割引・複数回線割引・親思い割引・おかえり割引・キャンペーンは条件付きのため実質月額に算入しない",
+      "setBenefits": [],
+      "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
+      "verified": true,
+      "observedAt": "2026-11-21T00:07:27.237Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 2874,
+          "total": 68970,
+          "breakdown": {
+            "monthlyTotal": 64680,
+            "adminFee": 4290,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 2814,
+          "total": 101310,
+          "breakdown": {
+            "monthlyTotal": 97020,
+            "adminFee": 4290,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    },
+    {
+      "providerId": "mineo",
+      "providerName": "mineo",
+      "channelId": "official",
+      "category": "mobile",
+      "sourceUrl": "https://mineo.jp/price/",
+      "crossCheckUrl": "https://mineo.jp/price/mypita/",
+      "planKey": "マイピタ / シングル / 50GB / eSIM",
+      "planLabel": "マイピタ 50GB（データ通信のみ・eSIM）",
+      "plan": {
+        "plan": "マイピタ",
+        "voice": false,
+        "simForm": "eSIM",
+        "dataFromGb": 0,
+        "dataToGb": 50
+      },
+      "contractMonths": null,
+      "contractNote": "解約手数料は無料と料金ページの表に記載",
+      "monthlySchedule": [
+        {
+          "fromMonth": 1,
+          "toMonth": null,
+          "amount": 2695
+        }
+      ],
+      "adminFee": 3850,
+      "adminFeeBreakdown": {
+        "contract": 3850,
+        "simIssue": 0
+      },
+      "constructionFee": {
+        "list": 0,
+        "installmentMonths": null,
+        "borne": 0,
+        "residualOnEarlyExit": false,
+        "note": "工事なし（SIM）"
+      },
+      "cashbacks": [],
+      "requiredOptions": [],
+      "proratedFirstMonth": null,
+      "campaignNote": "家族割引・複数回線割引・親思い割引・おかえり割引・キャンペーンは条件付きのため実質月額に算入しない",
+      "setBenefits": [],
+      "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
+      "verified": true,
+      "observedAt": "2026-11-21T00:07:27.237Z",
+      "effective": {
+        "24": {
+          "effectiveMonthly": 2855,
+          "total": 68530,
+          "breakdown": {
+            "monthlyTotal": 64680,
+            "adminFee": 3850,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        },
+        "36": {
+          "effectiveMonthly": 2802,
+          "total": 100870,
+          "breakdown": {
+            "monthlyTotal": 97020,
+            "adminFee": 3850,
+            "constructionBorne": 0,
+            "optionTotal": 0,
+            "cashbackCounted": 0,
+            "otherDiscounts": 0,
+            "excludedCashback": []
+          },
+          "missing": []
+        }
+      },
+      "publishable": true
+    }
+  ]
+}
