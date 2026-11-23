@@ -3,7 +3,7 @@
   "providerName": "楽天モバイル",
   "channelId": "official",
   "category": "mobile",
-  "observedAt": "2026-11-22T01:24:45.444Z",
+  "observedAt": "2026-11-23T01:48:44.662Z",
   "formula": "実質月額 = ( 月額の合計 + 工事費の実負担額 + 事務手数料 + 必須オプション費用×加入必要月数 - キャッシュバック額 - その他割引の総額 ) ÷ 契約月数",
   "primaryHorizonMonths": 36,
   "sourceUrls": [
@@ -53,7 +53,7 @@
       ],
       "verificationMethod": "各段の税抜×1.1=税込 / 3GBまでの税込額と手数料ページの月額最低利用金額の一致",
       "verified": true,
-      "observedAt": "2026-11-22T01:24:45.444Z",
+      "observedAt": "2026-11-23T01:48:44.662Z",
       "effective": {
         "24": {
           "effectiveMonthly": 1078,
@@ -127,7 +127,7 @@
       ],
       "verificationMethod": "各段の税抜×1.1=税込 / 3GBまでの税込額と手数料ページの月額最低利用金額の一致",
       "verified": true,
-      "observedAt": "2026-11-22T01:24:45.444Z",
+      "observedAt": "2026-11-23T01:48:44.662Z",
       "effective": {
         "24": {
           "effectiveMonthly": 2178,
@@ -201,7 +201,7 @@
       ],
       "verificationMethod": "各段の税抜×1.1=税込 / 3GBまでの税込額と手数料ページの月額最低利用金額の一致",
       "verified": true,
-      "observedAt": "2026-11-22T01:24:45.444Z",
+      "observedAt": "2026-11-23T01:48:44.662Z",
       "effective": {
         "24": {
           "effectiveMonthly": 3278,
@@ -275,7 +275,7 @@
       ],
       "verificationMethod": "各段の税抜×1.1=税込 / 3GBまでの税込額と手数料ページの月額最低利用金額の一致",
       "verified": true,
-      "observedAt": "2026-11-22T01:24:45.444Z",
+      "observedAt": "2026-11-23T01:48:44.662Z",
       "effective": {
         "24": {
           "effectiveMonthly": 4378,
