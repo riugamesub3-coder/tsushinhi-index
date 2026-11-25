@@ -5,6 +5,14 @@
   "firstCollectedAt": "2026-08-23T09:31:26.876Z",
   "notices": [
     {
+      "date": "2026-11-25",
+      "url": "https://www.nuro.jp/news_release/20261125/",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-11-25T04:16:08.647Z",
+      "sourceUrl": "https://www.nuro.jp/news_release/"
+    },
+    {
       "date": "2026-11-05",
       "url": "https://www.nuro.jp/news_release/20261105/",
       "categories": [],
@@ -950,6 +958,6 @@
       "sourceUrl": "https://www.nuro.jp/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-11-24T05:20:51.326Z",
-  "totalNotices": 109
+  "lastCollectedAt": "2026-11-25T04:16:08.647Z",
+  "totalNotices": 110
 }
