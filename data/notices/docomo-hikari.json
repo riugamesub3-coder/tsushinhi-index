@@ -5,6 +5,14 @@
   "firstCollectedAt": "2026-08-23T09:31:31.945Z",
   "notices": [
     {
+      "date": "2026-11-26",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/11/26_00.html",
+      "categories": [],
+      "relevant": false,
+      "firstSeenAt": "2026-11-26T03:37:12.632Z",
+      "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
+    },
+    {
       "date": "2026-11-25",
       "url": "https://www.docomo.ne.jp/binary/pdf/info/news_release/topics_261125_x1.pdf",
       "categories": [],
@@ -919,6 +927,6 @@
       "sourceUrl": "https://www.docomo.ne.jp/info/news_release/"
     }
   ],
-  "lastCollectedAt": "2026-11-25T04:16:17.168Z",
-  "totalNotices": 106
+  "lastCollectedAt": "2026-11-26T03:37:12.632Z",
+  "totalNotices": 107
 }
