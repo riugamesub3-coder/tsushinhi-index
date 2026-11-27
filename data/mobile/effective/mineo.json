@@ -3,7 +3,7 @@
   "providerName": "mineo",
   "channelId": "official",
   "category": "mobile",
-  "observedAt": "2026-11-26T03:38:25.722Z",
+  "observedAt": "2026-11-27T03:40:56.589Z",
   "formula": "実質月額 = ( 月額の合計 + 工事費の実負担額 + 事務手数料 + 必須オプション費用×加入必要月数 - キャッシュバック額 - その他割引の総額 ) ÷ 契約月数",
   "primaryHorizonMonths": 36,
   "sourceUrls": [
@@ -56,7 +56,7 @@
       "setBenefits": [],
       "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
       "verified": true,
-      "observedAt": "2026-11-26T03:38:25.722Z",
+      "observedAt": "2026-11-27T03:40:56.589Z",
       "effective": {
         "24": {
           "effectiveMonthly": 1477,
@@ -133,7 +133,7 @@
       "setBenefits": [],
       "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
       "verified": true,
-      "observedAt": "2026-11-26T03:38:25.722Z",
+      "observedAt": "2026-11-27T03:40:56.589Z",
       "effective": {
         "24": {
           "effectiveMonthly": 1458,
@@ -210,7 +210,7 @@
       "setBenefits": [],
       "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
       "verified": true,
-      "observedAt": "2026-11-26T03:38:25.722Z",
+      "observedAt": "2026-11-27T03:40:56.589Z",
       "effective": {
         "24": {
           "effectiveMonthly": 1697,
@@ -287,7 +287,7 @@
       "setBenefits": [],
       "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
       "verified": true,
-      "observedAt": "2026-11-26T03:38:25.722Z",
+      "observedAt": "2026-11-27T03:40:56.589Z",
       "effective": {
         "24": {
           "effectiveMonthly": 1678,
@@ -364,7 +364,7 @@
       "setBenefits": [],
       "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
       "verified": true,
-      "observedAt": "2026-11-26T03:38:25.722Z",
+      "observedAt": "2026-11-27T03:40:56.589Z",
       "effective": {
         "24": {
           "effectiveMonthly": 2137,
@@ -441,7 +441,7 @@
       "setBenefits": [],
       "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
       "verified": true,
-      "observedAt": "2026-11-26T03:38:25.722Z",
+      "observedAt": "2026-11-27T03:40:56.589Z",
       "effective": {
         "24": {
           "effectiveMonthly": 2118,
@@ -518,7 +518,7 @@
       "setBenefits": [],
       "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
       "verified": true,
-      "observedAt": "2026-11-26T03:38:25.722Z",
+      "observedAt": "2026-11-27T03:40:56.589Z",
       "effective": {
         "24": {
           "effectiveMonthly": 2357,
@@ -595,7 +595,7 @@
       "setBenefits": [],
       "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
       "verified": true,
-      "observedAt": "2026-11-26T03:38:25.722Z",
+      "observedAt": "2026-11-27T03:40:56.589Z",
       "effective": {
         "24": {
           "effectiveMonthly": 2338,
@@ -672,7 +672,7 @@
       "setBenefits": [],
       "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
       "verified": true,
-      "observedAt": "2026-11-26T03:38:25.722Z",
+      "observedAt": "2026-11-27T03:40:56.589Z",
       "effective": {
         "24": {
           "effectiveMonthly": 3127,
@@ -749,7 +749,7 @@
       "setBenefits": [],
       "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
       "verified": true,
-      "observedAt": "2026-11-26T03:38:25.722Z",
+      "observedAt": "2026-11-27T03:40:56.589Z",
       "effective": {
         "24": {
           "effectiveMonthly": 3108,
@@ -826,7 +826,7 @@
       "setBenefits": [],
       "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
       "verified": true,
-      "observedAt": "2026-11-26T03:38:25.722Z",
+      "observedAt": "2026-11-27T03:40:56.589Z",
       "effective": {
         "24": {
           "effectiveMonthly": 1059,
@@ -903,7 +903,7 @@
       "setBenefits": [],
       "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
       "verified": true,
-      "observedAt": "2026-11-26T03:38:25.722Z",
+      "observedAt": "2026-11-27T03:40:56.589Z",
       "effective": {
         "24": {
           "effectiveMonthly": 1040,
@@ -980,7 +980,7 @@
       "setBenefits": [],
       "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
       "verified": true,
-      "observedAt": "2026-11-26T03:38:25.722Z",
+      "observedAt": "2026-11-27T03:40:56.589Z",
       "effective": {
         "24": {
           "effectiveMonthly": 1444,
@@ -1057,7 +1057,7 @@
       "setBenefits": [],
       "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
       "verified": true,
-      "observedAt": "2026-11-26T03:38:25.722Z",
+      "observedAt": "2026-11-27T03:40:56.589Z",
       "effective": {
         "24": {
           "effectiveMonthly": 1425,
@@ -1134,7 +1134,7 @@
       "setBenefits": [],
       "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
       "verified": true,
-      "observedAt": "2026-11-26T03:38:25.722Z",
+      "observedAt": "2026-11-27T03:40:56.589Z",
       "effective": {
         "24": {
           "effectiveMonthly": 1884,
@@ -1211,7 +1211,7 @@
       "setBenefits": [],
       "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
       "verified": true,
-      "observedAt": "2026-11-26T03:38:25.722Z",
+      "observedAt": "2026-11-27T03:40:56.589Z",
       "effective": {
         "24": {
           "effectiveMonthly": 1865,
@@ -1288,7 +1288,7 @@
       "setBenefits": [],
       "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
       "verified": true,
-      "observedAt": "2026-11-26T03:38:25.722Z",
+      "observedAt": "2026-11-27T03:40:56.589Z",
       "effective": {
         "24": {
           "effectiveMonthly": 2104,
@@ -1365,7 +1365,7 @@
       "setBenefits": [],
       "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
       "verified": true,
-      "observedAt": "2026-11-26T03:38:25.722Z",
+      "observedAt": "2026-11-27T03:40:56.589Z",
       "effective": {
         "24": {
           "effectiveMonthly": 2085,
@@ -1442,7 +1442,7 @@
       "setBenefits": [],
       "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
       "verified": true,
-      "observedAt": "2026-11-26T03:38:25.722Z",
+      "observedAt": "2026-11-27T03:40:56.589Z",
       "effective": {
         "24": {
           "effectiveMonthly": 2874,
@@ -1519,7 +1519,7 @@
       "setBenefits": [],
       "verificationMethod": "/price/ の表と /price/mypita/ のコース紹介で月額が一致（契約事務手数料・発行料は /price/ の表のみ）",
       "verified": true,
-      "observedAt": "2026-11-26T03:38:25.722Z",
+      "observedAt": "2026-11-27T03:40:56.589Z",
       "effective": {
         "24": {
           "effectiveMonthly": 2855,
