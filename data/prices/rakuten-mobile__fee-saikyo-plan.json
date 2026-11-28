@@ -3,7 +3,7 @@
   "providerId": "rakuten-mobile",
   "providerName": "楽天モバイル",
   "url": "https://network.mobile.rakuten.co.jp/fee/saikyo-plan/",
-  "collectedAt": "2026-11-27T03:40:33.178Z",
+  "collectedAt": "2026-11-28T03:21:24.967Z",
   "points": [
     {
       "label": "*5 国内通話5分かけ放題の5分超過後は30秒",
@@ -36,12 +36,7 @@
       "raw": "3,278円"
     },
     {
-      "label": "Rakuten Link アプリ未使用時30秒",
-      "value": 22,
-      "raw": "22円"
-    },
-    {
-      "label": "Rakuten Linkアプリ未使用時30秒",
+      "label": "が対象 ・標準の電話アプリで発信した場合は30秒",
       "value": 22,
       "raw": "22円"
     },
@@ -209,6 +204,11 @@
       "label": "月 *6 （税込",
       "value": 1980,
       "raw": "1,980 円"
+    },
+    {
+      "label": "標準の電話アプリからの発信は30秒",
+      "value": 22,
+      "raw": "22円"
     },
     {
       "label": "歳～22歳 23歳～64歳 65歳以上 あなたは",

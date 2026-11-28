@@ -5,6 +5,16 @@
   "firstCollectedAt": "2026-08-23T09:31:30.121Z",
   "notices": [
     {
+      "date": "2026-11-27",
+      "url": "https://network.mobile.rakuten.co.jp/hikari/information/2026/1127_01/",
+      "categories": [
+        "noise"
+      ],
+      "relevant": false,
+      "firstSeenAt": "2026-11-28T03:20:36.697Z",
+      "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
+    },
+    {
       "date": "2026-11-13",
       "url": "https://network.mobile.rakuten.co.jp/hikari/information/2026/1113_01/",
       "categories": [
@@ -347,6 +357,6 @@
       "sourceUrl": "https://network.mobile.rakuten.co.jp/hikari/information/"
     }
   ],
-  "lastCollectedAt": "2026-11-27T03:39:47.291Z",
-  "totalNotices": 37
+  "lastCollectedAt": "2026-11-28T03:20:36.697Z",
+  "totalNotices": 38
 }
